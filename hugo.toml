@@ -1,0 +1,38 @@
+baseURL = "https://popcorn.zone/"
+locale = "en-us"
+title = "Popcorn"
+disableKinds = ["taxonomy", "term"]
+enableRobotsTXT = true
+
+[params]
+description = "Ask AI assistants the questions your buyers ask, and see who they recommend. Open source and self-hosted."
+github = "https://github.com/metcalfc/popcorn"
+template = "https://github.com/metcalfc/popcorn-config-template"
+
+[outputs]
+home = ["html"]
+section = ["html", "rss"]
+page = ["html"]
+
+[services.rss]
+limit = 20
+
+[markup.highlight]
+codeFences = false
+
+[markup.goldmark.renderer]
+unsafe = false
+
+[menus]
+[[menus.main]]
+name = "Docs"
+pageRef = "/docs"
+weight = 10
+[[menus.main]]
+name = "Blog"
+pageRef = "/blog"
+weight = 20
+[[menus.main]]
+name = "GitHub"
+url = "https://github.com/metcalfc/popcorn"
+weight = 30

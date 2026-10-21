@@ -1,0 +1,63 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="wrap">
+    <h1>Ask AI assistants the questions your buyers ask, and see who they recommend.</h1>
+    <p class="lede">Popcorn puts your buyers' questions to Claude and ChatGPT, grades whether each answer <strong>recommends</strong> your product, merely <strong>mentions</strong> it, or leaves it <strong>out</strong>, and turns what it finds into a ranked list of fixes for your sites.</p>
+    <p class="actions">
+      <a class="btn" href="{{ "/docs/getting-started/" | relURL }}">Get started</a>
+      <a class="btn ghost" href="{{ site.Params.github }}">Source on GitHub</a>
+    </p>
+    <p class="muted small">Open source (MIT). Self-hosted. Your prompts live in your own git repo.</p>
+  </div>
+</section>
+
+<section class="wrap" aria-labelledby="how">
+  <h2 id="how">How it works</h2>
+  <ol class="steps">
+    <li>
+      <h3>Your buyers' questions</h3>
+      <p>Prompt sets are TOML files in a config repo you own, one per category of buyer question, written the way someone who has never heard of you would type them. Changes go through pull requests.</p>
+    </li>
+    <li>
+      <h3>Two tracks, every assistant</h3>
+      <p>Each configured assistant answers every prompt on <strong>search</strong>, where it must search the web first, and <strong>recall</strong>, with no tools. You see both what the web says today and what the model already believes.</p>
+    </li>
+    <li>
+      <h3>Graded answers</h3>
+      <p>A second Claude call grades each answer <code>recommended</code>, <code>mentioned</code> or <code>absent</code>, with your position, the top pick, every product named, the objections raised, and why you weren't #1.</p>
+    </li>
+    <li>
+      <h3>Share of voice and rankings</h3>
+      <p>Each run shows rates per assistant and track with 95% intervals, and share of voice. Rankings follow your place day by day, and carry on through reworded, added and removed prompts.</p>
+    </li>
+    <li>
+      <h3>A ranked fix list</h3>
+      <p>Each run ends with <strong>Fix these first</strong>: the exact page to create or change, what it must say, the prompts it would flip, an effort estimate, and which of your sites it belongs on, with its owner.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="wrap" aria-labelledby="who">
+  <h2 id="who">Who it's for</h2>
+  <p>The people who own how a product is described: product marketing, docs, the blog and the website. Popcorn is for teams who want to know whether AI assistants recommend their product when buyers ask, which pages shape those answers, and what to change first. Every search, result URL and citation behind an answer is kept, so you can see which third-party pages the assistants lean on and which of your own sites they never reach.</p>
+</section>
+
+<section class="wrap" aria-labelledby="yours">
+  <h2 id="yours">Open source, on your own infrastructure</h2>
+  <ul>
+    <li><strong>MIT licensed.</strong> Read it, run it, change it.</li>
+    <li><strong>Self-hosted.</strong> One container with a SQLite database, on a Docker host, Kubernetes (Helm chart) or an exe.dev VM.</li>
+    <li><strong>Your config in your git repo.</strong> The brand, assistants, budget, schedule and prompt sets live in a config repo you can keep private. <code>popcorn plan</code> shows what a change does to your trends before you merge it.</li>
+    <li><strong>A daily budget.</strong> Every API call reserves against <code>budget.daily_usd</code> before it goes out. Prompts and answers go only to the model providers you configure.</li>
+    <li><strong>Web UI, CLI, JSON API and MCP server</strong>, so Claude Code or any MCP client can start runs and read results.</li>
+  </ul>
+</section>
+
+<section class="wrap" aria-labelledby="start">
+  <h2 id="start">Get started</h2>
+  <p>A fresh checkout runs as-is against an example config that measures Popcorn itself. You need Go and an Anthropic API key.</p>
+<pre><code>cp .env.example .env              # then fill in ANTHROPIC_API_KEY
+go run ./cmd/popcorn serve        # the example, at http://127.0.0.1:3000</code></pre>
+  <p><a href="{{ "/docs/getting-started/" | relURL }}">Read Getting started</a>, then start your own config repo from the <a href="{{ site.Params.template }}">template</a>.</p>
+</section>
+{{ end }}

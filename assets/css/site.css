@@ -1,0 +1,108 @@
+/* Popcorn's palette and type, copied from the app (internal/server/static/popcorn.css): warm ivory /
+   warm charcoal, cinema red for primary actions and the logo, gold for the occasional highlight.
+   Light by default, dark when the OS asks for it. */
+:root{color-scheme:light;
+  --pc-bg:#FAF8F5;--pc-surface:#FFFFFF;--pc-border:#E5DFD7;--pc-text:#252321;--pc-muted:#6E6862;
+  --pc-primary:#C73532;--pc-primary-hover:#A92B28;--pc-on-primary:#FFFFFF;
+  --pc-gold:#F2B544;--pc-gold-strong:#A87500;--pc-gold-bg:#FFF0CB;--pc-gold-text:#765000;
+  --pc-chip:#F2EEE8;--pc-control:#8C847B;
+  --sans:-apple-system,BlinkMacSystemFont,"Inter",system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;
+  --pc-bg:#1B1917;--pc-surface:#24211E;--pc-border:#3B3631;--pc-text:#F5F1EB;--pc-muted:#ADA59C;
+  --pc-primary:#EF7770;--pc-primary-hover:#F38D87;--pc-on-primary:#1B1917;
+  --pc-gold:#F2B544;--pc-gold-strong:#F2B544;--pc-gold-bg:#3B2C14;--pc-gold-text:#F2B544;
+  --pc-chip:#302C28;--pc-control:#7D756C}}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--pc-bg);color:var(--pc-text);font:16px/1.6 var(--sans);overflow-wrap:break-word}
+a{color:inherit;text-decoration-color:var(--pc-control);text-underline-offset:3px}
+a:hover{color:var(--pc-primary);text-decoration-color:currentColor}
+:focus-visible{outline:2px solid var(--pc-primary);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--pc-surface);padding:6px 10px;border:1px solid var(--pc-border);border-radius:6px;z-index:10}
+.skip:focus{left:16px}
+
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header.site{background:var(--pc-surface);border-bottom:1px solid var(--pc-border)}
+header.site .bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding-top:12px;padding-bottom:12px}
+.brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:17px}
+.brand svg{color:var(--pc-primary);flex-shrink:0}
+.brand:hover{color:var(--pc-text)}
+header.site nav{display:flex;gap:18px;flex-wrap:wrap}
+header.site nav a{text-decoration:none;color:var(--pc-muted);padding:4px 0;border-bottom:2px solid transparent}
+header.site nav a:hover{color:var(--pc-text)}
+header.site nav a[aria-current="page"]{color:var(--pc-text);border-bottom-color:var(--pc-primary)}
+
+main{padding:32px 0 64px}
+h1{font-size:30px;line-height:1.25;letter-spacing:-.02em;margin:0 0 12px}
+h2{font-size:21px;line-height:1.3;letter-spacing:-.01em;margin:40px 0 10px}
+h3{font-size:17px;margin:24px 0 6px}
+p,ul,ol{margin:0 0 14px}
+ul,ol{padding-left:22px}
+li{margin:4px 0}
+.muted{color:var(--pc-muted)}.small{font-size:14px}
+.lede{font-size:18px;color:var(--pc-muted);max-width:720px}
+.meta{color:var(--pc-muted);font-size:14px;margin-top:-4px}
+
+code{font:.9em var(--mono);background:var(--pc-chip);padding:1px 5px;border-radius:5px}
+pre{background:var(--pc-chip);border:1px solid var(--pc-border);border-radius:8px;padding:12px 14px;overflow-x:auto;max-width:100%;margin:0 0 16px}
+pre code{background:none;padding:0;font:13px/1.5 var(--mono);white-space:pre}
+blockquote{margin:0 0 14px;border-left:3px solid var(--pc-gold);padding:2px 0 2px 14px;color:var(--pc-muted)}
+hr{border:0;border-top:1px solid var(--pc-border);margin:32px 0}
+
+.table-scroll{overflow-x:auto;margin:0 0 16px;max-width:100%}
+table{border-collapse:collapse;font-size:14px;min-width:100%}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--pc-border);vertical-align:top}
+th{color:var(--pc-muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td code{white-space:nowrap}
+
+.prose{max-width:760px;min-width:0}
+.prose h2[id],.prose h3[id]{scroll-margin-top:16px}
+
+/* Buttons: one red primary action, the rest ghost. */
+.btn{display:inline-block;font-weight:500;background:var(--pc-primary);color:var(--pc-on-primary);border:1px solid transparent;border-radius:8px;padding:9px 16px;text-decoration:none}
+.btn:hover{background:var(--pc-primary-hover);color:var(--pc-on-primary)}
+.btn.ghost{background:var(--pc-surface);color:var(--pc-text);border-color:var(--pc-control)}
+.btn.ghost:hover{background:var(--pc-chip);color:var(--pc-text)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 12px}
+
+/* Home */
+.hero{padding:24px 0 8px}
+.hero h1{font-size:36px;max-width:780px}
+.steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;counter-reset:step}
+.steps li{background:var(--pc-surface);border:1px solid var(--pc-border);border-radius:10px;padding:16px;margin:0;counter-increment:step}
+.steps h3{margin:0 0 6px}
+.steps h3::before{content:counter(step);display:inline-block;min-width:24px;height:24px;line-height:24px;text-align:center;margin-right:8px;border-radius:999px;background:var(--pc-gold-bg);color:var(--pc-gold-text);font-size:13px;font-weight:600}
+.steps p{margin:0;color:var(--pc-muted);font-size:15px}
+section.wrap{margin-bottom:8px}
+section.wrap>p,section.wrap>ul{max-width:760px}
+
+/* Docs */
+.docs{display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px;align-items:start}
+.docs-nav{position:sticky;top:16px;font-size:15px}
+.docs-nav-title{font-weight:600;margin:0 0 6px}
+.docs-nav-title a{text-decoration:none}
+.docs-nav ol{list-style:none;padding:0;margin:0}
+.docs-nav li{margin:0}
+.docs-nav ol a{display:block;padding:5px 10px;margin-left:-10px;border-left:2px solid transparent;text-decoration:none;color:var(--pc-muted)}
+.docs-nav a:hover{color:var(--pc-text)}
+.docs-nav a[aria-current="page"]{color:var(--pc-text);border-left-color:var(--pc-primary);font-weight:500}
+.doc-list li{margin:10px 0}
+.pager{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--pc-border);margin-top:40px;padding-top:16px}
+@media (max-width:760px){
+  .docs{grid-template-columns:minmax(0,1fr);gap:16px}
+  .docs-nav{position:static;border:1px solid var(--pc-border);background:var(--pc-surface);border-radius:10px;padding:12px 16px}
+  .docs-nav ol a{margin-left:0}
+  h1,.hero h1{font-size:26px}
+}
+
+/* Blog */
+.posts{list-style:none;padding:0}
+.posts li{border-top:1px solid var(--pc-border);padding:16px 0 4px}
+.posts h2{margin:0 0 4px;font-size:20px}
+.posts h2 a{text-decoration:none}
+
+footer.site{border-top:1px solid var(--pc-border);background:var(--pc-surface);padding:20px 0;font-size:14px}
+footer.site p{margin:4px 0}
+p code,li code{overflow-wrap:anywhere}

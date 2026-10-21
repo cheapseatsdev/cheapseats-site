@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="wrap docs">
+  {{ partial "docs-nav.html" . }}
+  <article class="prose">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
+    {{ .Content }}
+    {{ $pages := .CurrentSection.Pages.ByWeight }}
+    {{ $i := 0 }}
+    {{ range $n, $p := $pages }}{{ if eq $p $ }}{{ $i = $n }}{{ end }}{{ end }}
+    <nav class="pager" aria-label="Previous and next">
+      {{ if gt $i 0 }}{{ with index $pages (sub $i 1) }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}{{ else }}<span></span>{{ end }}
+      {{ if lt (add $i 1) (len $pages) }}{{ with index $pages (add $i 1) }}<a href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}{{ end }}
+    </nav>
+  </article>
+</div>
+{{ end }}

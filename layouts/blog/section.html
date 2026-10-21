@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="wrap prose">
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  <ul class="posts">
+  {{ range .Pages.ByDate.Reverse }}
+    <li>
+      <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+      <p class="meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>{{ with .Params.author }} · {{ . }}{{ end }}</p>
+      <p>{{ .Summary | plainify }}</p>
+    </li>
+  {{ end }}
+  </ul>
+  {{ with .OutputFormats.Get "rss" }}<p class="muted"><a href="{{ .RelPermalink }}">Subscribe by RSS</a></p>{{ end }}
+</div>
+{{ end }}

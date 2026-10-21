@@ -1,0 +1,11 @@
+{{ $here := . }}
+{{ with site.GetPage "/docs" }}
+<nav class="docs-nav" aria-label="Docs">
+  <p class="docs-nav-title"><a href="{{ .RelPermalink }}"{{ if eq $here .}} aria-current="page"{{ end }}>Docs</a></p>
+  <ol>
+  {{ range .Pages.ByWeight }}
+    <li><a href="{{ .RelPermalink }}"{{ if eq $here . }} aria-current="page"{{ end }}>{{ .Title }}</a></li>
+  {{ end }}
+  </ol>
+</nav>
+{{ end }}

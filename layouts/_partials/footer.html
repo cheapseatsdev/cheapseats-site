@@ -1,0 +1,6 @@
+<footer class="site">
+  <div class="wrap">
+    <p>Popcorn is open source under the <a href="{{ site.Params.github }}/blob/main/LICENSE">MIT license</a>. Source on <a href="{{ site.Params.github }}">GitHub</a>.</p>
+    <p class="muted">Icons from <a href="https://lucide.dev">Lucide</a> (ISC). No cookies, no analytics.{{ with site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }} <a href="{{ .RelPermalink }}">RSS</a>{{ end }}{{ end }}</p>
+  </div>
+</footer>
