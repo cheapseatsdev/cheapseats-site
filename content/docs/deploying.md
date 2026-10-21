@@ -58,6 +58,16 @@ The chart runs one replica and replaces it rather than rolling, so two never sha
 
 The plain app image works too, with the config mounted at `/config` by `extraVolumes` and `extraVolumeMounts`. The template's [Kubernetes guide](https://github.com/metcalfc/popcorn-config-template/blob/main/deploy/README.md) walks through it.
 
+## Backups
+
+`popcorn backup <file>` takes a consistent copy of the live database (SQLite's `VACUUM INTO`). Copying `popcorn.db` while Popcorn runs can miss recent writes still in its write-ahead log.
+
+- Docker: `docker compose exec popcorn /app/popcorn backup /data/backup.db`, then `docker compose cp popcorn:/data/backup.db .`
+- Kubernetes: `kubectl exec deploy/popcorn -- /app/popcorn backup /data/backup.db`. The image has no shell or `tar`, so copy it off the volume with a pod that mounts the claim.
+- exe.dev: `deploy/exe-dev-ops.sh` sets up nightly copies (below).
+
+Popcorn also copies the database to `popcorn.db.bak-v<N>` before any schema change.
+
 ## exe.dev
 
 An [exe.dev](https://exe.dev) VM runs Popcorn as a systemd service behind exe.dev's HTTPS proxy, which signs people in by email. Because it's a whole VM, its answerers can be the `claude` and `codex` CLIs on subscriptions (both come installed) as well as the APIs.

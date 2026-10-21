@@ -36,7 +36,20 @@ Results, trends and fix lists follow a prompt by its id, so:
 
 Rankings carry on through added, removed and reworded prompts, new competitors and new answerer models, and each day says what changed since the day before. Comparisons with the day before only count the prompts both days asked, worded the same. Editing a set's name, description or tier changes nothing.
 
-A new trend starts only when how answers are asked or graded changes: the brand's names or domains, the grader, or a Popcorn release that changes its prompts.
+### What restarts a trend
+
+Only a change to how answers are asked or graded starts a new trend; anything else carries the trend on, noted on the day it happened.
+
+| change | effect |
+|---|---|
+| brand `name`, `aliases`, `about` or `audience` | new trend |
+| grader model | new trend |
+| a Popcorn release that changes its answer, search or grading prompts | new trend |
+| prompts added, removed or reworded | noted; comparisons use the prompts both days asked |
+| competitors | noted |
+| answerers, models or samples | noted |
+| brand sites or domains, facts, owners | nothing: they change where fixes go, not how answers are graded |
+| a set's name, description or tier | nothing |
 
 Before merging a config change, run `popcorn plan` on a checkout of main and one of the branch:
 

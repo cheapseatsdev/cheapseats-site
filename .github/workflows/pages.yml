@@ -1,8 +1,11 @@
 name: Deploy to GitHub Pages
 
+# Pull requests build with the same Hugo and flags, so a broken template fails there; only main
+# publishes.
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -11,8 +14,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || 'pages' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   HUGO_VERSION: 0.166.0
@@ -29,17 +32,20 @@ jobs:
           sudo dpkg -i "${RUNNER_TEMP}/hugo.deb"
           hugo version
       - id: pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
       - name: Build
         env:
           HUGO_ENVIRONMENT: production
         run: hugo --minify --panicOnWarning
       - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
         with:
           path: ./public
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
