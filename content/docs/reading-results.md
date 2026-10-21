@@ -34,6 +34,8 @@ Along with the verdict you get the brand's position in the answer, the answer's 
 - **Your sites**: which of the brand's sites the answers drew on, including any they never reached.
 - **Fix these first** and **insights** (below).
 
+For how these rates and share of voice are computed, with a worked example, see [Mentioned vs. recommended](/guides/mentioned-vs-recommended/).
+
 Export a run as CSV or JSON. Pages update themselves while a run is going; no need to refresh. Each run records the config repo's commit and the Popcorn version, shown on the run page and in its exports.
 
 ## Fix these first
