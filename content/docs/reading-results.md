@@ -27,7 +27,7 @@ Along with the verdict you get the brand's position in the answer, the answer's 
 
 ## The run page
 
-- **Rates**: top-pick, recommended and named rates per answerer and track, with 95% intervals.
+- **Rates**: top-pick, recommended and named rates per answerer and track, with 95% intervals. Info prompts (`intent = "info"`) count toward named only.
 - **Share of voice**: every product the answers named, counted across the run.
 - **Every answer** with its grade.
 - **Pages referenced**: every search, result URL and citation is captured, so this table shows which third-party pages shape the answers, with the brand's own pages flagged by site (marketing, docs, blog...) and the prompts where none surfaced called out.
@@ -58,7 +58,7 @@ Quick wins pulls the fix lists from the latest run of every prompt set into one 
 
 Rankings turns runs into a day-by-day series per set: the brand's place on the share-of-voice board, who leads, its rates (each prompt counting once) and a 7-day average.
 
-Prompt sets change over time, so the series carries on through added, removed and reworded prompts, new competitors and new answerer models: each day lists what changed since the day before, and its comparison with that day only counts the prompts both asked, worded the same, of the same answerers ("on 13 of 15 prompts"). A change in how answers are asked or graded starts the comparison over.
+Prompt sets change over time, so the series carries on through added, removed and reworded prompts, changed intents, new competitors and new answerer models: each day lists what changed since the day before, and its comparison with that day only counts the prompts both asked, worded the same, of the same answerers ("on 13 of 15 prompts"). A change in how answers are asked or graded starts the comparison over.
 
 Each set's page shows every prompt's results day by day, so one prompt's history survives being reworded or moved to another set.
 

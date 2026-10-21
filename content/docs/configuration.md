@@ -74,6 +74,16 @@ samples = { search = 2, recall = 1 }
 - `samples` is how many answers it takes per track (`search` and `recall`) for each prompt.
 - `claude-code` and `codex` only work on your own machine or a VM with the CLIs installed. `popcorn check` fails on a config whose subscription answerers can't run where it's checked.
 
+## Shared competitors
+
+```toml
+[[competitors]]
+name = "Peec AI"
+aliases = ["Peec", "peec.ai"]
+```
+
+Competitors the grader folds onto one canonical name in every prompt set, so share of voice counts "Peec" as Peec AI. A set's own `[[competitors]]` adds to the list, and its entry for the same name wins. See [prompt sets](../prompt-sets/#competitors-shared-by-every-set).
+
 ## Grader and analyst
 
 ```toml
