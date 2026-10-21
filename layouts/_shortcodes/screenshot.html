@@ -1,0 +1,13 @@
+{{- /* A screenshot in the reader's theme: static/images/docs/<name>-light.webp and -dark.webp. */ -}}
+{{- $name := .Get "name" -}}
+{{- $light := printf "images/docs/%s-light.webp" $name -}}
+{{- $dark := printf "images/docs/%s-dark.webp" $name -}}
+<figure class="screenshot">
+<picture>
+<source srcset="{{ $dark | relURL }}" media="(prefers-color-scheme: dark)">
+<img src="{{ $light | relURL }}" alt="{{ .Get "alt" }}" loading="lazy">
+</picture>
+{{- with .Get "caption" }}
+<figcaption>{{ . | markdownify }}</figcaption>
+{{- end }}
+</figure>

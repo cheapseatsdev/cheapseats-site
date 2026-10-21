@@ -52,7 +52,7 @@ The same call writes a short **insights** report: why the brand lost, the object
 
 ## Quick wins
 
-Quick wins pulls the fix lists from the latest run of every prompt set into one list, ranked by fastest ranking gain: the prompts a fix could flip per working day. Filter it by site to hand each team its own list.
+Quick wins pulls the fix lists from the latest run of every prompt set into one list, ranked by fastest ranking gain: the prompts a fix could flip per working day. Filter it by site to hand each team its own list. Each fix has a prompt for Claude Code: see [From fix to pull request](../fix-to-pull-request/) for the whole loop, shown on popcorn.zone.
 
 ## Rankings
 
