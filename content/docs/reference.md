@@ -74,7 +74,9 @@ curl -H "Authorization: Bearer <token>" \
 
 With `POPCORN_TOKENS` unset, `serve` only listens on 127.0.0.1 and everything is open. To listen anywhere else, set `POPCORN_TOKENS` (comma-separated, so one can be rotated at a time): every `/api/*` request, MCP included, then needs `Authorization: Bearer <token>`, and the web UI asks for a token once and keeps it in a cookie.
 
-On [exe.dev](../deploying/#exedev), the web UI can instead trust the proxy's signed-in email header (`POPCORN_AUTH_HEADER`, narrowed by `POPCORN_ALLOWED_EMAILS`); API and MCP clients still use a token.
+On [exe.dev](../deploying/#exedev), Popcorn instead trusts the proxy's signed-in email header (`POPCORN_AUTH_HEADER`, narrowed by `POPCORN_ALLOWED_EMAILS`). API and MCP clients get through the proxy with an exe.dev token scoped to the VM; see [connecting Claude Code](../deploying/#exedev).
+
+Behind a proxy on the same machine, set `POPCORN_HOSTS` to the host names it serves Popcorn as (comma-separated). MCP refuses a request that reaches Popcorn on loopback under any other name, against DNS rebinding.
 
 ## Data and privacy
 
