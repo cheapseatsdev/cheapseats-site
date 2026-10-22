@@ -28,4 +28,4 @@ When that happens, bring your prompts. Cheap Seats' prompt sets are plain TOML i
 
 The pages below take one tool at a time, using only Cheap Seats' public facts and what each tool says on its own pages, as of October 2026. Each says what the tool does that Cheap Seats doesn't, and when it's time to move. [Gauge](/compare/gauge/) is the place to begin: Cheap Seats started as a small, self-hosted take on it. [Elmo](/compare/elmo/) and [Limelit Open](/compare/limelit/) are open source and self-hosted too, each the open core of a hosted product, and each covers more engines than Cheap Seats. For all of them side by side, see [AI visibility tools compared](/blog/ai-visibility-tools-compared/).
 
-Cheap Seats was called Popcorn until October 2026. It isn't affiliated with Bad Popcorn (badpopcorn.ai), Popcorn AI (trypopcorn.ai), popcorn.ai, popcorn.co or Reclaim Protocol's popcorn-oss.
+

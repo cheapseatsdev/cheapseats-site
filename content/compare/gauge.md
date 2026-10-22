@@ -66,4 +66,4 @@ If you outgrow Cheap Seats, do whatever suits you; Gauge is the suggestion. Thes
 
 Your prompt sets are plain TOML in your own git repo. Each prompt is a line of text with an id, so the buyer questions you've refined in Cheap Seats are yours. They're plain text you can copy into Gauge when you set it up, and your run history stays in your SQLite file.
 
-Cheap Seats was called Popcorn until October 2026. It isn't affiliated with Bad Popcorn (badpopcorn.ai), Popcorn AI (trypopcorn.ai), popcorn.ai, popcorn.co or Reclaim Protocol's popcorn-oss. See [Getting started](/docs/getting-started/) to run it, or [all comparisons](/compare/).
+See [Getting started](/docs/getting-started/) to run it, or [all comparisons](/compare/).
