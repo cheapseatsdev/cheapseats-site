@@ -19,6 +19,8 @@ cheapseats suggest-prompts <set-id> [-n 10]  new buyer questions for a set, as T
 cheapseats regrade [-since 28d] [-dry-run=false] <set-id|run-id>
                                        grade stored answers again with today's grader, brand and competitors;
                                        a dry run with its cost unless -dry-run=false
+cheapseats review [-days 30] [-json] [-suggest] <set-id>
+                                       the prompts themselves: flat, noisy, off-target, duplicate and branded ones, and gaps (free; -suggest: one analyst call)
 cheapseats audit [-pages 10] [-info] [-json] [site...]   what AI crawlers can read on the brand's sites (free)
 cheapseats check-citations [-n 25] [-json] <run-id>      which pages the run cited name the brand, and which competitors (free)
 cheapseats crawl import [-host example.com] <logfile>... AI crawler fetches and AI referrals from access logs; - reads stdin, .gz is read as gzip
@@ -30,7 +32,7 @@ cheapseats migrate-config [dir]           give each prompt an id, in sets writte
 cheapseats version                        this build's version and database schema
 ```
 
-From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/).
+From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/), `review` in [Reviewing your prompts](../prompt-review/).
 
 - **`init`**: `-name` sets the brand's name instead of what the site calls itself; `-competitors` adds `[[competitors]]` entries, alternatives prompts and head-to-heads; `-suggest` adds `-n` suggested prompts to the starter sets with one analyst call; `-dry-run` prints what it found and every file it would write, and writes nothing. It writes to `./<brand>-cheapseats-config` unless you name a directory.
 - **`regrade`**: `-since` takes `28d`, `72h` or `all` (default 28 days) and applies to a set; `-dry-run` is true by default.
@@ -65,6 +67,7 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `audit_sites`      | audits the brand's sites for AI crawlers and returns the errors and warnings, each with a fix; takes `site`, `cached` and `info`. Free |
 | `check_citations`  | fetches a run's most-cited third-party pages and says which name the brand and which competitors; takes `run`, `limit` and `cached`. Free |
 | `get_crawlers`     | AI crawler fetches and AI referrals per page from imported logs, beside how often runs cite each; takes `last_days`, `flag` and `limit`. User agent only, unverified |
+| `review_prompts`   | a set's [prompt review](../prompt-review/): flat, noisy, off-target, duplicate, rewritten and branded prompts, and gaps; takes `set`, `days` (30, 60 or 90) and `suggest`. Free unless `suggest`, which is one analyst call for proposed edits |
 | `regrade`          | grade a set's, or one run's, stored answers again with today's grader, brand and competitors; takes `target` (a set or run id), `since_days` (default 28, 0 for all) and `dry_run` (true unless set to false). The dry run says how many answers and the estimated cost; the real one runs in the background within the daily budget. See [Re-grading](../regrading/) |
 | `share_run`        | a read-only [share link](../sharing/) to a run's report; takes `run`, or `set` for its newest finished run, `days` (default 30, max 365) and `include_answers`. The URL is shown only this once |
 | `cancel_run`       | stop an in-progress run                                                         |
@@ -115,7 +118,7 @@ A run's JSON (`/api/runs/{id}`, and `/runs/{id}/export.json`) carries everything
 
 `/api/citations` counts each answer that linked a URL once, and returns `runs_scanned` and `answers_scanned` alongside the pages, so a URL missing from the list reads as uncited across that many answers.
 
-In the web UI, `/sets/{id}/regrade` shows a set's re-grade dry run and starts one ([Re-grading](../regrading/)), and `/share/{token}` is a run's [share page](../sharing/).
+In the web UI, `/sets/{id}/review` is a set's [prompt review](../prompt-review/) (`/api/sets/{id}/review` its JSON), `/sets/{id}/regrade` shows a set's re-grade dry run and starts one ([Re-grading](../regrading/)), and `/share/{token}` is a run's [share page](../sharing/).
 
 `GET /healthz` answers `ok` without a token, for a container's liveness probe. `GET /share/{token}` is the only other page open without a sign-in besides `/login` and static files, and serves only that link's run.
 

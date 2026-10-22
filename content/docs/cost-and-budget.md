@@ -18,6 +18,7 @@ In a real run of 17 prompts and 68 answers, answered on Claude and ChatGPT subsc
 | **the fix list**, once per run | the Anthropic API (`[analyst]`) | per token |
 | **the theme pass**, once per run | the Anthropic API (`[grader]`) | per token: under a cent a run with Claude Haiku |
 | **`cheapseats suggest-prompts`**, when you ask | the Anthropic API (`[analyst]`) | per token: one call |
+| **prompt review**, and its proposed edits when you ask | Cheap Seats itself; the edits through `[analyst]` | free; proposed edits are one call |
 | **re-grading** stored answers, when you ask | the grader | one grader call per answer: $0 on `claude-code`, per token through the API |
 | **adaptive sampling** extras, if on | the same answerers | like any other answer; API extras only within today's budget |
 | **site audit, citation check, AI crawlers** | plain HTTP and your logs | free: no model calls |

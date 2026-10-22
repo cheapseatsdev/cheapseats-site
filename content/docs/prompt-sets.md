@@ -100,6 +100,10 @@ Write each question the way someone who has never heard of the brand would type 
 
 Sets written before prompts had ids (`prompts = ["...", "..."]`) are converted by `cheapseats migrate-config <dir>`, which makes an id from each prompt's words; review them before committing.
 
+## Review them monthly
+
+Once a set has a month of runs, the [prompt review](../prompt-review/) says which of its prompts tell you nothing, move for no reason, get answered about something else or ask the same thing twice, and what no prompt asks. It's free, and its suggested edits arrive as a diff for a pull request here.
+
 ## Keep them public
 
 Prompts are sent to every answerer's provider on each run. Don't put anything in them that isn't public.
