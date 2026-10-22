@@ -1,6 +1,7 @@
 <footer class="site">
   <div class="wrap">
-    <p>Popcorn is open source under the <a href="{{ site.Params.github }}/blob/main/LICENSE">MIT license</a>. Source on <a href="{{ site.Params.github }}">GitHub</a>.</p>
+    <p>{{ site.Title }} (popcorn.zone) is {{ site.Params.tagline }}, free under the <a href="{{ site.Params.github }}/blob/main/LICENSE">MIT license</a>. Source on <a href="{{ site.Params.github }}">GitHub</a>.</p>
+    <p class="muted">Not affiliated with Bad Popcorn (badpopcorn.ai), Popcorn AI (trypopcorn.ai), popcorn.ai, popcorn.co or Reclaim Protocol's popcorn-oss.</p>
     <p class="muted">Icons from <a href="https://lucide.dev">Lucide</a> (ISC). No cookies, no analytics.{{ with site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }} <a href="{{ .RelPermalink }}">RSS</a>{{ end }}{{ end }}</p>
   </div>
 </footer>

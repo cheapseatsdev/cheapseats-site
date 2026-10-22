@@ -3,8 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ if .IsHome }}{{ site.Title }}: open-source, self-hosted AI visibility tracker{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
+{{- /* Every page names the product the same way: other products share the name, and answers land on deep pages. */ -}}
+{{ $brand := printf "%s, %s (popcorn.zone)" site.Title site.Params.tagline -}}
+<title>{{ if .IsHome }}{{ site.Title }}: open-source, self-hosted AI visibility tracker{{ else }}{{ .Title }} · {{ site.Title }}, {{ site.Params.tagline }}{{ end }}</title>
+{{ $desc := "" }}{{ with .Description }}{{ $desc = . }}{{ else }}{{ with .Summary }}{{ $desc = . | plainify | truncate 160 }}{{ else }}{{ $desc = site.Params.description }}{{ end }}{{ end -}}
+{{ if not .IsHome }}{{ $desc = printf "%s %s." $desc $brand }}{{ end -}}
+<meta name="description" content="{{ $desc }}">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="{{ .Permalink }}">
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
