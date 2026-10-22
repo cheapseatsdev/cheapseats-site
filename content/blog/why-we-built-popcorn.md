@@ -2,12 +2,14 @@
 title: Why we built Popcorn
 date: 2026-10-21
 author: Chad Metcalf
-description: Buyers ask AI assistants what to use. Popcorn measures whether the answer recommends you, and tells you what to fix.
+description: Buyers ask AI assistants what to use. Popcorn is the 20% of tools like Gauge that you'll use 80% of the time, on the subscriptions you already have, so you can start measuring at no cost.
 ---
 
 Buyers ask AI assistants what to use. "What should I use for X?" gets one answer, written in full sentences, often with a top pick. If you sell in that category, you want to know what that answer says about you.
 
-Popcorn is how we find out. It's a small, self-hosted take on [Gauge](https://withgauge.com), open source under the MIT license.
+Popcorn is how we find out. It's inspired by tools that already do this, [Gauge](https://withgauge.com) first among them, along with Profound and Peec AI. They do a lot, and most of it we didn't need. What we did have was Claude and ChatGPT subscriptions with tokens to spare. So we built the 20% of those tools that we'd use 80% of the time, to run on those subscriptions: a small, self-hosted take on Gauge, open source under the MIT license.
+
+If you want to start measuring without buying anything, start here. If you outgrow it, move to one of the tools that inspired it, and take your prompts with you.
 
 <!--more-->
 
@@ -35,6 +37,10 @@ A dashboard that says you're losing doesn't help on its own. When a run finishes
 
 ## Yours to run
 
-Your buyer questions, brand facts and competitors live in a config repo you own, as TOML, and change by pull request. `popcorn plan` tells the reviewer what a change does to the trends before it merges. Popcorn runs as one container with a SQLite database, on a Docker host, Kubernetes or an exe.dev VM, with a daily budget on what it spends. Prompts and answers go to the model providers you configure, and nowhere else.
+Your buyer questions, brand facts and competitors live in a config repo you own, as TOML, and change by pull request. `popcorn plan` tells the reviewer what a change does to the trends before it merges. On your own machine Popcorn runs on your Claude subscription, and ChatGPT's if you have it, with no API key. Hosted, it's one container with a SQLite database, on a Docker host, Kubernetes or an exe.dev VM, with a daily budget on what it spends through the APIs. Prompts and answers go to the model providers you configure, and nowhere else.
+
+## When you outgrow it
+
+Popcorn asks Claude and OpenAI models, not Gemini, Perplexity, Copilot or Google AI Overviews, and it's a tool you run, not a service. When you need those engines, a hosted dashboard, or reports for many clients, the tools that inspired it are the next step; [Compare](/compare/) has the honest differences. The buyer questions you've written and refined are plain text in your repo, so they come with you.
 
 If you want to know whether the assistants recommend you, [start here](/docs/getting-started/). The code is on [GitHub](https://github.com/metcalfc/popcorn).

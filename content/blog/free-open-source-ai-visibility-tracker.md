@@ -7,7 +7,7 @@ description: Popcorn is a free, MIT-licensed AI visibility tracker you run yours
 
 **Is there a free AI visibility tracker that's actually useful?** Yes: Popcorn is free, open source under the MIT license, and runs as one Docker container with a SQLite database. It asks Claude and OpenAI models your buyers' questions on a schedule, grades whether each answer recommends you, merely mentions you or leaves you out, and ends every run with a ranked list of fixes.
 
-The software costs nothing. Running it costs model calls, and they're small: answers can come from the Claude Code and Codex subscriptions you already pay for, and Claude grades each answer for a fraction of a cent. One of our own runs, 17 questions and 68 answers, cost **$0.03** in grading.
+The software costs nothing, and on your own machine it can run entirely on the Claude subscription you already pay for (ChatGPT's too, optionally), with no API key. Through the APIs the model calls are small: one of our own runs, 17 questions and 68 answers answered on subscriptions, cost **$0.03** in grading.
 
 <!--more-->
 
@@ -16,23 +16,22 @@ The software costs nothing. Running it costs model calls, and they're small: ans
 If you're a small startup measuring AI visibility for the first time, you need three things: your buyers' questions, asked of the assistants they use, repeatedly; a judgment on each answer that's stricter than "were we named"; and a list of what to change. Popcorn does all three, and here's what each part costs:
 
 - **Answers.** Each question is asked of each assistant on two tracks: **search**, where it must search the web first, and **recall**, from what the model already believes. On a laptop, answerers can be the `claude` and `codex` CLIs on your existing subscriptions, with no API bill. On a server, they're the Anthropic and OpenAI APIs, billed per token.
-- **Grading.** Claude Haiku grades every answer. This is the one API key Popcorn always needs (`ANTHROPIC_API_KEY`). Grading the 68 answers in the run above cost $0.033 in total; the most expensive single grade was under a tenth of a cent.
-- **The fix list.** One Claude Opus call per run, a few cents.
+- **Grading.** Claude Haiku grades every answer, through the API or, with `provider = "claude-code"`, on your Claude subscription. Through the API, grading the 68 answers in the run above cost $0.033 in total; the most expensive single grade was under a tenth of a cent.
+- **The fix list.** One Claude Opus call per run: a few cents through the API, or on the subscription.
 - **A ceiling.** `budget.daily_usd` caps API spend: every call reserves against it before it goes out.
 
 There are no seats, no per-brand or per-prompt plans, and nothing to cancel. Prompts and answers go only to the model providers you configure.
 
 ## Five-minute quickstart
 
-You need Go 1.25 or later and an Anthropic API key. A fresh checkout runs against an example config that measures Popcorn itself:
+You need Go 1.25 or later and Claude: the `claude` CLI logged in to your Claude subscription, or an Anthropic API key. The `codex` CLI (or an OpenAI key) is optional and adds ChatGPT's answers. On your subscriptions, with no API key:
 
 ```bash
 git clone https://github.com/metcalfc/popcorn && cd popcorn
-cp .env.example .env              # then fill in ANTHROPIC_API_KEY
-go run ./cmd/popcorn serve        # at http://127.0.0.1:3000
+POPCORN_CONFIG=examples/popcorn-config/popcorn.subscriptions.toml go run ./cmd/popcorn serve
 ```
 
-To answer on your subscriptions instead of the APIs, log in to both CLIs, then in `examples/popcorn-config/popcorn.toml` comment out the `anthropic` and `openai` answerers and uncomment the `claude-code` and `codex` ones. Leave an API answerer in and it still answers, on your API key. Then open <http://127.0.0.1:3000>, pick a prompt set and run it. Our 17-question run on subscriptions took under six minutes.
+That example config measures Popcorn itself, with every model on the CLIs. (With an API key instead: `cp .env.example .env`, fill in `ANTHROPIC_API_KEY`, and run `go run ./cmd/popcorn serve`.) Then open <http://127.0.0.1:3000>, pick a prompt set and run it. Our 17-question run on subscriptions took under six minutes.
 
 To measure your own brand, start a config repo from the [template](https://github.com/metcalfc/popcorn-config-template): your brand, competitors and buyer questions, as TOML you change by pull request. [Getting started](/docs/getting-started/) has the details, and [Deploying](/docs/deploying/) covers Docker, the Helm chart and exe.dev.
 
