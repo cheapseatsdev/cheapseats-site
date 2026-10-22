@@ -56,6 +56,10 @@ The same call writes a short **insights** report: why the brand lost, the object
 
 Quick wins pulls the fix lists from the latest run of every prompt set into one list, ranked by fastest ranking gain: the prompts a fix could flip per working day. Filter it by site to hand each team its own list. Each fix has a prompt for Claude Code: see [From fix to pull request](../fix-to-pull-request/) for the whole loop, shown on popcorn.zone.
 
+**Marking a fix.** When you've submitted something for a fix, mark it with the commit or pull request: **proposed** while it's open, **accepted** once it merges, or **withdrawn** if it's closed, which reopens the fix. Filter by **status** to see what's left: *urgent* and *open* is the list nobody has touched.
+
+**A fix that wasn't enough comes back.** Fix lists are written fresh each run, and marking a fix settles only that fix. If the prompts still lose, the next run proposes a fix for the same page again: it's open, marked *retry*, and shows the earlier work and its outcome, how often its prompts were named and recommended before and after, and whether its page turned up in any answer. The analyst writing the list is told what was tried, so a retry says what to do differently. Work recorded after a fix list was built covers that list's fix for the same page too, since the list didn't know about it.
+
 ## Rankings
 
 Rankings turns runs into a day-by-day series per set: the brand's place on the share-of-voice board, who leads, its rates (each prompt counting once) and a 7-day average.
