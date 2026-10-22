@@ -23,7 +23,7 @@ A second Claude call grades each answer:
 | `mentioned`   | named, but only as one option among many, in passing, or with reservations      |
 | `absent`      | not named at all (aliases included)                                             |
 
-Along with the verdict you get the brand's position in the answer, the answer's top pick, every product named (for share of voice), the grader's reasoning, a **"why not #1"** (what the answer preferred and the reasons it gave), and the specific **objections** raised about the brand.
+Along with the verdict you get the brand's position in the answer, the answer's top pick, every product named (for share of voice), the grader's reasoning, a **"why not #1"** (what the answer preferred and the reasons it gave), and the specific **objections** raised about the brand. [How grading works](../how-grading-works/) has the rules in full, with worked examples.
 
 ## The run page
 
