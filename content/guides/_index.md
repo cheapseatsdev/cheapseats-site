@@ -1,6 +1,6 @@
 ---
 title: Guides
-outputs: ["html"]
+outputs: ["html", "markdown"]
 description: How to measure and improve whether AI assistants recommend your product.
 ---
 

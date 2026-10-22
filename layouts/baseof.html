@@ -8,6 +8,7 @@
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="{{ .Permalink }}">
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+{{ with .OutputFormats.Get "markdown" }}<link rel="alternate" type="text/markdown" href="{{ .Permalink }}">{{ end }}
 {{ with site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="Popcorn blog">{{ end }}{{ end }}
 {{ if .IsHome }}<script type="application/ld+json">
 {{ dict
