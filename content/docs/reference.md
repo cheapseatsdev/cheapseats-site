@@ -36,7 +36,10 @@ claude mcp add --transport http popcorn https://<host>/api/mcp --header "Authori
 | `list_runs`        | recent runs with status and headline rates                                      |
 | `get_run`          | rates, share of voice, top pages, the fix list, insights, one line per prompt   |
 | `get_result`       | one answer in full: text, grade, searches and citations                         |
-| `get_quick_wins`   | the ranked fixes, filterable by gap, set and site, each with its Claude prompt  |
+| `get_quick_wins`   | the ranked fixes, filterable by gap, set, site, status and priority, each with its Claude prompt and the work submitted for it; `brief` leaves out the prompts and `limit` caps the list |
+| `mark_fix`         | record the commit or pull request submitted for a fix, as proposed or accepted  |
+| `set_attempt_state` | move submitted work on: accepted when it merges, withdrawn when it's closed    |
+| `list_attempts`    | the work submitted for fixes, with each one's outcome in the runs since         |
 | `get_citations`    | every URL linked in an answer across runs, filterable by URL, set and window   |
 | `search_probe`     | one query through the answerers' web search tool, returning the exact result    |
 | `get_rankings`     | the brand's daily share-of-voice rank and rates per set, with day-over-day change |
@@ -56,7 +59,10 @@ claude mcp add --transport http popcorn https://<host>/api/mcp --header "Authori
 | `GET /api/runs/{id}`                 | one run in full: every answer with its grade and sources, fixes, insights |
 | `GET`/`POST /api/runs/{id}/fixes`    | the fix list; POST rebuilds it and the insights (one paid Claude call) |
 | `POST /api/runs/{id}/cancel`, `/retry` | stop a run, or finish an unfinished one                             |
-| `GET /api/quick-wins`                | the ranked fixes across sets; takes `gap`, `set` and `site` (a url, a kind like `docs`, or `elsewhere`) |
+| `GET /api/quick-wins`                | the ranked fixes across sets; takes `gap`, `set`, `site` (a url, a kind like `docs`, or `elsewhere`), `status` (`open`, `proposed`, `accepted`) and `priority` |
+| `POST /api/runs/{id}/fixes/{rank}/attempts` | records work submitted for a fix: `{"url", "state"?, "note"?}`, state `proposed` (default) or `accepted` |
+| `POST /api/attempts/{id}`            | moves an attempt on: `{"state": "accepted"}` or `"withdrawn"`          |
+| `GET /api/attempts`                  | the work submitted for fixes, newest first, with outcomes; takes `set` |
 | `GET /api/rankings`                  | daily rank and rates per set; takes `lastDays` and `set`              |
 | `GET /api/citations`                 | cited URLs across runs; takes `urlContains`, `lastDays` and `set`     |
 | `POST /api/search-probe`             | one search, verbatim; takes `{"query", "allowed_domains"?, "blocked_domains"?}` |

@@ -54,8 +54,10 @@ The two pull requests from this walkthrough:
 - [Mentioned vs. recommended](https://github.com/metcalfc/popcorn-site/pull/1): defines the three grades, the rates and share of voice exactly as Popcorn computes them, with Popcorn's own zero-score run as the worked example.
 - [Track AI citations](https://github.com/metcalfc/popcorn-site/pull/2): which pages AI assistants rely on, and how that complements Google Search Console's generative AI report and Bing Webmaster Tools' AI Performance report. Claude Code checked each report's scope against Google's and Microsoft's own pages, and left out what it couldn't confirm.
 
+Mark the fix with the pull request while it's open: from its card in quick wins, or ask Claude Code to do it over MCP (`mark_fix`) as part of the same task. It leaves the open list, so the next person picking a fix doesn't pick it again. When it merges, mark it accepted (`set_attempt_state`).
+
 ## 4. Merge, then let the next run check it
 
-Once the page is live, the next run of the set re-asks the questions. Each fix's **Done when** says what to look for. For these two, it's the new page among the pages that shaped the answers to the named prompts, which the run page lists under each prompt and in **Pages and searches**. The fix list is written fresh from each run, so a fix that worked usually drops off it, and one that didn't comes back, often with a sharper reason.
+Once the page is live, the next run of the set re-asks the questions. Each fix's **Done when** says what to look for. For these two, it's the new page among the pages that shaped the answers to the named prompts, which the run page lists under each prompt and in **Pages and searches**. The fix list is written fresh from each run, knowing what was tried, so a fix that worked usually drops off it, and one that didn't comes back open, marked *retry*, with your pull request, what changed for its prompts, and often a sharper reason.
 
 It doesn't happen at once. Search-track answers pick up a new page once it's indexed, and recall answers only change when the models do. Give a fix a few weekly runs before you judge it, and read the [rankings](../reading-results/#rankings) trend rather than one day.

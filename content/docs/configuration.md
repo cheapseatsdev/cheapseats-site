@@ -94,7 +94,7 @@ model = "claude-haiku-5-5"
 model = "claude-opus-5-5"
 ```
 
-The grader grades each answer; the analyst writes the fix list and insights. Both use `ANTHROPIC_API_KEY`.
+The grader grades each answer; the analyst writes the fix list and insights. Both use `ANTHROPIC_API_KEY`, or the proxy in `POPCORN_ANTHROPIC_BASE_URL`.
 
 ## Budget
 
@@ -157,7 +157,8 @@ A fix goes to its site's owner, else to the owner for its gap here, else `defaul
 
 | variable | what it does |
 | --- | --- |
-| `ANTHROPIC_API_KEY` | required: grading, the fix list, and `anthropic` answerers |
+| `ANTHROPIC_API_KEY` | required: grading, the fix list, and `anthropic` answerers, unless `POPCORN_ANTHROPIC_BASE_URL` is set |
+| `POPCORN_ANTHROPIC_BASE_URL` | a base URL for Popcorn's own Anthropic calls, such as a proxy that adds the key ([exe.dev](../deploying/#exedev) integrations); the `claude` CLI doesn't read it, so `claude-code` answerers stay on your subscription |
 | `OPENAI_API_KEY` | `openai` answerers |
 | `POPCORN_TOKENS` | comma-separated bearer tokens; required to listen beyond 127.0.0.1 |
 | `POPCORN_AUTH_HEADER`, `POPCORN_ALLOWED_EMAILS` | trust a signing-in proxy's email header, optionally narrowed to emails or `@domain`s ([exe.dev](../deploying/#exedev)) |
