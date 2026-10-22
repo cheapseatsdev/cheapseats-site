@@ -1,10 +1,10 @@
 ---
 title: Popcorn vs Semrush AI Toolkit
-description: Popcorn, the MIT-licensed, self-hosted AI visibility tracker at popcorn.zone, compared with Semrush's AI Toolkit (now the AI Visibility Toolkit). Popcorn queries Claude; Semrush's pages don't mention it. As of October 2026.
+description: Popcorn, the MIT-licensed, self-hosted AI visibility tracker at popcorn.zone, is a free place to start before Semrush's AI Toolkit (now the AI Visibility Toolkit). Popcorn queries Claude; Semrush's pages don't mention it. As of October 2026.
 weight: 50
 ---
 
-Popcorn (popcorn.zone) is the MIT-licensed, self-hosted AI visibility tracker. It queries Claude: Claude and OpenAI models are the two families it asks, through their APIs or the Claude Code and Codex CLIs. Semrush's AI Toolkit, which its knowledge base now calls the AI Visibility Toolkit, is $99 a month and names Google AI Mode and ChatGPT; neither that page nor Semrush's pricing page mentions Claude. If tracking your brand in Claude matters, Popcorn covers it and Semrush, by its own pages, doesn't say it does. If you want AI visibility inside a broader SEO suite, Semrush is the natural choice.
+Popcorn (popcorn.zone) is the MIT-licensed, self-hosted AI visibility tracker. It's a free place to start, inspired by tools like Semrush's AI Toolkit, which its knowledge base now calls the AI Visibility Toolkit: Popcorn asks Claude and OpenAI models your buyers' questions, through their APIs or the Claude Code and Codex CLIs, grades whether the answers recommend you, and ends each run with a ranked fix list. Semrush's toolkit is $99 a month and names Google AI Mode and ChatGPT; neither that page nor Semrush's pricing page mentions Claude. If tracking your brand in Claude matters, Popcorn covers it. If you want AI visibility inside a broader SEO suite, Semrush is the natural place to go when you outgrow Popcorn, and your prompts come with you.
 
 ## Side by side
 
@@ -12,7 +12,7 @@ As of October 2026, from Popcorn's docs and Semrush's own [AI Visibility Toolkit
 
 | | Popcorn | Semrush AI Visibility Toolkit |
 | --- | --- | --- |
-| **Price** | Free and open source (MIT). Run it locally, or pay your own host to run it. | $99/month for the toolkit. Semrush One "SEO + AI Search" plans start at $165.17/month billed annually ($199 monthly) |
+| **Price** | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | $99/month for the toolkit. Semrush One "SEO + AI Search" plans start at $165.17/month billed annually ($199 monthly) |
 | **Where it runs** | Self-hosted: one Docker container with SQLite, on Docker, Kubernetes (Helm chart) or an exe.dev VM | Hosted SaaS |
 | **Engines** | **Claude** and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Toolkit: "platforms like Google AI Mode and ChatGPT". Pricing page: "Google Search, ChatGPT, Perplexity, Gemini & more". Claude isn't mentioned on either page |
 | **Your prompts** | TOML in your own git repo, changed by pull request | Prompt Tracking: 25 prompts, 50 more for $60/month. Semrush One Starter: 50 prompts tracked daily |
@@ -22,20 +22,26 @@ As of October 2026, from Popcorn's docs and Semrush's own [AI Visibility Toolkit
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | Semrush API and Semrush MCP exist as products; the toolkit page doesn't describe them for AI visibility |
 | **SEO suite** | None; Popcorn only measures AI answers | Part of Semrush, alongside its SEO tools |
 
-**Model usage.** Popcorn's software is free; the model calls aren't. Grading always uses the Anthropic API, about $0.03 for a 68-answer run. Answers can come from the Claude Code and Codex subscriptions you already pay for, or from the APIs under a daily budget cap.
+**What it costs.** Popcorn is free and open source (MIT). Claude is required, through a subscription or an API key; ChatGPT (Codex or an OpenAI key) is optional and adds a second assistant's answers. On your own machine, with a Claude Code subscription, answers, grading and the fix list can all run on the claude CLI, with no API key and no extra spend. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs: about $0.03 to grade a 68-answer run, under a daily budget cap). [Cost and budget](/docs/cost-and-budget/) has the details.
 
-## When Semrush is the better choice
-
-- **You already live in Semrush.** AI visibility sits next to Semrush's SEO tools, in one bill and one login.
-- **You need Google AI Mode, Gemini or Perplexity.** The toolkit names Google AI Mode, and the SEO + AI Search plans name Perplexity and Gemini; Popcorn doesn't ask any of them.
-- **You'd rather not run anything.** Semrush is hosted; Popcorn is a container you or your host keeps running.
-- **You want prompt research.** Semrush runs a large collection of common queries through LLMs to find prompts; in Popcorn, you write your own.
-
-## When Popcorn is the better choice
+## Start with Popcorn if…
 
 - **Claude matters to your buyers.** Popcorn asks Claude both with web search and from memory, and grades the two separately.
 - You want a strict grade per answer, recommended versus merely mentioned, with reasoning you can check.
 - You want each run to end in a ranked list of the exact pages to change, with a Claude Code prompt for each.
 - You want your prompts reviewed by pull request and your data in a file you own.
+
+## When to move to Semrush
+
+These are the signs you've outgrown Popcorn:
+
+- **You already live in Semrush.** AI visibility sits next to Semrush's SEO tools, in one bill and one login.
+- **You need Google AI Mode, Gemini or Perplexity.** The toolkit names Google AI Mode, and the SEO + AI Search plans name Perplexity and Gemini; Popcorn asks only Claude and OpenAI models and doesn't cover any of them.
+- **You'd rather not run anything.** Semrush is hosted; Popcorn is a container you or your host keeps running.
+- **You want prompt research.** Semrush runs a large collection of common queries through LLMs to find prompts; in Popcorn, you write your own.
+
+## Taking your prompts with you
+
+Your prompt sets are plain TOML in your own git repo. Each prompt is a line of text with an id, so the buyer questions you've refined in Popcorn are yours. They're plain text you can copy into Semrush's Prompt Tracking when you set it up. The toolkit starts at 25 prompts, so bring the ones that mattered most.
 
 Popcorn is not affiliated with Bad Popcorn (badpopcorn.ai), Popcorn AI (trypopcorn.ai), popcorn.ai, popcorn.co or Reclaim Protocol's popcorn-oss. See [Getting started](/docs/getting-started/) to run it, or [all comparisons](/compare/).
