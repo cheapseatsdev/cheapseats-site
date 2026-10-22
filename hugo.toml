@@ -9,10 +9,32 @@ description = "Popcorn is an open-source (MIT), self-hosted AI visibility tracke
 github = "https://github.com/metcalfc/popcorn"
 template = "https://github.com/metcalfc/popcorn-config-template"
 
+# llms.txt (llmstxt.org): an index and a full-text file at the root, and a markdown copy of every
+# page beside its HTML, linked from <head>.
+[mediaTypes."text/markdown"]
+suffixes = ["md"]
+
+[outputFormats.markdown]
+mediaType = "text/markdown"
+baseName = "index"
+isPlainText = true
+
+[outputFormats.llms]
+mediaType = "text/plain"
+baseName = "llms"
+isPlainText = true
+notAlternative = true
+
+[outputFormats.llmsfull]
+mediaType = "text/plain"
+baseName = "llms-full"
+isPlainText = true
+notAlternative = true
+
 [outputs]
-home = ["html"]
-section = ["html", "rss"]
-page = ["html"]
+home = ["html", "llms", "llmsfull"]
+section = ["html", "rss", "markdown"]
+page = ["html", "markdown"]
 
 [services.rss]
 limit = 20

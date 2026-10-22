@@ -1,0 +1,25 @@
+# {{ site.Title }}
+
+> {{ site.Params.description }}
+
+Every page of {{ site.BaseURL }}, docs first, as markdown. Source: {{ site.Params.github }}
+{{ range slice "docs" "guides" "blog" }}
+{{- with site.GetPage . }}
+{{- range .Pages.ByWeight }}
+
+---
+
+# {{ .Title }}
+
+- URL: {{ .Permalink }}
+{{- if not .Date.IsZero }}
+- Date: {{ .Date.Format "2006-01-02" }}
+{{- end }}
+{{- with .Description }}
+- Description: {{ . }}
+{{- end }}
+
+{{ .RenderShortcodes }}
+{{- end }}
+{{- end }}
+{{- end }}
