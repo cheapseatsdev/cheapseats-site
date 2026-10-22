@@ -2,10 +2,10 @@
 title: AI visibility tools compared
 date: 2026-10-22
 author: Chad Metcalf
-description: Popcorn, Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar and Semrush AI Visibility compared row by row, as of October 2026, from each vendor's own pages - engines, pricing, hosting, prompts, grading, fixes and API.
+description: Start free with Popcorn, the open-source AI visibility tracker, then choose where to go next. Popcorn, Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar and Semrush AI Visibility compared row by row, as of October 2026, from each vendor's own pages - engines, pricing, hosting, prompts, grading, fixes and API.
 ---
 
-**How do the AI visibility tools compare?** As of October 2026, the hosted tools (Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar and Semrush AI Visibility) cover more engines, including Gemini, Perplexity and Google's AI surfaces, and charge from about $29 a month to custom enterprise contracts. Popcorn is the free, MIT-licensed one you run yourself: it asks only Claude and OpenAI models, keeps your prompts in your own git repo, grades every answer recommended, mentioned or absent, and ends every run with a ranked fix list.
+**How do the AI visibility tools compare?** As of October 2026, the hosted tools (Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar and Semrush AI Visibility) cover more engines, including Gemini, Perplexity and Google's AI surfaces, and charge from about $29 a month to custom enterprise contracts. Popcorn, the free, open-source AI visibility tracker, is the place to start: inspired by those tools, it does the part most teams use most of the time. It asks Claude and OpenAI models your buyers' questions, grades every answer recommended, mentioned or absent, ends every run with a ranked fix list, and runs on the Claude and ChatGPT subscriptions you already have. When you outgrow it, this page is how to choose where to go next.
 
 <!--more-->
 
@@ -15,7 +15,7 @@ Everything below comes from each vendor's own pages, read in October 2026. Where
 
 | Tool | Engines covered | Pricing model, entry price | Self-hosted or SaaS |
 | --- | --- | --- | --- |
-| **Popcorn** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Free and open source (MIT). Run it locally, or pay your own host to run it | Self-hosted: one Docker container with SQLite |
+| **Popcorn** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Free and open source (MIT); runs on your existing Claude and ChatGPT subscriptions | Self-hosted: one Docker container with SQLite |
 | **[Peec AI](/compare/peec-ai/)** | Names ChatGPT, Perplexity and Gemini; links an AI Mode tracker | Monthly plans (Starter, Pro, Advanced) and custom Enterprise; no prices shown, [see their pricing page](https://peec.ai/pricing) | SaaS |
 | **[Profound](/compare/profound/)** | Up to 9 on Enterprise: ChatGPT, Perplexity, Google AI Mode, Gemini, Copilot, DeepSeek, Claude, AI Overviews, Exa Search | Free 7-day trial; Enterprise custom; an Agency Growth plan, [see their pricing page](https://www.tryprofound.com/pricing) | SaaS |
 | **[Otterly.AI](/compare/otterly-ai/)** | ChatGPT, AI Overviews, Perplexity, Copilot included; AI Mode, Gemini and Claude as add-ons | Per plan; Lite $29/month for 15 prompts | SaaS |
@@ -23,7 +23,7 @@ Everything below comes from each vendor's own pages, read in October 2026. Where
 | **Ahrefs Brand Radar** | AI Overviews, AI Mode, Gemini, Copilot, Perplexity, ChatGPT; Claude in the AI Visibility Index | Paid; [see their pricing page](https://ahrefs.com/brand-radar) | SaaS |
 | **[Semrush AI Visibility](/compare/semrush-ai-toolkit/)** | Names Google AI Mode and ChatGPT; Claude not mentioned | $99/month for the AI Visibility Toolkit | SaaS |
 
-**Model usage.** Popcorn's software is free; the model calls aren't. Grading always uses the Anthropic API, about $0.03 for a 68-answer run. Answers can come from the Claude Code and Codex subscriptions you already pay for, or from the APIs under a daily budget cap.
+**What Popcorn costs.** Popcorn is free and open source (MIT). On your own machine it runs on the Claude and ChatGPT subscriptions you already have, with no API key: answers come from the Claude Code and Codex CLIs, and grading and the fix list can run on the claude CLI too. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs: about $0.03 to grade a 68-answer run, under a daily budget cap). [Cost and budget](/docs/cost-and-budget/) has the details.
 
 ## Prompts, grading, fixes and API
 
@@ -39,14 +39,22 @@ Everything below comes from each vendor's own pages, read in October 2026. Where
 
 Table dated October 2026. Prices and engine lists change often; follow the links to check.
 
-## How to choose
+## Start with Popcorn
 
-- **You need Gemini, Perplexity, Copilot, Google AI Overviews or AI Mode.** Use a hosted tool. Popcorn doesn't ask any of them. Otterly.AI includes AI Overviews, Perplexity and Copilot on its entry plan; Profound lists the most engines, nine on Enterprise.
+If you're just finding out whether AI assistants recommend you, start free. Popcorn asks Claude and OpenAI models your questions with web search and from memory, grades each answer strictly, and stores everything in a SQLite file you keep. Its prompts change by pull request, and its fixes land as pull requests. You'll learn which buyer questions matter, and those questions carry over to any tool you pick later.
+
+## How to choose where to go next
+
+These are the signs you've outgrown Popcorn, and where each points:
+
+- **You need Gemini, Perplexity, Copilot, Google AI Overviews or AI Mode.** Popcorn asks only Claude and OpenAI models. Otterly.AI includes AI Overviews, Perplexity and Copilot on its entry plan; Profound lists the most engines, nine on Enterprise.
 - **You need SOC 2 and SSO.** Profound lists SOC 2 and SSO/SAML on Enterprise, and Scrunch lists SOC 2 Type II.
 - **You're an agency.** Profound, Peec AI, Otterly.AI and Scrunch all have agency programmes or pages. Popcorn has no agency tier.
 - **You already pay for Ahrefs or Semrush.** Their AI visibility tools sit beside the SEO work you already do there.
-- **You want to start free, track Claude, and own the data.** Popcorn is free software, asks Claude and OpenAI models with web search and from memory, and stores everything in a SQLite file you keep. Its prompts change by pull request, and its fixes land as pull requests.
+- **You'd rather not run anything.** Every other tool here is hosted.
 
-The tools pair well, too: run Popcorn for the questions you choose, graded strictly, with fixes, and use a hosted tool for the engines Popcorn doesn't cover. For one tool at a time, see [Compare](/compare/).
+## Taking your prompts with you
+
+Popcorn's prompt sets are plain TOML in your own git repo, each prompt a line of text with an id. The buyer questions you refined are yours: plain text you can copy into whichever tool you choose. You can also keep Popcorn running alongside, for the strict grading and the fix list. For one tool at a time, see [Compare](/compare/).
 
 Popcorn (popcorn.zone) is not affiliated with Bad Popcorn (badpopcorn.ai), Popcorn AI (trypopcorn.ai), popcorn.ai, popcorn.co or Reclaim Protocol's popcorn-oss. The code is on [GitHub](https://github.com/metcalfc/popcorn), and [Getting started](/docs/getting-started/) takes you from a checkout to your first run.

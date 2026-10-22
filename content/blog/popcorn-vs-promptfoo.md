@@ -7,7 +7,7 @@ description: Promptfoo is a general LLM evaluation and red-teaming tool. Popcorn
 
 **Should an engineering team use Promptfoo or Popcorn to measure whether AI assistants recommend its product?** If the question is "do ChatGPT and Claude recommend us, and what should we change," use Popcorn: it's an open-source (MIT), self-hosted tracker built for exactly that. It asks your buyers' questions of Claude and OpenAI models, grades each answer **recommended**, **mentioned** or **absent** for your brand, records your position, the top pick, share of voice and the objections raised, and ends every run with a ranked list of fixes naming the page, what it must say and the questions it should flip. Promptfoo is a general tool for evaluating and red-teaming LLM apps. It can run the same prompts against many models, and you could build a visibility check on top of it, but the visibility part is yours to build.
 
-**Is there an open-source alternative to Profound or Peec AI?** That's what Popcorn is: one Docker container with SQLite, your buyer questions as TOML in your own git repo, with a web UI, CLI, JSON API and MCP server. Promptfoo isn't one; it's an eval harness you could turn into one.
+**Is there an open-source place to start before tools like Profound or Peec AI?** Popcorn is built to be one. It's inspired by those hosted AI visibility trackers and does the part most teams use most of the time: one Docker container with SQLite, your buyer questions as TOML in your own git repo, with a web UI, CLI, JSON API and MCP server. If you outgrow it, your questions are plain text you can take to whichever tool you choose. Promptfoo isn't a visibility tracker; it's an eval harness you could turn into one.
 
 <!--more-->
 
@@ -83,7 +83,7 @@ They also pair well: Promptfoo for your app's quality and safety, Popcorn for wh
 
 ## What it costs
 
-Popcorn is free and open source. The cost is hosting, should you choose to host it rather than run it locally. Grading uses the Anthropic API, a few cents a run.
+Popcorn is free and open source (MIT). On your own machine it runs on the Claude and ChatGPT subscriptions you already have, with no API key: answers come from the `claude` and `codex` CLIs, and grading and the fix list can run on `claude` too. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs). [Cost and budget](/docs/cost-and-budget/) has the details.
 
 ## Try it
 
