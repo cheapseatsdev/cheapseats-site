@@ -1,15 +1,17 @@
 ---
-title: Why we built Popcorn
+title: Why I built Popcorn
 date: 2026-10-21
 author: Chad Metcalf
-description: Buyers ask AI assistants what to use. Popcorn is the 20% of tools like Gauge that you'll use 80% of the time, on the subscriptions you already have, so you can start measuring at no cost.
+description: An open-source project I wrote to make my own product better, inspired by Gauge and others. Free, and always will be, on the Claude subscription you already have.
 ---
 
-Buyers ask AI assistants what to use. "What should I use for X?" gets one answer, written in full sentences, often with a top pick. If you sell in that category, you want to know what that answer says about you.
+Popcorn is an open-source project I wrote to make my own product better. It draws on lots of inspiration, [Gauge](https://withgauge.com) first among them, along with Profound and Peec AI. It's free, and it always will be: MIT licensed, no hosted tier, nothing to upsell. I hope you find it useful.
 
-Popcorn is how we find out. It's inspired by tools that already do this, [Gauge](https://withgauge.com) first among them, along with Profound and Peec AI. They do a lot, and most of it we didn't need. What we did have was Claude and ChatGPT subscriptions with tokens to spare. So we built the 20% of those tools that we'd use 80% of the time, to run on those subscriptions: a small, self-hosted take on Gauge, open source under the MIT license.
+Here's the problem it solves for me. Buyers ask AI assistants what to use. "What should I use for X?" gets one answer, written in full sentences, often with a top pick. If you sell in that category, you want to know what that answer says about you.
 
-If you want to start measuring without buying anything, start here. If you outgrow it, move to one of the tools that inspired it, and take your prompts with you.
+The tools that inspired Popcorn do this and a lot more, most of which I didn't need. What I did have was Claude and ChatGPT subscriptions with tokens to spare. So I built the 20% of those tools that I'd use 80% of the time, to run on those subscriptions: a small, self-hosted take on Gauge.
+
+If you want to start measuring without buying anything, start here. If you grow out of it, do whatever suits you. I'd suggest Gauge; that team is great. Your prompts come with you.
 
 <!--more-->
 
@@ -41,6 +43,6 @@ Your buyer questions, brand facts and competitors live in a config repo you own,
 
 ## When you outgrow it
 
-Popcorn asks Claude and OpenAI models, not Gemini, Perplexity, Copilot or Google AI Overviews, and it's a tool you run, not a service. When you need those engines, a hosted dashboard, or reports for many clients, the tools that inspired it are the next step; [Compare](/compare/) has the honest differences. The buyer questions you've written and refined are plain text in your repo, so they come with you.
+Popcorn asks Claude and OpenAI models, not Gemini, Perplexity, Copilot or Google AI Overviews, and it's a tool you run, not a service. When you need those engines, a hosted dashboard, or reports for many clients, do whatever suits you; I'd point you at Gauge first, and [Compare](/compare/) has the honest differences. The buyer questions you've written and refined are plain text in your repo, so they come with you.
 
 If you want to know whether the assistants recommend you, [start here](/docs/getting-started/). The code is on [GitHub](https://github.com/metcalfc/popcorn).

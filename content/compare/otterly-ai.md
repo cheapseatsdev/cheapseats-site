@@ -33,7 +33,7 @@ As of October 2026, from Popcorn's docs and Otterly.AI's own [pricing](https://o
 
 ## When to move to Otterly.AI
 
-These are the signs you've outgrown Popcorn:
+If you outgrow Popcorn, do whatever suits you. Its author would suggest [Gauge](/compare/gauge/); that team is great. If what you need is on this list, Otterly.AI is a good fit:
 
 - **You need Google AI Overviews, Perplexity or Copilot.** Otterly.AI includes them on every plan; Popcorn asks only Claude and OpenAI models, and doesn't cover Gemini or AI Mode either.
 - **You'd rather not run anything.** Otterly.AI is hosted, with a low published entry price.
