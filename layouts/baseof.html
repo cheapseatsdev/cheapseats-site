@@ -46,7 +46,7 @@
   "@type" $type
   "headline" .Title
   "name" .Title
-  "description" $desc
+  "description" ($desc | htmlUnescape)
   "url" .Permalink
   "inLanguage" "en"
   "about" $app
