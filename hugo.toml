@@ -1,17 +1,17 @@
-baseURL = "https://popcorn.zone/"
+baseURL = "https://cheapseats.dev/"
 locale = "en-us"
-title = "Popcorn"
+title = "Cheap Seats"
 disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true
 
 [params]
-description = "Popcorn is a free, open-source AI visibility tracker, inspired by tools like Gauge, Profound and Peec AI, that runs on the Claude subscription you already have (ChatGPT optional). It asks your buyers' questions, grades whether AI assistants recommend you, and builds a ranked fix list."
-github = "https://github.com/metcalfc/popcorn"
+description = "Cheap Seats is a free, open-source AI visibility tracker, inspired by tools like Gauge, Profound and Peec AI, that runs on the Claude subscription you already have (ChatGPT optional). It asks your buyers' questions, grades whether AI assistants recommend you, and builds a ranked fix list."
+github = "https://github.com/cheapseatsdev/cheapseats"
 # How every page title, meta description and the footer name the product.
 tagline = "the open-source AI visibility tracker"
 # The home page's meta description: 160 characters at most, so search results show all of it.
 metaDescription = "Free, open-source AI visibility tracker on the Claude subscription you already have. It grades whether AI assistants recommend you and lists what to fix."
-template = "https://github.com/metcalfc/popcorn-config-template"
+template = "https://github.com/cheapseatsdev/cheapseats-config-template"
 
 # llms.txt (llmstxt.org): an index and a full-text file at the root, and a markdown copy of every
 # page beside its HTML, linked from <head>.
@@ -68,5 +68,5 @@ pageRef = "/blog"
 weight = 20
 [[menus.main]]
 name = "GitHub"
-url = "https://github.com/metcalfc/popcorn"
+url = "https://github.com/cheapseatsdev/cheapseats"
 weight = 30

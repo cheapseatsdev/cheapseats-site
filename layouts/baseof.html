@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {{- /* Every page names the product the same way: other products share the name, and answers land on deep pages. */ -}}
-{{ $brand := printf "%s, %s (popcorn.zone)" site.Title site.Params.tagline -}}
+{{ $brand := printf "%s, %s (cheapseats.dev)" site.Title site.Params.tagline -}}
 {{- /* Search results cut titles past about 60 characters and descriptions past about 160, so the brand suffix only goes on when it fits. */ -}}
 {{ $title := printf "%s · %s, %s" .Title site.Title site.Params.tagline -}}
 {{ if .IsHome }}{{ $title = printf "%s: open-source, self-hosted AI visibility tracker" site.Title }}{{ else if gt (len $title) 60 }}{{ $title = printf "%s · %s" .Title site.Title }}{{ end -}}
@@ -28,7 +28,7 @@
 <link rel="canonical" href="{{ .Permalink }}">
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 {{ with .OutputFormats.Get "markdown" }}<link rel="alternate" type="text/markdown" href="{{ .Permalink }}">{{ end }}
-{{ with site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="Popcorn blog">{{ end }}{{ end }}
+{{ with site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="Cheap Seats blog">{{ end }}{{ end }}
 {{ if .IsHome }}<script type="application/ld+json">
 {{ dict
   "@context" "https://schema.org"
@@ -43,7 +43,7 @@
   "sameAs" (slice site.Params.github)
   | jsonify | safeJS }}
 </script>{{ else }}<script type="application/ld+json">
-{{- /* Every page says which Popcorn it's about, since other products share the name. */ -}}
+{{- /* Every page says which Cheap Seats it's about, since other products share the name. */ -}}
 {{ $app := dict "@type" "SoftwareApplication" "name" site.Title "url" site.BaseURL "applicationCategory" "BusinessApplication" -}}
 {{ $type := "WebPage" }}{{ if not .IsPage }}{{ $type = "CollectionPage" }}{{ else if eq .Section "blog" }}{{ $type = "BlogPosting" }}{{ else if in (slice "docs" "guides") .Section }}{{ $type = "TechArticle" }}{{ else }}{{ $type = "Article" }}{{ end -}}
 {{ $ld := dict

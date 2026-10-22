@@ -1,10 +1,10 @@
 ---
-title: How big a change Popcorn can detect
-description: Why AI answers vary from run to run, the intervals and tests Popcorn uses so a fluke doesn't read as a trend, a worked example of how many points a run and a week can resolve, and when more samples help.
+title: How big a change Cheap Seats can detect
+description: Why AI answers vary from run to run, the intervals and tests Cheap Seats uses so a fluke doesn't read as a trend, a worked example of how many points a run and a week can resolve, and when more samples help.
 weight: 44
 ---
 
-**How big a change can Popcorn detect?** On a 17-prompt set with two answerers and one answer each per track, a single run pins your named rate on one track to about ±17 points, and a week of daily runs pooled together to about ±6. A change smaller than that is reported as within noise, not as a win or a loss. Popcorn works it all out from the answers already stored, with no extra model calls. The rest of this page says why answers vary, what Popcorn tests, and how to get more precision when you need it.
+**How big a change can Cheap Seats detect?** On a 17-prompt set with two answerers and one answer each per track, a single run pins your named rate on one track to about ±17 points, and a week of daily runs pooled together to about ±6. A change smaller than that is reported as within noise, not as a win or a loss. Cheap Seats works it all out from the answers already stored, with no extra model calls. The rest of this page says why answers vary, what Cheap Seats tests, and how to get more precision when you need it.
 
 ## Why answers vary
 
@@ -15,11 +15,11 @@ Ask an assistant the same question twice and you get two different answers. That
 - **Small moves aren't evidence.** Sielinski's bootstrap intervals on citation share were typically 3 to 6 points wide: "a 3-point improvement (8% to 11%) cannot be attributed to an intervention" ([arXiv 2603.08924](https://arxiv.org/abs/2603.08924)).
 - **More answers a day buy less than you'd think.** Profound found that 10 runs a day instead of 1 cut daily movement in visibility by only about 11% ([Profound](https://www.tryprofound.com/blog/is-once-a-day-enough)). Much of the movement is the model and the web changing between days, which more answers on the same day can't remove.
 
-So Popcorn reports every rate with an interval, and tests every comparison against the noise before calling it a change.
+So Cheap Seats reports every rate with an interval, and tests every comparison against the noise before calling it a change.
 
 ## Prompts are the units
 
-A prompt gets only a handful of answers a run: answerers × tracks × samples. Its answers aren't independent draws about your whole category; they're repeated draws on one question. So Popcorn treats each prompt as a unit:
+A prompt gets only a handful of answers a run: answerers × tracks × samples. Its answers aren't independent draws about your whole category; they're repeated draws on one question. So Cheap Seats treats each prompt as a unit:
 
 - A trend's rate is the **mean over prompts** of each prompt's own rate, so a prompt with more answers doesn't count for more.
 - A **cell** is one prompt's `h` hits out of `n` answers. Its sampling variance is
@@ -53,13 +53,13 @@ Every comparison, day over day or before and after a fix, pairs the two sides pr
 
 A change is **within noise** when D ± margin covers 0. Rankings greys it out and shows `±X pts` beside it.
 
-**Rank moves** are tested the same way. Your rank changes when another product crosses you, so for each product that crossed, Popcorn tests the paired change in the gap between your share of a prompt's answers and that product's. If no crossing is significant in the direction the rank moved, the table says **within noise** and draws no arrow.
+**Rank moves** are tested the same way. Your rank changes when another product crosses you, so for each product that crossed, Cheap Seats tests the paired change in the gap between your share of a prompt's answers and that product's. If no crossing is significant in the direction the rank moved, the table says **within noise** and draws no arrow.
 
 The margin covers the noise of sampling answers. A change beyond it is real in the sense that it isn't a coin flip, but it can still come from a model update or the web changing rather than from your work.
 
 ## Worked example
 
-Popcorn's own *Choosing an AI visibility tool* set: 17 prompts, two answerers (Claude and an OpenAI model), one search and one recall answer each. On one track, each prompt gets **n = 2** answers a run. Take the worst case for noise, a rate near 50% (one of the two answers names you):
+Cheap Seats' own *Choosing an AI visibility tool* set: 17 prompts, two answerers (Claude and an OpenAI model), one search and one recall answer each. On one track, each prompt gets **n = 2** answers a run. Take the worst case for noise, a rate near 50% (one of the two answers names you):
 
 > p̃ = (1 + 0.5) / (2 + 1) = 0.5, var = 0.5 × 0.5 / 2 = 0.125 per prompt
 >
@@ -92,7 +92,7 @@ So one run tells you where you stand roughly; a week or a month tells you whethe
 
 ## What "no detectable change" means for a fix
 
-When you mark a fix with its pull request, Popcorn judges it on the prompts the fix meant to flip, named and recommended, with the test above:
+When you mark a fix with its pull request, Cheap Seats judges it on the prompts the fix meant to flip, named and recommended, with the test above:
 
 - **Before** pools the fix's run and the same-method runs up to 28 days before it, at most 5 runs.
 - **After** pools every same-method run since you marked it, within 28 days of the newest.
@@ -114,15 +114,15 @@ When you mark a fix with its pull request, Popcorn judges it on the prompts the 
 | one weekly run | 4 | about ±31 pts |
 | four weekly runs | 16 | about ±19 pts |
 
-Popcorn waits 7 days and at least 4 answers a prompt before judging (Gauge [evaluates content actions](https://docs.withgauge.com/introduction/core-aeo-metrics) no earlier than 14 days after completion). If the fix's page turns up in searches or citations after you marked it, when it didn't before, the outcome says **newly surfaced**: evidence the page is being read, though not by itself a move. See [From fix to pull request](../fix-to-pull-request/#4-merge-then-let-the-next-run-check-it).
+Cheap Seats waits 7 days and at least 4 answers a prompt before judging (Gauge [evaluates content actions](https://docs.withgauge.com/introduction/core-aeo-metrics) no earlier than 14 days after completion). If the fix's page turns up in searches or citations after you marked it, when it didn't before, the outcome says **newly surfaced**: evidence the page is being read, though not by itself a move. See [From fix to pull request](../fix-to-pull-request/#4-merge-then-let-the-next-run-check-it).
 
 ## When more samples help
 
 **You don't need many samples to start.** One sample per track, run weekly, is enough to see where you stand, and the 28-day window and fix outcomes pool runs for you. Extra samples narrow a single run; more runs over time also average out the day-to-day drift that extra samples can't touch.
 
-**Popcorn tells you whether your samples pay off.** When some answerer takes more than one sample per prompt, the set's page splits the run-to-run variance of each prompt's named rate as V = S/n + D (Profound's decomposition): S is the variance of one answer within a run, n the samples, and D the drift between runs. It's worked out per prompt, answerer and track over the same-method runs of the last 28 days, and needs at least 4 runs and 6 such cells. Going down to one sample would widen a run's interval by w = √((S + D) / (S/n + D)):
+**Cheap Seats tells you whether your samples pay off.** When some answerer takes more than one sample per prompt, the set's page splits the run-to-run variance of each prompt's named rate as V = S/n + D (Profound's decomposition): S is the variance of one answer within a run, n the samples, and D the drift between runs. It's worked out per prompt, answerer and track over the same-method runs of the last 28 days, and needs at least 4 runs and 6 such cells. Going down to one sample would widen a run's interval by w = √((S + D) / (S/n + D)):
 
 - **w under 1.25**: "Extra samples are buying little precision: between-run drift dominates; samples=1 would give about the same band." Cut samples and save the answers.
 - **otherwise**: "The samples are paying off", with how much wider one sample would make the band.
 
-**Adaptive sampling** spends extra answers only where they help. With `[sampling] adaptive = true` and `max_extra = N`, Popcorn gives each core run up to N extra answers, decided before the run starts, for the prompts whose named rate has been least certain over the last 28 days of same-method runs. Each extra goes where it most shrinks the run's total variance, a cell gets at most as many extras as it has planned samples, and on API answerers the extras must fit in today's budget. A prompt named in 0 of 40 answers gets none. It's off by default and never starts a trend over; extras count in the run's rates like any other answer. See [Configuration](../configuration/#sampling) and [Cost and budget](../cost-and-budget/#keeping-the-spend-down).
+**Adaptive sampling** spends extra answers only where they help. With `[sampling] adaptive = true` and `max_extra = N`, Cheap Seats gives each core run up to N extra answers, decided before the run starts, for the prompts whose named rate has been least certain over the last 28 days of same-method runs. Each extra goes where it most shrinks the run's total variance, a cell gets at most as many extras as it has planned samples, and on API answerers the extras must fit in today's budget. A prompt named in 0 of 40 answers gets none. It's off by default and never starts a trend over; extras count in the run's rates like any other answer. See [Configuration](../configuration/#sampling) and [Cost and budget](../cost-and-budget/#keeping-the-spend-down).

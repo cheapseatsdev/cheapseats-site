@@ -33,13 +33,13 @@ To tell two such readings apart, the margin on the difference is √2 times wide
 
 ## Prompts are the units
 
-Answers to the same prompt aren't independent draws about your whole category. They're repeated draws on one question, so Popcorn treats each prompt as the unit: a trend's rate is the mean of each prompt's own rate, and each prompt's sampling variance is
+Answers to the same prompt aren't independent draws about your whole category. They're repeated draws on one question, so Cheap Seats treats each prompt as the unit: a trend's rate is the mean of each prompt's own rate, and each prompt's sampling variance is
 
 > var = p̃ (1 − p̃) / n, with p̃ = (h + 0.5) / (n + 1)
 
 for `h` hits in `n` answers. Over `K` prompts, a day's margin is 1.96 · √(Σ var) / K.
 
-Popcorn's own *Choosing an AI visibility tool* set has 17 prompts and two answerers, each answering once on each track. On one track, each prompt gets **n = 2** answers a run. At a rate near 50%:
+Cheap Seats' own *Choosing an AI visibility tool* set has 17 prompts and two answerers, each answering once on each track. On one track, each prompt gets **n = 2** answers a run. At a rate near 50%:
 
 > p̃ = (1 + 0.5) / 3 = 0.5, var = 0.25 / 2 = 0.125 per prompt
 >
@@ -73,10 +73,10 @@ So a swing of 10 points between two single runs is well inside the noise, and a 
 - **Read one run for where you stand, not for whether you moved.** A single run tells you roughly how often you're named and who's beating you. A week or a month tells you whether that changed.
 - **Pool before you compare.** Compare a 7- or 28-day window against the one before, not yesterday against today.
 - **Spread answers over days rather than piling them into one.** Extra samples in a run narrow that run's interval, but much of the noise is day-to-day drift, which only more days average out. Profound's 10-a-day result is the warning.
-- **Check whether your samples pay off.** When a prompt takes more than one sample, Popcorn splits its run-to-run variance into within-run noise and between-run drift (Profound's decomposition), and tells you when extra samples are buying little. If drift dominates, cut samples and save the answers.
-- **Wait before judging a fix.** Popcorn waits 7 days and at least 4 answers a prompt before calling a fix's outcome. A fix aimed at three prompts, with four answers a prompt a run, has a margin of about ±31 points after one weekly run and ±19 after four. "No detectable change" means any effect is smaller than that, not that the fix failed.
+- **Check whether your samples pay off.** When a prompt takes more than one sample, Cheap Seats splits its run-to-run variance into within-run noise and between-run drift (Profound's decomposition), and tells you when extra samples are buying little. If drift dominates, cut samples and save the answers.
+- **Wait before judging a fix.** Cheap Seats waits 7 days and at least 4 answers a prompt before calling a fix's outcome. A fix aimed at three prompts, with four answers a prompt a run, has a margin of about ±31 points after one weekly run and ±19 after four. "No detectable change" means any effect is smaller than that, not that the fix failed.
 - **Distrust a number without an interval.** If a tool shows 40% and not the range around it, work out the range yourself from the answer count. If it doesn't show the answer count either, ask for it.
 
 A change beyond the margin still isn't proof that your work caused it: a model update or the web changing can move a rate too. But a change inside the margin isn't evidence of anything, and treating it as a win or a loss is how teams end up chasing noise.
 
-[How big a change Popcorn can detect](/docs/noise-and-confidence/) has the full method: the two kinds of interval on the rankings, the paired test for a change, rank moves, fix outcomes and adaptive sampling. For why the same answers can give different numbers in different tools, see [Why AI visibility scores differ between tools](/blog/why-ai-visibility-scores-differ/).
+[How big a change Cheap Seats can detect](/docs/noise-and-confidence/) has the full method: the two kinds of interval on the rankings, the paired test for a change, rank moves, fix outcomes and adaptive sampling. For why the same answers can give different numbers in different tools, see [Why AI visibility scores differ between tools](/blog/why-ai-visibility-scores-differ/).

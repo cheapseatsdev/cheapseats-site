@@ -1,21 +1,21 @@
 ---
 title: Configuration
-description: popcorn.toml, the file that says whose brand Popcorn measures, with which assistants, and how much it may spend.
+description: cheapseats.toml, the file that says whose brand Cheap Seats measures, with which assistants, and how much it may spend.
 weight: 20
 ---
 
-Everything except secrets lives in `popcorn.toml` in your config repo, with the prompt sets in `prompt-sets/` beside it. Secrets (API keys, tokens) come from the environment or `.env`. Unknown keys are errors, so a typo fails `popcorn check` instead of being ignored.
+Everything except secrets lives in `cheapseats.toml` in your config repo, with the prompt sets in `prompt-sets/` beside it. Secrets (API keys, tokens) come from the environment or `.env`. Unknown keys are errors, so a typo fails `cheapseats check` instead of being ignored.
 
-The examples below are from [`examples/popcorn-config/popcorn.toml`](https://github.com/metcalfc/popcorn/blob/main/examples/popcorn-config/popcorn.toml), which measures Popcorn itself.
+The examples below are from [`examples/cheapseats-config/cheapseats.toml`](https://github.com/cheapseatsdev/cheapseats/blob/main/examples/cheapseats-config/cheapseats.toml), which measures Cheap Seats itself.
 
 ## Brand
 
 ```toml
 [brand]
-name = "Popcorn"
-aliases = ["popcorn.zone", "metcalfc/popcorn"]
-# What the product is, so the grader can tell it apart from other things called "popcorn".
-about = "Popcorn is an open-source, self-hosted tool that asks AI assistants a brand's buyer questions, grades whether they recommend the brand, and builds a ranked list of fixes."
+name = "Cheap Seats"
+aliases = ["cheapseats.dev", "cheapseatsdev/cheapseats"]
+# What the product is, so the grader can tell it apart from other things called "cheapseats".
+about = "Cheap Seats is an open-source, self-hosted tool that asks AI assistants a brand's buyer questions, grades whether they recommend the brand, and builds a ranked list of fixes."
 # Who asks the questions. The answerers are told they're answering this person's question.
 # Changing `about` or `audience` changes how answers are asked or graded, so every trend restarts.
 audience = "a product marketing lead"
@@ -33,12 +33,12 @@ The brand's websites. Pages on them count as its own; the fix list puts each fix
 
 ```toml
 [[brand.sites]]
-url = "popcorn.zone"
+url = "cheapseats.dev"
 kind = "marketing"
 # owner = "web team"
 
 [[brand.sites]]
-url = "github.com/metcalfc/popcorn"
+url = "github.com/cheapseatsdev/cheapseats"
 kind = "code"
 ```
 
@@ -72,7 +72,7 @@ samples = { search = 2, recall = 1 }
 - Results and rankings key on `id`: never reuse an id for a different model; add a new answerer instead.
 - `name` is an optional display name.
 - `samples` is how many answers it takes per track (`search` and `recall`) for each prompt.
-- `claude-code` and `codex` only work on your own machine or a VM with the CLIs installed. `popcorn check` fails on a config whose subscription answerers can't run where it's checked.
+- `claude-code` and `codex` only work on your own machine or a VM with the CLIs installed. `cheapseats check` fails on a config whose subscription answerers can't run where it's checked.
 
 ## Shared competitors
 
@@ -114,7 +114,7 @@ model = "claude-opus-5-5"
 # provider = "claude-code"
 ```
 
-The grader grades each answer; the analyst writes the fix list and insights, and drafts prompts for `popcorn suggest-prompts`. By default both go through the Anthropic API, with `ANTHROPIC_API_KEY` or the proxy in `POPCORN_ANTHROPIC_BASE_URL`. With `provider = "claude-code"` they run on the local `claude` CLI and your Claude subscription instead; with subscription answerers too, Popcorn needs no API key at all (`examples/popcorn-config/popcorn.subscriptions.toml` is set up that way). The Docker image has no CLIs, so keep the API there. Switching the grader's provider starts a new method on every trend, since answers are graded a different way.
+The grader grades each answer; the analyst writes the fix list and insights, and drafts prompts for `cheapseats suggest-prompts`. By default both go through the Anthropic API, with `ANTHROPIC_API_KEY` or the proxy in `CHEAPSEATS_ANTHROPIC_BASE_URL`. With `provider = "claude-code"` they run on the local `claude` CLI and your Claude subscription instead; with subscription answerers too, Cheap Seats needs no API key at all (`examples/cheapseats-config/cheapseats.subscriptions.toml` is set up that way). The Docker image has no CLIs, so keep the API there. Switching the grader's provider starts a new method on every trend, since answers are graded a different way.
 
 ```toml
 [grader]
@@ -152,7 +152,7 @@ Adaptive sampling gives each run of a `core` set up to `max_extra` extra answers
 - It never starts a trend over: extras don't change the method.
 - Extras count in the run's rates like any other answer, so those prompts weigh a little more in its totals. Trends count each prompt once either way.
 
-See [How big a change Popcorn can detect](../noise-and-confidence/#when-more-samples-help).
+See [How big a change Cheap Seats can detect](../noise-and-confidence/#when-more-samples-help).
 
 ## Pricing
 
@@ -201,16 +201,16 @@ A fix goes to its site's owner, else to the owner for its gap here, else `defaul
 
 | variable | what it does |
 | --- | --- |
-| `ANTHROPIC_API_KEY` | `anthropic` answerers, and the grader and analyst unless they run on the `claude` CLI or `POPCORN_ANTHROPIC_BASE_URL` is set |
-| `POPCORN_ANTHROPIC_BASE_URL` | a base URL for Popcorn's own Anthropic calls, such as a proxy that adds the key ([exe.dev](../deploying/#exedev) integrations); the `claude` CLI doesn't read it, so `claude-code` answerers stay on your subscription |
+| `ANTHROPIC_API_KEY` | `anthropic` answerers, and the grader and analyst unless they run on the `claude` CLI or `CHEAPSEATS_ANTHROPIC_BASE_URL` is set |
+| `CHEAPSEATS_ANTHROPIC_BASE_URL` | a base URL for Cheap Seats' own Anthropic calls, such as a proxy that adds the key ([exe.dev](../deploying/#exedev) integrations); the `claude` CLI doesn't read it, so `claude-code` answerers stay on your subscription |
 | `OPENAI_API_KEY` | `openai` answerers |
-| `POPCORN_TOKENS` | comma-separated bearer tokens; required to listen beyond 127.0.0.1 |
-| `POPCORN_AUTH_HEADER`, `POPCORN_ALLOWED_EMAILS` | trust a signing-in proxy's email header, optionally narrowed to emails or `@domain`s ([exe.dev](../deploying/#exedev)) |
-| `POPCORN_HOSTS` | host names a proxy on the same machine serves Popcorn as, comma-separated; MCP refuses loopback requests under any other name |
-| `POPCORN_PUBLIC_URL` | the address [share links](../sharing/) use, such as `https://popcorn.example.com`. Unset, they use the first of `POPCORN_HOSTS` over https, else the host the request came in on (`X-Forwarded-Host` first) |
-| `POPCORN_CONFIG` | path to `popcorn.toml`; prompt sets are read from `prompt-sets/` beside it |
-| `POPCORN_CONFIG_REV` | the config commit, when the config is deployed without its `.git` |
-| `POPCORN_ADDR` | listen address, default `127.0.0.1:3000` |
-| `POPCORN_DATA_DIR` | where the database lives, default `data` |
+| `CHEAPSEATS_TOKENS` | comma-separated bearer tokens; required to listen beyond 127.0.0.1 |
+| `CHEAPSEATS_AUTH_HEADER`, `CHEAPSEATS_ALLOWED_EMAILS` | trust a signing-in proxy's email header, optionally narrowed to emails or `@domain`s ([exe.dev](../deploying/#exedev)) |
+| `CHEAPSEATS_HOSTS` | host names a proxy on the same machine serves Cheap Seats as, comma-separated; MCP refuses loopback requests under any other name |
+| `CHEAPSEATS_PUBLIC_URL` | the address [share links](../sharing/) use, such as `https://cheapseats.example.com`. Unset, they use the first of `CHEAPSEATS_HOSTS` over https, else the host the request came in on (`X-Forwarded-Host` first) |
+| `CHEAPSEATS_CONFIG` | path to `cheapseats.toml`; prompt sets are read from `prompt-sets/` beside it |
+| `CHEAPSEATS_CONFIG_REV` | the config commit, when the config is deployed without its `.git` |
+| `CHEAPSEATS_ADDR` | listen address, default `127.0.0.1:3000` |
+| `CHEAPSEATS_DATA_DIR` | where the database lives, default `data` |
 
-Popcorn reads `.env` at startup; the real environment wins.
+Cheap Seats reads `.env` at startup; the real environment wins.

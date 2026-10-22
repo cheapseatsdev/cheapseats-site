@@ -44,13 +44,13 @@ Everything on a run page is worked out from the answers and grades already store
 - **Fix these first** and **insights** (below).
 - **Share**: on a finished run, a read-only link to its report for someone without a sign-in. See [Sharing a run](../sharing/).
 
-**Evidence is always in the answer.** The grader is asked to copy the sentence that backs its verdict. Popcorn then looks for it in the answer, ignoring case, spacing, markdown emphasis and curly quotes, and keeps the answer's own span of text, or nothing if it isn't there. So a highlighted quote is always one the answer contains. Absent answers have none, nor do grades from before evidence was added. It's `evidence` in the grade, in the JSON and CSV exports and in MCP `get_result`.
+**Evidence is always in the answer.** The grader is asked to copy the sentence that backs its verdict. Cheap Seats then looks for it in the answer, ignoring case, spacing, markdown emphasis and curly quotes, and keeps the answer's own span of text, or nothing if it isn't there. So a highlighted quote is always one the answer contains. Absent answers have none, nor do grades from before evidence was added. It's `evidence` in the grade, in the JSON and CSV exports and in MCP `get_result`.
 
 **Re-graded runs say so.** A run whose stored answers were [re-graded](../regrading/) shows *re-graded &lt;date&gt; (was method X)* under its header, and keeps the grades it replaced.
 
 **Share of voice used to mean named rate.** In earlier versions the board's one column was labelled share of voice and held what is now the **named** rate. True share of voice now sits beside it. The JSON keeps the old `share` field, still holding the named rate, so existing scripts keep working; use `named_rate` or `share_of_voice` in new ones.
 
-Export a run as CSV or JSON. Pages update themselves while a run is going; no need to refresh. Each run records the config repo's commit and the Popcorn version, shown on the run page and in its exports.
+Export a run as CSV or JSON. Pages update themselves while a run is going; no need to refresh. Each run records the config repo's commit and the Cheap Seats version, shown on the run page and in its exports.
 
 ## What the assistants searched
 
@@ -60,7 +60,7 @@ Before a search-track answer, the assistant types its own queries into the web s
 - **Top queries**, with the prompts that ran each, whether its results reached the brand's sites, which competitors showed up in its results, and how often the answers that ran it named the brand. A `+Name` chip marks a query that names a product its prompt didn't.
 - **Names the assistants added**: the brand or a competitor in a search whose prompt didn't name it.
 - **How the prompts were rewritten**: **from prompt**, the share of a search's words that were in its prompt (low means it searched in its own words), and **prompt kept**, the share of the prompt's words still in the search (low means it searched for a narrow piece of the question). **Added** and **dropped** list the words searches add across the set ("best", "alternatives", "reddit", years) and the prompt words they leave out.
-- **Add as prompt**: queries whose results named competitors and never reached your sites, as a `[[prompts]]` entry to paste into the set's file. Popcorn doesn't write it. Reword it as a buyer would ask before you merge it.
+- **Add as prompt**: queries whose results named competitors and never reached your sites, as a `[[prompts]]` entry to paste into the set's file. Cheap Seats doesn't write it. Reword it as a buyer would ask before you merge it.
 - **Prompt by prompt**: answers that searched, searches per answer, distinct queries, both overlap scores, and each prompt's queries.
 
 The same data is at `/api/runs/<id>/searches` and over MCP as `get_search_queries`.
@@ -81,13 +81,13 @@ The same call writes a short **insights** report: why the brand lost, the object
 
 ## Quick wins
 
-Quick wins pulls the fix lists from the latest run of every prompt set into one list, ranked by **expected gain**: the prompts a fix could flip per working day, each weighted by what it has left to win (1 minus its recommended rate over the last 14 days, or its named rate for an info prompt). A prompt already won in most answers adds little. Filter it by site to hand each team its own list. Each fix has a prompt for Claude Code: see [From fix to pull request](../fix-to-pull-request/) for the whole loop, shown on popcorn.zone.
+Quick wins pulls the fix lists from the latest run of every prompt set into one list, ranked by **expected gain**: the prompts a fix could flip per working day, each weighted by what it has left to win (1 minus its recommended rate over the last 14 days, or its named rate for an info prompt). A prompt already won in most answers adds little. Filter it by site to hand each team its own list. Each fix has a prompt for Claude Code: see [From fix to pull request](../fix-to-pull-request/) for the whole loop, shown on cheapseats.dev.
 
 **Marking a fix.** When you've submitted something for a fix, mark it with the commit or pull request: **proposed** while it's open, **accepted** once it merges, or **withdrawn** if it's closed, which reopens the fix. Filter by **status** to see what's left: *urgent* and *open* is the list nobody has touched.
 
 **A fix that wasn't enough comes back.** Fix lists are written fresh each run, and marking a fix settles only that fix. If the prompts still lose, the next run proposes a fix for the same page again: it's open, marked *retry*, and shows the earlier work and its outcome, how often its prompts were named and recommended before and after, and whether its page turned up in any answer.
 
-**How an outcome is judged.** Popcorn pools the target prompts' answers before the fix (its run and up to 4 same-method runs in the 28 days before) and after it (every same-method run since, within 28 days of the newest), and tests the change in named and recommended against the noise of a few answers a prompt:
+**How an outcome is judged.** Cheap Seats pools the target prompts' answers before the fix (its run and up to 4 same-method runs in the 28 days before) and after it (every same-method run since, within 28 days of the newest), and tests the change in named and recommended against the noise of a few answers a prompt:
 
 | outcome | when |
 | --- | --- |
@@ -99,7 +99,7 @@ Quick wins pulls the fix lists from the latest run of every prompt set into one 
 | mixed | one rose and the other fell |
 | no detectable change (±X pts) | neither moved beyond its margin; a smaller effect could still be there |
 
-The fix's page turning up in searches or citations after the fix, when it didn't before, is shown as *newly surfaced*. The outcome also says whether the fix's host entered or left the cited set: whether any answer on each side cited a page on it. See [How big a change Popcorn can detect](../noise-and-confidence/#what-no-detectable-change-means-for-a-fix). The analyst writing the list is told what was tried, so a retry says what to do differently. Work recorded after a fix list was built covers that list's fix for the same page too, since the list didn't know about it.
+The fix's page turning up in searches or citations after the fix, when it didn't before, is shown as *newly surfaced*. The outcome also says whether the fix's host entered or left the cited set: whether any answer on each side cited a page on it. See [How big a change Cheap Seats can detect](../noise-and-confidence/#what-no-detectable-change-means-for-a-fix). The analyst writing the list is told what was tried, so a retry says what to do differently. Work recorded after a fix list was built covers that list's fix for the same page too, since the list didn't know about it.
 
 ## Rankings
 
@@ -107,7 +107,7 @@ Rankings turns runs into a day-by-day series per set: the brand's place on the s
 
 Prompt sets change over time, so the series carries on through added, removed and reworded prompts, changed intents, new competitors and new answerer models: each day lists what changed since the day before, and its comparison with that day only counts the prompts both asked, worded the same, of the same answerers ("on 13 of 15 prompts"). A change in how answers are asked or graded starts the comparison over.
 
-**Changes are tested against noise.** "Vs day before" pairs the two days prompt by prompt and shows each change with its 95% margin; a change whose interval covers zero is greyed out as **within noise**. A rank move is shown only if a product that crossed the brand moved beyond the noise; otherwise the table says *within noise* and draws no arrow. Hover a day for its own rate with the interval for this set's prompts that day. Triangles under the chart mark the days a fix was proposed (gold) or accepted (green), linked to its commit or pull request. [How big a change Popcorn can detect](../noise-and-confidence/) explains the band, the intervals and the test.
+**Changes are tested against noise.** "Vs day before" pairs the two days prompt by prompt and shows each change with its 95% margin; a change whose interval covers zero is greyed out as **within noise**. A rank move is shown only if a product that crossed the brand moved beyond the noise; otherwise the table says *within noise* and draws no arrow. Hover a day for its own rate with the interval for this set's prompts that day. Triangles under the chart mark the days a fix was proposed (gold) or accepted (green), linked to its commit or pull request. [How big a change Cheap Seats can detect](../noise-and-confidence/) explains the band, the intervals and the test.
 
 **Citation stability.** Each set's page also shows how much the hosts its answers cite move from run to run: a **stability score** (the mean Bray–Curtis similarity of consecutive runs' citation shares, with the mean overlap of hosts beside it), the hosts new and gone in the newest run, and each transition's similarity. It's shown once there are three transitions of the same method. A high score says a host entering or leaving means something; a low one says each run's sources are a sample. [Metric definitions](../metrics/#citation-stability) has the formulas.
 
@@ -117,8 +117,8 @@ Each set's page shows every prompt's results day by day, with named and recommen
 
 ## Search probe
 
-Type a query and Popcorn runs it through the same web search tool the answerers use, and shows the result exactly as the model receives it: the links in order, before it writes anything. Optionally restrict it to, or block, a list of domains. Each probe costs a few cents.
+Type a query and Cheap Seats runs it through the same web search tool the answerers use, and shows the result exactly as the model receives it: the links in order, before it writes anything. Optionally restrict it to, or block, a list of domains. Each probe costs a few cents.
 
 ## Retrying
 
-A run that hits an error or the daily budget ends `partial` or `budget`; **Retry unfinished** picks up where it left off and reuses any answer that was saved but not yet graded. A run cut off by a restart or deploy resumes by itself when Popcorn starts again, and a fix list cut off is built then too. A run can't be finished after the answer or grading prompts change, so one run never mixes two rubrics.
+A run that hits an error or the daily budget ends `partial` or `budget`; **Retry unfinished** picks up where it left off and reuses any answer that was saved but not yet graded. A run cut off by a restart or deploy resumes by itself when Cheap Seats starts again, and a fix list cut off is built then too. A run can't be finished after the answer or grading prompts change, so one run never mixes two rubrics.

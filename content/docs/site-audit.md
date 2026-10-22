@@ -4,22 +4,22 @@ description: Three checks that call no model and cost nothing, the site audit of
 weight: 46
 ---
 
-**Can AI assistants read my site?** `popcorn audit` checks what an AI crawler sees on each of your sites: whether robots.txt or a firewall blocks it, whether there's an llms.txt and a fresh sitemap, and whether each page has its content in the HTML or is empty without JavaScript. Two more checks sit beside it: the **citation check**, of which pages the answers cite name you and which name only competitors, and **AI crawler** counts from your own access logs.
+**Can AI assistants read my site?** `cheapseats audit` checks what an AI crawler sees on each of your sites: whether robots.txt or a firewall blocks it, whether there's an llms.txt and a fresh sitemap, and whether each page has its content in the HTML or is empty without JavaScript. Two more checks sit beside it: the **citation check**, of which pages the answers cite name you and which name only competitors, and **AI crawler** counts from your own access logs.
 
 None of the three calls a model. They're plain HTTP requests and your own logs, so they cost nothing, on any setup, and don't count against the [daily budget](../cost-and-budget/).
 
 ## Site audit
 
 ```bash
-popcorn audit                 # every site in [[brand.sites]] (and brand.domains)
-popcorn audit example.com     # just one, which needn't be yours (not kept)
-popcorn audit -pages 20 -info # more sitemap pages; list info findings too
-popcorn audit -json           # the findings as JSON
+cheapseats audit                 # every site in [[brand.sites]] (and brand.domains)
+cheapseats audit example.com     # just one, which needn't be yours (not kept)
+cheapseats audit -pages 20 -info # more sitemap pages; list info findings too
+cheapseats audit -json           # the findings as JSON
 ```
 
 Also **Site audit** in the web UI (`/audit`, "Audit now"), `POST /api/audit` to run one and `GET /api/audit` for the latest, and the MCP tool `audit_sites`.
 
-For each site it fetches robots.txt, the home page, `/llms.txt`, the sitemap and up to 10 pages from the sitemap, spread through it. It fetches as `Mozilla/5.0 (compatible; Popcorn-Audit/<version>; +https://popcorn.zone)`, 4 requests at a time, with a 15-second timeout and a 2 MB cap per page, and reads the raw HTML, as a crawler that runs no JavaScript does.
+For each site it fetches robots.txt, the home page, `/llms.txt`, the sitemap and up to 10 pages from the sitemap, spread through it. It fetches as `Mozilla/5.0 (compatible; CheapSeats-Audit/<version>; +https://cheapseats.dev)`, 4 requests at a time, with a 15-second timeout and a 2 MB cap per page, and reads the raw HTML, as a crawler that runs no JavaScript does.
 
 - A host/path site (`github.com/example`) gets its robots.txt rules checked for that path, but no llms.txt or sitemap check: those belong to the host.
 - Sites of kind `code` or `community` don't get their markup checked. It isn't yours to fix.
@@ -39,7 +39,7 @@ Each finding has a severity, a check id, what it found and a fix.
 | `robots.missing` | info | no robots.txt: everything is allowed | optional; add one to point crawlers at your sitemap |
 | `waf.blocks-ai-bot` | error | the home page answers 401, 403 or 429, or a challenge page, to an AI fetcher's user agent while a browser's gets 200 | allow the bot in your firewall or CDN bot settings (on Cloudflare, Security > Bots, AI Crawl Control) |
 
-**The firewall check only sends each bot's user agent, from Popcorn's address.** A firewall that lets verified bots through by IP may block this check and still admit the real crawler. Confirm in the firewall's log, or with the [crawler counts](#ai-crawlers) below, before changing rules.
+**The firewall check only sends each bot's user agent, from Cheap Seats' address.** A firewall that lets verified bots through by IP may block this check and still admit the real crawler. Confirm in the firewall's log, or with the [crawler counts](#ai-crawlers) below, before changing rules.
 
 ### llms.txt and the sitemap
 
@@ -76,18 +76,18 @@ Each finding has a severity, a check id, what it found and a fix.
 | `page.canonical` | warning | no canonical link | add `<link rel="canonical" href="<its URL>">` |
 | `page.open-graph` | warning | no `og:title` or `og:description` | add both |
 
-A site listed in a form Popcorn can't read gets `site.invalid` (error): list it as a host (`example.com`) or a host and path (`github.com/example`).
+A site listed in a form Cheap Seats can't read gets `site.invalid` (error): list it as a host (`example.com`) or a host and path (`github.com/example`).
 
 ## Citation check
 
 ```bash
-popcorn check-citations <run-id>         # the 25 most-cited third-party pages
-popcorn check-citations -n 50 <run-id>
+cheapseats check-citations <run-id>         # the 25 most-cited third-party pages
+cheapseats check-citations -n 50 <run-id>
 ```
 
 Also on the **Site audit** page ("Check citations", for any finished run), `POST /api/runs/{id}/citation-check` (`?n=`, default 25) to run one and `GET` for the run's latest, and the MCP tool `check_citations`.
 
-It takes the run's third-party pages, most cited first, then most surfaced in searches, and fetches each one as Popcorn, where its robots.txt allows `Popcorn-Audit`. Each page is fetched at most once a day and kept for a month. It reads the page's visible text and says whether it names your brand or an alias, and which of the set's competitors.
+It takes the run's third-party pages, most cited first, then most surfaced in searches, and fetches each one as Cheap Seats, where its robots.txt allows `CheapSeats-Audit`. Each page is fetched at most once a day and kept for a month. It reads the page's visible text and says whether it names your brand or an alias, and which of the set's competitors.
 
 A page that names competitors but not you is marked **outreach**: the answers read it, and it leaves you out. That's the same idea as the run page's [Cited without your brand](../metrics/#buckets-outreach-and-found-but-not-cited) list, checked against the page itself rather than the answers.
 
@@ -96,10 +96,10 @@ Matching is by whole word, ignoring case. That's stricter than the grader's own 
 ## AI crawlers
 
 ```bash
-popcorn crawl import access.log access.log.1.gz        # nginx, Apache
-popcorn crawl import -host docs.example.com docs.log   # the site, for lines that don't record one
-popcorn crawl import cloudflare-*.json caddy.json -    # - reads stdin
-popcorn crawl report -days 30
+cheapseats crawl import access.log access.log.1.gz        # nginx, Apache
+cheapseats crawl import -host docs.example.com docs.log   # the site, for lines that don't record one
+cheapseats crawl import cloudflare-*.json caddy.json -    # - reads stdin
+cheapseats crawl report -days 30
 ```
 
 Also **AI crawlers** in the web UI (`/crawlers`), `GET /api/crawlers?days=30`, and the MCP tool `get_crawlers`.
@@ -124,7 +124,7 @@ Each request is classed by its user agent:
 
 **Unverified: user agent only.** Anyone can send a crawler's user agent, and nothing here checks the request's IP against the operator's published ranges. Read the counts as what the logs claim.
 
-Popcorn keeps only daily counts per host, page, class and bot, not log lines, plus a hash of each counted request, so importing the same log twice, or one that overlaps it, counts nothing twice.
+Cheap Seats keeps only daily counts per host, page, class and bot, not log lines, plus a hash of each counted request, so importing the same log twice, or one that overlaps it, counts nothing twice.
 
 The page lists each of your pages' fetches by class, and AI referrals, beside how often the latest finished run of each set cited and surfaced it, and flags:
 
@@ -133,4 +133,4 @@ The page lists each of your pages' fetches by class, and AI referrals, beside ho
 
 ## Where to start
 
-Run `popcorn audit` before your first paid run. It's free, it takes a minute, and an error there, such as a firewall that blocks ChatGPT-User or a docs site that's empty without JavaScript, explains a lot of "never cited" before you've asked a single question. Then read [Reading results](../reading-results/) for what a run adds.
+Run `cheapseats audit` before your first paid run. It's free, it takes a minute, and an error there, such as a firewall that blocks ChatGPT-User or a docs site that's empty without JavaScript, explains a lot of "never cited" before you've asked a single question. Then read [Reading results](../reading-results/) for what a run adds.

@@ -7,32 +7,32 @@ weight: 70
 ## CLI
 
 ```
-popcorn init [-name X] [-competitors a,b] [-suggest [-n 10]] [-dry-run] <url> [dir]
+cheapseats init [-name X] [-competitors a,b] [-suggest [-n 10]] [-dry-run] <url> [dir]
                                        a new config repo from the brand's website (free unless -suggest)
-popcorn serve [-addr 127.0.0.1:3000]   web UI, JSON API, MCP and the daily schedule
-popcorn sets                           list prompt sets
-popcorn run <set-id>                   run one set and wait for it (costs money)
-popcorn report <run-id> [-json]        rates, share of voice and top pages for a run
-popcorn fixes <run-id> [-rebuild]      the run's fix list as markdown
-popcorn themes <run-id> [-rebuild]     net sentiment and the run's themes; -rebuild runs the theme pass again (one grader call)
-popcorn suggest-prompts <set-id> [-n 10]  new buyer questions for a set, as TOML to paste (one analyst call; writes nothing)
-popcorn regrade [-since 28d] [-dry-run=false] <set-id|run-id>
+cheapseats serve [-addr 127.0.0.1:3000]   web UI, JSON API, MCP and the daily schedule
+cheapseats sets                           list prompt sets
+cheapseats run <set-id>                   run one set and wait for it (costs money)
+cheapseats report <run-id> [-json]        rates, share of voice and top pages for a run
+cheapseats fixes <run-id> [-rebuild]      the run's fix list as markdown
+cheapseats themes <run-id> [-rebuild]     net sentiment and the run's themes; -rebuild runs the theme pass again (one grader call)
+cheapseats suggest-prompts <set-id> [-n 10]  new buyer questions for a set, as TOML to paste (one analyst call; writes nothing)
+cheapseats regrade [-since 28d] [-dry-run=false] <set-id|run-id>
                                        grade stored answers again with today's grader, brand and competitors;
                                        a dry run with its cost unless -dry-run=false
-popcorn audit [-pages 10] [-info] [-json] [site...]   what AI crawlers can read on the brand's sites (free)
-popcorn check-citations [-n 25] [-json] <run-id>      which pages the run cited name the brand, and which competitors (free)
-popcorn crawl import [-host example.com] <logfile>... AI crawler fetches and AI referrals from access logs; - reads stdin, .gz is read as gzip
-popcorn crawl report [-days 30] [-json]               those counts per page, beside how the latest runs cite it
-popcorn backup <file>                  a consistent copy of the database, safe while serve runs
-popcorn check                          validate the config and every prompt set
-popcorn plan <before> [<after>]        what a config change does to trends, for its pull request
-popcorn migrate-config [dir]           give each prompt an id, in sets written before ids
-popcorn version                        this build's version and database schema
+cheapseats audit [-pages 10] [-info] [-json] [site...]   what AI crawlers can read on the brand's sites (free)
+cheapseats check-citations [-n 25] [-json] <run-id>      which pages the run cited name the brand, and which competitors (free)
+cheapseats crawl import [-host example.com] <logfile>... AI crawler fetches and AI referrals from access logs; - reads stdin, .gz is read as gzip
+cheapseats crawl report [-days 30] [-json]               those counts per page, beside how the latest runs cite it
+cheapseats backup <file>                  a consistent copy of the database, safe while serve runs
+cheapseats check                          validate the config and every prompt set
+cheapseats plan <before> [<after>]        what a config change does to trends, for its pull request
+cheapseats migrate-config [dir]           give each prompt an id, in sets written before ids
+cheapseats version                        this build's version and database schema
 ```
 
-From a checkout, run any of them with `go run ./cmd/popcorn <command>`. `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-popcorn-init), `regrade` in [Re-grading stored answers](../regrading/).
+From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/).
 
-- **`init`**: `-name` sets the brand's name instead of what the site calls itself; `-competitors` adds `[[competitors]]` entries, alternatives prompts and head-to-heads; `-suggest` adds `-n` suggested prompts to the starter sets with one analyst call; `-dry-run` prints what it found and every file it would write, and writes nothing. It writes to `./<brand>-popcorn-config` unless you name a directory.
+- **`init`**: `-name` sets the brand's name instead of what the site calls itself; `-competitors` adds `[[competitors]]` entries, alternatives prompts and head-to-heads; `-suggest` adds `-n` suggested prompts to the starter sets with one analyst call; `-dry-run` prints what it found and every file it would write, and writes nothing. It writes to `./<brand>-cheapseats-config` unless you name a directory.
 - **`regrade`**: `-since` takes `28d`, `72h` or `all` (default 28 days) and applies to a set; `-dry-run` is true by default.
 
 ## MCP server
@@ -40,7 +40,7 @@ From a checkout, run any of them with `go run ./cmd/popcorn <command>`. `audit`,
 `/api/mcp` is an MCP server (Streamable HTTP), so Claude Code, Claude Desktop or any MCP client can list prompt sets, start runs and read the results without the web UI.
 
 ```bash
-claude mcp add --transport http popcorn https://<host>/api/mcp --header "Authorization: Bearer <token>"
+claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Authorization: Bearer <token>"
 ```
 
 | tool               | what it does                                                                    |
@@ -82,7 +82,7 @@ The server also offers three **prompts**, each telling the model which tools to 
 | route                                | what it returns                                                       |
 | ------------------------------------ | --------------------------------------------------------------------- |
 | `GET /api/status`                    | the brand, set count and today's spend against the budget              |
-| `GET /api/version`                   | the Popcorn version, config commit and database schema                  |
+| `GET /api/version`                   | the Cheap Seats version, config commit and database schema                  |
 | `GET /api/progress`                  | runs in progress: answers done, errors, in flight and waiting, per answerer, with time left |
 | `GET /api/live`                      | a version stamp that changes whenever a run does, and whether one is in progress |
 | `GET /api/sets`, `/api/sets/{id}`    | the checked-in prompt sets                                            |
@@ -121,11 +121,11 @@ In the web UI, `/sets/{id}/regrade` shows a set's re-grade dry run and starts on
 
 ## Access
 
-With `POPCORN_TOKENS` unset, `serve` only listens on 127.0.0.1 and everything is open. To listen anywhere else, set `POPCORN_TOKENS` (comma-separated, so one can be rotated at a time): every `/api/*` request, MCP included, then needs `Authorization: Bearer <token>`, and the web UI asks for a token once and keeps it in a cookie.
+With `CHEAPSEATS_TOKENS` unset, `serve` only listens on 127.0.0.1 and everything is open. To listen anywhere else, set `CHEAPSEATS_TOKENS` (comma-separated, so one can be rotated at a time): every `/api/*` request, MCP included, then needs `Authorization: Bearer <token>`, and the web UI asks for a token once and keeps it in a cookie.
 
-On [exe.dev](../deploying/#exedev), Popcorn instead trusts the proxy's signed-in email header (`POPCORN_AUTH_HEADER`, narrowed by `POPCORN_ALLOWED_EMAILS`). API and MCP clients get through the proxy with an exe.dev token scoped to the VM; see [connecting Claude Code](../deploying/#exedev).
+On [exe.dev](../deploying/#exedev), Cheap Seats instead trusts the proxy's signed-in email header (`CHEAPSEATS_AUTH_HEADER`, narrowed by `CHEAPSEATS_ALLOWED_EMAILS`). API and MCP clients get through the proxy with an exe.dev token scoped to the VM; see [connecting Claude Code](../deploying/#exedev).
 
-Behind a proxy on the same machine, set `POPCORN_HOSTS` to the host names it serves Popcorn as (comma-separated). MCP refuses a request that reaches Popcorn on loopback under any other name, against DNS rebinding. Set `POPCORN_PUBLIC_URL` to the address people reach Popcorn at, so [share links](../sharing/#where-links-point) point there.
+Behind a proxy on the same machine, set `CHEAPSEATS_HOSTS` to the host names it serves Cheap Seats as (comma-separated). MCP refuses a request that reaches Cheap Seats on loopback under any other name, against DNS rebinding. Set `CHEAPSEATS_PUBLIC_URL` to the address people reach Cheap Seats at, so [share links](../sharing/#where-links-point) point there.
 
 ## Data and privacy
 

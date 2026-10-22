@@ -7,8 +7,8 @@ weight: 48
 **What happens to my trend when the grading changes?** A change to what the grader reads (its prompt or model, the brand's name, aliases or `about`, a set's competitors) starts a new method, and trends start over with it. Re-grading grades the answers older runs already have again, as they would be graded today, so those runs join the new method's trend from their own dates on. Answers are never asked again.
 
 ```bash
-popcorn regrade <set-id|run-id> [-since 28d]          # a dry run: what it would do and cost
-popcorn regrade <set-id|run-id> -since 90d -dry-run=false
+cheapseats regrade <set-id|run-id> [-since 28d]          # a dry run: what it would do and cost
+cheapseats regrade <set-id|run-id> -since 90d -dry-run=false
 ```
 
 It's a dry run unless you pass `-dry-run=false`.
@@ -29,7 +29,7 @@ One grader call per answer.
 
 ## All or nothing, per run
 
-Every answer of a run is graded first, then the new grades are written together, and only over the run as it was read. If something else changed it meanwhile (another `popcorn regrade`, a retry), nothing is written. A run whose grading fails, or is cut off, is left exactly as it was.
+Every answer of a run is graded first, then the new grades are written together, and only over the run as it was read. If something else changed it meanwhile (another `cheapseats regrade`, a retry), nothing is written. A run whose grading fails, or is cut off, is left exactly as it was.
 
 ## History stays honest
 
@@ -44,8 +44,8 @@ Every answer of a run is graded first, then the new grades are written together,
 The run's fix list and themes stay as they were. To have them follow the new grades:
 
 ```bash
-popcorn fixes <run-id> -rebuild
-popcorn themes <run-id> -rebuild
+cheapseats fixes <run-id> -rebuild
+cheapseats themes <run-id> -rebuild
 ```
 
 ## In the web UI and over MCP

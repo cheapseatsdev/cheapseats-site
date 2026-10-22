@@ -4,7 +4,7 @@ description: A read-only, expiring, revocable link to one run's report for someo
 weight: 49
 ---
 
-**How do I show a run to someone without a Popcorn sign-in?** Make a share link. It's a read-only page of one run's report for a manager, a colleague in marketing or a client, at `/share/<token>`.
+**How do I show a run to someone without a Cheap Seats sign-in?** Make a share link. It's a read-only page of one run's report for a manager, a colleague in marketing or a client, at `/share/<token>`.
 
 ## What it shows
 
@@ -36,11 +36,11 @@ The answers' text (two per highlighted prompt, cut at 1,500 characters) is shown
 
 The first of:
 
-1. `POPCORN_PUBLIC_URL`, when set;
-2. `https://` and the first of `POPCORN_HOSTS`;
+1. `CHEAPSEATS_PUBLIC_URL`, when set;
+2. `https://` and the first of `CHEAPSEATS_HOSTS`;
 3. the host and scheme the request that made the link came in on (a proxy's `X-Forwarded-Host` and `X-Forwarded-Proto` count).
 
-Behind a proxy, set `POPCORN_PUBLIC_URL`. A link that would point at a loopback address gets a warning on the run page and in `share_run`'s result. See [Deploying](../deploying/#what-any-deployment-needs).
+Behind a proxy, set `CHEAPSEATS_PUBLIC_URL`. A link that would point at a loopback address gets a warning on the run page and in `share_run`'s result. See [Deploying](../deploying/#what-any-deployment-needs).
 
 ## Security
 
