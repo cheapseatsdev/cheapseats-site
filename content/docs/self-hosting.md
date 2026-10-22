@@ -15,7 +15,7 @@ Popcorn is a self-hosted AI visibility tracker you can run in Docker or on your 
 
 Popcorn itself costs nothing. Run it on your laptop for free, or host it and pay your host. That's the whole bill for Popcorn.
 
-Separately, the model calls are billed by their providers: Claude grades every answer through the Anthropic API (Haiku, a fraction of a cent each) and writes the fix list (Opus, a few cents a run), and API answerers are billed per token. On your own machine, answerers can use your Claude and ChatGPT subscriptions instead ([details](../getting-started/#answering-on-your-subscriptions)). A daily budget caps API spend ([Configuration](../configuration/)).
+Separately, the models: Claude is required and ChatGPT optional. On a machine or VM with the `claude` and `codex` CLIs, answering, grading and the fix list can all run on your subscriptions, with no API key ([details](../getting-started/#running-on-your-subscriptions)). In a container, which has no CLIs, they go through the APIs and are billed per token: grading with Haiku is a fraction of a cent an answer and the fix list a few cents a run, and a daily budget caps the spend ([Cost and budget](../cost-and-budget/)).
 
 ## Where your data goes
 

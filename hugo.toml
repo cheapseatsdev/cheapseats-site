@@ -5,7 +5,7 @@ disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true
 
 [params]
-description = "Popcorn is an open-source (MIT), self-hosted AI visibility tracker. It asks Claude and OpenAI models your buyers' questions, grades whether they recommend you, and builds a ranked fix list."
+description = "Popcorn is a free, open-source AI visibility tracker, inspired by tools like Gauge, Profound and Peec AI, that runs on the Claude subscription you already have (ChatGPT optional). It asks your buyers' questions, grades whether AI assistants recommend you, and builds a ranked fix list."
 github = "https://github.com/metcalfc/popcorn"
 # How every page title, meta description and the footer name the product.
 tagline = "the open-source AI visibility tracker"

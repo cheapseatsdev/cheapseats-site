@@ -89,12 +89,14 @@ Competitors the grader folds onto one canonical name in every prompt set, so sha
 ```toml
 [grader]
 model = "claude-haiku-5-5"
+# provider = "claude-code"   # on your Claude subscription, through the claude CLI
 
 [analyst]
 model = "claude-opus-5-5"
+# provider = "claude-code"
 ```
 
-The grader grades each answer; the analyst writes the fix list and insights. Both use `ANTHROPIC_API_KEY`, or the proxy in `POPCORN_ANTHROPIC_BASE_URL`.
+The grader grades each answer; the analyst writes the fix list and insights. By default both go through the Anthropic API, with `ANTHROPIC_API_KEY` or the proxy in `POPCORN_ANTHROPIC_BASE_URL`. With `provider = "claude-code"` they run on the local `claude` CLI and your Claude subscription instead; with subscription answerers too, Popcorn needs no API key at all (`examples/popcorn-config/popcorn.subscriptions.toml` is set up that way). The Docker image has no CLIs, so keep the API there. Switching the grader's provider starts a new method on every trend, since answers are graded a different way.
 
 ## Budget
 
@@ -157,7 +159,7 @@ A fix goes to its site's owner, else to the owner for its gap here, else `defaul
 
 | variable | what it does |
 | --- | --- |
-| `ANTHROPIC_API_KEY` | required: grading, the fix list, and `anthropic` answerers, unless `POPCORN_ANTHROPIC_BASE_URL` is set |
+| `ANTHROPIC_API_KEY` | `anthropic` answerers, and the grader and analyst unless they run on the `claude` CLI or `POPCORN_ANTHROPIC_BASE_URL` is set |
 | `POPCORN_ANTHROPIC_BASE_URL` | a base URL for Popcorn's own Anthropic calls, such as a proxy that adds the key ([exe.dev](../deploying/#exedev) integrations); the `claude` CLI doesn't read it, so `claude-code` answerers stay on your subscription |
 | `OPENAI_API_KEY` | `openai` answerers |
 | `POPCORN_TOKENS` | comma-separated bearer tokens; required to listen beyond 127.0.0.1 |

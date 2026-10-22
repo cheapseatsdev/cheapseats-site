@@ -2,12 +2,12 @@
 <section class="hero">
   <div class="wrap">
     <h1>Popcorn: an open-source, self-hosted AI visibility tracker</h1>
-    <p class="lede">Popcorn is an open-source (MIT), self-hosted AI visibility tracker, and an alternative to Profound, Peec AI and Ahrefs Brand Radar. It asks Claude and OpenAI models your buyers' questions, grades whether each answer <strong>recommends</strong> your brand, merely <strong>mentions</strong> it, or leaves it <strong>out</strong>, and builds a ranked list of fixes.</p>
+    <p class="lede">Start finding out whether AI assistants recommend you, at no cost. Popcorn is a free, open-source AI visibility tracker inspired by tools like Gauge, Profound and Peec AI: the 20% of what they do that you'll use 80% of the time, running on the Claude subscription you already have (ChatGPT optional). It asks your buyers' questions, grades whether each answer <strong>recommends</strong> your brand, merely <strong>mentions</strong> it, or leaves it <strong>out</strong>, and builds a ranked list of fixes.</p>
     <p class="actions">
       <a class="btn" href="{{ "/docs/getting-started/" | relURL }}">Get started</a>
       <a class="btn ghost" href="{{ site.Params.github }}">Source on GitHub</a>
     </p>
-    <p class="muted small">MIT licensed, one Docker container, code at <a href="{{ site.Params.github }}">github.com/metcalfc/popcorn</a>. Your prompts live in your own git repo.</p>  </div>
+    <p class="muted small">MIT licensed, code at <a href="{{ site.Params.github }}">github.com/metcalfc/popcorn</a>. Your prompts live in your own git repo, so if you outgrow Popcorn, they come with you.</p>  </div>
 </section>
 
 <section class="wrap" aria-labelledby="how">
@@ -37,8 +37,9 @@
 </section>
 
 <section class="wrap" aria-labelledby="who">
-  <h2 id="who">Who it's for</h2>
-  <p>The people who own how a product is described: product marketing, docs, the blog and the website. Popcorn is for teams who want to know whether AI assistants recommend their product when buyers ask, which pages shape those answers, and what to change first. Every search, result URL and citation behind an answer is kept, so you can see which third-party pages the assistants lean on and which of your own sites they never reach.</p>
+  <h2 id="who">Start here, move on when you're ready</h2>
+  <p>Popcorn grew out of tools like <a href="{{ "/compare/gauge/" | relURL }}">Gauge</a>. They do a lot, and most of it we didn't need; what we did have was Claude and ChatGPT subscriptions with tokens to spare. So Popcorn does the part you'll use most: ask your buyers' questions, grade the answers, show which pages shape them, and say what to fix first. It runs on those subscriptions, on your own machine, with nothing to buy.</p>
+  <p>It's for the people who own how a product is described: product marketing, docs, the blog and the website, and anyone starting to measure AI visibility before committing to a paid tool. If you outgrow it, because you need engines it doesn't ask, a hosted service, or reporting for many clients, move to one of the tools it was inspired by. The buyer questions you've refined are plain text in your own repo, ready to take with you. <a href="{{ "/compare/" | relURL }}">How they compare</a>.</p>
 </section>
 
 <section class="wrap" aria-labelledby="yours">
@@ -47,16 +48,16 @@
     <li><strong>MIT licensed.</strong> Read it, run it, change it.</li>
     <li><strong>Self-hosted.</strong> One container with a SQLite database, on a Docker host, Kubernetes (Helm chart) or an exe.dev VM.</li>
     <li><strong>Your config in your git repo.</strong> The brand, assistants, budget, schedule and prompt sets live in a config repo you can keep private. <code>popcorn plan</code> shows what a change does to your trends before you merge it.</li>
-    <li><strong>A daily budget.</strong> Every API call reserves against <code>budget.daily_usd</code> before it goes out. Prompts and answers go only to the model providers you configure.</li>
+    <li><strong>Your subscriptions, or the APIs.</strong> Answers, grades and the fix list can all come from the <code>claude</code> and <code>codex</code> CLIs on your Claude and ChatGPT subscriptions. Through the APIs, a daily budget caps spend. Prompts and answers go only to the model providers you configure.</li>
     <li><strong>Web UI, CLI, JSON API and MCP server</strong>, so Claude Code or any MCP client can start runs and read results.</li>
   </ul>
 </section>
 
 <section class="wrap" aria-labelledby="start">
   <h2 id="start">Get started</h2>
-  <p>A fresh checkout runs as-is against an example config that measures Popcorn itself. You need Go and an Anthropic API key.</p>
-<pre><code>cp .env.example .env              # then fill in ANTHROPIC_API_KEY
-go run ./cmd/popcorn serve        # the example, at http://127.0.0.1:3000</code></pre>
+  <p>A fresh checkout runs against an example config that measures Popcorn itself. You need Go and Claude: the <code>claude</code> CLI logged in to a Claude subscription (no API key, no spend), or an Anthropic API key. ChatGPT is optional: the <code>codex</code> CLI or an OpenAI key adds its answers.</p>
+<pre><code>POPCORN_CONFIG=examples/popcorn-config/popcorn.subscriptions.toml go run ./cmd/popcorn serve
+# then open http://127.0.0.1:3000</code></pre>
   <p><a href="{{ "/docs/getting-started/" | relURL }}">Read Getting started</a>, then start your own config repo from the <a href="{{ site.Params.template }}">template</a>.</p>
 </section>
 {{ end }}

@@ -4,9 +4,9 @@ description: What Popcorn costs to run every day, what a real run cost, and how 
 weight: 25
 ---
 
-**What does it cost to run Popcorn every day?** Popcorn itself is free and open source (MIT): no license fee, no seats, no per-prompt or per-brand pricing. Run it on your own machine and there's no hosting cost; host it on a Docker host, Kubernetes or an exe.dev VM and you pay your host. Separately, it calls model APIs, and that spend is capped by a **daily budget**, `budget.daily_usd` in `popcorn.toml`, that every API call is checked against before it goes out.
+**What does it cost to run Popcorn every day?** Popcorn itself is free and open source (MIT): no license fee, no seats, no per-prompt or per-brand pricing. Run it on your own machine and there's no hosting cost; host it on a Docker host, Kubernetes or an exe.dev VM and you pay your host. On your own machine it can run entirely on the Claude subscription you already have (and ChatGPT's, optionally), with no API key and no API spend. Through the APIs instead, spend is capped by a **daily budget**, `budget.daily_usd` in `popcorn.toml`, that every API call is checked against before it goes out.
 
-In a real run of 17 prompts and 68 answers, answered on Claude and ChatGPT subscriptions, the model spend was **$0.033**, all of it grading. The same answers at API prices would have added about $3.78. For comparison, Otterly.AI's entry plan is $29 a month as of October 2026, but it covers assistants Popcorn doesn't; see [Popcorn or Otterly.AI](#popcorn-or-otterlyai-on-a-startup-budget).
+In a real run of 17 prompts and 68 answers, answered on Claude and ChatGPT subscriptions and graded through the API, the model spend was **$0.033**, all of it grading; graded on the subscription too, it would have been nothing. The same answers at API prices would have added about $3.78. For comparison, Otterly.AI's entry plan is $29 a month as of October 2026, but it covers assistants Popcorn doesn't; see [Popcorn or Otterly.AI](#popcorn-or-otterlyai-on-a-startup-budget).
 
 ## Where the money goes
 
@@ -17,7 +17,7 @@ In a real run of 17 prompts and 68 answers, answered on Claude and ChatGPT subsc
 | **grading** every answer | the Anthropic API (`[grader]`) | per token |
 | **the fix list**, once per run | the Anthropic API (`[analyst]`) | per token |
 
-Grading and the fix list always use the Anthropic API, so you always need `ANTHROPIC_API_KEY` (or `POPCORN_ANTHROPIC_BASE_URL` pointing at a proxy that adds the key). Only answering can run on subscriptions, and only where the `claude` and `codex` CLIs are installed: on your own machine or a VM, not in the Docker image. See [Answering on your subscriptions](../getting-started/#answering-on-your-subscriptions).
+Claude is required, through a subscription or an API key; ChatGPT is optional. Grading and the fix list go through the Anthropic API by default, or with `provider = "claude-code"` through the `claude` CLI on your subscription, so a laptop can run with no API key at all. Subscriptions work only where the `claude` and `codex` CLIs are installed: on your own machine or a VM, not in the Docker image. See [Running on your subscriptions](../getting-started/#running-on-your-subscriptions).
 
 ## What a real run cost
 
