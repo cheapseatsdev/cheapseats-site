@@ -26,7 +26,11 @@
 <meta name="twitter:image" content="{{ .Permalink }}">{{ end }}
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="{{ .Permalink }}">
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="any">
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ "brand/apple-touch-icon.png" | relURL }}">
+<link rel="manifest" href="{{ "brand/site.webmanifest" | relURL }}">
+<meta name="theme-color" content="#1B1917">
 {{ with .OutputFormats.Get "markdown" }}<link rel="alternate" type="text/markdown" href="{{ .Permalink }}">{{ end }}
 {{ with site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="Cheap Seats blog">{{ end }}{{ end }}
 {{ if .IsHome }}<script type="application/ld+json">

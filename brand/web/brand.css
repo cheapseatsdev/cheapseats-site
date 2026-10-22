@@ -1,0 +1,28 @@
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --cs-bg: #FAF8F5;
+  --cs-surface: #FFFFFF;
+  --cs-border: #E5DFD7;
+  --cs-text: #252321;
+  --cs-muted: #6E6862;
+  --cs-primary: #C73532;
+  --cs-on-primary: #FFFFFF;
+  --cs-gold: #F2B544;
+  --cs-gold-bg: #FFF0CB;
+  --cs-gold-text: #765000;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --cs-bg: #1B1917;
+  --cs-surface: #24211E;
+  --cs-border: #3B3631;
+  --cs-text: #F5F1EB;
+  --cs-muted: #ADA59C;
+  --cs-primary: #EF7770;
+  --cs-on-primary: #1B1917;
+  --cs-gold: #F2B544;
+  --cs-gold-bg: #3B2C14;
+  --cs-gold-text: #F2B544;
+}
