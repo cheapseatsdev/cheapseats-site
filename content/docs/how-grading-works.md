@@ -45,7 +45,13 @@ It's strict on purpose: a brand listed in a table with nine others is mentioned,
 - **every product named**, folded onto your competitors' canonical names, which is what share of voice counts;
 - **reasoning**: one or two sentences quoting the wording that decided the grade;
 - **why not #1**: what the answer preferred instead and the reasons it gave;
-- **objections**: the specific concerns the answer raised about your brand.
+- **objections**: the specific concerns the answer raised about your brand;
+- **tone**: how the answer talks about your brand itself, not the category: **positive** (endorses it or describes it favorably), **negative** (mostly warnings or criticism), **mixed** (clear praise and clear criticism) or **neutral** (describes or lists it without judging it). None when it's absent;
+- **praise**: short phrases for each strength the answer credits your brand with, such as "open source" or "easy setup", the mirror of objections.
+
+Tone and praise feed the run's **net sentiment** (the share of answers naming you that are positive, minus the share negative) and its **themes**: after a run is graded, one more grader call groups its objections, praise and reasons for picking something else into a few named themes, each with the product it helps and a quote. [Metric definitions](../metrics/#sentiment-and-themes) has the formulas.
+
+**Adding tone and praise changed the grading instructions once.** Every trend marks the first run graded with them as a new method, since answers are graded a different way, rather than joining the two into one line. Runs graded before have no tone, so their net sentiment is n/a.
 
 Questions marked `intent = "info"` ask for an explanation, not a choice, so a good answer may recommend nothing. They count toward being named, not toward recommended.
 
@@ -63,7 +69,7 @@ These are real answers from Popcorn's runs of 22 October 2026, asked about Popco
 
 ## Rates and intervals
 
-The run page reports, for each assistant and track, how often your brand was the top pick, recommended, and named, each with a 95% Wilson interval, so a rate from a handful of answers reads as uncertain rather than precise. Share of voice counts every product named across the run's answers.
+The run page reports, for each assistant and track, how often your brand was the top pick, recommended, and named, each with a 95% Wilson interval, so a rate from a handful of answers reads as uncertain rather than precise. The share-of-voice board counts every product named across the run's answers: each one's named rate, its true share of voice (which adds up to 100%), and where it comes in the answers. Every formula is in [Metric definitions](../metrics/), and how much a rate can move by chance is in [How big a change Popcorn can detect](../noise-and-confidence/).
 
 ## Checking a grade
 

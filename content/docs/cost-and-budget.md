@@ -16,8 +16,12 @@ In a real run of 17 prompts and 68 answers, answered on Claude and ChatGPT subsc
 | **answering** your prompts | `claude-code` or `codex` CLIs, or the `anthropic` or `openai` APIs | your existing Claude or ChatGPT subscription, or per token |
 | **grading** every answer | the Anthropic API (`[grader]`) | per token |
 | **the fix list**, once per run | the Anthropic API (`[analyst]`) | per token |
+| **the theme pass**, once per run | the Anthropic API (`[grader]`) | per token: under a cent a run with Claude Haiku |
+| **`popcorn suggest-prompts`**, when you ask | the Anthropic API (`[analyst]`) | per token: one call |
+| **adaptive sampling** extras, if on | the same answerers | like any other answer; API extras only within today's budget |
+| **site audit, citation check, AI crawlers** | plain HTTP and your logs | free: no model calls |
 
-Claude is required, through a subscription or an API key; ChatGPT is optional. Grading and the fix list go through the Anthropic API by default, or with `provider = "claude-code"` through the `claude` CLI on your subscription, so a laptop can run with no API key at all. Subscriptions work only where the `claude` and `codex` CLIs are installed: on your own machine or a VM, not in the Docker image. See [Running on your subscriptions](../getting-started/#running-on-your-subscriptions).
+Claude is required, through a subscription or an API key; ChatGPT is optional. Grading, the theme pass, the fix list and prompt suggestions go through the Anthropic API by default, or with `provider = "claude-code"` through the `claude` CLI on your subscription, so a laptop can run with no API key at all. Subscriptions work only where the `claude` and `codex` CLIs are installed: on your own machine or a VM, not in the Docker image. See [Running on your subscriptions](../getting-started/#running-on-your-subscriptions).
 
 ## What a real run cost
 
@@ -39,7 +43,7 @@ One answer worked through, a Claude Opus search answer: 4 input tokens × $4/M +
 
 These are the CLIs' own token counts priced at API rates, not an API bill: an `anthropic` or `openai` answerer sends a different prompt, so its counts will differ. Read them as the order of magnitude. Search answers cost more than recall: the searches themselves are $10 per 1,000, and the results they bring back are input.
 
-**The fix list** adds one `claude-opus-5-5` call per run ($4 / $20 per million tokens).
+**The fix list** adds one `claude-opus-5-5` call per run ($4 / $20 per million tokens). **The theme pass** adds one more grader call, under a cent with Claude Haiku at the prices above; `[grader] themes = false` skips it.
 
 So, per run of a 17-prompt set with two answerers, one sample per track:
 
@@ -59,7 +63,7 @@ reservation_usd = 0.60
 concurrency = 6
 ```
 
-- **`daily_usd`** is the most Popcorn may spend on API calls in a UTC day, across every run, answer, grade, fix list and search probe.
+- **`daily_usd`** is the most Popcorn may spend on API calls in a UTC day, across every run, answer, grade, theme pass, fix list, prompt suggestion and search probe.
 - **`reservation_usd`** is what each call reserves before it goes out (default $0.60).
 - **`concurrency`** is how many API calls may be in flight at once.
 
@@ -81,6 +85,8 @@ Things to know:
 - **Fewer samples.** `samples = { search = 2, recall = 1 }` per answerer is three answers per prompt; `[tiers.plg] max_samples = 1` caps a tier at one.
 - **A cheap grader.** The grader reads every answer; the analyst runs once a run. Use a small model for `[grader]`.
 - **Leave the schedule off** on a dev machine: without `schedule.daily_hour_utc`, nothing runs unless you start it.
+- **Spend extra answers where they help.** Instead of raising `samples` everywhere, `[sampling] adaptive = true` with `max_extra = N` adds at most N answers to a core run, on the prompts whose rate is least certain, and only within today's budget on API answerers. It's off by default. The set's page says whether your samples are buying precision; see [How big a change Popcorn can detect](../noise-and-confidence/#when-more-samples-help).
+- **Start with the free checks.** `popcorn audit`, `popcorn check-citations` and `popcorn crawl` make no model calls. See [Free site checks](../site-audit/).
 
 See [Configuration](../configuration/#budget) for the rest of `popcorn.toml`.
 
