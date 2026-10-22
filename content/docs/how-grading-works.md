@@ -1,14 +1,14 @@
 ---
 title: How grading works
-description: How Popcorn decides whether an AI assistant recommended a brand, mentioned it or left it out, which assistants it asks, and how to check every grade.
+description: How Cheap Seats decides whether an AI assistant recommended a brand, mentioned it or left it out, which assistants it asks, and how to check every grade.
 weight: 42
 ---
 
-**How does Popcorn decide whether an AI assistant recommended a brand?** It asks each assistant your buyers' questions, then a separate Claude call reads each answer and grades it **recommended**, **mentioned** or **absent** for your brand, with the reasons. It isn't a single opaque score: every answer, every search the assistant ran, every result and citation, and every grade with its reasoning is stored, and you can open any of them from the run page or export them.
+**How does Cheap Seats decide whether an AI assistant recommended a brand?** It asks each assistant your buyers' questions, then a separate Claude call reads each answer and grades it **recommended**, **mentioned** or **absent** for your brand, with the reasons. It isn't a single opaque score: every answer, every search the assistant ran, every result and citation, and every grade with its reasoning is stored, and you can open any of them from the run page or export them.
 
 ## Which assistants it asks
 
-Popcorn asks the models you configure, through their APIs or their command-line tools:
+Cheap Seats asks the models you configure, through their APIs or their command-line tools:
 
 | provider      | asks                                   | billed                     |
 | ------------- | -------------------------------------- | -------------------------- |
@@ -17,7 +17,7 @@ Popcorn asks the models you configure, through their APIs or their command-line 
 | `claude-code` | Claude models, through the `claude` CLI | your Claude subscription   |
 | `codex`       | OpenAI models, through the `codex` CLI  | your ChatGPT subscription  |
 
-**Not covered:** Google AI Overviews, AI Mode, Gemini, Perplexity and Microsoft Copilot. Popcorn doesn't ask them. And it asks the models directly, not the ChatGPT or Claude apps a buyer types into, which can add their own memory and settings.
+**Not covered:** Google AI Overviews, AI Mode, Gemini, Perplexity and Microsoft Copilot. Cheap Seats doesn't ask them. And it asks the models directly, not the ChatGPT or Claude apps a buyer types into, which can add their own memory and settings.
 
 ## Two tracks
 
@@ -30,7 +30,7 @@ The two are graded and reported separately, never blended, so you can see which 
 
 ## Three grades
 
-The grader is a separate Claude call (Claude Haiku on popcorn.zone's own runs) that sees the question, the answer, your brand's name and aliases, and the canonical names of your competitors. It grades only your brand:
+The grader is a separate Claude call (Claude Haiku on cheapseats.dev's own runs) that sees the question, the answer, your brand's name and aliases, and the canonical names of your competitors. It grades only your brand:
 
 | verdict       | when                                                                                                   |
 | ------------- | ------------------------------------------------------------------------------------------------------ |
@@ -50,13 +50,13 @@ It's strict on purpose: a brand listed in a table with nine others is mentioned,
 - **praise**: short phrases for each strength the answer credits your brand with, such as "open source" or "easy setup", the mirror of objections;
 - **evidence**: the one sentence of the answer that most supports the verdict, copied word for word. None when the brand is absent.
 
-**Evidence is checked, not trusted.** A model asked to quote can paraphrase. Popcorn looks for the grader's quote in the answer itself, ignoring case, spacing, markdown emphasis and curly quotes, and keeps the answer's own span of text. A quote it can't find is dropped, never shown. So every quote on the run page, where it's highlighted in the answer, is one the answer contains. It's `evidence` in the grade, in the JSON and CSV exports and in MCP `get_result`.
+**Evidence is checked, not trusted.** A model asked to quote can paraphrase. Cheap Seats looks for the grader's quote in the answer itself, ignoring case, spacing, markdown emphasis and curly quotes, and keeps the answer's own span of text. A quote it can't find is dropped, never shown. So every quote on the run page, where it's highlighted in the answer, is one the answer contains. It's `evidence` in the grade, in the JSON and CSV exports and in MCP `get_result`.
 
 Tone and praise feed the run's **net sentiment** (the share of answers naming you that are positive, minus the share negative) and its **themes**: after a run is graded, one more grader call groups its objections, praise and reasons for picking something else into a few named themes, each with the product it helps and a quote. [Metric definitions](../metrics/#sentiment-and-themes) has the formulas.
 
 **Adding tone and praise changed the grading instructions once.** Every trend marks the first run graded with them as a new method, since answers are graded a different way, rather than joining the two into one line. Runs graded before have no tone, so their net sentiment is n/a.
 
-**Adding evidence changed them once more.** In Popcorn 0.2.5 the grader started returning an evidence quote, so each set's trend marks a new method at its first run on 0.2.5. Grades from before have no evidence.
+**Adding evidence changed them once more.** In Cheap Seats 0.2.5 the grader started returning an evidence quote, so each set's trend marks a new method at its first run on 0.2.5. Grades from before have no evidence.
 
 **Re-grading carries a trend on.** Instead of letting a grading change restart the trend, you can [re-grade](../regrading/) the answers older runs already have under today's grader. The answers aren't asked again; the re-graded runs join the new method's trend from their own dates on, and the grades they replaced are kept. On the `claude` CLI it costs nothing.
 
@@ -64,22 +64,22 @@ Questions marked `intent = "info"` ask for an explanation, not a choice, so a go
 
 ## Worked examples
 
-These are real answers from Popcorn's runs of 22 October 2026, asked about Popcorn itself.
+These are real answers from Cheap Seats' runs of 22 October 2026, asked about Cheap Seats itself while it was still called Popcorn. The quotes keep the name the questions and answers used.
 
-**Mentioned: named, not endorsed.** Asked *"Is Popcorn a good open-source alternative to paid AI visibility tools?"*, Claude, answering from memory, opened with *"I can't vouch for Popcorn specifically"* and said it had no reliable information about a tool by that name. Popcorn is named first, because the question named it, but the answer doesn't endorse it, so the grade is `mentioned`, and its objections say what to fix.
+**Mentioned: named, not endorsed.** Asked *"Is Popcorn a good open-source alternative to paid AI visibility tools?"*, Claude, answering from memory, opened with *"I can't vouch for Popcorn specifically"* and said it had no reliable information about a tool by that name. Cheap Seats is named first, because the question named it, but the answer doesn't endorse it, so the grade is `mentioned`, and its objections say what to fix.
 
 **A close call.** Asked *"Popcorn or Semrush AI Toolkit for tracking our brand in ChatGPT and Claude?"*, an OpenAI model opened with: *"I'd start by evaluating Popcorn if your main goal is tracking your brand in ChatGPT and Claude. Choose Semrush AI Toolkit if you also want that work tied to a broader SEO program."* That reads as one of two primary picks, which is `recommended`, but the same answer says *"I don't have reliable enough information about Popcorn's capabilities"*, which hedges it to `mentioned`. Graded ten more times, it came back `mentioned` nine times and `recommended` once. Close calls like this are why every question is asked more than once and every rate carries an interval, and why each grade shows its reasoning: you can read the close ones yourself.
 
 **Absent: another product with the same name.** Asked *"Popcorn vs Profound…"*, an answer said it *"couldn't verify the specific Popcorn product you mean"* and went on to describe trypopcorn.ai, which *"sells WhatsApp sales and support agents"*. The name is in the answer, but the brand isn't. The grader tells products that share your name apart using your brand's `about`, and records when every use of the name means something else; that grade is `absent`. An answer that says it can't find your brand, without taking it for something else, still names it.
 
-**Absent, though the answer recommends something.** A question about a competitor, such as *"Is Gauge a good tool for tracking AI visibility?"*, can get an answer that endorses Gauge warmly and never names your brand. That's `absent` for you. The grader is told that the product a question asks about is never your brand, and Popcorn then checks the answer's text itself: if your brand's name and aliases appear nowhere in it, the grade is absent whatever the model said.
+**Absent, though the answer recommends something.** A question about a competitor, such as *"Is Gauge a good tool for tracking AI visibility?"*, can get an answer that endorses Gauge warmly and never names your brand. That's `absent` for you. The grader is told that the product a question asks about is never your brand, and Cheap Seats then checks the answer's text itself: if your brand's name and aliases appear nowhere in it, the grade is absent whatever the model said.
 
 ## Rates and intervals
 
-The run page reports, for each assistant and track, how often your brand was the top pick, recommended, and named, each with a 95% Wilson interval, so a rate from a handful of answers reads as uncertain rather than precise. The share-of-voice board counts every product named across the run's answers: each one's named rate, its true share of voice (which adds up to 100%), and where it comes in the answers. Every formula is in [Metric definitions](../metrics/), and how much a rate can move by chance is in [How big a change Popcorn can detect](../noise-and-confidence/).
+The run page reports, for each assistant and track, how often your brand was the top pick, recommended, and named, each with a 95% Wilson interval, so a rate from a handful of answers reads as uncertain rather than precise. The share-of-voice board counts every product named across the run's answers: each one's named rate, its true share of voice (which adds up to 100%), and where it comes in the answers. Every formula is in [Metric definitions](../metrics/), and how much a rate can move by chance is in [How big a change Cheap Seats can detect](../noise-and-confidence/).
 
 ## Checking a grade
 
-The run page lists every answer behind its rates. For any answer you can read the full text, with the grade's evidence highlighted in it, the searches the assistant ran, every result and page it cited, and the grade with its reasoning. Each run also stores the grading instructions it used, its config commit and the Popcorn version, and exports to CSV or JSON. When the way answers are asked or graded changes, the trend marks the run where it changed rather than joining two methods into one line. A re-graded run says so on its page, with the method it had before.
+The run page lists every answer behind its rates. For any answer you can read the full text, with the grade's evidence highlighted in it, the searches the assistant ran, every result and page it cited, and the grade with its reasoning. Each run also stores the grading instructions it used, its config commit and the Cheap Seats version, and exports to CSV or JSON. When the way answers are asked or graded changes, the trend marks the run where it changed rather than joining two methods into one line. A re-graded run says so on its page, with the method it had before.
 
 See [Reading results](../reading-results/) for the run page, and [Configuration](../configuration/) for answerers, models and samples.

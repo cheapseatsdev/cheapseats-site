@@ -1,10 +1,10 @@
 ---
 title: Metric definitions
-description: Every number Popcorn reports, with its formula and denominator, and how each maps to Peec AI, Profound, Gauge, Otterly.AI, Ahrefs, SE Ranking, Elmo and Limelit Open.
+description: Every number Cheap Seats reports, with its formula and denominator, and how each maps to Peec AI, Profound, Gauge, Otterly.AI, Ahrefs, SE Ranking, Elmo and Limelit Open.
 weight: 43
 ---
 
-**What exactly does each Popcorn number mean?** Almost every metric below is a count of graded answers over a count of graded answers, worked out from what's stored. No model is called to build a report. The same numbers are on the run page, in the run's JSON (`/api/runs/<id>` and `/runs/<id>/export.json`, under `Summary`), in `popcorn report <run-id> -json` (under `summary`) and in MCP `get_run`.
+**What exactly does each Cheap Seats number mean?** Almost every metric below is a count of graded answers over a count of graded answers, worked out from what's stored. No model is called to build a report. The same numbers are on the run page, in the run's JSON (`/api/runs/<id>` and `/runs/<id>/export.json`, under `Summary`), in `cheapseats report <run-id> -json` (under `summary`) and in MCP `get_run`.
 
 Terms used throughout:
 
@@ -97,7 +97,7 @@ Every page an answer cited, or its searches returned, is sorted into a kind of s
 | `institutional` | .gov, .edu, .mil, .int and their country forms (gov.uk, ac.uk) |
 | `editorial` | everything else |
 
-Your sites come first, then competitors' domains, then `[sources]` in `popcorn.toml`, then the built-in lists; within a list the most specific entry wins. See [Configuration](../configuration/#sources).
+Your sites come first, then competitors' domains, then `[sources]` in `cheapseats.toml`, then the built-in lists; within a list the most specific entry wins. See [Configuration](../configuration/#sources).
 
 For each page, host and kind:
 
@@ -175,13 +175,13 @@ A high score says the answers lean on the same sources run after run, so a host 
 | **Fix outcome** | the same paired D, before and after the fix, over its target prompts |
 | **Quick wins gain** | speed × mean over the fix's prompts of (1 − p), where speed is prompts per working day and p is the prompt's recommended rate (named, for an info prompt) pooled over the last 14 days |
 
-`var_k` is a prompt's sampling variance, p̃(1 − p̃)/n with p̃ = (h + 0.5)/(n + 1). [How big a change Popcorn can detect](../noise-and-confidence/) explains these intervals and tests, with a worked example.
+`var_k` is a prompt's sampling variance, p̃(1 − p̃)/n with p̃ = (h + 0.5)/(n + 1). [How big a change Cheap Seats can detect](../noise-and-confidence/) explains these intervals and tests, with a worked example.
 
 ## How these compare to other tools
 
 Most AI visibility tools use the same few words for different formulas. The table below is from each vendor's published documentation as of October 2026: [Peec AI](https://docs.peec.ai/metrics/brand-metrics), [Profound](https://docs.tryprofound.com/cookbook/metrics/how-metrics-are-calculated.md), [Gauge](https://docs.withgauge.com/introduction/core-aeo-metrics), [Otterly.AI](https://help.otterly.ai/brand-report-kpi-definition), [Ahrefs Brand Radar](https://help.ahrefs.com/en/articles/15501968-ai-visibility-metrics), [SE Ranking](https://visible.seranking.com/?p=4633), and the two open-source trackers, Elmo ([visibility](https://www.elmohq.com/docs/user-guide/visibility), [sentiment](https://www.elmohq.com/docs/user-guide/sentiment), [share of voice code](https://github.com/elmohq/elmo/blob/ed3c6a23227f90e653df8b8722ee3a8fb6c4e5e6/apps/web/src/lib/visibility-stats.ts)) and Limelit Open ([methodology](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/methodology.md)). Check their pages for changes since.
 
-| concept | Popcorn | Peec AI | Profound | Gauge | Otterly.AI | Ahrefs | SE Ranking | Elmo | Limelit Open |
+| concept | Cheap Seats | Peec AI | Profound | Gauge | Otterly.AI | Ahrefs | SE Ranking | Elmo | Limelit Open |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Visibility** | **named rate**: answers naming you ÷ every graded answer | visibility: responses mentioning you ÷ all responses | visibility: runs naming you ÷ runs naming any brand | visibility: answers naming you ÷ all answers | brand coverage: prompts mentioning you ÷ all prompts | a mention: you appear at least once in an answer | visibility: mean of (N − best position + 1)/N, 0 when absent | visibility: each prompt's latest answers mentioning you ÷ those answers; a name match is confirmed by a model (Jev) | visibility: answers containing your name string ÷ unbranded answers |
 | **Share of voice** | your mentions ÷ every product's mentions, one per answer, all products named | your mentions ÷ all brand mentions | your mentions ÷ all brand mentions, one per run | your mentions ÷ yours plus selected competitors' | your mentions ÷ all brand mentions | your share of impressions, weighted by search volume, against tracked brands | | your mentions ÷ yours plus tracked competitors' | your mention occurrences ÷ every tracked brand's occurrences in the same answers |
@@ -194,20 +194,20 @@ Most AI visibility tools use the same few words for different formulas. The tabl
 | **After a config change** | grades and rates stay as graded, unless you re-grade stored answers under today's grader; which pages are whose follows today's config | | re-applied to history from today's config | | | | | past answers re-judged for the changed company, 90 days back by default | every stored answer re-read from today's brands and rules |
 | **Intervals** | 95% intervals on every rate; changes tested against noise | none published | none published | none published | none published | "directional indicators" | none published | none published; 5 samples a run by default | `n` on every number; under 20 answers captioned a small sample |
 
-The Semrush AI Toolkit [sorts sources](https://www.semrush.com/kb/1594-ai-seo-metrics) into the same four buckets Popcorn uses: missing, shared, strong and unique.
+The Semrush AI Toolkit [sorts sources](https://www.semrush.com/kb/1594-ai-seo-metrics) into the same four buckets Cheap Seats uses: missing, shared, strong and unique.
 
-### Migrating between Popcorn and these tools
+### Migrating between Cheap Seats and these tools
 
-- **Popcorn's visibility is stricter than Profound's.** Profound leaves out the runs that name no brand at all; Popcorn's named rate counts every graded answer. On the same answers, Popcorn's number is lower or equal. To reproduce Profound's, take Popcorn's export and drop the answers whose `named` list is empty.
-- **Profound averages per model.** It works each metric out per AI model, then averages the models with equal weight. Popcorn's run-level rates pool the answers; its per-answerer rates are the per-model numbers, so average those to match.
-- **Gauge's share of voice depends on whom you compare with.** It divides by your mentions plus the selected competitors'. Popcorn divides by every product the answers named, so adding a competitor to your config doesn't change your share, except where it folds two spellings into one name.
-- **Peec AI's visibility is Popcorn's named rate.** Responses mentioning you over all responses. Peec's position also counts every brand detected, as Popcorn's avg place does.
-- **Otterly.AI counts prompts, not answers.** Brand coverage is the share of prompts that mention you. In Popcorn, count the prompts in the prompt list whose named rate is above zero.
-- **Ahrefs weights by search volume.** Brand Radar's AI share of voice is a share of estimated impressions. Popcorn weights every prompt you choose to ask the same, and estimates no traffic.
-- **SE Ranking's visibility is Popcorn's weighted column**, the same formula.
-- **History.** Profound applies today's topics, tags and brands to past answers, so editing your setup changes past numbers ([why past numbers change](https://docs.tryprofound.com/cookbook/metrics/why-past-numbers-change.md)). In Popcorn, a run's grades, rates and share of voice are fixed when it's graded; a change in how answers are asked or graded starts a new method on the trend rather than rewriting the old one. To carry the trend on after a grading change, [re-grade](../regrading/) the stored answers: it's a step you take, it keeps the replaced grades, and the run page says so. Only which pages count as yours or a competitor's, and the source kinds, are read from today's config for every run.
-- **Elmo's share of voice also depends on whom you track.** Like Gauge, it divides by your mentions plus your tracked competitors'. Its position is your rank among the tracked companies an answer names, where Popcorn's avg place counts every product named.
-- **Elmo leaves out "I don't know that brand".** A model reads each name match, and an answer saying it has no information about your brand isn't counted. Popcorn counts it as named, graded `mentioned`, with the objection recorded, so Popcorn's named rate can be higher on the same answers. Elmo's visibility also counts each prompt's latest answers, where Popcorn's run rates pool the run's.
-- **Limelit Open counts strings, and occurrences.** Its visibility is a deterministic text search, so "I could not find Acme" counts as a mention, as its methodology says. Its share of voice counts every occurrence, not one per answer: an answer that names you once and a rival five times is a 1:5 share, where in Popcorn it's 1:1.
+- **Cheap Seats' visibility is stricter than Profound's.** Profound leaves out the runs that name no brand at all; Cheap Seats' named rate counts every graded answer. On the same answers, Cheap Seats' number is lower or equal. To reproduce Profound's, take Cheap Seats' export and drop the answers whose `named` list is empty.
+- **Profound averages per model.** It works each metric out per AI model, then averages the models with equal weight. Cheap Seats' run-level rates pool the answers; its per-answerer rates are the per-model numbers, so average those to match.
+- **Gauge's share of voice depends on whom you compare with.** It divides by your mentions plus the selected competitors'. Cheap Seats divides by every product the answers named, so adding a competitor to your config doesn't change your share, except where it folds two spellings into one name.
+- **Peec AI's visibility is Cheap Seats' named rate.** Responses mentioning you over all responses. Peec's position also counts every brand detected, as Cheap Seats' avg place does.
+- **Otterly.AI counts prompts, not answers.** Brand coverage is the share of prompts that mention you. In Cheap Seats, count the prompts in the prompt list whose named rate is above zero.
+- **Ahrefs weights by search volume.** Brand Radar's AI share of voice is a share of estimated impressions. Cheap Seats weights every prompt you choose to ask the same, and estimates no traffic.
+- **SE Ranking's visibility is Cheap Seats' weighted column**, the same formula.
+- **History.** Profound applies today's topics, tags and brands to past answers, so editing your setup changes past numbers ([why past numbers change](https://docs.tryprofound.com/cookbook/metrics/why-past-numbers-change.md)). In Cheap Seats, a run's grades, rates and share of voice are fixed when it's graded; a change in how answers are asked or graded starts a new method on the trend rather than rewriting the old one. To carry the trend on after a grading change, [re-grade](../regrading/) the stored answers: it's a step you take, it keeps the replaced grades, and the run page says so. Only which pages count as yours or a competitor's, and the source kinds, are read from today's config for every run.
+- **Elmo's share of voice also depends on whom you track.** Like Gauge, it divides by your mentions plus your tracked competitors'. Its position is your rank among the tracked companies an answer names, where Cheap Seats' avg place counts every product named.
+- **Elmo leaves out "I don't know that brand".** A model reads each name match, and an answer saying it has no information about your brand isn't counted. Cheap Seats counts it as named, graded `mentioned`, with the objection recorded, so Cheap Seats' named rate can be higher on the same answers. Elmo's visibility also counts each prompt's latest answers, where Cheap Seats' run rates pool the run's.
+- **Limelit Open counts strings, and occurrences.** Its visibility is a deterministic text search, so "I could not find Acme" counts as a mention, as its methodology says. Its share of voice counts every occurrence, not one per answer: an answer that names you once and a rival five times is a 1:5 share, where in Cheap Seats it's 1:1.
 - **History, again.** Elmo re-judges past answers when you add a competitor or change a name, 90 days back by default, and leaves older answers as they were, so a long chart can step at that point. Limelit Open re-reads every stored answer whenever the brands or its matching rules change.
-- **Your prompts move with you.** Popcorn's prompt sets are plain TOML in your own repo. Each prompt is a line of text, so you can paste them into any of these tools. See [Compare](/compare/).
+- **Your prompts move with you.** Cheap Seats' prompt sets are plain TOML in your own repo. Each prompt is a line of text, so you can paste them into any of these tools. See [Compare](/compare/).

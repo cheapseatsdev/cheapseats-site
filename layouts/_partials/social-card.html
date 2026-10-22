@@ -1,4 +1,4 @@
-{{- /* A 1200x630 share card per page: the page title on Popcorn's card background, drawn at build time. Returns the image resource. */ -}}
+{{- /* A 1200x630 share card per page: the page title on Cheap Seats' card background, drawn at build time. Returns the image resource. */ -}}
 {{- $bold := resources.Get "social/Inter-Bold.ttf" -}}
 {{- $medium := resources.Get "social/Inter-Medium.ttf" -}}
 {{- $title := .Title -}}
@@ -13,7 +13,7 @@
 {{- $filters := slice
   (images.Text site.Title (dict "font" $bold "size" 46 "color" "#252321" "x" 156 "y" 78))
   (images.Text ($title | truncate 90) (dict "font" $bold "size" $size "color" "#252321" "x" 80 "y" 236 "linespacing" 10))
-  (images.Text (printf "popcorn.zone · %s" site.Params.tagline) (dict "font" $medium "size" 28 "color" "#6E6862" "x" 80 "y" 550))
+  (images.Text (printf "cheapseats.dev · %s" site.Params.tagline) (dict "font" $medium "size" 28 "color" "#6E6862" "x" 80 "y" 550))
 -}}
 {{- with $eyebrow }}{{ $filters = $filters | append (images.Text . (dict "font" $medium "size" 30 "color" "#C73532" "x" 80 "y" 180)) }}{{ end -}}
 {{- $card := (resources.Get "social/card.png") | images.Filter $filters -}}

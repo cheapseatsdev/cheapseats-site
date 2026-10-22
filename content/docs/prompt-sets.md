@@ -1,10 +1,10 @@
 ---
 title: Prompt sets
-description: The buyer questions Popcorn asks, as TOML files in your config repo, with ids that keep their history.
+description: The buyer questions Cheap Seats asks, as TOML files in your config repo, with ids that keep their history.
 weight: 30
 ---
 
-Each file in your config repo's `prompt-sets/` is one category of buyer questions. Popcorn only reads them, so change one with a pull request, after `popcorn check`.
+Each file in your config repo's `prompt-sets/` is one category of buyer questions. Cheap Seats only reads them, so change one with a pull request, after `cheapseats check`.
 
 ## Format
 
@@ -24,7 +24,7 @@ text = "What's the difference between being mentioned and being recommended in a
 intent = "info"                   # asks to explain, not to choose: scored on named, not recommended
 
 # Products the grader folds onto one canonical name, so share of voice counts "Peec" as Peec AI.
-# Competitors every set shares go once in popcorn.toml; list one here only for this set.
+# Competitors every set shares go once in cheapseats.toml; list one here only for this set.
 [[competitors]]
 name = "Peec AI"
 aliases = ["Peec"]
@@ -48,7 +48,7 @@ Don't reword an explanation question into "recommend a tool" to make it scoreabl
 
 ## Competitors shared by every set
 
-A competitor list that every set repeats goes once in `popcorn.toml`:
+A competitor list that every set repeats goes once in `cheapseats.toml`:
 
 ```toml
 [[competitors]]
@@ -74,7 +74,7 @@ Only a change to how answers are asked or graded starts a new trend; anything el
 |---|---|
 | brand `name`, `aliases`, `about` or `audience` | new trend |
 | grader model | new trend |
-| a Popcorn release that changes its answer, search or grading prompts | new trend |
+| a Cheap Seats release that changes its answer, search or grading prompts | new trend |
 | prompts added, removed or reworded | noted; comparisons use the prompts both days asked |
 | a prompt's `intent` | noted; that prompt is left out of the day's comparison |
 | competitors | noted |
@@ -82,23 +82,23 @@ Only a change to how answers are asked or graded starts a new trend; anything el
 | brand sites or domains, facts, owners | nothing: they change where fixes go, not how answers are graded |
 | a set's name, description or tier | nothing |
 
-Before merging a config change, run `popcorn plan` on a checkout of main and one of the branch:
+Before merging a config change, run `cheapseats plan` on a checkout of main and one of the branch:
 
 ```bash
-popcorn plan <checkout of main> <checkout of the branch>
+cheapseats plan <checkout of main> <checkout of the branch>
 ```
 
 It lists the prompts added, removed, reworded and moved, prompts whose intent changed, competitor and answerer changes, which of them start a trend over, ids that should have been kept, and the answers a day the new config asks for, as Markdown for the pull request.
 
 ## Ask the way a buyer would
 
-Only `head-to-heads` names the brand; in every other set it has to be named on its own merits. `popcorn check` enforces this, matching the brand name and aliases as whole words.
+Only `head-to-heads` names the brand; in every other set it has to be named on its own merits. `cheapseats check` enforces this, matching the brand name and aliases as whole words.
 
 Write each question the way someone who has never heard of the brand would type it, and keep each set at 15–20 prompts so a rate means something.
 
 ## Sets written before ids
 
-Sets written before prompts had ids (`prompts = ["...", "..."]`) are converted by `popcorn migrate-config <dir>`, which makes an id from each prompt's words; review them before committing.
+Sets written before prompts had ids (`prompts = ["...", "..."]`) are converted by `cheapseats migrate-config <dir>`, which makes an id from each prompt's words; review them before committing.
 
 ## Keep them public
 
