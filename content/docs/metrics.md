@@ -103,12 +103,12 @@ For each page, host and kind:
 
 | metric | numerator | denominator | JSON |
 | --- | --- | --- | --- |
-| **Retrieved** | answers whose searches returned it | answers with stored text, on both tracks | `retrieved_rate` |
-| **Cited** | answers that linked it | answers with stored text, on both tracks | `cited_rate` |
+| **Retrieved** | answers whose searches returned it | answers that could reach a page: the search track, plus any answer that searched, fetched or cited | `retrieved_rate` |
+| **Cited** | answers that linked it | answers that could reach a page: the search track, plus any answer that searched, fetched or cited | `cited_rate` |
 | **Share of citations** | its citations, one per answer that linked it | every citation in the run | `citation_share` |
 | **Cited when retrieved** | answers that both retrieved and linked it | answers whose searches returned it | `cited_when_surfaced` |
 
-A host counts each answer once, however many of its pages the answer used. Recall answers run no searches, so a retrieved rate's ceiling is the run's share of search-track answers.
+A host counts each answer once, however many of its pages the answer used. Recall answers have no tools, so they're left out of these rates rather than diluting them.
 
 ### Buckets, outreach and found but not cited
 
