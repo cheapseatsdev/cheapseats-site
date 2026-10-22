@@ -3,8 +3,7 @@
 > {{ site.Params.description }}
 
 Every page of {{ site.BaseURL }}, docs first, as markdown. Source: {{ site.Params.github }}
-{{ range slice "docs" "guides" "blog" }}
-{{- with site.GetPage . }}
+{{ range site.Sections.ByWeight }}
 {{- range .Pages.ByWeight }}
 
 ---
@@ -20,6 +19,5 @@ Every page of {{ site.BaseURL }}, docs first, as markdown. Source: {{ site.Param
 {{- end }}
 
 {{ .RenderShortcodes }}
-{{- end }}
 {{- end }}
 {{- end }}
