@@ -18,7 +18,7 @@ As of October 2026, from Popcorn's docs and Gauge's own [pricing](https://withga
 
 | | Popcorn | Gauge |
 | --- | --- | --- |
-| **Price** | Free and open source (MIT); runs on your existing Claude and ChatGPT subscriptions | Growth $599/month; Enterprise custom |
+| **Price** | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | Growth $599/month; Enterprise custom |
 | **Where it runs** | Self-hosted: one Docker container with SQLite, on Docker, Kubernetes (Helm chart) or an exe.dev VM | Hosted SaaS |
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Growth: ChatGPT, Google AI Mode, Microsoft Copilot. Enterprise adds Google AI Overviews, Gemini and Perplexity. Claude and Grok on any plan with your own Anthropic or xAI API key |
 | **Your prompts** | TOML in your own git repo, changed by pull request | 600 prompts, run daily, on Growth; custom on Enterprise |
@@ -28,7 +28,7 @@ As of October 2026, from Popcorn's docs and Gauge's own [pricing](https://withga
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | MCP and a CLI; Slack integration. API not mentioned |
 | **Coding agents** | Not covered | Gauge Agents runs evaluations with Claude Code, Codex and Cursor |
 
-**What it costs.** Popcorn is free and open source (MIT). On your own machine it runs on the Claude and ChatGPT subscriptions you already have, with no API key: answers come from the Claude Code and Codex CLIs, and grading and the fix list can run on the claude CLI too. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs: about $0.03 to grade a 68-answer run, under a daily budget cap). [Cost and budget](/docs/cost-and-budget/) has the details.
+**What it costs.** Popcorn is free and open source (MIT). Claude is required, through a subscription or an API key; ChatGPT (Codex or an OpenAI key) is optional and adds a second assistant's answers. On your own machine, with a Claude Code subscription, answers, grading and the fix list can all run on the claude CLI, with no API key and no extra spend. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs: about $0.03 to grade a 68-answer run, under a daily budget cap). [Cost and budget](/docs/cost-and-budget/) has the details.
 
 ## Ranked fix list vs Action Center
 

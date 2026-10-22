@@ -5,13 +5,13 @@ weight: 25
 outputs: ["html", "markdown"]
 ---
 
-Popcorn (popcorn.zone) is the MIT-licensed, self-hosted AI visibility tracker. It is openly inspired by hosted tools like Gauge, Profound, Peec AI, Otterly.AI and the Semrush AI Toolkit. Those products do a lot. Most teams starting out use a small part of it most of the time: ask the assistants your buyers' questions, see whether the answers recommend you, and find out what to change. Popcorn is that part, free and open source, running on the Claude and ChatGPT subscriptions you already have.
+Popcorn (popcorn.zone) is the MIT-licensed, self-hosted AI visibility tracker. It is openly inspired by hosted tools like Gauge, Profound, Peec AI, Otterly.AI and the Semrush AI Toolkit. Those products do a lot. Most teams starting out use a small part of it most of the time: ask the assistants your buyers' questions, see whether the answers recommend you, and find out what to change. Popcorn is that part, free and open source, running on the Claude subscription you already have (ChatGPT optional).
 
 ## Start here
 
 If you want to find out whether AI assistants recommend your product, without a sales call or a monthly plan, start with Popcorn. It asks Claude and OpenAI models your buyers' questions, grades whether each answer recommends your brand, merely mentions it or leaves it out, and ends every run with a ranked list of fixes.
 
-On your own machine it runs on the Claude and ChatGPT subscriptions you already have, with no API key. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs).
+Claude is required, through a subscription or an API key; ChatGPT (Codex or an OpenAI key) is optional and adds a second assistant's answers. On your own machine, a Claude Code subscription is enough: no API key, no extra spend. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs).
 
 ## When to move
 

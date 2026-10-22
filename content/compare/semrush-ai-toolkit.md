@@ -12,7 +12,7 @@ As of October 2026, from Popcorn's docs and Semrush's own [AI Visibility Toolkit
 
 | | Popcorn | Semrush AI Visibility Toolkit |
 | --- | --- | --- |
-| **Price** | Free and open source (MIT); runs on your existing Claude and ChatGPT subscriptions | $99/month for the toolkit. Semrush One "SEO + AI Search" plans start at $165.17/month billed annually ($199 monthly) |
+| **Price** | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | $99/month for the toolkit. Semrush One "SEO + AI Search" plans start at $165.17/month billed annually ($199 monthly) |
 | **Where it runs** | Self-hosted: one Docker container with SQLite, on Docker, Kubernetes (Helm chart) or an exe.dev VM | Hosted SaaS |
 | **Engines** | **Claude** and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Toolkit: "platforms like Google AI Mode and ChatGPT". Pricing page: "Google Search, ChatGPT, Perplexity, Gemini & more". Claude isn't mentioned on either page |
 | **Your prompts** | TOML in your own git repo, changed by pull request | Prompt Tracking: 25 prompts, 50 more for $60/month. Semrush One Starter: 50 prompts tracked daily |
@@ -22,7 +22,7 @@ As of October 2026, from Popcorn's docs and Semrush's own [AI Visibility Toolkit
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | Semrush API and Semrush MCP exist as products; the toolkit page doesn't describe them for AI visibility |
 | **SEO suite** | None; Popcorn only measures AI answers | Part of Semrush, alongside its SEO tools |
 
-**What it costs.** Popcorn is free and open source (MIT). On your own machine it runs on the Claude and ChatGPT subscriptions you already have, with no API key: answers come from the Claude Code and Codex CLIs, and grading and the fix list can run on the claude CLI too. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs: about $0.03 to grade a 68-answer run, under a daily budget cap). [Cost and budget](/docs/cost-and-budget/) has the details.
+**What it costs.** Popcorn is free and open source (MIT). Claude is required, through a subscription or an API key; ChatGPT (Codex or an OpenAI key) is optional and adds a second assistant's answers. On your own machine, with a Claude Code subscription, answers, grading and the fix list can all run on the claude CLI, with no API key and no extra spend. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs: about $0.03 to grade a 68-answer run, under a daily budget cap). [Cost and budget](/docs/cost-and-budget/) has the details.
 
 ## Start with Popcorn if…
 
