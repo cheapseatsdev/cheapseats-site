@@ -1,7 +1,6 @@
 <footer class="site">
   <div class="wrap">
     <p>{{ site.Title }} (cheapseats.dev) is {{ site.Params.tagline }}, free under the <a href="{{ site.Params.github }}/blob/main/LICENSE">MIT license</a>. Source on <a href="{{ site.Params.github }}">GitHub</a>.</p>
-    <p class="muted">Cheap Seats was called Popcorn until October 2026. It isn't affiliated with Bad Popcorn (badpopcorn.ai), Popcorn AI (trypopcorn.ai), popcorn.ai, popcorn.co or Reclaim Protocol's popcorn-oss.</p>
     <p class="muted">Icons from <a href="https://lucide.dev">Lucide</a> (ISC). No cookies, no analytics.{{ with site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }} <a href="{{ .RelPermalink }}">RSS</a>{{ end }}{{ end }}</p>
   </div>
 </footer>

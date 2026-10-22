@@ -78,4 +78,4 @@ If you outgrow Cheap Seats, do whatever suits you. I'd suggest [Gauge](/compare/
 
 Cheap Seats' prompt sets are plain TOML in your own git repo, each prompt a line of text with an id. The buyer questions you refined are yours: plain text you can copy into whichever tool you choose. You can also keep Cheap Seats running alongside, for the strict grading and the fix list. For one tool at a time, see [Compare](/compare/).
 
-Cheap Seats was called Popcorn until October 2026. It isn't affiliated with Bad Popcorn (badpopcorn.ai), Popcorn AI (trypopcorn.ai), popcorn.ai, popcorn.co or Reclaim Protocol's popcorn-oss. The code is on [GitHub](https://github.com/cheapseatsdev/cheapseats), and [Getting started](/docs/getting-started/) takes you from a checkout to your first run.
+The code is on [GitHub](https://github.com/cheapseatsdev/cheapseats), and [Getting started](/docs/getting-started/) takes you from a checkout to your first run.

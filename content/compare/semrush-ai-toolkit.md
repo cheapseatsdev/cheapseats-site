@@ -44,4 +44,4 @@ If you outgrow Cheap Seats, do whatever suits you. Its author would suggest [Gau
 
 Your prompt sets are plain TOML in your own git repo. Each prompt is a line of text with an id, so the buyer questions you've refined in Cheap Seats are yours. They're plain text you can copy into Semrush's Prompt Tracking when you set it up. The toolkit starts at 25 prompts, so bring the ones that mattered most.
 
-Cheap Seats was called Popcorn until October 2026. It isn't affiliated with Bad Popcorn (badpopcorn.ai), Popcorn AI (trypopcorn.ai), popcorn.ai, popcorn.co or Reclaim Protocol's popcorn-oss. See [Getting started](/docs/getting-started/) to run it, or [all comparisons](/compare/).
+See [Getting started](/docs/getting-started/) to run it, or [all comparisons](/compare/).
