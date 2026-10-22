@@ -23,7 +23,7 @@ A second Claude call grades each answer:
 | `mentioned`   | named, but only as one option among many, in passing, or with reservations      |
 | `absent`      | not named at all (aliases included)                                             |
 
-Along with the verdict you get the brand's position in the answer, the answer's top pick, every product named (for share of voice), the grader's reasoning, a **"why not #1"** (what the answer preferred and the reasons it gave), the specific **objections** raised about the brand, its **tone** about the brand (positive, neutral, mixed or negative) and the **praise** it gives. [How grading works](../how-grading-works/) has the rules in full, with worked examples.
+Along with the verdict you get the brand's position in the answer, the answer's top pick, every product named (for share of voice), the grader's reasoning, a **"why not #1"** (what the answer preferred and the reasons it gave), the specific **objections** raised about the brand, its **tone** about the brand (positive, neutral, mixed or negative), the **praise** it gives, and the **evidence**: the sentence of the answer that most supports the verdict, checked to be in the answer. [How grading works](../how-grading-works/) has the rules in full, with worked examples.
 
 ## The run page
 
@@ -37,10 +37,16 @@ Everything on a run page is worked out from the answers and grades already store
 - **Head to head**: the brand against each product on the board: answers naming both and which of the two led, answers naming only one, and answers naming neither.
 - **Objections**: the concerns answers raised about the brand, counted once per answer, with an example prompt.
 - **Sources**: every page an answer cited or its searches returned, sorted by kind of site (own, competitor, ugc, review, reference, institutional, editorial), with how often each kind and host was **retrieved**, **cited**, its **share of citations**, and how often it was **cited when retrieved**. Each host that isn't yours is bucketed **missing**, **shared**, **strong** or **unique** by whether the answers citing it name competitors, you, or both.
+- **Page types**: after the kinds of site, what the cited and retrieved pages are: listicle, comparison, review, docs, forum, repo, article, product or other, from each page's URL and title. The kind of site says whose page it is; the page type says what it does. [Metric definitions](../metrics/#page-types) has the rules.
 - **Cited without you**: the third-party hosts the answers cite while naming competitors and never you, ranked by competitors named × answers citing it. That's the outreach list.
 - **Found but not cited**: your own pages that searches returned and no answer linked.
-- **Pages referenced** and **every answer** with its grade.
+- **Pages referenced** and **every answer** with its grade. The grade's **evidence** is highlighted in the answer's text, and quoted under the grader's reasoning.
 - **Fix these first** and **insights** (below).
+- **Share**: on a finished run, a read-only link to its report for someone without a sign-in. See [Sharing a run](../sharing/).
+
+**Evidence is always in the answer.** The grader is asked to copy the sentence that backs its verdict. Popcorn then looks for it in the answer, ignoring case, spacing, markdown emphasis and curly quotes, and keeps the answer's own span of text, or nothing if it isn't there. So a highlighted quote is always one the answer contains. Absent answers have none, nor do grades from before evidence was added. It's `evidence` in the grade, in the JSON and CSV exports and in MCP `get_result`.
+
+**Re-graded runs say so.** A run whose stored answers were [re-graded](../regrading/) shows *re-graded &lt;date&gt; (was method X)* under its header, and keeps the grades it replaced.
 
 **Share of voice used to mean named rate.** In earlier versions the board's one column was labelled share of voice and held what is now the **named** rate. True share of voice now sits beside it. The JSON keeps the old `share` field, still holding the named rate, so existing scripts keep working; use `named_rate` or `share_of_voice` in new ones.
 
@@ -93,7 +99,7 @@ Quick wins pulls the fix lists from the latest run of every prompt set into one 
 | mixed | one rose and the other fell |
 | no detectable change (±X pts) | neither moved beyond its margin; a smaller effect could still be there |
 
-The fix's page turning up in searches or citations after the fix, when it didn't before, is shown as *newly surfaced*. See [How big a change Popcorn can detect](../noise-and-confidence/#what-no-detectable-change-means-for-a-fix). The analyst writing the list is told what was tried, so a retry says what to do differently. Work recorded after a fix list was built covers that list's fix for the same page too, since the list didn't know about it.
+The fix's page turning up in searches or citations after the fix, when it didn't before, is shown as *newly surfaced*. The outcome also says whether the fix's host entered or left the cited set: whether any answer on each side cited a page on it. See [How big a change Popcorn can detect](../noise-and-confidence/#what-no-detectable-change-means-for-a-fix). The analyst writing the list is told what was tried, so a retry says what to do differently. Work recorded after a fix list was built covers that list's fix for the same page too, since the list didn't know about it.
 
 ## Rankings
 
@@ -102,6 +108,10 @@ Rankings turns runs into a day-by-day series per set: the brand's place on the s
 Prompt sets change over time, so the series carries on through added, removed and reworded prompts, changed intents, new competitors and new answerer models: each day lists what changed since the day before, and its comparison with that day only counts the prompts both asked, worded the same, of the same answerers ("on 13 of 15 prompts"). A change in how answers are asked or graded starts the comparison over.
 
 **Changes are tested against noise.** "Vs day before" pairs the two days prompt by prompt and shows each change with its 95% margin; a change whose interval covers zero is greyed out as **within noise**. A rank move is shown only if a product that crossed the brand moved beyond the noise; otherwise the table says *within noise* and draws no arrow. Hover a day for its own rate with the interval for this set's prompts that day. Triangles under the chart mark the days a fix was proposed (gold) or accepted (green), linked to its commit or pull request. [How big a change Popcorn can detect](../noise-and-confidence/) explains the band, the intervals and the test.
+
+**Citation stability.** Each set's page also shows how much the hosts its answers cite move from run to run: a **stability score** (the mean Bray–Curtis similarity of consecutive runs' citation shares, with the mean overlap of hosts beside it), the hosts new and gone in the newest run, and each transition's similarity. It's shown once there are three transitions of the same method. A high score says a host entering or leaving means something; a low one says each run's sources are a sample. [Metric definitions](../metrics/#citation-stability) has the formulas.
+
+**After a grading change**, [re-grade](../regrading/) the answers you already have to carry the trend on instead of starting it over.
 
 Each set's page shows every prompt's results day by day, with named and recommended pooled over the same 7, 14 or 28 days and a 95% interval, so one prompt's history survives being reworded or moved to another set. When some answerer takes more than one sample, it also says whether the extra samples are buying precision.
 

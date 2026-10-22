@@ -35,7 +35,51 @@ With `POPCORN_TOKENS` unset, `serve` only listens on 127.0.0.1 and everything is
 
 What Popcorn asks, and about whom, lives in a config repo of your own, which you can keep private: the brand, answerers, grader, prices, budget and schedule in `popcorn.toml`, and the prompt sets in `prompt-sets/` beside it.
 
-Start a config repo from the [template](https://github.com/metcalfc/popcorn-config-template) (or copy the example), and point Popcorn at it:
+### Start one from your website: `popcorn init`
+
+```bash
+go run ./cmd/popcorn init https://yoursite.com                  # writes ./<brand>-popcorn-config
+go run ./cmd/popcorn init yoursite.com ../acme-config -dry-run  # prints what it found and would write
+go run ./cmd/popcorn init yoursite.com -name "Acme" -competitors "Asana,Trello" -suggest
+```
+
+It makes three requests, through the same guarded fetcher as the [site audit](../site-audit/) (public addresses only): the home page, `/llms.txt` and `/sitemap.xml`. No model is called unless you pass `-suggest`. From them it works out:
+
+- **Name**: the first of `og:site_name`, `application-name`, a JSON-LD Organization or SoftwareApplication `name`, the part of `<title>` that spells the domain, llms.txt's heading, the domain.
+- **About**: the meta description, else `og:description`, the JSON-LD description, llms.txt's summary.
+- **Aliases**: the domain, and the name without spaces.
+- **Sites**: the host (marketing); `docs.`, `developers.`, `help.`, `blog.` and `community.` subdomains and `/docs`, `/blog`, `/community` paths it finds linked; docs on readthedocs.io or gitbook.io named after the brand; up to three GitHub repositories or owners named after the brand or its domain, as `code`.
+- **Category**: what buyers would call the product, from the description ("platform", "app", "database"...). With none, the prompts say "tool" and a TODO says to replace it.
+
+It writes:
+
+```
+<brand>-popcorn-config/
+  popcorn.toml                   brand, sites, competitors; claude-code answerer, grader and
+                                 analyst (codex commented out); budget; schedule off
+  prompt-sets/
+    discovery.toml      core     "What's the best <category> for a small team?" ...
+    use-cases.toml      plg      the jobs buyers hire it for (a TODO: use theirs)
+    alternatives.toml   plg      "What are good alternatives to <competitor>?" ...
+    pricing.toml        plg      cost and value
+    head-to-heads.toml  plg      "<brand> vs <competitor>: which should I pick?": the only set
+                                 that names the brand
+```
+
+| flag | |
+| --- | --- |
+| `-name X` | the brand's name, instead of what the site calls itself |
+| `-competitors a,b` | competitors, comma-separated: `[[competitors]]` entries, alternatives prompts and head-to-heads |
+| `-suggest [-n 10]` | add suggested prompts to the starter sets: one analyst call on the `claude` CLI, so nothing on a subscription |
+| `-dry-run` | print what it found and every file it would write; write nothing |
+
+The generated files pass `popcorn check` before they're written. `init` refuses to overwrite a file that exists, and writes nothing if one does. Review every TODO (`grep -rn TODO`): `audience` and `facts` are left for you, and `about` and the category are guesses. Settle `about` and `audience` before the first run, since changing them restarts every trend. Commit the directory as its own git repo.
+
+### Or start from the template
+
+Start a config repo from the [template](https://github.com/metcalfc/popcorn-config-template), or copy the example, instead.
+
+### Point Popcorn at it
 
 ```bash
 POPCORN_CONFIG=../your-config/popcorn.toml go run ./cmd/popcorn check

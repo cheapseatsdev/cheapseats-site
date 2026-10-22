@@ -207,6 +207,7 @@ A fix goes to its site's owner, else to the owner for its gap here, else `defaul
 | `POPCORN_TOKENS` | comma-separated bearer tokens; required to listen beyond 127.0.0.1 |
 | `POPCORN_AUTH_HEADER`, `POPCORN_ALLOWED_EMAILS` | trust a signing-in proxy's email header, optionally narrowed to emails or `@domain`s ([exe.dev](../deploying/#exedev)) |
 | `POPCORN_HOSTS` | host names a proxy on the same machine serves Popcorn as, comma-separated; MCP refuses loopback requests under any other name |
+| `POPCORN_PUBLIC_URL` | the address [share links](../sharing/) use, such as `https://popcorn.example.com`. Unset, they use the first of `POPCORN_HOSTS` over https, else the host the request came in on (`X-Forwarded-Host` first) |
 | `POPCORN_CONFIG` | path to `popcorn.toml`; prompt sets are read from `prompt-sets/` beside it |
 | `POPCORN_CONFIG_REV` | the config commit, when the config is deployed without its `.git` |
 | `POPCORN_ADDR` | listen address, default `127.0.0.1:3000` |
