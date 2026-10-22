@@ -24,7 +24,7 @@ We picked two urgent, small documentation fixes. Both were pages popcorn.zone di
 
 {{< screenshot name="claude-prompt" alt="The fix's Prompt for Claude Code: the questions it affects, what the assistant said, who wins the question today, the task, what the page must say and the rules." caption="The prompt Popcorn writes for each fix. It's self-contained: Claude Code needs nothing else from the dashboard." >}}
 
-Open Claude Code in the repo that owns the site the fix belongs to, and paste the prompt. If you've connected Popcorn's [MCP server](../reference/#mcp), you can ask for it instead: "get the top quick win for popcorn.zone and do it". `get_quick_wins` returns each fix with its prompt.
+Open Claude Code in the repo that owns the site the fix belongs to, and paste the prompt. If you've connected Popcorn's [MCP server](../reference/#mcp-server), you can ask for it instead: "get the top quick win for popcorn.zone and do it". `get_quick_wins` returns each fix with its prompt.
 
 The prompt does most of the work:
 
@@ -44,7 +44,7 @@ Claude Code finishes with a pull request: the page, a summary of what it says, a
 
 The review is where you catch what the prompt got wrong. Popcorn's analyst writes the fix from the answers, not from your code, so its summary of your product can be loose. On the first pull request, Claude Code checked the prompt against the app's source and reported six places where they differed. For example:
 
-- The prompt asked for an "average position". Popcorn records each answer's position but doesn't average it, so the page shows how to compute one from the CSV export instead of claiming a metric that doesn't exist.
+- The prompt asked for an "average position". Popcorn recorded each answer's position but didn't average it then, so the page showed how to compute one from the CSV export instead of claiming a metric that didn't exist. (Popcorn has since added **avg place** to the run page; see [Metric definitions](../metrics/#share-of-voice-and-position).)
 - The prompt defined "recommended" as "top pick or explicitly endorsed". The grader's rule is stricter: the top pick, or one of three or fewer options the answer actively endorses. The page uses the grader's rule.
 
 That's the reason to give Claude Code the source and not only the prompt.
@@ -60,4 +60,12 @@ Mark the fix with the pull request while it's open: from its card in quick wins,
 
 Once the page is live, the next run of the set re-asks the questions. Each fix's **Done when** says what to look for. For these two, it's the new page among the pages that shaped the answers to the named prompts, which the run page lists under each prompt and in **Pages and searches**. The fix list is written fresh from each run, knowing what was tried, so a fix that worked usually drops off it, and one that didn't comes back open, marked *retry*, with your pull request, what changed for its prompts, and often a sharper reason.
 
-It doesn't happen at once. Search-track answers pick up a new page once it's indexed, and recall answers only change when the models do. Give a fix a few weekly runs before you judge it, and read the [rankings](../reading-results/#rankings) trend rather than one day.
+It doesn't happen at once. Search-track answers pick up a new page once it's indexed, and recall answers only change when the models do.
+
+**Popcorn judges the outcome for you, against the noise.** A prompt gets a handful of answers a run, so one run going up proves little. Popcorn pools the fix's prompts' answers from up to five runs before you marked it and every run since, compares named and recommended prompt by prompt, and gives the attempt a status:
+
+- **too early** until 7 days have passed and the target prompts have at least 4 answers each since, on average;
+- **moved** when named or recommended rose beyond its 95% margin and neither fell; **worse** or **mixed** when one fell;
+- **no detectable change (±X pts)** when neither moved beyond its margin. That isn't a verdict that the fix failed: any effect is smaller than X points so far, and X shrinks with each run.
+
+If the fix's page starts turning up in searches or citations, the outcome says *newly surfaced*, a sign the page is being read before the rates move. Fixes are marked on the [rankings](../reading-results/#rankings) chart, so you can read the trend around them rather than one day. [How big a change Popcorn can detect](../noise-and-confidence/#what-no-detectable-change-means-for-a-fix) has the numbers.

@@ -80,9 +80,27 @@ samples = { search = 2, recall = 1 }
 [[competitors]]
 name = "Peec AI"
 aliases = ["Peec", "peec.ai"]
+domains = ["peec.ai"]
 ```
 
 Competitors the grader folds onto one canonical name in every prompt set, so share of voice counts "Peec" as Peec AI. A set's own `[[competitors]]` adds to the list, and its entry for the same name wins. See [prompt sets](../prompt-sets/#competitors-shared-by-every-set).
+
+- `domains` are the competitor's own sites, each a host (covering its subdomains) or a host/path prefix (`github.com/withgauge`). The run page counts pages on them as that competitor's, in its sources, buckets and outreach list. Like the brand's sites, domains only decide whose pages are whose: they're read from today's config for every run, and adding or changing them changes no trend.
+
+## Sources
+
+The run page sorts every page the answers drew on into a kind of site: `own` (the brand's sites), `competitor` (their `domains`), then `ugc`, `review`, `reference`, `institutional` or `editorial` from a built-in list ([Metric definitions](../metrics/#sources) has it). Move a host to another kind here:
+
+```toml
+[sources]
+ugc = ["community.example.com"]
+editorial = ["medium.com"]   # instead of ugc
+review = ["example.com/reviews"]
+```
+
+- The keys are `ugc`, `review`, `reference`, `institutional` and `editorial`.
+- `[sources]` wins over the built-in list, the most specific entry wins, and a host may be in only one class.
+- The brand's sites are always `own` and competitors' domains always `competitor`, whatever `[sources]` says. Changing it changes no trend.
 
 ## Grader and analyst
 
@@ -96,7 +114,15 @@ model = "claude-opus-5-5"
 # provider = "claude-code"
 ```
 
-The grader grades each answer; the analyst writes the fix list and insights. By default both go through the Anthropic API, with `ANTHROPIC_API_KEY` or the proxy in `POPCORN_ANTHROPIC_BASE_URL`. With `provider = "claude-code"` they run on the local `claude` CLI and your Claude subscription instead; with subscription answerers too, Popcorn needs no API key at all (`examples/popcorn-config/popcorn.subscriptions.toml` is set up that way). The Docker image has no CLIs, so keep the API there. Switching the grader's provider starts a new method on every trend, since answers are graded a different way.
+The grader grades each answer; the analyst writes the fix list and insights, and drafts prompts for `popcorn suggest-prompts`. By default both go through the Anthropic API, with `ANTHROPIC_API_KEY` or the proxy in `POPCORN_ANTHROPIC_BASE_URL`. With `provider = "claude-code"` they run on the local `claude` CLI and your Claude subscription instead; with subscription answerers too, Popcorn needs no API key at all (`examples/popcorn-config/popcorn.subscriptions.toml` is set up that way). The Docker image has no CLIs, so keep the API there. Switching the grader's provider starts a new method on every trend, since answers are graded a different way.
+
+```toml
+[grader]
+model = "claude-haiku-5-5"
+themes = false   # skip the theme pass
+```
+
+After each run is graded, one more grader call groups its objections, praise and reasons for losing into a few named **themes**, shown on the run page. It's on by default; `themes = false` turns it off. It changes no rate or trend. `themes` belongs in `[grader]`, not `[analyst]`.
 
 ## Budget
 
@@ -108,9 +134,25 @@ reservation_usd = 0.60
 concurrency = 6
 ```
 
-Every API call (API answers, grading, the fix list, search probes) reserves an allowance against `budget.daily_usd` in a SQLite ledger before it goes out, and settles to the real cost after. A run that would go over stops with status `budget`; retry it the next day.
+Every API call (API answers, grading, the theme pass, the fix list, prompt suggestions, search probes) reserves an allowance against `budget.daily_usd` in a SQLite ledger before it goes out, and settles to the real cost after. A run that would go over stops with status `budget`; retry it the next day.
 
 This is an admission limit, not a provider billing cap: one call can cost more than its reservation, so set provider-side limits too. Subscription answers are recorded at $0 and don't count against the budget.
+
+## Sampling
+
+```toml
+[sampling]
+adaptive = true
+max_extra = 12
+```
+
+Adaptive sampling gives each run of a `core` set up to `max_extra` extra answers, for the prompts whose named rate has been least certain over the last 28 days of runs asked and graded the same way. It's all decided before the run starts, a cell gets at most as many extras as it has planned samples, and extras on API answerers have to fit in what's left of today's budget.
+
+- Off by default. `adaptive = true` needs `max_extra` (1 to 1000).
+- It never starts a trend over: extras don't change the method.
+- Extras count in the run's rates like any other answer, so those prompts weigh a little more in its totals. Trends count each prompt once either way.
+
+See [How big a change Popcorn can detect](../noise-and-confidence/#when-more-samples-help).
 
 ## Pricing
 

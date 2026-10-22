@@ -12,13 +12,20 @@ popcorn sets                           list prompt sets
 popcorn run <set-id>                   run one set and wait for it (costs money)
 popcorn report <run-id> [-json]        rates, share of voice and top pages for a run
 popcorn fixes <run-id> [-rebuild]      the run's fix list as markdown
+popcorn themes <run-id> [-rebuild]     net sentiment and the run's themes; -rebuild runs the theme pass again (one grader call)
+popcorn suggest-prompts <set-id> [-n 10]  new buyer questions for a set, as TOML to paste (one analyst call; writes nothing)
+popcorn audit [-pages 10] [-info] [-json] [site...]   what AI crawlers can read on the brand's sites (free)
+popcorn check-citations [-n 25] [-json] <run-id>      which pages the run cited name the brand, and which competitors (free)
+popcorn crawl import [-host example.com] <logfile>... AI crawler fetches and AI referrals from access logs; - reads stdin, .gz is read as gzip
+popcorn crawl report [-days 30] [-json]               those counts per page, beside how the latest runs cite it
+popcorn backup <file>                  a consistent copy of the database, safe while serve runs
 popcorn check                          validate the config and every prompt set
 popcorn plan <before> [<after>]        what a config change does to trends, for its pull request
 popcorn migrate-config [dir]           give each prompt an id, in sets written before ids
 popcorn version                        this build's version and database schema
 ```
 
-From a checkout, run any of them with `go run ./cmd/popcorn <command>`.
+From a checkout, run any of them with `go run ./cmd/popcorn <command>`. `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/).
 
 ## MCP server
 
@@ -34,15 +41,20 @@ claude mcp add --transport http popcorn https://<host>/api/mcp --header "Authori
 | `get_prompt_set`   | the prompts in one set, and the competitor names the grader folds onto          |
 | `start_run`        | start a run over a set (costs money; returns the id)                            |
 | `list_runs`        | recent runs with status and headline rates                                      |
-| `get_run`          | rates, share of voice, top pages, the fix list, insights, one line per prompt   |
+| `get_run`          | rates per answerer and track (and `unbranded`, without branded prompts), share of voice with named rate, positions and top 3, head to head, objections, sources by kind and host, the outreach list, the brand's pages found but not cited, net sentiment with top praise and objections, the run's themes, the fix list, insights, one line per prompt |
 | `get_result`       | one answer in full: text, grade, searches and citations                         |
 | `get_quick_wins`   | the ranked fixes, filterable by gap, set, site, status and priority, each with its Claude prompt and the work submitted for it; `brief` leaves out the prompts and `limit` caps the list |
 | `mark_fix`         | record the commit or pull request submitted for a fix, as proposed or accepted  |
 | `set_attempt_state` | move submitted work on: accepted when it merges, withdrawn when it's closed    |
-| `list_attempts`    | the work submitted for fixes, with each one's outcome in the runs since         |
+| `list_attempts`    | the work submitted for fixes, with each one's outcome (moved, worse, mixed, no detectable change...) tested against noise |
 | `get_citations`    | every URL linked in an answer across runs, filterable by URL, set and window   |
 | `search_probe`     | one query through the answerers' web search tool, returning the exact result    |
-| `get_rankings`     | the brand's daily share-of-voice rank and rates per set, with day-over-day change |
+| `get_rankings`     | the brand's daily share-of-voice rank and rates per set, with rolling averages and 95% bands, and day-over-day change with its margin (`within_noise` when it could be chance); takes `set`, `last_days` and `window` (7, 14 or 28) |
+| `get_search_queries` | the searches behind a run's search-track answers: top queries, names the assistants added, words added and dropped, and queries worth adding as prompts; takes `run`, `pool` and `limit`. Free |
+| `suggest_prompts`  | drafts new buyer questions for a set as TOML to paste, with repeats dropped; takes `set` and `n` (default 10, max 50). One analyst call; writes nothing |
+| `audit_sites`      | audits the brand's sites for AI crawlers and returns the errors and warnings, each with a fix; takes `site`, `cached` and `info`. Free |
+| `check_citations`  | fetches a run's most-cited third-party pages and says which name the brand and which competitors; takes `run`, `limit` and `cached`. Free |
+| `get_crawlers`     | AI crawler fetches and AI referrals per page from imported logs, beside how often runs cite each; takes `last_days`, `flag` and `limit`. User agent only, unverified |
 | `cancel_run`       | stop an in-progress run                                                         |
 
 ## JSON API
@@ -63,7 +75,11 @@ claude mcp add --transport http popcorn https://<host>/api/mcp --header "Authori
 | `POST /api/runs/{id}/fixes/{rank}/attempts` | records work submitted for a fix: `{"url", "state"?, "note"?}`, state `proposed` (default) or `accepted` |
 | `POST /api/attempts/{id}`            | moves an attempt on: `{"state": "accepted"}` or `"withdrawn"`          |
 | `GET /api/attempts`                  | the work submitted for fixes, newest first, with outcomes; takes `set` |
-| `GET /api/rankings`                  | daily rank and rates per set; takes `lastDays` and `set`              |
+| `GET /api/rankings`                  | daily rank and rates per set, with rolling averages, bands and day-over-day margins; takes `lastDays`, `set` and `window` (7, 14 or 28) |
+| `GET /api/runs/{id}/searches`        | what the assistants searched in a run; `pool=1` adds the set's earlier same-method runs |
+| `GET`/`POST /api/audit`              | the latest site audit; POST runs one over the brand's sites and waits for it (free) |
+| `GET`/`POST /api/runs/{id}/citation-check` | the run's latest citation check; POST runs one over its `n` most-cited third-party pages (default 25) and waits for it (free) |
+| `GET /api/crawlers`                  | AI crawler and referral counts per page, from imported logs; takes `days` (default 30) |
 | `GET /api/citations`                 | cited URLs across runs; takes `urlContains`, `lastDays` and `set`     |
 | `POST /api/search-probe`             | one search, verbatim; takes `{"query", "allowed_domains"?, "blocked_domains"?}` |
 
@@ -71,6 +87,8 @@ claude mcp add --transport http popcorn https://<host>/api/mcp --header "Authori
 curl -H "Authorization: Bearer <token>" \
   "https://<host>/api/citations?urlContains=docs.example.com&lastDays=30"
 ```
+
+A run's JSON (`/api/runs/{id}`, and `/runs/{id}/export.json`) carries everything on the run page under `Summary`: `voice` with `named_rate`, `share_of_voice`, `avg_position`, `named_first`, `top3` and `position_weighted` per product (and `share`, the old name for `named_rate`), `unbranded`, `head_to_head`, `objections`, `source_classes`, `hosts` with `bucket`, `outreach` and `found_not_cited`; net sentiment and themes are under `opinion`. [Metric definitions](../metrics/) defines each field. An attempt's `outcome` has `status`, `summary`, and `named` and `recommended` as `{d, margin, prompts}`.
 
 `/api/citations` counts each answer that linked a URL once, and returns `runs_scanned` and `answers_scanned` alongside the pages, so a URL missing from the list reads as uncited across that many answers.
 

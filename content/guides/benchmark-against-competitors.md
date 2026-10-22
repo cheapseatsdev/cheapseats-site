@@ -4,7 +4,7 @@ description: How to benchmark your brand's visibility in ChatGPT and Claude answ
 weight: 30
 ---
 
-**The short answer.** To benchmark your brand against competitors in AI answers, ask the assistants your buyers' questions, several times each, and record every product each answer names, not only yours. Then, for one fixed set of questions, count how many answers named each product (share of voice) and how many made it the top pick, rank everyone on that list, and repeat daily so you see the trend. [Popcorn](/docs/getting-started/) does exactly this: it records every product named in each answer, computes each prompt set's share-of-voice rank and recommended and mentioned rates day by day, and keeps the answers, searches and citations behind every number so you can check them.
+**The short answer.** To benchmark your brand against competitors in AI answers, ask the assistants your buyers' questions, several times each, and record every product each answer names, not only yours. Then, for one fixed set of questions, count how many answers named each product (its named rate and share of voice) and how many made it the top pick, rank everyone on that list, and repeat daily so you see the trend. [Popcorn](/docs/getting-started/) does exactly this: it records every product named in each answer, computes each prompt set's share-of-voice rank and recommended and mentioned rates day by day, and keeps the answers, searches and citations behind every number so you can check them.
 
 The fair comparison is **top picks on the same prompt set**: the same questions, asked of the same assistants, graded the same way, for every brand. Being named is easy to inflate by choosing the questions; being the one product an answer tells the buyer to use is not.
 
@@ -12,13 +12,15 @@ Popcorn asks Claude and OpenAI models, on two tracks (search, where the assistan
 
 ## Is there a way to measure share of voice in AI chatbot answers?
 
-Yes. In Popcorn, share of voice for a product is:
+Yes. A second model, the grader, reads each answer and lists every product, company or platform it names, in order; Popcorn counts those lists, once per product per answer however many times it repeats the name. Each product on the board gets two rates:
 
-> answers that named it ÷ all graded answers in the run
+> named rate = answers that named it ÷ all graded answers in the run
+>
+> share of voice = answers that named it ÷ the sum of that count over every product named
 
-An answer counts once per product however many times it repeats the name. A second model, the grader, reads each answer and lists every product, company or platform it names, in order; Popcorn counts those lists. Your own brand is counted as named exactly when its grade is *recommended* or *mentioned*, so your share of voice always equals your named rate. Because most answers name several products, the shares add up to well over 100%.
+Your own brand is counted as named exactly when its grade is *recommended* or *mentioned*, so your row always matches your named rate. Because most answers name several products, named rates add up to well over 100%; shares of voice add up to 100%.
 
-This differs from a common definition, *your mentions ÷ mentions of all tracked brands*. That ratio changes when you add or drop a tracked competitor, even if no answer changed. Popcorn's share is a share of answers, so a product's number depends only on the answers, and the board includes every product the answers named, including ones you never configured.
+Many tools define share of voice as *your mentions ÷ mentions of the tracked brands*. That ratio changes when you add or drop a tracked competitor, even if no answer changed. Popcorn's denominator is every product the answers named, including ones you never configured, so a product's number depends only on the answers. Earlier versions of Popcorn showed only the named rate and called it share of voice; [Metric definitions](/docs/metrics/#how-these-compare-to-other-tools) maps both onto other tools' definitions.
 
 Next to each product's share, Popcorn counts its **top picks**: answers whose single strongest recommendation was that product.
 
@@ -40,7 +42,9 @@ Track these per prompt set and per track, each from the same graded answers:
 | --- | --- | --- |
 | top-pick rate | answers whose single top pick is you ÷ answers to questions that ask for a choice | the strictest, fairest win: one per answer |
 | recommended rate | answers graded *recommended* ÷ choice answers | you were among at most three products the answer endorsed |
-| named rate (= share of voice) | answers graded *recommended* or *mentioned* ÷ all answers | the assistant knows you exist |
+| named rate | answers graded *recommended* or *mentioned* ÷ all answers | the assistant knows you exist |
+| share of voice | answers naming you ÷ answers naming each product, summed over every product | your slice of the conversation, out of 100% |
+| avg place | your mean position in the answers that name you | whether you come up first or last |
 | share-of-voice rank | your place on the board of every product named | where you stand against the whole field |
 | top-pick counts per competitor | how many answers each product won | who is actually winning the questions |
 | objections | the concerns answers raised about you | what to fix |
@@ -64,7 +68,7 @@ This is real data from Popcorn tracking itself on the *Choosing an AI visibility
 
 Run `r-20261022-043101-41215d`, 22 October 2026. Claude Opus (via Claude Code) and an OpenAI model (via Codex), each on the search track (2 samples per question) and the recall track (1 sample): **68 graded answers**.
 
-| product | answers naming it (of 68) | share of voice | top picks |
+| product | answers naming it (of 68) | named rate | top picks |
 | --- | --- | --- | --- |
 | Profound | 56 | 82% | 8 |
 | Peec AI | 53 | 78% | 11 |
@@ -81,7 +85,7 @@ Run `r-20261022-043101-41215d`, 22 October 2026. Claude Opus (via Claude Code) a
 What it says:
 
 - **Popcorn has no rank.** No answer, on either track, named it. Zero of 60 choice answers still leaves a 95% interval up to about 6% for the top-pick rate, but the direction is not in doubt.
-- **Profound leads share of voice; Peec AI leads top picks.** Profound was named in 3 more answers, but Peec AI was the top pick in 11 against Profound's 8. If you only tracked mentions, you'd call the wrong leader.
+- **Profound leads on mentions; Peec AI leads top picks.** Profound was named in 3 more answers, but Peec AI was the top pick in 11 against Profound's 8. If you only tracked mentions, you'd call the wrong leader.
 - **Ahrefs Brand Radar is named often and never chosen**: 33 answers, 0 top picks. It is a comparison point, not a winner.
 - **Check the board for split names.** "Scrunch AI" and "Scrunch" are one company counted twice, because Scrunch isn't in this set's competitor list. The grader folds names onto the canonical ones you configure, so add it under `[[competitors]]` with its aliases. Don't add the two rows together yourself: an answer naming both would be counted twice.
 
@@ -126,7 +130,7 @@ Questions, answerers and competitors change over time. Popcorn keeps one series 
 The same data is available outside the web UI:
 
 ```
-popcorn report <run-id> -json     # summary.voice: name, answers, share, top_pick per product
+popcorn report <run-id> -json     # summary.voice: name, answers, named_rate, share_of_voice, avg_position, top_pick per product
 ```
 
 ```bash

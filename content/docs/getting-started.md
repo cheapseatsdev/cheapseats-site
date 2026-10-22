@@ -42,7 +42,15 @@ POPCORN_CONFIG=../your-config/popcorn.toml go run ./cmd/popcorn check
 POPCORN_CONFIG=../your-config/popcorn.toml go run ./cmd/popcorn serve
 ```
 
-`popcorn check` validates the config and every prompt set. Then:
+`popcorn check` validates the config and every prompt set.
+
+**A free first step: `popcorn audit`.** Before you ask a single question, check what AI crawlers can read on your sites: robots.txt and firewall blocks per AI bot, llms.txt, the sitemap, and pages that are empty without JavaScript. It calls no model and costs nothing. See [Free site checks](../site-audit/).
+
+```bash
+POPCORN_CONFIG=../your-config/popcorn.toml go run ./cmd/popcorn audit
+```
+
+Then:
 
 1. Set your brand, audience and sites. See [Configuration](../configuration/).
 2. Write prompt sets of the questions your buyers ask. See [Prompt sets](../prompt-sets/).
