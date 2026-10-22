@@ -36,7 +36,7 @@ The grader is a separate Claude call (Claude Haiku on popcorn.zone's own runs) t
 | ------------- | ------------------------------------------------------------------------------------------------------ |
 | `recommended` | the answer's top pick, or one of at most three primary recommendations it actively endorses for the buyer's situation |
 | `mentioned`   | named, but only as one option among many, in passing, as a comparison point, or with reservations       |
-| `absent`      | not named at all, aliases included                                                                     |
+| `absent`      | not named at all, aliases included, or the name is used only for another product that shares it        |
 
 It's strict on purpose: a brand listed in a table with nine others is mentioned, not recommended. Each grade also records:
 
@@ -51,11 +51,13 @@ Questions marked `intent = "info"` ask for an explanation, not a choice, so a go
 
 ## Worked examples
 
-These are real answers from a Popcorn run of 22 October 2026, to the question *"Popcorn or Semrush AI Toolkit for tracking our brand in ChatGPT and Claude?"*
+These are real answers from Popcorn's runs of 22 October 2026, asked about Popcorn itself.
 
-**Recommended, as one of two primary picks.** An OpenAI model, answering from memory, opened with: *"I'd start by evaluating Popcorn if your main goal is tracking your brand in ChatGPT and Claude. Choose Semrush AI Toolkit if you also want that work tied to a broader SEO program."* It committed to no single top pick, but it endorsed Popcorn as one of two primary options for the buyer's stated goal, so the grade is `recommended` at position 1, top pick none. Its reservations are kept as objections: *insufficient information about Popcorn's capabilities*, *requires verification before buying*.
+**Mentioned: named, not endorsed.** Asked *"Is Popcorn a good open-source alternative to paid AI visibility tools?"*, Claude, answering from memory, opened with *"I can't vouch for Popcorn specifically"* and said it had no reliable information about a tool by that name. Popcorn is named first, because the question named it, but the answer doesn't endorse it, so the grade is `mentioned`, and its objections say what to fix.
 
-**Mentioned: named, not endorsed.** Claude, on the search track, began: *"I couldn't find a product called Popcorn, so I can't compare the two fairly."* Popcorn is named first, because the question named it, but the answer doesn't endorse it, so the grade is `mentioned`. The objections recorded were *no public product found under this name* and *could not verify the product exists*, which tells you what to fix.
+**A close call.** Asked *"Popcorn or Semrush AI Toolkit for tracking our brand in ChatGPT and Claude?"*, an OpenAI model opened with: *"I'd start by evaluating Popcorn if your main goal is tracking your brand in ChatGPT and Claude. Choose Semrush AI Toolkit if you also want that work tied to a broader SEO program."* That reads as one of two primary picks, which is `recommended`, but the same answer says *"I don't have reliable enough information about Popcorn's capabilities"*, which hedges it to `mentioned`. Graded ten more times, it came back `mentioned` nine times and `recommended` once. Close calls like this are why every question is asked more than once and every rate carries an interval, and why each grade shows its reasoning: you can read the close ones yourself.
+
+**Absent: another product with the same name.** Asked *"Popcorn vs Profound…"*, an answer said it *"couldn't verify the specific Popcorn product you mean"* and went on to describe trypopcorn.ai, which *"sells WhatsApp sales and support agents"*. The name is in the answer, but the brand isn't. The grader tells products that share your name apart using your brand's `about`, and records when every use of the name means something else; that grade is `absent`. An answer that says it can't find your brand, without taking it for something else, still names it.
 
 **Absent, though the answer recommends something.** A question about a competitor, such as *"Is Gauge a good tool for tracking AI visibility?"*, can get an answer that endorses Gauge warmly and never names your brand. That's `absent` for you. The grader is told that the product a question asks about is never your brand, and Popcorn then checks the answer's text itself: if your brand's name and aliases appear nowhere in it, the grade is absent whatever the model said.
 
