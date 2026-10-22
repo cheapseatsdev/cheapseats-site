@@ -47,11 +47,18 @@ It's strict on purpose: a brand listed in a table with nine others is mentioned,
 - **why not #1**: what the answer preferred instead and the reasons it gave;
 - **objections**: the specific concerns the answer raised about your brand;
 - **tone**: how the answer talks about your brand itself, not the category: **positive** (endorses it or describes it favorably), **negative** (mostly warnings or criticism), **mixed** (clear praise and clear criticism) or **neutral** (describes or lists it without judging it). None when it's absent;
-- **praise**: short phrases for each strength the answer credits your brand with, such as "open source" or "easy setup", the mirror of objections.
+- **praise**: short phrases for each strength the answer credits your brand with, such as "open source" or "easy setup", the mirror of objections;
+- **evidence**: the one sentence of the answer that most supports the verdict, copied word for word. None when the brand is absent.
+
+**Evidence is checked, not trusted.** A model asked to quote can paraphrase. Popcorn looks for the grader's quote in the answer itself, ignoring case, spacing, markdown emphasis and curly quotes, and keeps the answer's own span of text. A quote it can't find is dropped, never shown. So every quote on the run page, where it's highlighted in the answer, is one the answer contains. It's `evidence` in the grade, in the JSON and CSV exports and in MCP `get_result`.
 
 Tone and praise feed the run's **net sentiment** (the share of answers naming you that are positive, minus the share negative) and its **themes**: after a run is graded, one more grader call groups its objections, praise and reasons for picking something else into a few named themes, each with the product it helps and a quote. [Metric definitions](../metrics/#sentiment-and-themes) has the formulas.
 
 **Adding tone and praise changed the grading instructions once.** Every trend marks the first run graded with them as a new method, since answers are graded a different way, rather than joining the two into one line. Runs graded before have no tone, so their net sentiment is n/a.
+
+**Adding evidence changed them once more.** In Popcorn 0.2.5 the grader started returning an evidence quote, so each set's trend marks a new method at its first run on 0.2.5. Grades from before have no evidence.
+
+**Re-grading carries a trend on.** Instead of letting a grading change restart the trend, you can [re-grade](../regrading/) the answers older runs already have under today's grader. The answers aren't asked again; the re-graded runs join the new method's trend from their own dates on, and the grades they replaced are kept. On the `claude` CLI it costs nothing.
 
 Questions marked `intent = "info"` ask for an explanation, not a choice, so a good answer may recommend nothing. They count toward being named, not toward recommended.
 
@@ -73,6 +80,6 @@ The run page reports, for each assistant and track, how often your brand was the
 
 ## Checking a grade
 
-The run page lists every answer behind its rates. For any answer you can read the full text, the searches the assistant ran, every result and page it cited, and the grade with its reasoning. Each run also stores the grading instructions it used, its config commit and the Popcorn version, and exports to CSV or JSON. When the way answers are asked or graded changes, the trend marks the run where it changed rather than joining two methods into one line.
+The run page lists every answer behind its rates. For any answer you can read the full text, with the grade's evidence highlighted in it, the searches the assistant ran, every result and page it cited, and the grade with its reasoning. Each run also stores the grading instructions it used, its config commit and the Popcorn version, and exports to CSV or JSON. When the way answers are asked or graded changes, the trend marks the run where it changed rather than joining two methods into one line. A re-graded run says so on its page, with the method it had before.
 
 See [Reading results](../reading-results/) for the run page, and [Configuration](../configuration/) for answerers, models and samples.

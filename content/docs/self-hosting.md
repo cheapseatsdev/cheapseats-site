@@ -40,7 +40,7 @@ docker run -p 3000:3000 \
   -v popcorn-data:/data \
   -v "$PWD/examples/popcorn-config:/config:ro" \
   --env-file .env \
-  ghcr.io/metcalfc/popcorn:0.2.3
+  ghcr.io/metcalfc/popcorn:0.2.5
 ```
 
 Open <http://localhost:3000> and enter one of your tokens. To measure your own brand, mount your config repo at `/config` instead (start one from the [config template](https://github.com/metcalfc/popcorn-config-template)). Pin an exact version; the [releases](https://github.com/metcalfc/popcorn/releases) list them.
@@ -53,7 +53,7 @@ The chart runs one replica and replaces it rather than rolling, so two never sha
 
 ```dockerfile
 # Dockerfile in your config repo: one image per config commit
-FROM ghcr.io/metcalfc/popcorn:0.2.3
+FROM ghcr.io/metcalfc/popcorn:0.2.5
 COPY popcorn.toml /config/popcorn.toml
 COPY prompt-sets /config/prompt-sets
 ARG REVISION=""
@@ -66,7 +66,7 @@ kubectl create secret generic popcorn \
   --from-literal=POPCORN_TOKENS="$(openssl rand -hex 32)" \
   --from-literal=ANTHROPIC_API_KEY="<key>"         # add OPENAI_API_KEY if an answerer uses it
 
-helm install popcorn oci://ghcr.io/metcalfc/charts/popcorn --version 0.2.3 \
+helm install popcorn oci://ghcr.io/metcalfc/charts/popcorn --version 0.2.5 \
   --set image.repository=ghcr.io/acme/popcorn-config \
   --set image.tag=<config commit> \
   --set existingSecret=popcorn

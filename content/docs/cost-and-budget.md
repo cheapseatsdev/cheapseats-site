@@ -18,6 +18,7 @@ In a real run of 17 prompts and 68 answers, answered on Claude and ChatGPT subsc
 | **the fix list**, once per run | the Anthropic API (`[analyst]`) | per token |
 | **the theme pass**, once per run | the Anthropic API (`[grader]`) | per token: under a cent a run with Claude Haiku |
 | **`popcorn suggest-prompts`**, when you ask | the Anthropic API (`[analyst]`) | per token: one call |
+| **re-grading** stored answers, when you ask | the grader | one grader call per answer: $0 on `claude-code`, per token through the API |
 | **adaptive sampling** extras, if on | the same answerers | like any other answer; API extras only within today's budget |
 | **site audit, citation check, AI crawlers** | plain HTTP and your logs | free: no model calls |
 
@@ -63,7 +64,7 @@ reservation_usd = 0.60
 concurrency = 6
 ```
 
-- **`daily_usd`** is the most Popcorn may spend on API calls in a UTC day, across every run, answer, grade, theme pass, fix list, prompt suggestion and search probe.
+- **`daily_usd`** is the most Popcorn may spend on API calls in a UTC day, across every run, answer, grade, re-grade, theme pass, fix list, prompt suggestion and search probe.
 - **`reservation_usd`** is what each call reserves before it goes out (default $0.60).
 - **`concurrency`** is how many API calls may be in flight at once.
 
@@ -77,6 +78,16 @@ Things to know:
 - **Subscription answers cost $0** in the ledger and don't count against the budget; only their grading does.
 - **`daily_usd = 0`, or no `[budget]` at all, means no cap.** Set it.
 - A model with no price in `[pricing]` can't be called, so nothing goes out unpriced. Check the prices against the providers' current price lists; the cost figures are only as right as they are.
+
+## What a re-grade costs
+
+[Re-grading](../regrading/) grades a set's stored answers again under today's grader: one grader call per answer, and nothing is asked again.
+
+- **On `provider = "claude-code"`** it's $0, on your subscription.
+- **Through the API**, `popcorn regrade` and the set's **Re-grade stored answers** page are dry runs first: they show the runs, answers and estimated cost, from the answers' token counts (about four characters a token, plus the grader's thinking) priced by `[pricing]`. At the grading cost measured above, about $0.0005 an answer, re-grading the 68 answers of one run is about three cents.
+- **It's budgeted like a run.** The real calls go through the same daily budget, and a run the day's remaining budget can't cover isn't started.
+
+A `start_run` dry run (MCP, or `POST /api/runs` with `"dry_run": true`) estimates a run's cost the same way, from each answerer's recent answers and their grading, with today's remaining budget beside it.
 
 ## Keeping the spend down
 

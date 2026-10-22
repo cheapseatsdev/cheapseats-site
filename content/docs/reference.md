@@ -7,6 +7,8 @@ weight: 70
 ## CLI
 
 ```
+popcorn init [-name X] [-competitors a,b] [-suggest [-n 10]] [-dry-run] <url> [dir]
+                                       a new config repo from the brand's website (free unless -suggest)
 popcorn serve [-addr 127.0.0.1:3000]   web UI, JSON API, MCP and the daily schedule
 popcorn sets                           list prompt sets
 popcorn run <set-id>                   run one set and wait for it (costs money)
@@ -14,6 +16,9 @@ popcorn report <run-id> [-json]        rates, share of voice and top pages for a
 popcorn fixes <run-id> [-rebuild]      the run's fix list as markdown
 popcorn themes <run-id> [-rebuild]     net sentiment and the run's themes; -rebuild runs the theme pass again (one grader call)
 popcorn suggest-prompts <set-id> [-n 10]  new buyer questions for a set, as TOML to paste (one analyst call; writes nothing)
+popcorn regrade [-since 28d] [-dry-run=false] <set-id|run-id>
+                                       grade stored answers again with today's grader, brand and competitors;
+                                       a dry run with its cost unless -dry-run=false
 popcorn audit [-pages 10] [-info] [-json] [site...]   what AI crawlers can read on the brand's sites (free)
 popcorn check-citations [-n 25] [-json] <run-id>      which pages the run cited name the brand, and which competitors (free)
 popcorn crawl import [-host example.com] <logfile>... AI crawler fetches and AI referrals from access logs; - reads stdin, .gz is read as gzip
@@ -25,7 +30,10 @@ popcorn migrate-config [dir]           give each prompt an id, in sets written b
 popcorn version                        this build's version and database schema
 ```
 
-From a checkout, run any of them with `go run ./cmd/popcorn <command>`. `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/).
+From a checkout, run any of them with `go run ./cmd/popcorn <command>`. `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-popcorn-init), `regrade` in [Re-grading stored answers](../regrading/).
+
+- **`init`**: `-name` sets the brand's name instead of what the site calls itself; `-competitors` adds `[[competitors]]` entries, alternatives prompts and head-to-heads; `-suggest` adds `-n` suggested prompts to the starter sets with one analyst call; `-dry-run` prints what it found and every file it would write, and writes nothing. It writes to `./<brand>-popcorn-config` unless you name a directory.
+- **`regrade`**: `-since` takes `28d`, `72h` or `all` (default 28 days) and applies to a set; `-dry-run` is true by default.
 
 ## MCP server
 
@@ -37,9 +45,10 @@ claude mcp add --transport http popcorn https://<host>/api/mcp --header "Authori
 
 | tool               | what it does                                                                    |
 | ------------------ | ------------------------------------------------------------------------------- |
+| `get_started`      | call it first: the brand and its sites, each set's tier, last run and status, today's spend against the budget, which answerers and the grader can run here, the latest audit's errors and warnings, open and urgent fixes, attempts awaiting an outcome, `data_state` (`no_runs`, `running`, `stale` or `ready`) and `next_steps`, the tool calls worth making now with their arguments. Free |
 | `list_prompt_sets` | the checked-in prompt sets with ids, descriptions and counts                    |
 | `get_prompt_set`   | the prompts in one set, and the competitor names the grader folds onto          |
-| `start_run`        | start a run over a set (costs money; returns the id)                            |
+| `start_run`        | start a run over a set (costs money; returns the id); takes `set` and `dry_run`. With `dry_run: true` it starts nothing and returns the plan: answers per answerer and track, answerers skipped, estimated cost from each answerer's recent answers and their grading (priced by `[pricing]`; re-grades count toward grading, so it errs high), today's remaining budget, and whether it would be refused |
 | `list_runs`        | recent runs with status and headline rates                                      |
 | `get_run`          | rates per answerer and track (and `unbranded`, without branded prompts), share of voice with named rate, positions and top 3, head to head, objections, sources by kind and host, the outreach list, the brand's pages found but not cited, net sentiment with top praise and objections, the run's themes, the fix list, insights, one line per prompt |
 | `get_result`       | one answer in full: text, grade, searches and citations                         |
@@ -49,13 +58,24 @@ claude mcp add --transport http popcorn https://<host>/api/mcp --header "Authori
 | `list_attempts`    | the work submitted for fixes, with each one's outcome (moved, worse, mixed, no detectable change...) tested against noise |
 | `get_citations`    | every URL linked in an answer across runs, filterable by URL, set and window   |
 | `search_probe`     | one query through the answerers' web search tool, returning the exact result    |
+| `get_citation_stability` | how much the hosts a set's answers cite move from run to run: Bray–Curtis similarity and Jaccard overlap of consecutive runs, the headline score from 3 transitions, and the newest transition's new and gone hosts (ten of each); takes `set`, `track` (`search` by default, or `recall`) and `last_days` (default 30). Free |
 | `get_rankings`     | the brand's daily share-of-voice rank and rates per set, with rolling averages and 95% bands, and day-over-day change with its margin (`within_noise` when it could be chance); takes `set`, `last_days` and `window` (7, 14 or 28) |
 | `get_search_queries` | the searches behind a run's search-track answers: top queries, names the assistants added, words added and dropped, and queries worth adding as prompts; takes `run`, `pool` and `limit`. Free |
 | `suggest_prompts`  | drafts new buyer questions for a set as TOML to paste, with repeats dropped; takes `set` and `n` (default 10, max 50). One analyst call; writes nothing |
 | `audit_sites`      | audits the brand's sites for AI crawlers and returns the errors and warnings, each with a fix; takes `site`, `cached` and `info`. Free |
 | `check_citations`  | fetches a run's most-cited third-party pages and says which name the brand and which competitors; takes `run`, `limit` and `cached`. Free |
 | `get_crawlers`     | AI crawler fetches and AI referrals per page from imported logs, beside how often runs cite each; takes `last_days`, `flag` and `limit`. User agent only, unverified |
+| `regrade`          | grade a set's, or one run's, stored answers again with today's grader, brand and competitors; takes `target` (a set or run id), `since_days` (default 28, 0 for all) and `dry_run` (true unless set to false). The dry run says how many answers and the estimated cost; the real one runs in the background within the daily budget. See [Re-grading](../regrading/) |
+| `share_run`        | a read-only [share link](../sharing/) to a run's report; takes `run`, or `set` for its newest finished run, `days` (default 30, max 365) and `include_answers`. The URL is shown only this once |
 | `cancel_run`       | stop an in-progress run                                                         |
+
+The server also offers three **prompts**, each telling the model which tools to call:
+
+| prompt | what it asks for | arguments |
+| --- | --- | --- |
+| `weekly_pulse` | a short weekly read-out: what moved, what's open, what to do this week | `set` (default: every set) |
+| `competitor_radar` | who is winning which prompts, and from which sources | `set`, `competitor` (default: the leaders) |
+| `why_not_recommended` | why the assistants don't recommend the brand for one prompt, and what would change that | `prompt` (its text or number; required), `set` |
 
 ## JSON API
 
@@ -66,11 +86,14 @@ claude mcp add --transport http popcorn https://<host>/api/mcp --header "Authori
 | `GET /api/progress`                  | runs in progress: answers done, errors, in flight and waiting, per answerer, with time left |
 | `GET /api/live`                      | a version stamp that changes whenever a run does, and whether one is in progress |
 | `GET /api/sets`, `/api/sets/{id}`    | the checked-in prompt sets                                            |
+| `GET /api/sets/{id}/citation-stability` | the set's citation stability, every transition in full; takes `track` (`search` or `recall`) and `lastDays` (default 30) |
 | `GET /api/runs`                      | runs with headline rates; takes `set` and `limit`                     |
-| `POST /api/runs`                     | starts a run over `{"set": "<id>"}` (costs money)                     |
+| `POST /api/runs`                     | starts a run over `{"set": "<id>"}` (costs money); with `"dry_run": true` it returns the plan and estimated cost and starts nothing |
 | `GET /api/runs/{id}`                 | one run in full: every answer with its grade and sources, fixes, insights |
 | `GET`/`POST /api/runs/{id}/fixes`    | the fix list; POST rebuilds it and the insights (one paid Claude call) |
 | `POST /api/runs/{id}/cancel`, `/retry` | stop a run, or finish an unfinished one                             |
+| `GET`/`POST /api/runs/{id}/shares`   | the run's share links; POST makes one from `{"days"?, "include_answers"?}` and returns it as `url`, once |
+| `DELETE /api/shares/{id}`            | revokes a share link                                                  |
 | `GET /api/quick-wins`                | the ranked fixes across sets; takes `gap`, `set`, `site` (a url, a kind like `docs`, or `elsewhere`), `status` (`open`, `proposed`, `accepted`) and `priority` |
 | `POST /api/runs/{id}/fixes/{rank}/attempts` | records work submitted for a fix: `{"url", "state"?, "note"?}`, state `proposed` (default) or `accepted` |
 | `POST /api/attempts/{id}`            | moves an attempt on: `{"state": "accepted"}` or `"withdrawn"`          |
@@ -88,11 +111,13 @@ curl -H "Authorization: Bearer <token>" \
   "https://<host>/api/citations?urlContains=docs.example.com&lastDays=30"
 ```
 
-A run's JSON (`/api/runs/{id}`, and `/runs/{id}/export.json`) carries everything on the run page under `Summary`: `voice` with `named_rate`, `share_of_voice`, `avg_position`, `named_first`, `top3` and `position_weighted` per product (and `share`, the old name for `named_rate`), `unbranded`, `head_to_head`, `objections`, `source_classes`, `hosts` with `bucket`, `outreach` and `found_not_cited`; net sentiment and themes are under `opinion`. [Metric definitions](../metrics/) defines each field. An attempt's `outcome` has `status`, `summary`, and `named` and `recommended` as `{d, margin, prompts}`.
+A run's JSON (`/api/runs/{id}`, and `/runs/{id}/export.json`) carries everything on the run page under `Summary`: `voice` with `named_rate`, `share_of_voice`, `avg_position`, `named_first`, `top3` and `position_weighted` per product (and `share`, the old name for `named_rate`), `unbranded`, `head_to_head`, `objections`, `source_classes`, `hosts` with `bucket`, `outreach` and `found_not_cited`; net sentiment and themes are under `opinion`; each source page has a `page_type`, rolled up in `page_types`. Each grade carries its `evidence`, and a re-graded run lists its `regrades`: when, how many answers, the cost, and the method and grader it had before. [Metric definitions](../metrics/) defines each field. An attempt's `outcome` has `status`, `summary`, and `named` and `recommended` as `{d, margin, prompts}`.
 
 `/api/citations` counts each answer that linked a URL once, and returns `runs_scanned` and `answers_scanned` alongside the pages, so a URL missing from the list reads as uncited across that many answers.
 
-`GET /healthz` answers `ok` without a token, for a container's liveness probe.
+In the web UI, `/sets/{id}/regrade` shows a set's re-grade dry run and starts one ([Re-grading](../regrading/)), and `/share/{token}` is a run's [share page](../sharing/).
+
+`GET /healthz` answers `ok` without a token, for a container's liveness probe. `GET /share/{token}` is the only other page open without a sign-in besides `/login` and static files, and serves only that link's run.
 
 ## Access
 
@@ -100,7 +125,7 @@ With `POPCORN_TOKENS` unset, `serve` only listens on 127.0.0.1 and everything is
 
 On [exe.dev](../deploying/#exedev), Popcorn instead trusts the proxy's signed-in email header (`POPCORN_AUTH_HEADER`, narrowed by `POPCORN_ALLOWED_EMAILS`). API and MCP clients get through the proxy with an exe.dev token scoped to the VM; see [connecting Claude Code](../deploying/#exedev).
 
-Behind a proxy on the same machine, set `POPCORN_HOSTS` to the host names it serves Popcorn as (comma-separated). MCP refuses a request that reaches Popcorn on loopback under any other name, against DNS rebinding.
+Behind a proxy on the same machine, set `POPCORN_HOSTS` to the host names it serves Popcorn as (comma-separated). MCP refuses a request that reaches Popcorn on loopback under any other name, against DNS rebinding. Set `POPCORN_PUBLIC_URL` to the address people reach Popcorn at, so [share links](../sharing/#where-links-point) point there.
 
 ## Data and privacy
 

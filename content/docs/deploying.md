@@ -12,6 +12,7 @@ Each deployment is its own config repo, made from the [config template](https://
 - **Secrets in the environment:** `POPCORN_TOKENS` (Popcorn refuses to listen beyond localhost without it), `ANTHROPIC_API_KEY` (grading), `OPENAI_API_KEY` for OpenAI answerers. Deployed answerers use the APIs: the image has no Claude Code or Codex CLI, and `popcorn check` fails on a config that needs one.
 - **Time to stop.** On SIGTERM Popcorn stops starting runs and marks the ones in progress as interrupted; on the next start it resumes them, oldest first, keeping every answer they already had. Give it 30 seconds.
 - **Probes:** `GET /healthz` answers `ok` without a token.
+- **Share links:** `GET /share/<token>` answers without a token, serving only that link's run ([Sharing a run](../sharing/)). Set `POPCORN_PUBLIC_URL` to the address people reach Popcorn at, such as `https://popcorn.example.com`, so the links point there. Behind a proxy, without it, a link can point at the address the proxy reaches Popcorn on; one that would point at a loopback address gets a warning. A proxy that signs people in must let `/share/` through for links to work.
 
 ## An image per config commit
 
@@ -115,6 +116,8 @@ An [exe.dev](https://exe.dev) VM runs Popcorn as a systemd service behind exe.de
    ```bash
    ssh exe.dev share add <vm> someone@example.com
    ```
+
+   [Share links](../sharing/) use `POPCORN_HOSTS` (over https) unless `POPCORN_PUBLIC_URL` is set. While the VM is private, its proxy asks everyone to sign in, so a share link opens only for people the VM is shared with.
 
 7. Connect Claude Code (or any MCP client). The proxy only lets in people who signed in by email, so a client gets through with an exe.dev token scoped to the VM, sent as `X-Exedev-Authorization`; the proxy then passes your email, and Popcorn signs you in as usual.
 

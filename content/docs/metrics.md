@@ -126,6 +126,42 @@ With competitors configured, only they count as competitors here; with none, eve
 - **Cited without your brand** (`outreach`): the missing hosts that aren't a competitor's own, ranked by distinct competitors named × answers citing the host. These are the pages to get your brand onto.
 - **Found but not cited** (`found_not_cited`): your own pages that searches returned and no answer linked.
 
+### Page types
+
+The kind of site says whose page it is; the **page type** says what the page does, from its URL and the title the search result or citation gave it (`page_type` on each page, rolled up in `page_types` with cited, retrieved, pages and share of citations). The first rule that matches wins:
+
+| type | when |
+| --- | --- |
+| `forum` | Reddit, Quora, Lobsters, Discord; Hacker News items; Stack Overflow and Stack Exchange questions; GitHub or GitLab issues, pull requests and discussions; `forum.*`, `community.*`, `discuss.*` hosts |
+| `repo` | a repository's front page: github.com/owner/repo (and GitLab, Codeberg, Bitbucket) |
+| `docs` | `docs.*` hosts, a `/docs/`, `/documentation/` or `/reference/` path, Read the Docs, pkg.go.dev, docs.rs, MDN, Microsoft Learn |
+| `comparison` | the path or title says vs, versus, compare or comparison, or "alternative to" |
+| `review` | G2, Capterra, TrustRadius, GetApp, Software Advice, Trustpilot, PeerSpot, Gartner reviews; after the listicle rule, any page whose path or title says review |
+| `listicle` | best (not "best practices"), top N, N best, alternatives, tools/apps/software/platforms for |
+| `article` | a `/blog/`, `/news/`, `/articles/`, `/posts/` path, a dated path (`/2026/05/`), `blog.*` and `news.*` hosts, Medium, dev.to, Substack, Hashnode |
+| `product` | the home page, `/pricing`, `/plans`, `/features`, `/product`, `/solutions`, `/integrations` |
+| `other` | everything else (Wikipedia, a repository's files) |
+
+What the page is beats where it's filed: `/blog/notion-vs-obsidian` is a comparison and `/blog/best-note-apps` a listicle. MCP `get_run` carries `page_types` and each top page's `page_type`.
+
+## Citation stability
+
+How much the hosts a set's answers cite move from one run to the next, per track, over the same daily runs the trends use (each day's newest finished run, the last 30 days by default). A run's citations are a vector of host **citation shares** `s_h`: a host's citations over all the run's citations, so `Σ s_h = 1`. For each run against the one before it, with shares `a` and `b`:
+
+| metric | formula | range |
+| --- | --- | --- |
+| **Similarity** (Bray–Curtis × 100) | 100 · (1 − Σ\|a_h − b_h\| / Σ(a_h + b_h)), which for shares is 100 · Σ min(a_h, b_h): the share of citations the two runs have in common by host | 100 when every host kept its share; 0 when no host was cited in both |
+| **Overlap** (Jaccard × 100) | 100 · hosts cited in both ÷ hosts cited in either | 0 to 100 |
+| **New**, **gone** | hosts cited this run and not the one before, and the other way round, largest share first | |
+| **Stability score** | the mean similarity over the transitions, with the mean overlap beside it | shown from **3 transitions** |
+
+- **One or two transitions can be a fluke**, so the score waits for three.
+- **The chain stops at a change of method**: the run that changed it is the oldest compared.
+- **A run that cited nothing** (an outage, or the recall track, which has no search) is skipped rather than read as every host leaving.
+- **A change of prompts** flags its transition `prompts_changed`: some of its churn is the questions.
+
+A high score says the answers lean on the same sources run after run, so a host entering or leaving means something. A low one says each run's sources table is a sample. It's on the set page, at `GET /api/sets/{id}/citation-stability` and in MCP `get_citation_stability`.
+
 ## Trends and outcomes
 
 | metric | formula |
@@ -155,7 +191,7 @@ Most AI visibility tools use the same few words for different formulas. The tabl
 | **Sentiment** | **net sentiment**: % positive − % negative of answers naming you | 0–100 score | positive claims ÷ all claims | positive ÷ (positive + neutral + negative) | net sentiment: (positive − negative) ÷ total × 100 | | net sentiment: % positive − % negative | 0–100: positive 100, neutral and mixed 50, negative 0 | Limelit Cloud only |
 | **Citations** | cited rate (÷ answers) and citation share (÷ all citations) | | citation share: your domain's citations ÷ all citations | citation rate: answers citing the page or domain ÷ all answers | | | | citations by URL, domain and category | citation share: your site's citations ÷ all citations |
 | **Branded prompts** | left out of the headline rates; shown underneath | | | left out of rankings by default | | | | | left out of the headline; kept in the grid, tagged |
-| **After a config change** | grades and rates stay as graded; which pages are whose follows today's config | | re-applied to history from today's config | | | | | past answers re-judged for the changed company, 90 days back by default | every stored answer re-read from today's brands and rules |
+| **After a config change** | grades and rates stay as graded, unless you re-grade stored answers under today's grader; which pages are whose follows today's config | | re-applied to history from today's config | | | | | past answers re-judged for the changed company, 90 days back by default | every stored answer re-read from today's brands and rules |
 | **Intervals** | 95% intervals on every rate; changes tested against noise | none published | none published | none published | none published | "directional indicators" | none published | none published; 5 samples a run by default | `n` on every number; under 20 answers captioned a small sample |
 
 The Semrush AI Toolkit [sorts sources](https://www.semrush.com/kb/1594-ai-seo-metrics) into the same four buckets Popcorn uses: missing, shared, strong and unique.
@@ -169,7 +205,7 @@ The Semrush AI Toolkit [sorts sources](https://www.semrush.com/kb/1594-ai-seo-me
 - **Otterly.AI counts prompts, not answers.** Brand coverage is the share of prompts that mention you. In Popcorn, count the prompts in the prompt list whose named rate is above zero.
 - **Ahrefs weights by search volume.** Brand Radar's AI share of voice is a share of estimated impressions. Popcorn weights every prompt you choose to ask the same, and estimates no traffic.
 - **SE Ranking's visibility is Popcorn's weighted column**, the same formula.
-- **History.** Profound applies today's topics, tags and brands to past answers, so editing your setup changes past numbers ([why past numbers change](https://docs.tryprofound.com/cookbook/metrics/why-past-numbers-change.md)). In Popcorn, a run's grades, rates and share of voice are fixed when it's graded; a change in how answers are asked or graded starts a new method on the trend rather than rewriting the old one. Only which pages count as yours or a competitor's, and the source kinds, are read from today's config for every run.
+- **History.** Profound applies today's topics, tags and brands to past answers, so editing your setup changes past numbers ([why past numbers change](https://docs.tryprofound.com/cookbook/metrics/why-past-numbers-change.md)). In Popcorn, a run's grades, rates and share of voice are fixed when it's graded; a change in how answers are asked or graded starts a new method on the trend rather than rewriting the old one. To carry the trend on after a grading change, [re-grade](../regrading/) the stored answers: it's a step you take, it keeps the replaced grades, and the run page says so. Only which pages count as yours or a competitor's, and the source kinds, are read from today's config for every run.
 - **Elmo's share of voice also depends on whom you track.** Like Gauge, it divides by your mentions plus your tracked competitors'. Its position is your rank among the tracked companies an answer names, where Popcorn's avg place counts every product named.
 - **Elmo leaves out "I don't know that brand".** A model reads each name match, and an answer saying it has no information about your brand isn't counted. Popcorn counts it as named, graded `mentioned`, with the objection recorded, so Popcorn's named rate can be higher on the same answers. Elmo's visibility also counts each prompt's latest answers, where Popcorn's run rates pool the run's.
 - **Limelit Open counts strings, and occurrences.** Its visibility is a deterministic text search, so "I could not find Acme" counts as a mention, as its methodology says. Its share of voice counts every occurrence, not one per answer: an answer that names you once and a rival five times is a 1:5 share, where in Popcorn it's 1:1.
