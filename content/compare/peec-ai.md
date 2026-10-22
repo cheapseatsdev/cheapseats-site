@@ -33,7 +33,7 @@ As of October 2026, from Popcorn's docs and Peec AI's own [pricing](https://peec
 
 ## When to move to Peec AI
 
-These are the signs you've outgrown Popcorn:
+If you outgrow Popcorn, do whatever suits you. Its author would suggest [Gauge](/compare/gauge/); that team is great. If what you need is on this list, Peec AI is a good fit:
 
 - **You need Perplexity, Gemini or Google AI Mode.** Popcorn asks only Claude and OpenAI models, so it doesn't cover them, or Copilot and AI Overviews either.
 - **You'd rather not run anything.** Peec AI is hosted; Popcorn is a container you or your host keeps running.

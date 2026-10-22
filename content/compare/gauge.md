@@ -1,16 +1,16 @@
 ---
 title: Popcorn vs Gauge
-description: Popcorn, the MIT-licensed, self-hosted AI visibility tracker at popcorn.zone, started as a small take on Gauge. A free place to start, compared with Gauge's Action Center and plans as of October 2026, and when to move.
+description: Popcorn, the free, MIT-licensed AI visibility tracker at popcorn.zone, started as a small take on Gauge, its inspiration. Compared with Gauge's Action Center and plans as of October 2026.
 weight: 40
 ---
 
-Popcorn (popcorn.zone) is the MIT-licensed, self-hosted AI visibility tracker. It started as a small, self-hosted take on Gauge, and it owes Gauge its central idea: measuring AI visibility is only useful if it ends in work to do. Gauge is a hosted agent-led growth platform whose Action Center lets a team review, assign and track recommended actions, with a monthly content engine on top.
+Popcorn (popcorn.zone) is a personal open-source project, MIT licensed and free, and it always will be. Its author wrote it to make his own product better, and Gauge was the inspiration: Popcorn started as a small, self-hosted take on it, and it owes Gauge its central idea, that measuring AI visibility is only useful if it ends in work to do. Gauge is a hosted agent-led growth platform whose Action Center lets a team review, assign and track recommended actions, with a monthly content engine on top.
 
 ## Why Popcorn exists
 
-Gauge does a lot. Popcorn's author didn't need all of it, and already had Claude and ChatGPT subscriptions with tokens to spare. So Popcorn is the 20% of a tool like Gauge that you'll use 80% of the time: ask the assistants your buyers' questions, grade whether they recommend you, and end every run with a ranked fix list you act on in your own repo.
+Gauge does a lot. Popcorn's author didn't need all of it, and already had Claude and ChatGPT subscriptions with tokens to spare. So Popcorn is the 20% of a tool like Gauge that you'll use 80% of the time: ask the assistants your buyers' questions, grade whether they recommend you, and end every run with a ranked fix list you act on in your own repo. There's no hosted tier and nothing to upsell.
 
-If you want to get started at no cost, start here. If you grow out of it, Gauge is a natural next step, and the prompts that got you started come with you.
+If you want to get started at no cost, start here. If you grow out of it, Gauge is where Popcorn's author would point you: that team is great, and the prompts that got you started come with you.
 
 ## Side by side
 
@@ -53,7 +53,7 @@ When a pull request ships the fix, you mark the fix with that PR, and the next r
 
 ## When to move to Gauge
 
-These are the signs you've outgrown Popcorn:
+If you outgrow Popcorn, do whatever suits you; Gauge is the suggestion. These are the signs it's time:
 
 - **You need Google AI Mode, Copilot, AI Overviews, Gemini or Perplexity.** Gauge tracks them; Popcorn asks only Claude and OpenAI models and covers none of these.
 - **You'd rather not run anything.** Gauge is hosted; Popcorn is software you or your host keeps running.

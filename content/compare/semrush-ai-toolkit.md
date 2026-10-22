@@ -33,7 +33,7 @@ As of October 2026, from Popcorn's docs and Semrush's own [AI Visibility Toolkit
 
 ## When to move to Semrush
 
-These are the signs you've outgrown Popcorn:
+If you outgrow Popcorn, do whatever suits you. Its author would suggest [Gauge](/compare/gauge/); that team is great. If what you need is on this list, Semrush is a good fit:
 
 - **You already live in Semrush.** AI visibility sits next to Semrush's SEO tools, in one bill and one login.
 - **You need Google AI Mode, Gemini or Perplexity.** The toolkit names Google AI Mode, and the SEO + AI Search plans name Perplexity and Gemini; Popcorn asks only Claude and OpenAI models and doesn't cover any of them.

@@ -33,7 +33,7 @@ As of October 2026, from Popcorn's docs and Profound's own [pricing](https://www
 
 ## When to move to Profound
 
-These are the signs you've outgrown Popcorn:
+If you outgrow Popcorn, do whatever suits you. Its author would suggest [Gauge](/compare/gauge/); that team is great. If what you need is on this list, Profound is a good fit:
 
 - **You need engines Popcorn doesn't ask.** Popcorn asks only Claude and OpenAI models. It doesn't cover Gemini, Perplexity, Microsoft Copilot, DeepSeek, Google AI Overviews or AI Mode. Profound lists all of them.
 - **You need enterprise procurement boxes ticked.** Profound lists SOC 2, SSO/SAML and dedicated support with an SLA. Popcorn is software you run, so its security is your own.
