@@ -1,5 +1,6 @@
 ---
 title: Docs
+weight: 10
 description: Run Popcorn, point it at your brand, read the results and deploy it.
 outputs: ["html", "markdown"]
 ---
