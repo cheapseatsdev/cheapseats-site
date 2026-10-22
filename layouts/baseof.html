@@ -3,12 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ if .IsHome }}{{ site.Title }}: see whether AI assistants recommend you{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+<title>{{ if .IsHome }}{{ site.Title }}: open-source, self-hosted AI visibility tracker{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="{{ .Permalink }}">
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 {{ with site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="Popcorn blog">{{ end }}{{ end }}
+{{ if .IsHome }}<script type="application/ld+json">
+{{ dict
+  "@context" "https://schema.org"
+  "@type" "SoftwareApplication"
+  "name" site.Title
+  "description" site.Params.description
+  "url" site.BaseURL
+  "applicationCategory" "BusinessApplication"
+  "operatingSystem" "Linux, macOS, Docker"
+  "license" "https://opensource.org/licenses/MIT"
+  "offers" (dict "@type" "Offer" "price" "0" "priceCurrency" "USD")
+  "sameAs" (slice site.Params.github)
+  | jsonify | safeJS }}
+</script>{{ end }}
 {{ $css := resources.Get "css/site.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 </head>

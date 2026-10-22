@@ -5,7 +5,7 @@ disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true
 
 [params]
-description = "Ask AI assistants the questions your buyers ask, and see who they recommend. Open source and self-hosted."
+description = "Popcorn is an open-source (MIT), self-hosted AI visibility tracker. It asks Claude and OpenAI models your buyers' questions, grades whether they recommend you, and builds a ranked fix list."
 github = "https://github.com/metcalfc/popcorn"
 template = "https://github.com/metcalfc/popcorn-config-template"
 
