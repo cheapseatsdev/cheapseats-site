@@ -1,6 +1,6 @@
 ---
 title: See the searches behind an AI answer
-description: How to see the web search results an AI assistant got for a question before it wrote its answer, and read them against the answer's top pick and objections to find out why it preferred a competitor. In Cheap Seats' web UI, CLI, JSON API and MCP server, with a real answer worked through.
+description: See the web search results an AI assistant got before it wrote its answer, and read them against its top pick and objections to see why it chose a competitor.
 weight: 50
 ---
 

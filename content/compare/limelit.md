@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Limelit Open
-description: Cheap Seats (MIT) and Limelit Open (Apache-2.0) are both free, self-hosted AI visibility trackers. Engines, grading, metrics and history compared as of October 2026, and when to move.
+description: Cheap Seats (MIT) and Limelit Open (Apache-2.0) are both free, self-hosted AI visibility trackers. Engines, grading, metrics and history as of October 2026.
 weight: 70
 ---
 

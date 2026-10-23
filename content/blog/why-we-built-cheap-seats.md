@@ -3,7 +3,7 @@ title: Why I built Cheap Seats
 date: 2026-10-21
 author: Chad Metcalf
 aliases: ["/blog/why-we-built-popcorn/"]
-description: An open-source project I wrote to make my own product better, inspired by Gauge and others. Free, and always will be, on the Claude subscription you already have.
+description: An open-source project I wrote to make my own product better, inspired by Gauge and others. Free, always, on the Claude subscription you already have.
 ---
 
 Cheap Seats is an open-source project I wrote to make my own product better. It draws on lots of inspiration, [Gauge](https://withgauge.com) first among them, along with Profound and Peec AI. It's free, and it always will be: MIT licensed, no hosted tier, nothing to upsell. I hope you find it useful.

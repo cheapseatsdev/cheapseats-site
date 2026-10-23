@@ -1,6 +1,6 @@
 ---
 title: A public read-only copy
-description: "Show your Cheap Seats dashboard to anyone, without sign-ins or credentials: a read-only copy on its own machine, refreshed from your deployment, rate-limited in front."
+description: "Show your Cheap Seats dashboard to anyone, without sign-ins or credentials: a read-only copy on its own machine, refreshed from your deployment, rate-limited."
 weight: 340
 group: Acting on it
 ---

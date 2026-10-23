@@ -1,6 +1,6 @@
 ---
 title: Benchmark your brand against competitors in AI answers
-description: How to benchmark your brand's visibility in ChatGPT and Claude answers against competitors, measure share of voice in AI chatbot answers, and which metrics a marketing team should track, with a real competitor table and rank trend.
+description: Benchmark your brand against competitors in ChatGPT and Claude answers, measure share of voice, and pick the metrics to track, with a real table and trend.
 weight: 30
 ---
 

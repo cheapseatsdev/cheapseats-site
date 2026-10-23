@@ -1,6 +1,6 @@
 ---
 title: Find out if ChatGPT recommends your product
-description: How to find out whether ChatGPT recommends your product when buyers ask about your category, in about 15 minutes with Cheap Seats. Buyer questions as a TOML prompt set, your own OpenAI and Claude keys or subscriptions, a daily budget, and a recommended, mentioned or absent grade for every answer, with a real graded answer and why checking by hand in ChatGPT misleads.
+description: "Find out whether ChatGPT recommends your product in about 15 minutes: buyer questions as a prompt set, a grade on each answer, and why checking by hand fails."
 weight: 40
 ---
 

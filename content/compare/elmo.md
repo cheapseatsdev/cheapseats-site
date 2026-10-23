@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Elmo
-description: Cheap Seats and Elmo are both MIT-licensed, self-hosted AI visibility trackers. Engines, keys, grading, metrics and history compared as of October 2026, and when to move to Elmo.
+description: Cheap Seats and Elmo are both MIT-licensed, self-hosted AI visibility trackers. Engines, keys, grading, metrics and history, October 2026, and when to move.
 weight: 60
 ---
 

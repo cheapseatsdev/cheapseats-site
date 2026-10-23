@@ -1,6 +1,6 @@
 ---
 title: Prove your content changed AI answers
-description: How often to re-check whether AI assistants recommend you, how to track the change over time against noise, and how to prove to leadership that a page you shipped changed what the assistants say, with the stored answers as evidence. With a real fix outcome and a one-page report built from it.
+description: How often to re-check whether AI assistants recommend you, how to track change against noise, and how to show leadership a page you shipped moved the answers.
 weight: 60
 ---
 

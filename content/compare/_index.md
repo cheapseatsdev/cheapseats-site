@@ -1,6 +1,6 @@
 ---
 title: Compare
-description: Cheap Seats, the MIT-licensed AI visibility tracker at cheapseats.dev, is free and always will be. How it relates to Gauge, Profound, Peec AI, Otterly.AI, Semrush, Bad Popcorn, Elmo and Limelit Open.
+description: Cheap Seats, the free, MIT-licensed AI visibility tracker, beside Gauge, Profound, Peec AI, Otterly.AI, Semrush, Bad Popcorn, Elmo and Limelit Open.
 weight: 25
 outputs: ["html", "markdown"]
 ---

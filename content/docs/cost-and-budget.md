@@ -1,6 +1,6 @@
 ---
 title: Cost, API keys and the daily budget
-description: What Cheap Seats costs to run every day on your own Anthropic and OpenAI keys or your Claude and ChatGPT subscriptions, what two real runs cost, and how the daily budget caps API spend.
+description: What Cheap Seats costs on your own Anthropic and OpenAI keys or your Claude and ChatGPT subscriptions, what two real runs cost, and the daily budget.
 weight: 140
 group: Start here
 aliases:

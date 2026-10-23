@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Profound
-description: Cheap Seats, the MIT-licensed, self-hosted AI visibility tracker at cheapseats.dev, is a free place to start before Profound. Engines, pricing, hosting, prompts, grading, fixes and API compared as of October 2026, and when to move.
+description: Cheap Seats, the free, self-hosted AI visibility tracker, as a place to start before Profound. Engines, pricing, prompts, grading and fixes, October 2026.
 weight: 10
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "Optional providers: Jev and Exa"
-description: Two optional services, off unless configured, for jobs the core models do badly or not at all. TypeSafe's Jev folds product names the grader wrote differently onto one row of the share-of-voice board; an Exa search per prompt over your sites says which of your own pages answer each question. Keys or key-adding proxies, budgeted like every other call.
+description: "Two optional services, off unless configured: TypeSafe's Jev folds product names the grader wrote differently; an Exa search per prompt finds your own pages."
 weight: 445
 group: Running it
 ---

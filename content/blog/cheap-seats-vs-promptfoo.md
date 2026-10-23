@@ -3,7 +3,7 @@ title: "Cheap Seats vs. Promptfoo for AI visibility"
 date: 2026-10-22
 author: Chad Metcalf
 aliases: ["/blog/popcorn-vs-promptfoo/"]
-description: Promptfoo is a general LLM evaluation and red-teaming tool. Cheap Seats is an open-source tracker built for one job, finding out whether AI assistants recommend your product. When each fits, and what you'd build to make Promptfoo do Cheap Seats' job.
+description: Promptfoo is a general LLM eval and red-teaming tool; Cheap Seats tracks whether AI assistants recommend you. When each fits, and what you'd build on top.
 ---
 
 **Should an engineering team use Promptfoo or Cheap Seats to measure whether AI assistants recommend its product?** If the question is "do ChatGPT and Claude recommend us, and what should we change," use Cheap Seats: it's an open-source (MIT), self-hosted tracker built for exactly that. It asks your buyers' questions of Claude and OpenAI models, grades each answer **recommended**, **mentioned** or **absent** for your brand, records your position, the top pick, share of voice and the objections raised, and ends every run with a ranked list of fixes naming the page, what it must say and the questions it should flip. Promptfoo is a general tool for evaluating and red-teaming LLM apps. It can run the same prompts against many models, and you could build a visibility check on top of it, but the visibility part is yours to build.
