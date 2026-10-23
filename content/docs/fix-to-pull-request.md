@@ -8,7 +8,7 @@ Every run ends with a fix list, and [quick wins](../reading-results/#quick-wins)
 
 ## 1. Pick a fix
 
-{{< screenshot name="quickwin" alt="The quick wins page with one fix expanded: where it goes, what it must say, when it's done, which page it displaces, and why." caption="Quick wins on cheapseats.dev's dashboard, with the second fix expanded." >}}
+{{< screenshot name="quickwin" alt="The quick wins page with one fix expanded: where it goes, what it must say, when it's done, which page it displaces, and why." caption="Quick wins on our own dashboard on 21 October, with the second fix expanded. Cheap Seats was still called Popcorn then." >}}
 
 Start from the top of quick wins, or filter by site to get the fixes your team owns. Each fix says:
 
