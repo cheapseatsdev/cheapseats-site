@@ -129,7 +129,7 @@ With `CHEAPSEATS_TOKENS` unset, `serve` only listens on 127.0.0.1 and everything
 
 On [exe.dev](../deploying/#exedev), Cheap Seats instead trusts the proxy's signed-in email header (`CHEAPSEATS_AUTH_HEADER`, narrowed by `CHEAPSEATS_ALLOWED_EMAILS`). API and MCP clients get through the proxy with an exe.dev token scoped to the VM; see [connecting Claude Code](../deploying/#exedev).
 
-Behind a proxy on the same machine, set `CHEAPSEATS_HOSTS` to the host names it serves Cheap Seats as (comma-separated). MCP refuses a request that reaches Cheap Seats on loopback under any other name, against DNS rebinding. Set `CHEAPSEATS_PUBLIC_URL` to the address people reach Cheap Seats at, so [share links](../sharing/#where-links-point) point there.
+Behind a proxy on the same machine, set `CHEAPSEATS_HOSTS` to the host names it serves Cheap Seats as (comma-separated). MCP refuses a request that reaches Cheap Seats on loopback under any other name, against DNS rebinding, and so does the whole of an open (token-less) Cheap Seats. A form or fetch from another origin that would change anything is refused everywhere, unless its origin is one of these names. So a proxy that rewrites `Host` to the upstream address, as nginx does unless told `proxy_set_header Host $host;`, needs `CHEAPSEATS_HOSTS` to name the public host, or every form answers `403` and says so. Set `CHEAPSEATS_PUBLIC_URL` to the address people reach Cheap Seats at, so [share links](../sharing/#where-links-point) point there.
 
 ## Data and privacy
 

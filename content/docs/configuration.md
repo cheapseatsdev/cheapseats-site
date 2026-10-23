@@ -207,7 +207,7 @@ A fix goes to its site's owner, else to the owner for its gap here, else `defaul
 | `OPENAI_API_KEY` | `openai` answerers |
 | `CHEAPSEATS_TOKENS` | comma-separated bearer tokens; required to listen beyond 127.0.0.1 |
 | `CHEAPSEATS_AUTH_HEADER`, `CHEAPSEATS_ALLOWED_EMAILS` | trust a signing-in proxy's email header, optionally narrowed to emails or `@domain`s ([exe.dev](../deploying/#exedev)) |
-| `CHEAPSEATS_HOSTS` | host names a proxy on the same machine serves Cheap Seats as, comma-separated; MCP refuses loopback requests under any other name |
+| `CHEAPSEATS_HOSTS` | host names a proxy on the same machine serves Cheap Seats as, comma-separated; MCP (and, with no sign-in, everything) refuses loopback requests under any other name, and forms from any other origin are refused |
 | `CHEAPSEATS_PUBLIC_URL` | the address [share links](../sharing/) use, such as `https://cheapseats.example.com`. Unset, they use the first of `CHEAPSEATS_HOSTS` over https, else the host the request came in on (`X-Forwarded-Host` first) |
 | `CHEAPSEATS_READONLY` | set to anything for a [read-only copy](../read-only-copy/): serves pages and the JSON API to anyone, refuses every change and MCP, runs nothing |
 | `CHEAPSEATS_CONFIG` | path to `cheapseats.toml`; prompt sets are read from `prompt-sets/` beside it |
