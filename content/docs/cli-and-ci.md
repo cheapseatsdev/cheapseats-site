@@ -64,7 +64,7 @@ A run that stopped keeps what it finished; `POST /api/runs/{id}/retry`, or the *
 
 ```bash
 docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.3.0 run head-to-heads
+  ghcr.io/cheapseatsdev/cheapseats:0.4.2 run head-to-heads
 ```
 
 On a deployment that is already serving, start the run through the API instead (below) or from the set's page. It lands in the same database and the same trend, and counts against the same daily budget.

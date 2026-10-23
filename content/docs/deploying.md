@@ -20,7 +20,7 @@ Each deployment is its own config repo, made from the [config template](https://
 Cheap Seats ships as an image, `ghcr.io/cheapseatsdev/cheapseats:<version>`, and a Helm chart, `oci://ghcr.io/cheapseatsdev/charts/cheapseats`, released together at the same version. The image has no config in it: each deployment builds its own image on top, from its config repo:
 
 ```dockerfile
-FROM ghcr.io/cheapseatsdev/cheapseats:0.3.0
+FROM ghcr.io/cheapseatsdev/cheapseats:0.4.2
 COPY cheapseats.toml /config/cheapseats.toml
 COPY prompt-sets /config/prompt-sets
 ARG REVISION=""

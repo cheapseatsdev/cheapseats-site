@@ -88,9 +88,9 @@ Every API call is checked against today's spend before it goes out, and a run th
 
 ```bash
 docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD/your-config:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.3.0 check
+  ghcr.io/cheapseatsdev/cheapseats:0.4.2 check
 docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD/your-config:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.3.0 run discovery
+  ghcr.io/cheapseatsdev/cheapseats:0.4.2 run discovery
 ```
 
 or from a checkout, `CHEAPSEATS_CONFIG=../your-config/cheapseats.toml go run ./cmd/cheapseats run discovery`. A 15-prompt set with these two answerers is 90 answers; graded with Claude Haiku, grading cost us about three cents for 68 answers, and the answering is a few dollars through the APIs or $0 on subscriptions. [Cost, API keys and the daily budget](/docs/cost-and-budget/) has the measured figures. `cheapseats serve` gives you the web UI at `127.0.0.1:3000` with a Run button per set, and a weekly schedule once you set `schedule.daily_hour_utc`.

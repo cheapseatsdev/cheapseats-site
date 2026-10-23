@@ -41,7 +41,7 @@ docker run -p 3000:3000 \
   -v cheapseats-data:/data \
   -v "$PWD/examples/cheapseats-config:/config:ro" \
   --env-file .env \
-  ghcr.io/cheapseatsdev/cheapseats:0.3.0
+  ghcr.io/cheapseatsdev/cheapseats:0.4.2
 ```
 
 Open <http://localhost:3000> and enter one of your tokens. To measure your own brand, mount your config repo at `/config` instead (start one from the [config template](https://github.com/cheapseatsdev/cheapseats-config-template)). Pin an exact version; the [releases](https://github.com/cheapseatsdev/cheapseats/releases) list them.
@@ -54,7 +54,7 @@ The chart runs one replica and replaces it rather than rolling, so two never sha
 
 ```dockerfile
 # Dockerfile in your config repo: one image per config commit
-FROM ghcr.io/cheapseatsdev/cheapseats:0.3.0
+FROM ghcr.io/cheapseatsdev/cheapseats:0.4.2
 COPY cheapseats.toml /config/cheapseats.toml
 COPY prompt-sets /config/prompt-sets
 ARG REVISION=""
@@ -67,7 +67,7 @@ kubectl create secret generic cheapseats \
   --from-literal=CHEAPSEATS_TOKENS="$(openssl rand -hex 32)" \
   --from-literal=ANTHROPIC_API_KEY="<key>"         # add OPENAI_API_KEY if an answerer uses it
 
-helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.3.0 \
+helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.4.2 \
   --set image.repository=ghcr.io/acme/cheapseats-config \
   --set image.tag=<config commit> \
   --set existingSecret=cheapseats

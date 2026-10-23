@@ -145,6 +145,16 @@ The kind of site says whose page it is; the **page type** says what the page doe
 
 What the page is beats where it's filed: `/blog/notion-vs-obsidian` is a comparison and `/blog/best-note-apps` a listicle. MCP `get_run` carries `page_types` and each top page's `page_type`.
 
+### Opportunities
+
+The two together (`opportunities`): each kind of site, and each page type within it, as one row. For a row whose pages have `c` of the run's `C` citations, cited by `n` answers of which `b` name the brand and `k` name a competitor:
+
+- **citation share** (`citation_share`) = `c ÷ C`
+- **brand presence** (`brand_presence`) = `b ÷ n`, and **competitor presence** (`competitor_presence`) = `k ÷ n`, with `competitors_named` counting each competitor
+- **gap** = citation share × (1 − brand presence)
+
+A kind of page the answers lean on and that rarely names you scores highest. A row is **owned** (`own`: your pages, so the fix is writing that kind of page) or **earned** (everyone else's, so the fix is getting onto them). A row with fewer than 3 citations isn't listed on its own, since its presence rate would be one answer's say-so; its citations still count toward its kind of site. Each row carries its most cited hosts and the prompts its citing answers were for. The analyst gets the top rows beside the answers, so an outreach or new-page fix can name the kind of page and its share rather than one host. It's a view over the stored citations and grades: no model call, and no change to any trend. MCP `get_run` carries `opportunities`.
+
 ## Citation stability
 
 How much the hosts a set's answers cite move from one run to the next, per track, over the same daily runs the trends use (each day's newest finished run, the last 30 days by default). A run's citations are a vector of host **citation shares** `s_h`: a host's citations over all the run's citations, so `Σ s_h = 1`. For each run against the one before it, with shares `a` and `b`:
