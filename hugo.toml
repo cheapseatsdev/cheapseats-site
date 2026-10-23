@@ -4,6 +4,22 @@ title = "Cheap Seats"
 disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true
 
+# The brand's design tokens live once, in brand/web/tokens.css. Mounted into assets so the
+# stylesheet builds them in (layouts/baseof.html), and into static so a third consumer can fetch
+# them at /brand/tokens.css. Declaring a mount drops that target's default, hence the two re-adds.
+[[module.mounts]]
+source = "assets"
+target = "assets"
+[[module.mounts]]
+source = "brand/web/tokens.css"
+target = "assets/css/tokens.css"
+[[module.mounts]]
+source = "static"
+target = "static"
+[[module.mounts]]
+source = "brand/web/tokens.css"
+target = "static/brand/tokens.css"
+
 [params]
 description = "Cheap Seats is a free, open-source AI visibility tracker, inspired by tools like Gauge, Profound and Peec AI, that runs on the Claude subscription you already have (ChatGPT optional). It asks your buyers' questions, grades whether AI assistants recommend you, and builds a ranked fix list."
 github = "https://github.com/cheapseatsdev/cheapseats"

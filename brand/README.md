@@ -40,6 +40,8 @@ The 16px favicon uses optically simplified, pixel-aligned geometry. Use it only 
 | `--cs-gold-bg` | `#FFF0CB` | `#3B2C14` | Highlight badge background |
 | `--cs-gold-text` | `#765000` | `#F2B544` | Text on highlight badges |
 
+The complete set (these, plus hover, chip, control, series and status colors, type stacks, radii and content width) is `web/tokens.css`, the source of truth the site and the app both build from.
+
 The logo's dark neutral is `#1B1917` and its reverse lettering is `#FAF8F5`. UI text uses the separate text tokens above.
 
 Keep large areas neutral. Use red for primary actions and gold sparingly. The mark itself is one solid color. Preserve foreground/background pairs, especially dark text on coral buttons. The decorative border colors need a stronger alternative wherever a visible control boundary is essential. Provide clear keyboard focus styles and verify actual component contrast.
@@ -77,7 +79,7 @@ Copy the relevant files into the application's public asset folder. This example
 <meta name="twitter:image:alt" content="Cheap Seats — three rising red seats beside the company name">
 ```
 
-The manifest icon URLs are relative to the manifest. Keep those files together. Review `id`, `start_url`, and the name fields if deploying below a subpath. Import `brand.css` and set `data-theme="light"` or `data-theme="dark"` on the root element to select the palette. These integration snippets are supplied for handoff; the live site has not been changed.
+The manifest icon URLs are relative to the manifest. Keep those files together. Review `id`, `start_url`, and the name fields if deploying below a subpath. Import `tokens.css` (also served at `https://cheapseats.dev/brand/tokens.css`; `brand.css` just imports it) for the palette, type stacks and radii. It follows the OS's light or dark until `data-theme="light"` or `data-theme="dark"` is set on the root element.
 
 ## Editable source
 
