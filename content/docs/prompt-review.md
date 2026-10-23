@@ -14,7 +14,7 @@ It's worked out from what Cheap Seats already stores (results, grades, searches,
 ## Where to find it
 
 - **Page**: `/sets/<id>/review`, linked from the set page. `?days=30` (the default), `60` or `90`.
-- **CLI**: `cheapseats review <set-id> [-days 30] [-json] [-suggest]`.
+- **CLI**: `cheapseats review <set-id> [-days 30] [-json] [-suggest] [-jev]`.
 - **MCP**: `review_prompts`, taking `set`, optional `days` and `suggest`. It returns the counts and the top five of each flag, numbers rounded. `get_started` suggests it once a set has four weeks of runs and hasn't been reviewed in 30 days.
 - **JSON**: `GET /api/sets/<id>/review?days=30`, every prompt's numbers.
 
@@ -44,6 +44,21 @@ Each flag comes with the numbers behind it and a one-line suggestion. A prompt w
 | **Branded leak** | Outside `head-to-heads`: the prompt names the brand, or at least 2 of its searches and 20% of them add the brand's name. | Reword it as a buyer who hasn't heard of the brand would ask. If only the searches add it, check the prompt doesn't use a term only the brand uses; if not, the assistants found it on their own. |
 
 **Noise** is split the way the set page's sample advice splits it ([How big a change Cheap Seats can detect](../noise-and-confidence/)). Only planned samples count, not adaptive sampling's extras, and a run where every answer to the prompt errored isn't counted. With one sample per answerer and track, noise can't be split, so it isn't flagged. A product named twice in one answer, by its name and an alias, counts once.
+
+## Jev's judgments
+
+The flags above come from a month of answers, so a new set has none. With `[typesafe]` configured ([Optional providers](../optional-providers/)), the prompts' wording itself is put to Jev, one question per request:
+
+| Judgment | The question |
+|---|---|
+| **Duplicate** | Would two prompts of the same intent that share a meaningful word be served by one good answer? |
+| **Off target** | Does the prompt ask about something other than `brand.category`? Not asked without a category, since against the product description it would flag every prompt that isn't about this one product. |
+| **Intent** | Does the answer that serves the buyer name a product in the category (`selection`) or none (`info`)? A how-do-I question about a job those products do is a selection. |
+| **Branded** | Outside `head-to-heads`, does the prompt name the brand, a product of its maker or its domain, in any spelling? |
+
+Each answer is stored under a hash of exactly what the question saw, so rewording one prompt re-asks only its own questions and a `cheapseats check` that changes nothing asks nothing. A 20-prompt set is about 70 requests the first time, a fraction of a cent, and nothing after.
+
+Where it shows: `cheapseats check` prints one `suggestion:` line per flag at `min_confidence` (`suggestion: set s: p3 and p7 may ask the same thing (0.86)`) after its other checks; a suggestion never fails `check`, and `-no-jev` skips it, so CI stays green and fast. The review page, its JSON (`jev`), MCP `review_prompts` and `cheapseats review` list the same flags from what's stored, and opening them never asks. The pass also runs after every run on the run's set, so a new prompt is judged at its first run; `cheapseats judge <run-id>` runs it by hand, and `cheapseats review -jev` asks before reviewing.
 
 ## Gaps
 

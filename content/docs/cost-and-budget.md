@@ -48,6 +48,10 @@ Prompts and answers go only to the providers you configure, and every answer, se
 | **re-grading** stored answers, when you ask | the grader | one grader call per answer: $0 on `claude-code`, per token through the API |
 | **adaptive sampling** extras, if on | the same answerers | like any other answer; API extras only within today's budget |
 | **site audit, citation check, AI crawlers** | plain HTTP and your logs | free: no model calls |
+| **the fact check**, after each run, with `[brand] facts` listed | the grader (`[grader] check_facts`) | one grader call per answer naming you: $0 on `claude-code`, a few cents a run through the API |
+| **Jev passes**, after each run, with `[typesafe]` configured | TypeSafe's API | input tokens only, $0.042 per million: a run's passes together under a cent, and the free tier covers it |
+| **Exa searches**, after each run, with `[exa]` configured | Exa's API | $4 per thousand: coverage and the baseline one per prompt, prospects one per seed; 10 to 15 cents a run of 15 prompts, inside the free plan |
+| **Exa page reads**, when a free check meets a page empty without JavaScript | Exa's API | $1 per thousand pages, at most once a page a day |
 
 Claude is required, through a subscription or an API key; ChatGPT is optional. Grading, the theme pass, the fix list and prompt suggestions go through the Anthropic API by default, or with `provider = "claude-code"` through the `claude` CLI on your subscription, so a laptop can run with no API key at all. Subscriptions work only where the `claude` and `codex` CLIs are installed: on your own machine or a VM, not in the Docker image. See [Running on your subscriptions](../getting-started/#running-on-your-subscriptions).
 
@@ -100,6 +104,7 @@ Answers a day = prompts × tracks × answerers × samples. Two tracks and two an
 - **Grading:** about $0.0005 to $0.0008 an answer with Claude Haiku through the API, or $0 on `claude-code`.
 - **Answering through the APIs:** about $0.06 an answer on average, search answers near $0.09 and recall answers $0.01 to $0.035; or $0 on subscriptions.
 - **Per run:** one fix-list call, a few cents with Claude Opus, and one theme call, under a cent.
+- **Optional providers**, if on: about a cent of Jev and 10 to 15 cents of Exa per 15-prompt run, both inside the providers' free tiers on a weekly schedule ([Optional providers](../optional-providers/#getting-a-key)).
 
 A 20-prompt set, four answers a prompt, is 80 answers a day: about **$0.06 a day on subscriptions**, grading only, or **about $5 a day through the APIs**. The `start_run` dry run (below) estimates a real set from its own recent answers.
 
@@ -112,7 +117,7 @@ reservation_usd = 0.60
 concurrency = 6
 ```
 
-- **`daily_usd`** is the most Cheap Seats may spend on API calls in a UTC day, across every run, answer, grade, re-grade, theme pass, fix list, prompt suggestion and search probe.
+- **`daily_usd`** is the most Cheap Seats may spend on API calls in a UTC day, across every run, answer, grade, re-grade, theme pass, fact check, fix list, prompt suggestion, search probe, and every Jev and Exa pass.
 - **`reservation_usd`** is what each call reserves before it goes out (default $0.60).
 - **`concurrency`** is how many API calls may be in flight at once.
 
@@ -146,6 +151,7 @@ A `start_run` dry run (MCP, or `POST /api/runs` with `"dry_run": true`) estimate
 - **Leave the schedule off** on a dev machine: without `schedule.daily_hour_utc`, nothing runs unless you start it.
 - **Spend extra answers where they help.** Instead of raising `samples` everywhere, `[sampling] adaptive = true` with `max_extra = N` adds at most N answers to a core run, on the prompts whose rate is least certain, and only within today's budget on API answerers. It's off by default. The set's page says whether your samples are buying precision; see [How big a change Cheap Seats can detect](../noise-and-confidence/#when-more-samples-help).
 - **Start with the free checks.** `cheapseats audit`, `cheapseats check-citations` and `cheapseats crawl` make no model calls. See [Free site checks](../site-audit/).
+- **Switch off the passes you don't read.** Every `[typesafe]` and `[exa]` switch is on when its table is present. `baseline = false` or `prospects = false` saves a search per prompt or per seed; the Jev passes are too cheap to be worth switching off.
 
 See [Configuration](../configuration/#budget) for the rest of `cheapseats.toml`.
 

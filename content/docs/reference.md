@@ -19,6 +19,16 @@ cheapseats themes <run-id> [-rebuild]     net sentiment and the run's themes; -r
 cheapseats fold <run-id>                  put the run's new product names to Jev ([typesafe])
 cheapseats coverage <run-id>              search the brand's sites for each prompt ([exa])
 cheapseats misstatements <run-id>         check the answers naming the brand against [brand] facts (one grader call each)
+cheapseats cluster <run-id>               put the run's new objection and praise wordings to Jev ([typesafe])
+cheapseats verdicts <run-id>              a second opinion from Jev on each grade's verdict and evidence ([typesafe])
+cheapseats classify <run-id>              type pages and class hosts the rule lists call other or editorial ([typesafe])
+cheapseats match-fixes <run-id>           ask Jev which sets' fixes ask for the same page ([typesafe])
+cheapseats judge <run-id>                 put the run's set's prompts to Jev: duplicates, off target, intent, branded ([typesafe])
+cheapseats baseline <run-id>              search the web for each prompt, no domain filter ([exa])
+cheapseats prospect <run-id>              pages like the listicles the answers leaned on, as outreach ([exa])
+cheapseats discover [-json]               sites like your competitors' and yours, as [[competitors]] entries to paste ([exa], Jev optional)
+cheapseats probe [-engine claude|exa|both] [-domains a,b] [-exclude a,b] "<query>"
+                                       one search as the answerers' tool returns it; exa and both need [exa]
 cheapseats suggest-prompts <set-id> [-n 10]  new buyer questions for a set, as TOML to paste (one analyst call; writes nothing)
 cheapseats regrade [-since 28d] [-dry-run=false] <set-id|run-id>
                                        grade stored answers again with today's grader, brand and competitors;
@@ -36,7 +46,7 @@ cheapseats migrate-config [dir]           give each prompt an id, in sets writte
 cheapseats version                        this build's version and database schema
 ```
 
-From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. Running a set from a terminal or a pipeline, with the exit codes and a scheduled workflow, is in [The CLI, and runs from CI](../cli-and-ci/). `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/), `review` in [Reviewing your prompts](../prompt-review/), `fold` and `coverage` in [Optional providers](../optional-providers/), `misstatements` in [Got wrong about you](../got-wrong/).
+From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. Running a set from a terminal or a pipeline, with the exit codes and a scheduled workflow, is in [The CLI, and runs from CI](../cli-and-ci/). `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/), `review` in [Reviewing your prompts](../prompt-review/), `fold`, `coverage`, `cluster`, `verdicts`, `classify`, `match-fixes`, `judge`, `baseline`, `prospect`, `discover` and the probe's `-engine` in [Optional providers](../optional-providers/), `misstatements` in [Got wrong about you](../got-wrong/). `check -no-jev` skips the prompt judgments and `review -jev` asks for them.
 
 - **`init`**: `-name` sets the brand's name instead of what the site calls itself; `-competitors` adds `[[competitors]]` entries, alternatives prompts and head-to-heads; `-suggest` adds `-n` suggested prompts to the starter sets with one analyst call; `-dry-run` prints what it found and every file it would write, and writes nothing. It writes to `./<brand>-cheapseats-config` unless you name a directory.
 - **`regrade`**: `-since` takes `28d`, `72h` or `all` (default 28 days) and applies to a set; `-dry-run` is true by default.
@@ -56,14 +66,16 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `get_prompt_set`   | the prompts in one set, and the competitor names the grader folds onto          |
 | `start_run`        | start a run over a set (costs money; returns the id); takes `set` and `dry_run`. With `dry_run: true` it starts nothing and returns the plan: answers per answerer and track, answerers skipped, estimated cost from each answerer's recent answers and their grading (priced by `[pricing]`; re-grades count toward grading, so it errs high), today's remaining budget, and whether it would be refused |
 | `list_runs`        | recent runs with status and headline rates                                      |
-| `get_run`          | rates per answerer and track (and `unbranded`, without branded prompts), share of voice with named rate, positions and top 3, head to head, objections, sources by kind and host, the outreach list, the brand's pages found but not cited, net sentiment with top praise and objections, the run's themes, the fix list, insights, one line per prompt |
+| `get_run`          | rates per answerer and track (and `unbranded`, without branded prompts), share of voice with named rate, positions and top 3, head to head, objections, sources by kind and host, cited pages by type, `opportunities`, the outreach list, the brand's pages found but not cited, net sentiment with top praise and objections, the run's themes, the fix list, insights, one line per prompt; with the providers on, `own_pages` per prompt, `neutral_retrieval`, `prospects`, second-opinion counts and up to ten disagreements, and `misstatements` when facts are checked |
+| `wait_for_run`     | waits on the server for a run and returns its `list_runs` row (status, rates, rank) once every answer is graded and the fix list is built, so `get_run` is complete; takes `run` and `timeout_seconds` (default 90, at most 600). On the timeout it returns `timed_out: true` with the run's progress so far, to be called again; a run left queued by a restart says so in `note` |
 | `get_result`       | one answer in full: text, grade, searches and citations                         |
 | `get_quick_wins`   | the ranked fixes, filterable by gap, set, site, status and priority, each with its Claude prompt and the work submitted for it; `brief` leaves out the prompts and `limit` caps the list |
 | `mark_fix`         | record the commit or pull request submitted for a fix, as proposed or accepted  |
 | `set_attempt_state` | move submitted work on: accepted when it merges, withdrawn when it's closed    |
 | `list_attempts`    | the work submitted for fixes, with each one's outcome (moved, worse, mixed, no detectable change...) tested against noise |
 | `get_citations`    | every URL linked in an answer across runs, filterable by URL, set and window   |
-| `search_probe`     | one query through the answerers' web search tool, returning the exact result    |
+| `search_probe`     | one query through the answerers' web search tool, returning the exact result; with `[exa]`, `engine` is `claude`, `exa` or `both` (each link marked overlap, only Claude or only Exa) |
+| `suggest_competitors` | runs competitor discovery on Exa and returns the top 10 hosts with reasons and the `[[competitors]]` TOML to paste; needs `[exa]`, Jev optional. Nothing is written to the config |
 | `get_citation_stability` | how much the hosts a set's answers cite move from run to run: Bray–Curtis similarity and Jaccard overlap of consecutive runs, the headline score from 3 transitions, and the newest transition's new and gone hosts (ten of each); takes `set`, `track` (`search` by default, or `recall`) and `last_days` (default 30). Free |
 | `get_rankings`     | the brand's daily share-of-voice rank and rates per set, with rolling averages and 95% bands, and day-over-day change with its margin (`within_noise` when it could be chance); takes `set`, `last_days` and `window` (7, 14 or 28) |
 | `get_search_queries` | the searches behind a run's search-track answers: top queries, names the assistants added, words added and dropped, and queries worth adding as prompts; takes `run`, `pool` and `limit`. Free |
@@ -111,14 +123,16 @@ The server also offers three **prompts**, each telling the model which tools to 
 | `GET`/`POST /api/runs/{id}/citation-check` | the run's latest citation check; POST runs one over its `n` most-cited third-party pages (default 25) and waits for it (free) |
 | `GET /api/crawlers`                  | AI crawler and referral counts per page, from imported logs; takes `days` (default 30) |
 | `GET /api/citations`                 | cited URLs across runs; takes `urlContains`, `lastDays` and `set`     |
-| `POST /api/search-probe`             | one search, verbatim; takes `{"query", "allowed_domains"?, "blocked_domains"?}` |
+| `POST /api/search-probe`             | one search, verbatim; takes `{"query", "allowed_domains"?, "blocked_domains"?, "engine"?}` |
+| `GET /api/competitors/suggestions`   | the hosts competitor discovery found (`suggestions` and `toml`); calls no provider   |
+| `POST /api/competitors/suggestions/{host}/dismiss` | hides a host from the suggestions for good                  |
 
 ```bash
 curl -H "Authorization: Bearer <token>" \
   "https://<host>/api/citations?urlContains=docs.example.com&lastDays=30"
 ```
 
-A run's JSON (`/api/runs/{id}`, and `/runs/{id}/export.json`) carries everything on the run page under `Summary`: `voice` with `named_rate`, `share_of_voice`, `avg_position`, `named_first`, `top3` and `position_weighted` per product (and `share`, the old name for `named_rate`), `unbranded`, `head_to_head`, `objections`, `source_classes`, `hosts` with `bucket`, `outreach` and `found_not_cited`; net sentiment and themes are under `opinion`; each source page has a `page_type`, rolled up in `page_types`. Each grade carries its `evidence`, and a re-graded run lists its `regrades`: when, how many answers, the cost, and the method and grader it had before. [Metric definitions](../metrics/) defines each field. An attempt's `outcome` has `status`, `summary`, and `named` and `recommended` as `{d, margin, prompts}`.
+A run's JSON (`/api/runs/{id}`, and `/runs/{id}/export.json`) carries everything on the run page under `Summary`: `voice` with `named_rate`, `share_of_voice`, `avg_position`, `named_first`, `top3` and `position_weighted` per product (and `share`, the old name for `named_rate`), `unbranded`, `head_to_head`, `objections`, `source_classes`, `hosts` with `bucket`, `outreach` and `found_not_cited`; net sentiment and themes are under `opinion`; each source page has a `page_type`, rolled up in `page_types`; `opportunities` scores kind of site and page type together. With the providers on, each objection carries its `wordings`, each prompt its `coverage` and `baseline`, the run its `prospects` and `second_opinion`, and `misstatements` when facts are checked. Each grade carries its `evidence`, and a re-graded run lists its `regrades`: when, how many answers, the cost, and the method and grader it had before. [Metric definitions](../metrics/) defines each field. An attempt's `outcome` has `status`, `summary`, and `named` and `recommended` as `{d, margin, prompts}`.
 
 `/api/citations` counts each answer that linked a URL once, and returns `runs_scanned` and `answers_scanned` alongside the pages, so a URL missing from the list reads as uncited across that many answers.
 
@@ -136,7 +150,7 @@ Behind a proxy on the same machine, set `CHEAPSEATS_HOSTS` to the host names it 
 
 ## Data and privacy
 
-Prompts and answers are sent to the model providers on every run, and `brand.about` and `brand.facts` go to the grader and analyst, so keep anything private out of them. API keys are masked out of provider error messages before they're logged or stored.
+Prompts and answers are sent to the model providers on every run; `brand.about` goes to the grader and analyst, and `brand.facts` to the analyst and the fact check, so keep anything private out of them. With the optional providers on, Jev sees product names, objection and praise wordings, graded answers, page titles and URLs, fix titles and prompt wordings, and Exa sees prompt texts and the sites searched; neither sees a key or a token. API keys are masked out of provider error messages before they're logged or stored.
 
 ## CLI answerers
 
