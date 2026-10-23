@@ -2,8 +2,12 @@
 <div class="wrap docs">
   {{ partial "docs-nav.html" . }}
   <div class="prose">
-    <h1>{{ .Title }}</h1>
-    {{ .Content }}
+    <header class="page-heading">
+      <p class="eyebrow">Run it. Read it. Improve it.</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
+    </header>
+    <div class="article-content">{{ .Content }}</div>
     {{ $pages := .Pages.ByWeight }}
     {{ range $g := site.Params.docGroups }}
     {{ $in := where $pages "Params.group" $g }}

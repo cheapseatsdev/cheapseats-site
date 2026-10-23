@@ -134,3 +134,14 @@ Behind a proxy on the same machine, set `CHEAPSEATS_HOSTS` to the host names it 
 ## Data and privacy
 
 Prompts and answers are sent to the model providers on every run, and `brand.about` and `brand.facts` go to the grader and analyst, so keep anything private out of them. API keys are masked out of provider error messages before they're logged or stored.
+
+## CLI answerers
+
+The `claude-code` and `codex` answerers run the CLIs you've logged in, and each CLI carries a shell and file access that the model drives. On the search track the model reads pages it doesn't control, so treat what it could do with those tools as the boundary, not what the brief tells it. What Cheap Seats does on every call:
+
+- an empty temporary directory, no session, and your own CLAUDE.md, hooks, skills, MCP servers and Codex config switched off;
+- an environment of only what the CLI needs (its home, PATH, locale, proxies, certificates and its own settings directory): no API keys, no `CHEAPSEATS_TOKENS`, nothing else this process holds. `CHEAPSEATS_CLI_ENV` names more variables to pass, comma-separated;
+- `claude` with `--tools` set to exactly WebSearch and WebFetch on the search track and nothing on recall, which the CLI enforces;
+- `codex` with a read-only sandbox and an empty environment for any command it runs. The sandbox stops writes, not reads or commands: Codex always has its shell, and on recall only the brief tells it not to use it.
+
+So on a machine that holds anything a prompt-injected answer could read, run the CLIs as a separate user: set `CHEAPSEATS_CLI_USER` and Cheap Seats runs them through `sudo -n -H -u <user>`, with a sudoers rule that allows the two commands and `SETENV` for the environment it passes. The [exe.dev deploy](../deploying/#exedev) does this for you with a `cheapseats-cli` user. On a laptop the CLIs run as you, the same as when you use them by hand. The Docker image and Helm chart have no CLIs: deployed answerers use the APIs, and the keys they hold never reach a model's shell.

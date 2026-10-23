@@ -2,9 +2,13 @@
 <div class="wrap docs">
   {{ partial "docs-nav.html" . }}
   <article class="prose">
-    <h1>{{ .Title }}</h1>
-    {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
-    {{ .Content }}
+    <header class="page-heading">
+      <p class="eyebrow"><a href="{{ "/docs/" | relURL }}">Docs</a>{{ with .Params.group }} / {{ . }}{{ end }}</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
+    </header>
+    {{ partial "on-page.html" . }}
+    <div class="article-content">{{ .Content }}</div>
     {{ $pages := .CurrentSection.Pages.ByWeight }}
     {{ $i := 0 }}
     {{ range $n, $p := $pages }}{{ if eq $p $ }}{{ $i = $n }}{{ end }}{{ end }}

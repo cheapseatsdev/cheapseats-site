@@ -1,0 +1,15 @@
+{{ $here := . }}
+{{ with site.GetPage "/docs" }}
+  <p class="docs-nav-title"><a href="{{ .RelPermalink }}"{{ if eq $here . }} aria-current="page"{{ end }}>All documentation</a></p>
+  {{ $pages := .Pages.ByWeight }}
+  {{ range $g := site.Params.docGroups }}
+  {{ with where $pages "Params.group" $g }}
+  <p class="docs-nav-group">{{ $g }}</p>
+  <ul>
+  {{ range . }}
+    <li><a href="{{ .RelPermalink }}"{{ if eq $here . }} aria-current="page"{{ end }}>{{ .Title }}</a></li>
+  {{ end }}
+  </ul>
+  {{ end }}
+  {{ end }}
+{{ end }}

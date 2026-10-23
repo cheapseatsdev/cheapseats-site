@@ -1,8 +1,9 @@
 # cheapseats.dev
 
 The website, docs and blog for [Cheap Seats](https://github.com/cheapseatsdev/cheapseats), built with
-[Hugo](https://gohugo.io) and a small theme in `layouts/` and `assets/css/site.css`. No JavaScript,
-no web fonts, no CDN assets, no analytics.
+[Hugo](https://gohugo.io) and a small theme in `layouts/` and `assets/css/site.css`. No web fonts,
+CDN assets or analytics. Navigation works without JavaScript; a small inline script remembers the
+chosen appearance.
 
 ```bash
 hugo server          # http://localhost:1313

@@ -1,8 +1,11 @@
 {{ define "main" }}
 <article class="wrap prose">
-  <h1>{{ .Title }}</h1>
-  <p class="meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>{{ with .Params.author }} · {{ . }}{{ end }}</p>
-  {{ .Content }}
+  <header class="page-heading">
+    <p class="eyebrow"><a href="{{ "/blog/" | relURL }}">Blog</a></p>
+    <h1>{{ .Title }}</h1>
+    {{ partial "article-meta.html" . }}
+  </header>
+  <div class="article-content">{{ .Content }}</div>
   <p class="muted"><a href="{{ "/blog/" | relURL }}">All posts</a></p>
 </article>
 {{ end }}

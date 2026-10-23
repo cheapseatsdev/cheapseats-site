@@ -1,0 +1,6 @@
+{{ if .Fragments.Headings }}
+<div class="on-page">
+  <p>On this page</p>
+  {{ .TableOfContents | replaceRE `<nav id="TableOfContents">` `<nav id="TableOfContents" aria-label="On this page">` | safeHTML }}
+</div>
+{{ end }}

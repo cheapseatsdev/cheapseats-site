@@ -1,0 +1,9 @@
+{{ $here := . }}
+{{ range site.Menus.main }}
+  {{ if .Page }}
+    {{ $active := or ($here.IsMenuCurrent "main" .) ($here.HasMenuCurrent "main" .) (eq $here.Section .Page.Section) }}
+    <a href="{{ .URL }}"{{ if and $active (not $here.IsHome) }} aria-current="page"{{ end }}>{{ .Name }}</a>
+  {{ else }}
+    <a href="{{ .URL }}">{{ .Name }}</a>
+  {{ end }}
+{{ end }}
