@@ -17,8 +17,8 @@ As of October 2026, from Cheap Seats' docs and Peec AI's own [pricing](https://p
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Names ChatGPT, Perplexity and Gemini, and links an AI Mode visibility tracker; per-plan model lists aren't published |
 | **Your prompts** | TOML in your own git repo, changed by pull request | Tracked prompts; monthly answers are "tracked prompts by active models and tracking frequency" |
 | **Web search vs memory** | Both, as separate tracks (search and recall), reported separately | Not stated |
-| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections | Not detailed on the pricing or home page |
-| **What to fix** | A ranked fix list every run: the page, what it must say, the prompts it should flip, the owner, and a Claude Code prompt | "Recommended actions": "Ranked opportunities to improve AI visibility, grouped by earned and owned" |
+| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections; with your facts listed, what each answer got wrong about you | Not detailed on the pricing or home page |
+| **What to fix** | A ranked fix list every run: the page, what it must say, the prompts it should flip, the owner, and a Claude Code prompt; an opportunities table scores each kind of source, owned against earned | "Recommended actions": "Ranked opportunities to improve AI visibility, grouped by earned and owned" |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | API and MCP ("Peec MCP is live") |
 | **Data** | Your SQLite file; prompts and answers go only to the model providers you configure | Hosted by Peec AI |
 
@@ -38,7 +38,7 @@ If you outgrow Cheap Seats, do whatever suits you. Its author would suggest [Gau
 - **You need Perplexity, Gemini or Google AI Mode.** Cheap Seats asks only Claude and OpenAI models, so it doesn't cover them, or Copilot and AI Overviews either.
 - **You'd rather not run anything.** Peec AI is hosted; Cheap Seats is a container you or your host keeps running.
 - **You're an agency.** Peec AI serves "marketing teams and SEO agencies" and has a page for agencies. Cheap Seats has no agency tier.
-- **You want earned-media opportunities.** Peec AI groups its recommended actions into earned and owned. Cheap Seats' fixes are pages to create or change, on your site or others.
+- **You want earned-media opportunities as a workflow.** Peec AI groups its recommended actions into earned and owned. Cheap Seats scores the same split, each kind of source by how much the answers lean on it and how rarely it names you, and with Exa lists prospect pages like the ones cited ([Opportunities](/docs/metrics/#opportunities)); but its actions are still single pages to create or change, and the outreach is yours to do.
 
 ## Taking your prompts with you
 

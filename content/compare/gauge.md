@@ -23,7 +23,7 @@ As of October 2026, from Cheap Seats' docs and Gauge's own [pricing](https://wit
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Growth: ChatGPT, Google AI Mode, Microsoft Copilot. Enterprise adds Google AI Overviews, Gemini and Perplexity. Claude and Grok on any plan with your own Anthropic or xAI API key |
 | **Your prompts** | TOML in your own git repo, changed by pull request | 600 prompts, run daily, on Growth; custom on Enterprise |
 | **Web search vs memory** | Both, as separate tracks (search and recall), reported separately | Not stated |
-| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections | Sentiment analysis on Enterprise |
+| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections; with your facts listed, what each answer got wrong about you | Sentiment analysis on Enterprise |
 | **What to fix** | A ranked fix list every run (below) | Action Center: "Review, assign, and track recommended actions", plus a content engine (18 articles a month on Growth) |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | MCP and a CLI; Slack integration. API not mentioned |
 | **Coding agents** | Not covered | Gauge Agents runs evaluations with Claude Code, Codex and Cursor |
