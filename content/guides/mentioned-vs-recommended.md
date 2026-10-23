@@ -1,5 +1,5 @@
 ---
-title: "Mentioned vs. recommended: measuring your brand in AI answers"
+title: "Mentioned vs. recommended: measuring brands in AI answers"
 description: The difference between being mentioned and being recommended by an AI assistant, how to measure each, and how to compute share of voice against competitors.
 ---
 
