@@ -64,6 +64,8 @@
 {{ $ld | jsonify | safeJS }}
 </script>{{ end }}
 {{ $css := resources.Get "css/site.css" | minify | fingerprint }}
+{{- /* A theme picked with the header's toggle, applied before the page paints. */}}
+<script>try{var t=localStorage.getItem("cheapseats-theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 </head>
 <body>
@@ -73,5 +75,31 @@
 {{ block "main" . }}{{ end }}
 </main>
 {{ partial "footer.html" . }}
+<script>
+// The header's theme toggle cycles system, light, dark; a pick is remembered in this browser.
+// Screenshots follow it too: their dark image's media query is pinned on or off while one is picked.
+(function () {
+  var button = document.querySelector(".theme-toggle");
+  if (!button) return;
+  var modes = ["system", "light", "dark"], root = document.documentElement;
+  var mode = root.dataset.theme || "system";
+  function apply() {
+    if (mode === "system") delete root.dataset.theme; else root.dataset.theme = mode;
+    document.querySelectorAll("picture source[data-dark]").forEach(function (s) {
+      s.media = mode === "system" ? "(prefers-color-scheme: dark)" : mode === "dark" ? "all" : "not all";
+    });
+    var next = modes[(modes.indexOf(mode) + 1) % modes.length];
+    button.dataset.mode = mode;
+    button.setAttribute("aria-label", "Theme: " + mode + ". Switch to " + next + ".");
+    button.title = button.getAttribute("aria-label");
+  }
+  apply();
+  button.addEventListener("click", function () {
+    mode = modes[(modes.indexOf(mode) + 1) % modes.length];
+    try { if (mode === "system") localStorage.removeItem("cheapseats-theme"); else localStorage.setItem("cheapseats-theme", mode); } catch (e) {}
+    apply();
+  });
+})();
+</script>
 </body>
 </html>

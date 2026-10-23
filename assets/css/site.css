@@ -1,6 +1,6 @@
 /* Cheap Seats' palette and type, copied from the app (internal/server/static/cheapseats.css): warm ivory /
    warm charcoal, cinema red for primary actions and the logo, gold for the occasional highlight.
-   Light by default, dark when the OS asks for it. */
+   The OS's light or dark, unless the header's toggle picks one (data-theme on <html>). */
 :root{color-scheme:light;
   --pc-bg:#FAF8F5;--pc-surface:#FFFFFF;--pc-border:#E5DFD7;--pc-text:#252321;--pc-muted:#6E6862;
   --pc-primary:#C73532;--pc-primary-hover:#A92B28;--pc-on-primary:#FFFFFF;
@@ -8,11 +8,16 @@
   --pc-chip:#F2EEE8;--pc-control:#8C847B;
   --sans:-apple-system,BlinkMacSystemFont,"Inter",system-ui,sans-serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,monospace}
-@media (prefers-color-scheme:dark){:root{color-scheme:dark;
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
   --pc-bg:#1B1917;--pc-surface:#24211E;--pc-border:#3B3631;--pc-text:#F5F1EB;--pc-muted:#ADA59C;
   --pc-primary:#EF7770;--pc-primary-hover:#F38D87;--pc-on-primary:#1B1917;
   --pc-gold:#F2B544;--pc-gold-strong:#F2B544;--pc-gold-bg:#3B2C14;--pc-gold-text:#F2B544;
   --pc-chip:#302C28;--pc-control:#7D756C}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --pc-bg:#1B1917;--pc-surface:#24211E;--pc-border:#3B3631;--pc-text:#F5F1EB;--pc-muted:#ADA59C;
+  --pc-primary:#EF7770;--pc-primary-hover:#F38D87;--pc-on-primary:#1B1917;
+  --pc-gold:#F2B544;--pc-gold-strong:#F2B544;--pc-gold-bg:#3B2C14;--pc-gold-text:#F2B544;
+  --pc-chip:#302C28;--pc-control:#7D756C}
 
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -107,3 +112,7 @@ footer.site{border-top:1px solid var(--pc-border);background:var(--pc-surface);p
 footer.site p{margin:4px 0}
 p code,li code{overflow-wrap:anywhere}
 .screenshot{margin:0 0 20px}.screenshot img{display:block;max-width:100%;height:auto;border:1px solid var(--pc-border);border-radius:8px}.screenshot figcaption{font-size:.9em;color:var(--pc-muted);margin-top:6px}
+.theme-toggle{margin-left:auto;background:transparent;color:var(--pc-muted);border:1px solid var(--pc-border);border-radius:8px;padding:5px;display:inline-flex;cursor:pointer}
+.theme-toggle:hover{color:var(--pc-text);background:var(--pc-chip)}
+.theme-toggle span{display:none}
+.theme-toggle:not([data-mode]) .t-system,.theme-toggle[data-mode="system"] .t-system,.theme-toggle[data-mode="light"] .t-light,.theme-toggle[data-mode="dark"] .t-dark{display:inline-flex}
