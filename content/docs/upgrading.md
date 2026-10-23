@@ -20,6 +20,13 @@ From a release before prompt ids: run `cheapseats migrate-config` on your config
 cheapseats migrate-config [dir]           give each prompt an id, in sets written before ids
 ```
 
+## Upgrading to 0.4
+
+- **Two schema migrations**, backed up first as always. An existing deployment upgrades with no config changes.
+- **New keys, all optional**: `[brand] category`, the `[typesafe]` and `[exa]` tables and their switches, `[grader] check_facts`, and `[pricing.exa-contents]`. Unknown keys are errors, so upgrade the app before adding any of them to the config. See [Optional providers](../optional-providers/) and [Got wrong about you](../got-wrong/).
+- **No grader or answer-prompt change**, so every trend carries on.
+- **0.4.2 reads one set of names**: only `CHEAPSEATS_*` from the environment, and only `cheapseats.toml` and `cheapseats.db`. A deployment still on older names renames them before this upgrade.
+
 ## What a release can restart
 
 A release that changes how answers are asked or graded starts trends over, and its release notes should say so. Anything else that changes is annotated on the rankings, not a new trend.

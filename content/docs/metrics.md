@@ -68,7 +68,7 @@ For each product on the board, against your brand, over every graded answer (`he
 
 ### Objections
 
-The concerns raised in answers that name your brand (`objections`), folded for counting: lowercase, every run of punctuation and spaces one space, so "Pricing unclear." and "pricing, unclear" count once. Each objection counts once per answer, with the first prompt it came up on as an example.
+The concerns raised in answers that name your brand (`objections`), folded for counting: lowercase, every run of punctuation and spaces one space, so "Pricing unclear." and "pricing, unclear" count once. Each objection counts once per answer, with the first prompt it came up on as an example. With `[typesafe]` and `cluster_phrases` on, wordings Jev judged to say the same thing count as one row, named by the wording seen first, with `wordings` listing the rest; the same applies to praise.
 
 ## Sentiment and themes
 
@@ -84,6 +84,18 @@ Grades from before tone was graded have no tone, so net sentiment is over the an
 
 **Themes** come from one more grader call after a run is graded. It groups the run's objections, praise and reasons for picking something else into at most eight named themes, each with a kind (strength, weakness or competitive), the answers that said it, the product it helps (always one of your competitors or a product the answers named), and a quote copied word for word from what it groups. Counts, quotes and beneficiaries are checked against the inputs. With fewer than five distinct strings to group there's no call, and the run says so.
 
+## Second opinions
+
+With `[typesafe]` and `second_opinions` on, Jev reads every graded answer again under the grader's own verdict definitions (both are built from one text) and picks the sentence of the answer that most supports its verdict. Each opinion is compared with the answer's *current* grade when read, so a re-grade changes the comparison and not the stored opinion:
+
+| | when |
+| --- | --- |
+| **agrees** | Jev chose the grader's verdict, at a probability of at least `min_confidence` |
+| **disagrees** | Jev chose another verdict, at a probability of at least `min_confidence` |
+| **unsure** | Jev's probability for its choice is under the threshold |
+
+**Agreement rate** = agreed ÷ (agreed + disagreed), over the answers Jev was sure about. The set page's **Jev agrees** column is this rate per run; since the answers and the definitions don't change between runs, its movement is a measure of the grader's drift. The evidence comparison is **same** (the two sentences are equal once case, spacing and punctuation are folded, or one contains the other), **differs** or **none**. `second_opinion` in the run's JSON carries the counts and each disagreement; MCP `get_run` the counts and up to ten disagreements, `get_result` one answer's.
+
 ## Sources
 
 Every page an answer cited, or its searches returned, is sorted into a kind of site:
@@ -98,7 +110,7 @@ Every page an answer cited, or its searches returned, is sorted into a kind of s
 | `institutional` | .gov, .edu, .mil, .int and their country forms (gov.uk, ac.uk) |
 | `editorial` | everything else |
 
-Your sites come first, then competitors' domains, then `[sources]` in `cheapseats.toml`, then the built-in lists; within a list the most specific entry wins. See [Configuration](../configuration/#sources).
+Your sites come first, then competitors' domains, then `[sources]` in `cheapseats.toml`, then the built-in lists; within a list the most specific entry wins. See [Configuration](../configuration/#sources). With `[typesafe]` and `page_types` on, a third-party host the lists would call `editorial` is classed by Jev once, from up to three of its pages' titles and URLs, and that sits between `[sources]` and the built-in lists.
 
 For each page, host and kind:
 
@@ -127,6 +139,16 @@ With competitors configured, only they count as competitors here; with none, eve
 - **Cited without your brand** (`outreach`): the missing hosts that aren't a competitor's own, ranked by distinct competitors named × answers citing the host. These are the pages to get your brand onto.
 - **Found but not cited** (`found_not_cited`): your own pages that searches returned and no answer linked.
 
+### Neutral retrieval
+
+With `[exa]` and `baseline` on, each prompt is also run as a plain web search on Exa, with no domain filter, and the top `baseline_results` pages (default 10) are kept. Per host, with a competitor's domains as one row and your sites as one:
+
+- **neutral**: the prompts a neutral index ranks a page of the host for
+- **assistants**: the prompts any answer retrieved or cited a page of the host for
+- the **reading** is **content** when neutral is at least 2 and at least the assistants' count (the web agrees with the assistants, so the work is content), **query** when the assistants found it for 2 or more prompts and a neutral search never ranked it (only their own searches find it), and **both** otherwise. A host one answer retrieved once, and the index never ranked, isn't a row.
+
+Under each prompt, the neutral top pages carry whose they are and the same status as coverage: `cited`, `retrieved` or `unseen`. `baseline` in the run's JSON carries all of it; MCP `get_run` carries the top ten rows as `neutral_retrieval`.
+
 ### Page types
 
 The kind of site says whose page it is; the **page type** says what the page does, from its URL and the title the search result or citation gave it (`page_type` on each page, rolled up in `page_types` with cited, retrieved, pages and share of citations). The first rule that matches wins:
@@ -143,7 +165,7 @@ The kind of site says whose page it is; the **page type** says what the page doe
 | `product` | the home page, `/pricing`, `/plans`, `/features`, `/product`, `/solutions`, `/integrations` |
 | `other` | everything else (Wikipedia, a repository's files) |
 
-What the page is beats where it's filed: `/blog/notion-vs-obsidian` is a comparison and `/blog/best-note-apps` a listicle. MCP `get_run` carries `page_types` and each top page's `page_type`.
+What the page is beats where it's filed: `/blog/notion-vs-obsidian` is a comparison and `/blog/best-note-apps` a listicle. MCP `get_run` carries `page_types` and each top page's `page_type`. With `[typesafe]` and `page_types` on, a page the rules call `other` is typed by Jev once, from its URL, title and the definitions above, and its chip says so; a page the rules already type is never asked about.
 
 ### Opportunities
 
