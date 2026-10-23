@@ -24,6 +24,15 @@ A miss has two different causes, and a run alone can't tell them apart: no page 
 
 A search that finds nothing is information. On cheapseats.dev's own first run, Exa found no page of ours for any of 11 prompts: a neutral index hadn't picked the new domain up yet, which no amount of writing fixes until it does.
 
+## Getting a key
+
+Both have self-serve sign-ups, and for most teams Exa's free plan is all the coverage check will ever need.
+
+- **Exa**: sign up at [dashboard.exa.ai](https://dashboard.exa.ai) and make a key under API keys. As of October 2026 the free plan gives $10 of credits every month, plus a $10 onboarding bonus, with no payment method. At $4 per thousand searches that's 2,500 searches a month. The coverage check uses one search per prompt per run, so five prompt sets of 15 to 20 prompts, run weekly, is about 350 searches a month, well inside the free plan.
+- **TypeSafe**: make a key in the [TypeSafe console](https://console.typesafe.ai/keys). Jev bills input tokens only, at $0.042 per million, and a run's whole folding pass is a few thousand tokens: a month of runs is cents.
+
+Keys go in the environment or `.env` like the others; on exe.dev, add each as an integration and the VM holds no key (below).
+
 ## Turning them on
 
 ```toml
@@ -45,7 +54,7 @@ search_per_1k = 4.0
 
 Each needs a way to reach its API, and either of two will do:
 
-- **A key**: `TYPESAFE_API_KEY`, `EXA_API_KEY`, from the environment or `.env`, like the other keys.
+- **A key**: `TYPESAFE_API_KEY`, `EXA_API_KEY`, from the environment or `.env`, like the other keys (see [Getting a key](#getting-a-key)).
 - **A key-adding proxy**: `CHEAPSEATS_TYPESAFE_BASE_URL`, `CHEAPSEATS_EXA_BASE_URL`, exactly as `CHEAPSEATS_ANTHROPIC_BASE_URL` works for Anthropic. On [exe.dev](../deploying/#exedev), add each as an integration and the VM holds no key at all.
 
 `cheapseats fold <run-id>` and `cheapseats coverage <run-id>` run either pass again on a finished run, asking and searching only what hasn't been. With a table present and neither key nor proxy set, `cheapseats check` prints a note and the pass is skipped at run time, the way an answerer whose key is missing is skipped; the readiness report lists both under `optional`. A missing `[pricing]` entry fails `check`, as it does for any model.
