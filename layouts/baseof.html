@@ -7,7 +7,7 @@
 {{ $brand := printf "%s, %s (cheapseats.dev)" site.Title site.Params.tagline -}}
 {{- /* Search results cut titles past about 60 characters and descriptions past about 160, so the brand suffix only goes on when it fits. */ -}}
 {{ $title := printf "%s · %s, %s" .Title site.Title site.Params.tagline -}}
-{{ if .IsHome }}{{ $title = printf "%s: open-source, self-hosted AI visibility tracker" site.Title }}{{ else if gt (len $title) 60 }}{{ $title = printf "%s · %s" .Title site.Title }}{{ end -}}
+{{ if .IsHome }}{{ $title = printf "%s: open-source, self-hosted AI visibility tracker" site.Title }}{{ else if gt (strings.RuneCount $title) 60 }}{{ $title = printf "%s · %s" .Title site.Title }}{{ if gt (strings.RuneCount $title) 60 }}{{ $title = .Title }}{{ end }}{{ end -}}
 <title>{{ $title }}</title>
 {{ $desc := "" }}{{ with .Description }}{{ $desc = . }}{{ else }}{{ with .Summary }}{{ $desc = . | plainify }}{{ else }}{{ $desc = site.Params.metaDescription }}{{ end }}{{ end -}}
 {{ if .IsHome }}{{ $desc = site.Params.metaDescription }}{{ else if le (add (len $desc) (len $brand) 2) 160 }}{{ $desc = printf "%s %s." $desc $brand }}{{ end -}}
