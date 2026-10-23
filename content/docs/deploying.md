@@ -97,14 +97,14 @@ An [exe.dev](https://exe.dev) VM runs Cheap Seats as a systemd service behind ex
 
    To keep the Anthropic key off the VM, add it as an exe.dev integration instead, and replace the `ANTHROPIC_API_KEY` line with `CHEAPSEATS_ANTHROPIC_BASE_URL=https://anthropic.int.exe.xyz`. Cheap Seats' own API calls (grading, the fix list, `anthropic` answerers) then go through that proxy, which adds the key. The `claude` CLI doesn't read this variable, so `claude-code` answerers stay on your subscription.
 
-3. Log the CLIs in, if your answerers use them. The subscription is whoever logs in.
+3. Deploy (below), with `SEED_DB=path/to/cheapseats.db` the first time to start from an existing database. The deploy also makes a `cheapseats-cli` user for the `claude` and `codex` CLIs to run as: each carries a shell the model can use, and this keeps the VM's env file, database and logins out of a prompt-injected answer's reach (see [CLI answerers](../reference/#cli-answerers)).
+
+4. Log the CLIs in as that user, if your answerers use them. The subscription is whoever logs in. (Logins made before the CLI user existed move over on the first deploy.)
 
    ```bash
-   ssh -t <vm>.exe.xyz claude                        # /login, then /exit
-   ssh -t <vm>.exe.xyz codex login --device-auth
+   ssh -t <vm>.exe.xyz sudo -H -u cheapseats-cli claude                      # /login, then /exit
+   ssh -t <vm>.exe.xyz sudo -H -u cheapseats-cli codex login --device-auth
    ```
-
-4. Deploy (below), with `SEED_DB=path/to/cheapseats.db` the first time to start from an existing database.
 
 5. Backups and alerts: a nightly copy of the database (the newest 14 kept, in `~/cheapseats/backups`), and an hourly check that emails when a run ends partial, failed or out of budget, a fix list fails, or a run stalls. The address must be one exe.dev lets the VM write to: its owner, a teammate, or someone who has signed in to it.
 
