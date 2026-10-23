@@ -23,7 +23,7 @@ Claude is required, through a subscription or an API key; OpenAI is optional and
 Every prompt is asked of every answerer on two tracks:
 
 - **search**: the model must search the web before answering, with a web search tool. This is the closest Cheap Seats gets to what an assistant with browsing says today, and it moves as pages are published and crawled. Every search it ran, every result and every citation is stored.
-- **recall**: no tools. This is what the model already believes, and it moves only when a new model ships. (The `codex` CLI always has its shell; on recall the brief tells it not to use it, and Cheap Seats confines what it could reach: see [CLI answerers](../reference/#cli-answerers).)
+- **recall**: no tools. This is what the model already believes, and it moves only when a new model ships. (The CLIs are agents: Cheap Seats switches their local tools off and confines what the rest could reach; see [CLI answerers](../reference/#cli-answerers).)
 
 The two are graded and reported separately, never blended. A consumer app decides for itself whether to search, so its answers are some mix of the two; Cheap Seats keeps them apart so you can tell which one you're losing on. See [How grading works](../how-grading-works/#two-tracks).
 

@@ -97,7 +97,7 @@ An [exe.dev](https://exe.dev) VM runs Cheap Seats as a systemd service behind ex
 
    To keep the Anthropic key off the VM, add it as an exe.dev integration instead, and replace the `ANTHROPIC_API_KEY` line with `CHEAPSEATS_ANTHROPIC_BASE_URL=https://anthropic.int.exe.xyz`. Cheap Seats' own API calls (grading, the fix list, `anthropic` answerers) then go through that proxy, which adds the key. The `claude` CLI doesn't read this variable, so `claude-code` answerers stay on your subscription.
 
-3. Deploy (below), with `SEED_DB=path/to/cheapseats.db` the first time to start from an existing database. The deploy also makes a `cheapseats-cli` user for the `claude` and `codex` CLIs to run as: each carries a shell the model can use, and this keeps the VM's env file, database and logins out of a prompt-injected answer's reach (see [CLI answerers](../reference/#cli-answerers)).
+3. Deploy (below), with `SEED_DB=path/to/cheapseats.db` the first time to start from an existing database. The deploy also makes a `cheapseats-cli` user for the `claude` and `codex` CLIs to run as: each is an agent with tools the model drives, and this keeps the VM's env file, database and logins out of a prompt-injected answer's reach whatever a CLI update adds (see [CLI answerers](../reference/#cli-answerers)).
 
 4. Log the CLIs in as that user, if your answerers use them. The subscription is whoever logs in. (Logins made before the CLI user existed move over on the first deploy.)
 
