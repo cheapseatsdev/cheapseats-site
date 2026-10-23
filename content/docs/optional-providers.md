@@ -16,13 +16,13 @@ Cheap Seats runs on Claude, optionally OpenAI, and nothing else has to be config
 
 The grader writes product names as the answers do, so one product can sit on the share-of-voice board twice: "Scrunch" and "Scrunch AI". Your configured competitor aliases fold the spellings you thought of. Jev folds the ones you didn't.
 
-After each run, every name the grader wrote that isn't the brand, a competitor or an alias, and hasn't been decided before, is put to Jev once: a choice over the known products it plausibly matches (a shared word, or one name containing the other), with a "different product" option, given your category from `brand.about` and the sentence of an answer that named each product. Decisions are stored with their confidence; the board folds a name when its decision is at or above `min_confidence` (default 0.8). A re-run asks nothing. Tightening the threshold re-reads the stored decisions and asks nothing either. A run's whole pass is usually one call and a fraction of a cent.
+After each run, every name the grader wrote that isn't the brand, a competitor or an alias, and hasn't been decided before, is put to Jev once: a choice over the known products it plausibly matches (a shared word, or one name containing the other), with a "different product" option, given your category from `brand.about` and the sentence of an answer that named each product. Decisions are stored with Jev's probability that the two names are one product; the board folds a name when that is at or above `min_confidence` (default 0.7). A re-run asks nothing. Tightening the threshold re-reads the stored decisions and asks nothing either. A run's whole pass is usually one call and a fraction of a cent.
 
 ### Exa checks coverage
 
 A miss has two different causes, and a run alone can't tell them apart: no page of yours answers the question, or one does and the assistants never read it. After each run, every prompt is searched once on Exa, restricted to your sites (`[[brand.sites]]` and `brand.domains`). What it finds is shown under each prompt on the run page as your pages for that question, each marked **cited** (an answer to the prompt cited it), **retrieved** (a search returned it and no answer cited it) or **unseen**, or "none found". The same is in the run's JSON as `coverage` and in MCP `get_run` as `own_pages` per prompt. Fifteen prompts is fifteen searches, about six cents.
 
-A search that finds nothing is information: for a new domain it usually means the index hasn't picked the site up yet, which no amount of writing fixes until it does.
+A search that finds nothing is information. On cheapseats.dev's own first run, Exa found no page of ours for any of 11 prompts: a neutral index hadn't picked the new domain up yet, which no amount of writing fixes until it does.
 
 ## Turning them on
 
@@ -30,7 +30,7 @@ A search that finds nothing is information: for a new domain it usually means th
 [typesafe]
 model = "jev-1.14.0"     # pin a version; aliases like jev-latest move
 # fold_names = true      # unset means on
-# min_confidence = 0.8
+# min_confidence = 0.7   # Jev's probability that two names are one product
 
 [exa]
 # coverage = true        # unset means on
@@ -48,7 +48,7 @@ Each needs a way to reach its API, and either of two will do:
 - **A key**: `TYPESAFE_API_KEY`, `EXA_API_KEY`, from the environment or `.env`, like the other keys.
 - **A key-adding proxy**: `CHEAPSEATS_TYPESAFE_BASE_URL`, `CHEAPSEATS_EXA_BASE_URL`, exactly as `CHEAPSEATS_ANTHROPIC_BASE_URL` works for Anthropic. On [exe.dev](../deploying/#exedev), add each as an integration and the VM holds no key at all.
 
-With a table present and neither set, `cheapseats check` prints a note and the pass is skipped at run time, the way an answerer whose key is missing is skipped; the readiness report lists both under `optional`. A missing `[pricing]` entry fails `check`, as it does for any model.
+`cheapseats fold <run-id>` and `cheapseats coverage <run-id>` run either pass again on a finished run, asking and searching only what hasn't been. With a table present and neither key nor proxy set, `cheapseats check` prints a note and the pass is skipped at run time, the way an answerer whose key is missing is skipped; the readiness report lists both under `optional`. A missing `[pricing]` entry fails `check`, as it does for any model.
 
 On Kubernetes, keys go in the Secret the chart loads, or in `extraEnv` as a `secretKeyRef`; the proxy URLs, which aren't secrets, go in `env`. See [Self-hosting](../self-hosting/).
 
