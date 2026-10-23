@@ -1,16 +1,31 @@
 {{ define "main" }}
-<div class="wrap prose">
-  <h1>{{ .Title }}</h1>
+<div class="wrap blog-index">
+  <header class="page-heading blog-heading">
+    <div><p class="eyebrow">Notes from Cheap Seats</p><h1>{{ .Title }}</h1>{{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}</div>
+    {{ with .OutputFormats.Get "rss" }}<a class="rss-link" href="{{ .RelPermalink }}">RSS ↗</a>{{ end }}
+  </header>
   {{ .Content }}
-  <ul class="posts">
-  {{ range .Pages.ByDate.Reverse }}
+  {{ $posts := .Pages.ByDate.Reverse }}
+  {{ range first 1 $posts }}
+  <article class="featured-post">
+    <p class="eyebrow">Latest article</p>
+    <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    {{ partial "article-meta.html" . }}
+    <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 220 }}{{ end }}</p>
+    <a class="text-link" href="{{ .RelPermalink }}">Read the article <span aria-hidden="true">→</span></a>
+  </article>
+  {{ end }}
+  {{ if gt (len $posts) 1 }}
+  <ul class="posts" aria-label="More articles">
+  {{ range after 1 $posts }}
     <li>
       <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-      <p class="meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>{{ with .Params.author }} · {{ . }}{{ end }}</p>
-      <p>{{ .Summary | plainify }}</p>
+      {{ partial "article-meta.html" . }}
+      <p>{{ with .Description }}{{ . | truncate 180 }}{{ else }}{{ .Summary | plainify | truncate 180 }}{{ end }}</p>
     </li>
   {{ end }}
   </ul>
+  {{ end }}
   {{ with .OutputFormats.Get "rss" }}<p class="muted"><a href="{{ .RelPermalink }}">Subscribe by RSS</a></p>{{ end }}
 </div>
 {{ end }}

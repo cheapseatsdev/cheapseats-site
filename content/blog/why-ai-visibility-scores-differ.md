@@ -81,4 +81,4 @@ Re-deriving keeps the past comparable with today's setup, so the Initech change 
 - To get Otterly.AI's brand coverage, count prompts whose named rate is above zero.
 - To compare with Limelit's share of voice, you'd need occurrence counts, which Cheap Seats doesn't keep; compare named rates instead.
 
-The full mapping, tool by tool, is in [Metric definitions](/docs/metrics/#migrating-between-cheapseats-and-these-tools). And whatever tool you use, the prompts are the part worth keeping. In Cheap Seats they're plain TOML in your own repo, so if you move, they come with you.
+The full mapping, tool by tool, is in [Metric definitions](/docs/metrics/#migrating-between-cheap-seats-and-these-tools). And whatever tool you use, the prompts are the part worth keeping. In Cheap Seats they're plain TOML in your own repo, so if you move, they come with you.

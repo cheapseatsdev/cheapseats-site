@@ -1,18 +1,46 @@
 {{ define "main" }}
 <section class="hero">
-  <div class="wrap">
-    <h1>Cheap Seats: an open-source, self-hosted AI visibility tracker</h1>
-    <p class="lede">Find out whether AI assistants recommend you, at no cost. Cheap Seats is an open-source project I wrote to make my own product better, drawing on lots of inspiration, Gauge first among them. It's free, and always will be: no hosted tier, no upsell. It runs on the Claude subscription you already have (ChatGPT optional), asks your buyers' questions, grades whether each answer <strong>recommends</strong> your brand, merely <strong>mentions</strong> it, or leaves it <strong>out</strong>, and builds a ranked list of fixes.</p>
-    <p class="actions">
-      <a class="btn" href="{{ "/docs/getting-started/" | relURL }}">Get started</a>
-      <a class="btn ghost" href="{{ site.Params.github }}">Source on GitHub</a>
-    </p>
-    <p class="muted small">MIT licensed, code at <a href="{{ site.Params.github }}">github.com/cheapseatsdev/cheapseats</a>. Your prompts live in your own git repo, so if you outgrow Cheap Seats, they come with you.</p>  </div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Open-source, self-hosted AI visibility tracker</p>
+      <h1>Do AI assistants recommend you?</h1>
+      <p class="lede">Ask your buyers' questions. See where your brand stands. Know which pages to fix first.</p>
+      <p class="actions">
+        <a class="btn" href="{{ "/docs/getting-started/" | relURL }}">Get started <span aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="https://demo.cheapseats.dev/">Explore the demo</a>
+      </p>
+      <p class="muted small">Free on your Claude subscription; ChatGPT optional. Your prompts stay in your own git repo.</p>
+    </div>
+    <section class="product-preview" aria-labelledby="preview-title">
+      <div class="preview-bar"><span>Example snapshot</span><span>Cheap Seats</span></div>
+      <div class="preview-content">
+        <p class="eyebrow">Prompt set</p>
+        <h2 id="preview-title">Head-to-heads</h2>
+        <p class="muted preview-description">Does AI choose Cheap Seats when buyers compare?</p>
+        <dl class="preview-metrics">
+          <div><dt>Recommended</dt><dd>14<span>%</span></dd></div>
+          <div><dt>Named</dt><dd>100<span>%</span></dd></div>
+        </dl>
+        <div class="preview-track" aria-hidden="true"><span></span></div>
+        <p class="preview-caption">Example results · Search track · October 22, 2026</p>
+        <a class="text-link" href="https://demo.cheapseats.dev/">Inspect the real dashboard <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </div>
 </section>
 
-<section class="wrap" aria-labelledby="how">
-  <h2 id="how">How it works</h2>
+<section class="wrap home-section workflow" aria-labelledby="how">
+  <h2 id="how">From buyer questions to better answers</h2>
   <ol class="steps">
+    <li><h3>Ask real questions</h3><p>Run the prompts your buyers use, across search and recall.</p></li>
+    <li><h3>See where you stand</h3><p>Separate recommendations from mentions, with the evidence behind each answer.</p></li>
+    <li><h3>Fix what matters</h3><p>Work through ranked page improvements and track the results.</p></li>
+  </ol>
+</section>
+
+<section class="wrap home-section" aria-labelledby="inside">
+  <h2 id="inside">Inside each run</h2>
+  <ol class="features">
     <li>
       <h3>Your buyers' questions</h3>
       <p>Prompt sets are TOML files in a config repo you own, one per category of buyer question, written the way someone who has never heard of you would type them. Changes go through pull requests.</p>
@@ -36,13 +64,13 @@
   </ol>
 </section>
 
-<section class="wrap" aria-labelledby="who">
+<section class="wrap home-section reading-section" aria-labelledby="who">
   <h2 id="who">Start here, move on when you're ready</h2>
   <p>I built Cheap Seats to make my own product better. It draws on a lot of tools, <a href="{{ "/compare/gauge/" | relURL }}">Gauge</a> first among them, along with Profound, Peec AI and others. They do a lot, and most of it I didn't need; what I did have was Claude and ChatGPT subscriptions with tokens to spare. So Cheap Seats does the part you'll use most: ask your buyers' questions, grade the answers, show which pages shape them, and say what to fix first. It runs on those subscriptions, on your own machine, with nothing to buy. It's free, and it always will be.</p>
   <p>It's for the people who own how a product is described: product marketing, docs, the blog and the website, and anyone starting to measure AI visibility. I hope you find it useful. If you grow out of it, because you need engines it doesn't ask, a hosted service, or reporting for many clients, do whatever suits you. I'd suggest Gauge; that team is great. The buyer questions you've refined are plain text in your own repo, ready to take with you. <a href="{{ "/compare/" | relURL }}">How the tools compare</a>.</p>
 </section>
 
-<section class="wrap" aria-labelledby="yours">
+<section class="wrap home-section reading-section" aria-labelledby="yours">
   <h2 id="yours">Open source, on your own infrastructure</h2>
   <ul>
     <li><strong>MIT licensed.</strong> Read it, run it, change it.</li>
@@ -53,7 +81,7 @@
   </ul>
 </section>
 
-<section class="wrap" aria-labelledby="start">
+<section class="wrap home-section reading-section" aria-labelledby="start">
   <h2 id="start">Get started</h2>
   <p>A fresh checkout runs against an example config that measures Cheap Seats itself. You need Go and Claude: the <code>claude</code> CLI logged in to a Claude subscription (no API key, no spend), or an Anthropic API key. ChatGPT is optional: the <code>codex</code> CLI or an OpenAI key adds its answers.</p>
 <pre><code>CHEAPSEATS_CONFIG=examples/cheapseats-config/cheapseats.subscriptions.toml go run ./cmd/cheapseats serve

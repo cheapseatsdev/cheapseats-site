@@ -1,7 +1,7 @@
 {{ define "main" }}
 <div class="wrap prose">
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  <ul>{{ range .Pages }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+  <header class="page-heading"><h1>{{ .Title }}</h1>{{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}</header>
+  <div class="article-content">{{ .Content }}</div>
+  <ul class="doc-list">{{ range .Pages }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Description }}<p class="muted">{{ . }}</p>{{ end }}</li>{{ end }}</ul>
 </div>
 {{ end }}
