@@ -38,7 +38,7 @@ If you outgrow Cheap Seats, do whatever suits you. Its author would suggest [Gau
 - **You need Google AI Overviews, Perplexity or Copilot.** Otterly.AI includes them on every plan; Cheap Seats asks only Claude and OpenAI models, and doesn't cover Gemini or AI Mode either.
 - **You'd rather not run anything.** Otterly.AI is hosted, with a low published entry price.
 - **You're an agency.** Otterly.AI offers unlimited workspaces, simplified billing and reports with your branding through Looker Studio.
-- **You want site audits.** Otterly.AI audits URLs for crawlability and content. Cheap Seats tells you which pages to change, not how your site crawls.
+- **You want content audits.** Otterly.AI audits URLs for crawlability and content, and writes briefs. Cheap Seats' free [site audit](/docs/site-audit/) checks what AI crawlers can read (robots.txt and firewall blocks, llms.txt, the sitemap, pages empty without JavaScript), not what a page says.
 
 ## Taking your prompts with you
 
