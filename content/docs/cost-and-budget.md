@@ -1,12 +1,37 @@
 ---
-title: Cost and budget
-description: What Cheap Seats costs to run every day, what a real run cost, and how the daily budget cap keeps model spend under control.
+title: Cost, API keys and the daily budget
+description: What Cheap Seats costs to run every day on your own Anthropic and OpenAI keys or your Claude and ChatGPT subscriptions, what two real runs cost, and how the daily budget caps API spend.
 weight: 25
+aliases:
+  - /docs/cost/
+  - /docs/costs/
+  - /docs/models-keys-and-budget/
 ---
 
-**What does it cost to run Cheap Seats every day?** Cheap Seats itself is free and open source (MIT): no license fee, no seats, no per-prompt or per-brand pricing. Run it on your own machine and there's no hosting cost; host it on a Docker host, Kubernetes or an exe.dev VM and you pay your host. On your own machine it can run entirely on the Claude subscription you already have (and ChatGPT's, optionally), with no API key and no API spend. Through the APIs instead, spend is capped by a **daily budget**, `budget.daily_usd` in `cheapseats.toml`, that every API call is checked against before it goes out.
+**What does it cost to run Cheap Seats every day?** Cheap Seats itself is free and open source (MIT): no license fee, no seats, no per-prompt, per-engine or per-brand pricing. The only running cost is the model calls, and you choose how to pay for them: **your own Anthropic and OpenAI API keys**, billed per token by the providers, or **the Claude and ChatGPT subscriptions you already have**, through the `claude` and `codex` CLIs on your own machine, at no extra cost. Through the APIs, spend is capped by a **daily budget**, `budget.daily_usd` in `cheapseats.toml`, that every API call is checked against before it goes out. Run it on your own machine and there's no hosting cost; host it on a Docker host, Kubernetes or an exe.dev VM and you pay your host.
 
 In a real run of 17 prompts and 68 answers, answered on Claude and ChatGPT subscriptions and graded through the API, the model spend was **$0.033**, all of it grading; graded on the subscription too, it would have been nothing. The same answers at API prices would have added about $3.78. For comparison, Otterly.AI's entry plan is $29 a month as of October 2026, but it covers assistants Cheap Seats doesn't; see [Cheap Seats or Otterly.AI](#cheapseats-or-otterlyai-on-a-startup-budget).
+
+## How AI visibility tools price their plans
+
+Hosted AI visibility tools sell a subscription, and four things drive what it costs. The figures are from each vendor's own pricing page as of October 2026; check them before deciding.
+
+- **Prompts.** Every plan caps the questions it tracks. [Otterly.AI](https://otterly.ai/pricing) is 15 prompts on Lite ($29 a month), 100 on Standard ($189) and 400 on Premium ($489), with 100 more for $99 a month. [Peec AI](https://peec.ai/pricing) is 50 on Starter, 150 on Pro and 350 on Advanced (prices on request). [Profound](https://www.tryprofound.com/pricing)'s free trial runs 50 prompts daily for 7 days; Enterprise is a "tailored prompt tracking plan" at a custom price.
+- **Engines.** Otterly.AI's plans cover ChatGPT, Google AI Overviews, Perplexity and Copilot; Claude, Gemini and Google AI Mode are paid add-ons (Claude is $29 a month on Lite, $109 on Standard, $439 on Premium). Peec AI's plans are "choose 3 models"; Profound's trial covers three engines and Enterprise up to nine.
+- **Brands or projects.** Peec AI's plans allow 1, 2 or 5 projects. An agency tracking many clients needs the plan with enough projects, or an agency plan.
+- **Seats.** Peec AI and Profound list unlimited users on every plan; check the others. [Gauge](https://withgauge.com/pricing)'s Growth plan is $599 a month, Enterprise custom.
+
+Cheap Seats has none of those dials. Prompts are TOML files in your config repo, as many as you like; the engines are Claude and OpenAI models, and only those (see [Which AI engines Cheap Seats asks](../engines/)); one instance measures one brand against its competitors; there is no seat count. The cost is the model calls, and the rest of this page measures them.
+
+## Your own API keys, or your own subscriptions
+
+Cheap Seats calls Claude and OpenAI directly. Nothing you ask goes through a vendor in the middle, and nothing is billed but the models:
+
+- **Your own API keys.** `ANTHROPIC_API_KEY` and, if you add a ChatGPT answerer, `OPENAI_API_KEY`, from the environment or `.env`. The providers bill you per token at their own prices; the matching prices in `[pricing]` are what Cheap Seats uses to count the spend and enforce the daily budget. Claude is required; OpenAI is optional.
+- **Your own subscriptions.** With `provider = "claude-code"` an answerer, the grader and the analyst run through the `claude` CLI on your Claude subscription, and `provider = "codex"` runs an answerer through the `codex` CLI on your ChatGPT subscription. No API key, and the ledger records each call at $0. This works where the CLIs are installed, on your own machine or a VM, not in the Docker image.
+- **Mixed.** cheapseats.dev answers on both subscriptions and grades through the API with a small model, so grading is the whole bill.
+
+Prompts and answers go only to the providers you configure, and every answer, search result and citation stays in your SQLite file. See [Self-hosting](../self-hosting/) and [Configuration](../configuration/#answerers).
 
 ## Where the money goes
 
@@ -56,6 +81,27 @@ So, per run of a 17-prompt set with two answerers, one sample per track:
 
 cheapseats.dev runs its sets weekly, on subscriptions.
 
+### An 11-prompt set, graded twice
+
+Cheap Seats' *head to heads* set is 11 prompts. Its run on 22 October 2026 (run `r-20261022-051238-0c6344`), the same two subscription answerers, one search and one recall answer each, is **44 answers**, answered for $0 extra. Those 44 answers were then re-graded twice the same day, after grader changes, each time through the API with `claude-haiku-5-5`:
+
+| re-grade of 44 answers | cost | per answer |
+| --- | ---: | ---: |
+| first | $0.031 | $0.0007 |
+| second | $0.036 | $0.0008 |
+
+So a daily run of an 11-prompt set on both tracks, with two models on subscriptions, costs about **three to four cents a day in grading**, and about a dollar a month. At API prices the answering would add about $2.50 a run (44 answers at the $0.056 average above), so about $75 a month daily.
+
+### Estimate your own
+
+Answers a day = prompts × tracks × answerers × samples. Two tracks and two answerers at one sample each is four answers a prompt. Then, from the runs above:
+
+- **Grading:** about $0.0005 to $0.0008 an answer with Claude Haiku through the API, or $0 on `claude-code`.
+- **Answering through the APIs:** about $0.06 an answer on average, search answers near $0.09 and recall answers $0.01 to $0.035; or $0 on subscriptions.
+- **Per run:** one fix-list call, a few cents with Claude Opus, and one theme call, under a cent.
+
+A 20-prompt set, four answers a prompt, is 80 answers a day: about **$0.06 a day on subscriptions**, grading only, or **about $5 a day through the APIs**. The `start_run` dry run (below) estimates a real set from its own recent answers.
+
 ## The daily budget
 
 ```toml
@@ -104,7 +150,7 @@ See [Configuration](../configuration/#budget) for the rest of `cheapseats.toml`.
 
 ## Cheap Seats or Otterly.AI on a startup budget
 
-Otterly.AI's [pricing page](https://otterly.ai/pricing), as of October 2026, lists **Lite at $29 a month** ($25 with its 15% annual discount): 15 search prompts, tracked daily across ChatGPT, Google AI Overviews, Perplexity and Microsoft Copilot. Claude, Gemini and Google AI Mode are add-ons from the Standard plan ($189 a month, 100 prompts).
+Otterly.AI's [pricing page](https://otterly.ai/pricing), as of October 2026, lists **Lite at $29 a month** ($25 with its 15% annual discount): 15 search prompts, tracked daily across ChatGPT, Google AI Overviews, Perplexity and Microsoft Copilot. Claude, Gemini and Google AI Mode are paid add-ons on every plan: Claude is $29 a month on Lite, $109 on Standard ($189 a month, 100 prompts) and $439 on Premium.
 
 The same 15 prompts daily in Cheap Seats, on subscriptions, with two answerers and one sample per track, is 60 answers a day. At the grading cost measured above (about $0.0005 an answer), that's about $0.03 a day, roughly $1 over 30 days, plus the fix list and your hosting if you host it.
 
