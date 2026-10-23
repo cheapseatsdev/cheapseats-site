@@ -205,6 +205,7 @@ A fix goes to its site's owner, else to the owner for its gap here, else `defaul
 | `ANTHROPIC_API_KEY` | `anthropic` answerers, and the grader and analyst unless they run on the `claude` CLI or `CHEAPSEATS_ANTHROPIC_BASE_URL` is set |
 | `CHEAPSEATS_ANTHROPIC_BASE_URL` | a base URL for Cheap Seats' own Anthropic calls, such as a proxy that adds the key ([exe.dev](../deploying/#exedev) integrations); the `claude` CLI doesn't read it, so `claude-code` answerers stay on your subscription |
 | `OPENAI_API_KEY` | `openai` answerers |
+| `TYPESAFE_API_KEY`, `EXA_API_KEY` | the [optional providers](../optional-providers/), only with `[typesafe]` or `[exa]` in the config; or a key-adding proxy in `CHEAPSEATS_TYPESAFE_BASE_URL` or `CHEAPSEATS_EXA_BASE_URL` |
 | `CHEAPSEATS_TOKENS` | comma-separated bearer tokens; required to listen beyond 127.0.0.1 |
 | `CHEAPSEATS_AUTH_HEADER`, `CHEAPSEATS_ALLOWED_EMAILS` | trust a signing-in proxy's email header, optionally narrowed to emails or `@domain`s ([exe.dev](../deploying/#exedev)) |
 | `CHEAPSEATS_HOSTS` | host names a proxy on the same machine serves Cheap Seats as, comma-separated; MCP (and, with no sign-in, everything) refuses loopback requests under any other name, and forms from any other origin are refused |
@@ -213,8 +214,10 @@ A fix goes to its site's owner, else to the owner for its gap here, else `defaul
 | `CHEAPSEATS_CLI_USER` | a user to run the `claude` and `codex` CLIs as, through `sudo`, so nothing a model-driven tool can reach includes this user's files ([CLI answerers](../reference/#cli-answerers)); the exe.dev deploy sets it |
 | `CHEAPSEATS_CLI_ENV` | more environment variables to pass the CLIs, comma-separated; by default they get only what they need, never this process's keys or tokens |
 | `CHEAPSEATS_CONFIG` | path to `cheapseats.toml`; prompt sets are read from `prompt-sets/` beside it |
+| `CHEAPSEATS_PROMPT_SETS` | read the prompt sets from this directory instead |
 | `CHEAPSEATS_CONFIG_REV` | the config commit, when the config is deployed without its `.git` |
 | `CHEAPSEATS_ADDR` | listen address, default `127.0.0.1:3000` |
 | `CHEAPSEATS_DATA_DIR` | where the database lives, default `data` |
+| `CHEAPSEATS_DEBUG` | set to anything for debug logging |
 
-Cheap Seats reads `.env` at startup; the real environment wins.
+Cheap Seats reads `.env` at startup; the real environment wins. `POPCORN_*` names from before the rename still work, with a warning at startup ([Upgrading](../upgrading/)).

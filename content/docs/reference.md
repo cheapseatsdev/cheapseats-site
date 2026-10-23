@@ -16,6 +16,8 @@ cheapseats run <set-id>                   run one set and wait for it (costs mon
 cheapseats report <run-id> [-json]        rates, share of voice and top pages for a run
 cheapseats fixes <run-id> [-rebuild]      the run's fix list as markdown
 cheapseats themes <run-id> [-rebuild]     net sentiment and the run's themes; -rebuild runs the theme pass again (one grader call)
+cheapseats fold <run-id>                  put the run's new product names to Jev ([typesafe])
+cheapseats coverage <run-id>              search the brand's sites for each prompt ([exa])
 cheapseats suggest-prompts <set-id> [-n 10]  new buyer questions for a set, as TOML to paste (one analyst call; writes nothing)
 cheapseats regrade [-since 28d] [-dry-run=false] <set-id|run-id>
                                        grade stored answers again with today's grader, brand and competitors;
@@ -33,7 +35,7 @@ cheapseats migrate-config [dir]           give each prompt an id, in sets writte
 cheapseats version                        this build's version and database schema
 ```
 
-From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. Running a set from a terminal or a pipeline, with the exit codes and a scheduled workflow, is in [The CLI, and runs from CI](../cli-and-ci/). `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/), `review` in [Reviewing your prompts](../prompt-review/).
+From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. Running a set from a terminal or a pipeline, with the exit codes and a scheduled workflow, is in [The CLI, and runs from CI](../cli-and-ci/). `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/), `review` in [Reviewing your prompts](../prompt-review/), `fold` and `coverage` in [Optional providers](../optional-providers/).
 
 - **`init`**: `-name` sets the brand's name instead of what the site calls itself; `-competitors` adds `[[competitors]]` entries, alternatives prompts and head-to-heads; `-suggest` adds `-n` suggested prompts to the starter sets with one analyst call; `-dry-run` prints what it found and every file it would write, and writes nothing. It writes to `./<brand>-cheapseats-config` unless you name a directory.
 - **`regrade`**: `-since` takes `28d`, `72h` or `all` (default 28 days) and applies to a set; `-dry-run` is true by default.
