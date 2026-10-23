@@ -26,10 +26,10 @@ A search that finds nothing is information. On cheapseats.dev's own first run, E
 
 ## Getting a key
 
-Both have self-serve sign-ups, and for most teams Exa's free plan is all the coverage check will ever need.
+Both have self-serve sign-ups and free tiers, and for most teams the free tiers are all either feature will ever need.
 
 - **Exa**: sign up at [dashboard.exa.ai](https://dashboard.exa.ai) and make a key under API keys. As of October 2026 the free plan gives $10 of credits every month, plus a $10 onboarding bonus, with no payment method. At $4 per thousand searches that's 2,500 searches a month. The coverage check uses one search per prompt per run, so five prompt sets of 15 to 20 prompts, run weekly, is about 350 searches a month, well inside the free plan.
-- **TypeSafe**: make a key in the [TypeSafe console](https://console.typesafe.ai/keys). Jev bills input tokens only, at $0.042 per million, and a run's whole folding pass is a few thousand tokens: a month of runs is cents.
+- **TypeSafe**: make a key in the [TypeSafe console](https://console.typesafe.ai/keys). As of October 2026 the free tier is $5 of usage a month. Jev bills input tokens only, at $0.042 per million, so that's about 119 million tokens, and a run's whole folding pass is a few thousand: the free tier covers this many thousands of times over.
 
 Keys go in the environment or `.env` like the others; on exe.dev, add each as an integration and the VM holds no key (below).
 
