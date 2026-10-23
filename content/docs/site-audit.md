@@ -23,7 +23,7 @@ Also **Site audit** in the web UI (`/audit`, "Audit now"), `POST /api/audit` to 
 For each site it fetches robots.txt, the home page, `/llms.txt`, the sitemap and up to 10 pages from the sitemap, spread through it. It fetches as `Mozilla/5.0 (compatible; CheapSeats-Audit/<version>; +https://cheapseats.dev)`, 4 requests at a time, with a 15-second timeout and a 2 MB cap per page, and reads the raw HTML, as a crawler that runs no JavaScript does.
 
 - A host/path site (`github.com/example`) gets its robots.txt rules checked for that path, but no llms.txt or sitemap check: those belong to the host.
-- Sites of kind `code` or `community` don't get their markup checked. It isn't yours to fix.
+- Sites of kind `code` or `community` (your GitHub, a forum) raise no robots.txt, firewall, llms.txt, sitemap or markup findings: none of that is yours to fix. Which crawlers the host blocks is still recorded on the site's `blocked` line, so you know it, without a fix you can't apply.
 - The newest audit of your own sites is kept. If it's less than 30 days old, its errors and warnings go to the analyst with the next fix list, so a fix can say "this page is empty without JavaScript" rather than only "this page wasn't cited".
 
 Each finding has a severity, a check id, what it found and a fix.

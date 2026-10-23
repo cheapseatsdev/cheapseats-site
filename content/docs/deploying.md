@@ -10,7 +10,7 @@ Each deployment is its own config repo, made from the [config template](https://
 ## What any deployment needs
 
 - **One instance, one volume.** Run progress lives in the process and the database is SQLite on `/data`; never run two against the same data. A run takes minutes with no inbound HTTP, so keep it always on.
-- **Secrets in the environment:** `CHEAPSEATS_TOKENS` (Cheap Seats refuses to listen beyond localhost without it), `ANTHROPIC_API_KEY` (grading), `OPENAI_API_KEY` for OpenAI answerers. Deployed answerers use the APIs: the image has no Claude Code or Codex CLI, and `cheapseats check` fails on a config that needs one.
+- **Secrets in the environment:** `CHEAPSEATS_TOKENS` (Cheap Seats refuses to listen beyond localhost without it), `ANTHROPIC_API_KEY` (grading), `OPENAI_API_KEY` for OpenAI answerers, and `TYPESAFE_API_KEY` or `EXA_API_KEY` only with `[typesafe]` or `[exa]` in the config (or their `CHEAPSEATS_*_BASE_URL` proxies; see [Optional providers](../optional-providers/)). Deployed answerers use the APIs: the image has no Claude Code or Codex CLI, and `cheapseats check` fails on a config that needs one.
 - **Time to stop.** On SIGTERM Cheap Seats stops starting runs and marks the ones in progress as interrupted; on the next start it resumes them, oldest first, keeping every answer they already had. Give it 30 seconds.
 - **Probes:** `GET /healthz` answers `ok` without a token.
 - **Share links:** `GET /share/<token>` answers without a token, serving only that link's run ([Sharing a run](../sharing/)). Set `CHEAPSEATS_PUBLIC_URL` to the address people reach Cheap Seats at, such as `https://cheapseats.example.com`, so the links point there. Behind a proxy, without it, a link can point at the address the proxy reaches Cheap Seats on; one that would point at a loopback address gets a warning. A proxy that signs people in must let `/share/` through for links to work.
@@ -54,9 +54,11 @@ Cheap Seats reads the config and every prompt set once, at startup, so each depl
 The chart runs one replica and replaces it rather than rolling, so two never share the database. The values you set:
 
 - `image.repository` and `image.tag`: your deployment's image (required). Deploy an exact tag, so a rollback is redeploying the previous one.
-- `existingSecret`: a Secret you create holding `CHEAPSEATS_TOKENS`, `ANTHROPIC_API_KEY`, and `OPENAI_API_KEY` if an answerer uses it. The chart never takes keys as values.
+- `existingSecret`: a Secret you create holding `CHEAPSEATS_TOKENS`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` if an answerer uses it, and `TYPESAFE_API_KEY` or `EXA_API_KEY` with `[typesafe]` or `[exa]`. The chart never takes keys as values: a value named like one fails the install. `extraEnv` and `extraEnvFrom` pick single keys out of other Secrets.
+- `env`: plain environment for values that aren't secrets, such as `CHEAPSEATS_CONFIG_REV` or the key-adding proxies `CHEAPSEATS_ANTHROPIC_BASE_URL`, `CHEAPSEATS_TYPESAFE_BASE_URL` and `CHEAPSEATS_EXA_BASE_URL`.
 - `persistence`: the volume for the database (1Gi by default), or an `existingClaim`.
 - `ingress`: off by default.
+- `nameOverride`: set to `popcorn` for a release installed before the rename, so its Deployment, Service and volume keep their names ([Upgrading](../upgrading/#upgrading-from-popcorn)).
 
 The plain app image works too, with the config mounted at `/config` by `extraVolumes` and `extraVolumeMounts`. The template's [Kubernetes guide](https://github.com/cheapseatsdev/cheapseats-config-template/blob/main/deploy/README.md) walks through it.
 
