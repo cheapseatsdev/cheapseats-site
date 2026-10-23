@@ -121,7 +121,7 @@ on:
 
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       URL: ${{ secrets.CHEAPSEATS_URL }}         # https://cheapseats.example.com
       AUTH: "Authorization: Bearer ${{ secrets.CHEAPSEATS_TOKEN }}"
