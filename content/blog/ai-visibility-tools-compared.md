@@ -2,7 +2,7 @@
 title: AI visibility tools compared
 date: 2026-10-22
 author: Chad Metcalf
-description: Cheap Seats, Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar, Semrush, Elmo and Limelit Open compared row by row, from each tool's own pages, as of October 2026.
+description: Cheap Seats, Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar, Semrush, Elmo and Limelit Open, row by row from their own pages, October 2026.
 ---
 
 **How do the AI visibility tools compare?** As of October 2026, the hosted tools (Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar and Semrush AI Visibility) cover more engines, including Gemini, Perplexity and Google's AI surfaces, and charge from about $29 a month to custom enterprise contracts. Elmo and Limelit Open are open source and cover those engines too, through vendor APIs and paid scraping services. Cheap Seats is an open-source project I wrote to make my own product better, inspired by those tools; it's free and always will be, and it does the part most teams use most of the time. It asks Claude and OpenAI models your buyers' questions, grades every answer recommended, mentioned or absent, ends every run with a ranked fix list, and runs on the Claude subscription you already have (ChatGPT optional). When you outgrow it, this page is how to choose where to go next.

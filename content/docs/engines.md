@@ -1,6 +1,6 @@
 ---
 title: Which AI engines Cheap Seats asks, and why
-description: Cheap Seats asks Claude and OpenAI models through their APIs and CLIs, not scraped consumer apps. Why, what that misses, and how other tools reach Google AI Overviews, Perplexity and more.
+description: Cheap Seats asks Claude and OpenAI models through their APIs and CLIs, not scraped consumer apps. Why, what that misses, and how other tools reach the rest.
 weight: 250
 group: Reading what it finds
 ---

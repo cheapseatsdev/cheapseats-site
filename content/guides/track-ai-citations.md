@@ -1,6 +1,6 @@
 ---
 title: Track which pages AI assistants cite
-description: How to see whether AI search cites your website, which third-party pages AI assistants rely on in your category, and how Cheap Seats complements Google Search Console and Bing Webmaster Tools.
+description: Whether AI search cites your website, which third-party pages AI assistants rely on in your category, and how it complements Search Console and Bing's report.
 weight: 10
 ---
 

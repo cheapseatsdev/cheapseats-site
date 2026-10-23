@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Gauge
-description: Cheap Seats, the free, MIT-licensed AI visibility tracker at cheapseats.dev, started as a small take on Gauge, its inspiration. Compared with Gauge's Action Center and plans as of October 2026.
+description: Cheap Seats, the free, MIT-licensed AI visibility tracker, started as a small take on Gauge, its inspiration. Gauge's Action Center and plans, October 2026.
 weight: 40
 ---
 

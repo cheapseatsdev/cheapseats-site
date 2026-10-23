@@ -1,6 +1,6 @@
 ---
 title: Metric definitions
-description: Every number Cheap Seats reports, with its formula and denominator, and how each maps to Peec AI, Profound, Gauge, Otterly.AI, Ahrefs, SE Ranking, Elmo and Limelit Open.
+description: Every number Cheap Seats reports, with its formula and denominator, and how each maps to Peec AI, Profound, Gauge, Otterly.AI, Ahrefs, SE Ranking and Elmo.
 weight: 230
 group: Reading what it finds
 ---

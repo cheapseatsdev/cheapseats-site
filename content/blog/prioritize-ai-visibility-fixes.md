@@ -2,7 +2,7 @@
 title: Which fix first, and who owns AI visibility
 date: 2026-10-23
 author: Chad Metcalf
-description: "A method for prioritizing fixes to how AI assistants describe your product: prompts a fix could flip per day of work, weighted by what each has left to win and how directly it answers the reason you lost. Then an owner for each kind of fix, with the fields Cheap Seats puts on every one."
+description: Rank fixes by the prompts each could flip per day of work, weighted by what's left to win and how directly it answers why you lost. Then an owner for each.
 ---
 
 **How should we prioritize fixes to improve how AI assistants describe our product?** By how many buyer questions a fix could flip per day of work, discounted for questions you're already winning, and by how directly it answers the reason the assistant gave for not picking you. **What are the quickest wins?** The small fixes that touch many questions: a roundup that shaped several answers and leaves you out, a page the answers needed that you don't have, and, before either, getting your pages retrieved at all. **Who should own it?** Whoever owns the page the fix lands on. When no page does, the kind of gap decides: documentation to the docs team, positioning to product marketing, third-party listings to SEO or comms, and product gaps to product. Cheap Seats scores and assigns every fix this way, and this post shows the method on our own fix list.

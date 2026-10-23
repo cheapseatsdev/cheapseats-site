@@ -2,7 +2,7 @@
 title: A free, open-source AI visibility tracker
 date: 2026-10-21
 author: Chad Metcalf
-description: Cheap Seats is a free, MIT-licensed AI visibility tracker you run yourself. What it costs to run, a five-minute quickstart, a real graded answer and fix, and how it compares with HubSpot's AEO Grader, Ahrefs' free checker and Amplitude AI Visibility.
+description: "A free, MIT-licensed AI visibility tracker you run yourself: what it costs, a five-minute quickstart, a real graded answer and fix, and the free checkers."
 ---
 
 **Is there a free AI visibility tracker that's actually useful?** Yes: Cheap Seats is free, open source under the MIT license, and runs as one Docker container with a SQLite database. It asks Claude and OpenAI models your buyers' questions on a schedule, grades whether each answer recommends you, merely mentions you or leaves you out, and ends every run with a ranked list of fixes.

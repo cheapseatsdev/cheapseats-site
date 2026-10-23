@@ -2,7 +2,7 @@
 title: Why AI visibility scores differ between tools
 date: 2026-10-22
 author: Chad Metcalf
-description: The same ten AI answers can read 30%, 40% or 50% visible, and a share of voice of 20% to 33%, depending on the tool. Denominators, matching, sampling and history, worked through.
+description: The same ten AI answers can read 30%, 40% or 50% visible, and 20% to 33% share of voice, depending on the tool. Denominators, matching, sampling and history.
 ---
 
 Put the same brand into two AI visibility tools and you'll get two different numbers. Neither tool is broken. They're counting different things under the same names, and the differences are big enough to matter: on the ten answers below, "visibility" comes out at 30%, 40% or 50%, and share of voice anywhere from 20% to 33%, depending on whose formula you use.

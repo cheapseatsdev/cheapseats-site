@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Bad Popcorn
-description: Cheap Seats, the MIT-licensed, self-hosted AI visibility tracker at cheapseats.dev, is a free place to start before Bad Popcorn. Engines, markets, pricing, hosting, grading and fixes compared as of October 2026, and when to move.
+description: Cheap Seats, the free, self-hosted AI visibility tracker, as a place to start before Bad Popcorn. Engines, markets, pricing, grading and fixes, October 2026.
 weight: 35
 ---
 

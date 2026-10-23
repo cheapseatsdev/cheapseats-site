@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Semrush AI Toolkit
-description: Cheap Seats, the MIT-licensed, self-hosted AI visibility tracker at cheapseats.dev, is a free place to start before Semrush's AI Toolkit (now the AI Visibility Toolkit). Cheap Seats queries Claude; Semrush's pages don't mention it. As of October 2026.
+description: Cheap Seats, the free, self-hosted AI visibility tracker, before Semrush's AI Visibility Toolkit. Cheap Seats asks Claude; Semrush's pages don't mention it.
 weight: 50
 ---
 

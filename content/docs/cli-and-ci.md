@@ -1,6 +1,6 @@
 ---
 title: The CLI, and runs from CI
-description: Run a prompt set from the command line and get the recommended rate and share of voice back with an exit code; check prompt changes in your config repo's CI; start a run from a weekly pipeline over the JSON API.
+description: Run a prompt set from the command line and get its rates back with an exit code, check prompt changes in your config repo's CI, start runs from a pipeline.
 weight: 440
 group: Running it
 ---

@@ -1,6 +1,6 @@
 ---
 title: Reviewing your prompts
-description: A monthly review of the prompts themselves, from the answers you already have — which tell you nothing, which move for no reason, which are answered about something else, which ask the same thing twice, and what no prompt asks. Free.
+description: "A free monthly review of the prompts themselves: which tell you nothing, move for no reason, get answered about something else or repeat, and what's missing."
 weight: 260
 group: Reading what it finds
 ---

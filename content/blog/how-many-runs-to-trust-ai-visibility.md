@@ -2,7 +2,7 @@
 title: How many runs do you need to trust an AI visibility number?
 date: 2026-10-22
 author: Chad Metcalf
-description: AI answers change every time you ask. What the research says about that variance, the arithmetic for how far one run and a week of runs can be trusted, and what to do about it.
+description: AI answers change every time you ask. What the research says about that variance, how far one run and a week of runs can be trusted, and what to do about it.
 ---
 
 Ask an assistant the same question twice and you'll get two different answers. So when an AI visibility tool says you're named in 40% of answers this week and 30% last week, the first question isn't "what did we break?" It's "is that a change at all?" Usually, at the sample sizes most people run, it isn't.

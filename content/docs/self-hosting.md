@@ -1,6 +1,6 @@
 ---
 title: "Self-hosted AI visibility tracker: Docker and Kubernetes"
-description: Run Cheap Seats, the open-source AI visibility tracker, in Docker, on your own Kubernetes cluster with the Helm chart, or on an exe.dev VM. One container, one SQLite file, and your prompts go only to the model providers you configure.
+description: Run Cheap Seats in Docker, on Kubernetes with the Helm chart, or on an exe.dev VM. One container, one SQLite file; prompts go only to providers you choose.
 weight: 410
 group: Running it
 ---

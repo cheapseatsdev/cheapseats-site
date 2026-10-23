@@ -1,6 +1,6 @@
 ---
 title: How big a change Cheap Seats can detect
-description: Why AI answers vary from run to run, the intervals and tests Cheap Seats uses so a fluke doesn't read as a trend, a worked example of how many points a run and a week can resolve, and when more samples help.
+description: Why AI answers vary run to run, the intervals and tests that keep a fluke from reading as a trend, what a run and a week can resolve, and when samples help.
 weight: 240
 group: Reading what it finds
 ---
