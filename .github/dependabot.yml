@@ -1,0 +1,14 @@
+# Dependabot keeps the GitHub Actions current, one grouped pull request a week. Hugo is pinned by
+# HUGO_VERSION in the build workflow and on the VM; bump both together.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: "ci"
