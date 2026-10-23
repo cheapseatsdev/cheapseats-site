@@ -116,7 +116,7 @@ The ChatGPT answer quoted above, as Cheap Seats recorded it. The question was pr
 | **verdict** | `absent` |
 | **named** | ChatGPT, Peec AI, Otterly.AI, Profound |
 | **top pick** | none: the answer shortlists three tools without choosing one |
-| **grader's reasoning** | "The answer never names Cheap Seats, CheapSeats, Popcorn, or any alias; it only recommends Peec AI, OtterlyAI, and Profound as monitoring tools." |
+| **grader's reasoning** | "The answer never names Cheap Seats, CheapSeats, or any alias; it only recommends Peec AI, OtterlyAI, and Profound as monitoring tools." |
 | **searches** | 2, every result URL kept; the answer cited 4 of them |
 | **cost** | $0.0013 to grade; $0 to answer, on the subscription |
 
@@ -127,11 +127,11 @@ For contrast, an answer graded `recommended`, from our *head to heads* set the s
 | | |
 | --- | --- |
 | **verdict** | `recommended`, position 1, top pick |
-| **evidence** | "I'd lean toward Popcorn for a focused ChatGPT-and-Claude tracking need, provided it demonstrates reliable coverage of both." |
+| **evidence** | "I'd lean toward Cheap Seats for a focused ChatGPT-and-Claude tracking need, provided it demonstrates reliable coverage of both." |
 | **objections** | coverage of ChatGPT and Claude unverified; uncertain about product capabilities |
 | **tone** | mixed |
 
-The objections are the useful part: the answer recommended us while saying it couldn't verify what we do, which is a documentation gap with a page name on it. (Popcorn was our name until 22 October 2026; the grader folds old names and aliases onto the brand.)
+The objections are the useful part: the answer recommended us while saying it couldn't verify what we do, which is a documentation gap with a page name on it.
 
 ## What tools track how often AI assistants mention a brand?
 

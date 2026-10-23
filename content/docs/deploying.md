@@ -58,7 +58,6 @@ The chart runs one replica and replaces it rather than rolling, so two never sha
 - `env`: plain environment for values that aren't secrets, such as `CHEAPSEATS_CONFIG_REV` or the key-adding proxies `CHEAPSEATS_ANTHROPIC_BASE_URL`, `CHEAPSEATS_TYPESAFE_BASE_URL` and `CHEAPSEATS_EXA_BASE_URL`.
 - `persistence`: the volume for the database (1Gi by default), or an `existingClaim`.
 - `ingress`: off by default.
-- `nameOverride`: set to `popcorn` for a release installed before the rename, so its Deployment, Service and volume keep their names ([Upgrading](../upgrading/#upgrading-from-popcorn)).
 
 The plain app image works too, with the config mounted at `/config` by `extraVolumes` and `extraVolumeMounts`. The template's [Kubernetes guide](https://github.com/cheapseatsdev/cheapseats-config-template/blob/main/deploy/README.md) walks through it.
 

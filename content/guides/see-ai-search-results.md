@@ -82,7 +82,7 @@ The question is prompt 13 of our *Getting recommended instead of a competitor* s
 | **cited** | 3: perplexity.ai/api-platform, developers.openai.com's web search guide, bing.com's AI Performance help |
 | **named** | Perplexity Search API, OpenAI Responses API, Bing Webmaster Tools |
 | **verdict** | `absent`; no top pick: the answer lays out three tools without choosing one |
-| **grader's reasoning** | "The answer names no brand, alias, or Cheap Seats/Popcorn reference; it discusses Perplexity, OpenAI, and Bing tools only." |
+| **grader's reasoning** | "The answer names no brand, alias, or Cheap Seats reference; it discusses Perplexity, OpenAI, and Bing tools only." |
 
 Now read the two together. None of the 46 results was on cheapseats.dev or our GitHub repo, so this is the first kind of miss: **not retrieved**. No fix to our wording would have helped, because nothing of ours was in front of the model. The query tells us what would: the assistant searched in its own words, for vendor documentation about retrieval traces, with the names of the tools it already knew. Across the whole run, 80 search answers ran 149 searches; on average 22% of a search's words came from its prompt, and the assistants added Profound to 29 searches on 13 prompts and Peec AI to 22 on 12, names no prompt contained. The products the model already associates with the category get searched for by name; the rest have to be on the pages those searches return.
 
