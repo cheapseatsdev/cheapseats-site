@@ -9,8 +9,8 @@ hugo server          # http://localhost:1313
 hugo --minify        # build into public/
 ```
 
-Every push to `main` builds with Hugo 0.166.0 and deploys to GitHub Pages
-(`.github/workflows/pages.yml`).
+Every pull request builds with Hugo 0.166.0 (`.github/workflows/build.yml`). cheapseats.dev is
+served from its own server, which rebuilds `main` within five minutes of a merge.
 
 - `content/docs/`: docs pages, ordered by `weight`. Adapted from the Cheap Seats repo's README and
   `docs/`; keep them true of Cheap Seats as it ships.
