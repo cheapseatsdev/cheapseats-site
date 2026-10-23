@@ -17,12 +17,15 @@ name = "Cheap Seats"
 aliases = ["cheapseats.dev", "cheapseatsdev/cheapseats"]
 # What the product is, so the grader can tell it apart from other things called "cheapseats".
 about = "Cheap Seats is an open-source, self-hosted tool that asks AI assistants a brand's buyer questions, grades whether they recommend the brand, and builds a ranked list of fixes."
+# The market, as a noun phrase: what a prompt should be about, as opposed to what this one product is.
+category = "AI search visibility tools, which measure whether AI assistants recommend a brand"
 # Who asks the questions. The answerers are told they're answering this person's question.
 # Changing `about` or `audience` changes how answers are asked or graded, so every trend restarts.
 audience = "a product marketing lead"
 ```
 
 - `aliases` are other names the grader counts as the brand.
+- `category` is the market in a noun phrase. With `[typesafe]`, the prompt review's off-target question is asked against it; without a category that question isn't asked, since against `about` it would flag every prompt that isn't about this one product. New in 0.4.0.
 - `audience` is who asks the questions, for example "a software developer"; the answerers are told so.
 - `facts` is a list of public claims the analyst may build fixes on, and that the [fact check](../got-wrong/) reads each answer naming you against.
 
@@ -101,6 +104,7 @@ review = ["example.com/reviews"]
 
 - The keys are `ugc`, `review`, `reference`, `institutional` and `editorial`.
 - `[sources]` wins over the built-in list, the most specific entry wins, and a host may be in only one class.
+- With `[typesafe]` and `page_types` on, a third-party host the list calls `editorial` is classed by Jev once; `[sources]` still wins over Jev ([Optional providers](../optional-providers/)).
 - The brand's sites are always `own` and competitors' domains always `competitor`, whatever `[sources]` says. Changing it changes no trend.
 
 ## Grader and analyst
@@ -132,6 +136,25 @@ check_facts = false   # skip the fact check
 ```
 
 With `facts` listed under `[brand]`, each answer that names the brand is read once more after the run, against those facts, for claims that contradict one ([Got wrong about you](../got-wrong/)). One grader call per such answer, from the same budget; nothing on `claude-code`. It's on whenever facts are listed; `check_facts = false` turns it off. It changes no grade or trend, and like `themes` it belongs in `[grader]`.
+
+## Optional providers
+
+```toml
+[typesafe]
+model = "jev-1.14.0"
+# fold_names, cluster_phrases, second_opinions, page_types, fix_matches, prompt_review: on unless false
+# min_confidence = 0.7
+
+[exa]
+# coverage, baseline, prospects, contents_fallback: on unless false
+# results = 3
+# baseline_results = 10
+# prospect_seeds = 10
+# prospect_results = 5
+# discover_results = 10
+```
+
+Two optional services for jobs the core models do badly or not at all, each off until its table is present and then on in full. Every switch, what each pass adds, where it shows and what it costs are on [Optional providers](../optional-providers/). Keys are `TYPESAFE_API_KEY` and `EXA_API_KEY`, or the proxies `CHEAPSEATS_TYPESAFE_BASE_URL` and `CHEAPSEATS_EXA_BASE_URL` ([Environment](#environment)). Each model needs a `[pricing]` entry (below). Unknown keys are errors, so upgrade the app before adding a switch the running version doesn't know.
 
 ## Budget
 
@@ -165,7 +188,7 @@ See [How big a change Cheap Seats can detect](../noise-and-confidence/#when-more
 
 ## Pricing
 
-USD per million tokens; `search_per_1k` is USD per 1,000 web searches. An API answerer whose model has no price in `[pricing]` can't run. Confirm prices against the providers' current price lists before relying on the cost figures.
+USD per million tokens; `search_per_1k` is USD per 1,000 web searches and `page_per_1k` USD per 1,000 pages read. An API answerer whose model has no price in `[pricing]` can't run, and neither can an optional provider's pass. Confirm prices against the providers' current price lists before relying on the cost figures.
 
 ```toml
 [pricing.claude-haiku-5-5]
@@ -174,6 +197,15 @@ output = 0.50
 cache_read = 0.01
 cache_write = 0.125
 search_per_1k = 10.0
+
+[pricing."jev-1.14.0"]      # TypeSafe: input only
+input = 0.042
+
+[pricing.exa-search]
+search_per_1k = 4.0
+
+[pricing.exa-contents]      # a page read through Exa, only when plain HTTP got an empty shell
+page_per_1k = 1.0
 ```
 
 ## Schedule and tiers
