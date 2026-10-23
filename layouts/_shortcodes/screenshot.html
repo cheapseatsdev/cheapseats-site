@@ -4,7 +4,7 @@
 {{- $dark := printf "images/docs/%s-dark.webp" $name -}}
 <figure class="screenshot">
 <picture>
-<source srcset="{{ $dark | relURL }}" media="(prefers-color-scheme: dark)">
+<source data-dark srcset="{{ $dark | relURL }}" media="(prefers-color-scheme: dark)">
 <img src="{{ $light | relURL }}" alt="{{ .Get "alt" }}" loading="lazy">
 </picture>
 {{- with .Get "caption" }}
