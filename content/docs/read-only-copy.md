@@ -1,7 +1,8 @@
 ---
 title: A public read-only copy
 description: "Show your Cheap Seats dashboard to anyone, without sign-ins or credentials: a read-only copy on its own machine, refreshed from your deployment, rate-limited in front."
-weight: 51
+weight: 340
+group: Acting on it
 ---
 
 A read-only copy shows your dashboard to anyone: prospects, a team without accounts, the public. It serves every page and the JSON API from a copy of your database, and it can't change anything or call a model. [demo.cheapseats.dev](https://demo.cheapseats.dev) is one, a copy of Cheap Seats measuring itself.

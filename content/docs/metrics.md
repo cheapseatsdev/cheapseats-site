@@ -1,7 +1,8 @@
 ---
 title: Metric definitions
 description: Every number Cheap Seats reports, with its formula and denominator, and how each maps to Peec AI, Profound, Gauge, Otterly.AI, Ahrefs, SE Ranking, Elmo and Limelit Open.
-weight: 43
+weight: 230
+group: Reading what it finds
 ---
 
 **What exactly does each Cheap Seats number mean?** Almost every metric below is a count of graded answers over a count of graded answers, worked out from what's stored. No model is called to build a report. The same numbers are on the run page, in the run's JSON (`/api/runs/<id>` and `/runs/<id>/export.json`, under `Summary`), in `cheapseats report <run-id> -json` (under `summary`) and in MCP `get_run`.

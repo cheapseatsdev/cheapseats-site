@@ -1,7 +1,8 @@
 ---
 title: "Free site checks: audit, citations, AI crawlers"
 description: Three checks that call no model and cost nothing, the site audit of what AI crawlers can read, the citation check of which cited pages name you, and AI crawler counts from your access logs.
-weight: 46
+weight: 320
+group: Acting on it
 ---
 
 **Can AI assistants read my site?** `cheapseats audit` checks what an AI crawler sees on each of your sites: whether robots.txt or a firewall blocks it, whether there's an llms.txt and a fresh sitemap, and whether each page has its content in the HTML or is empty without JavaScript. Two more checks sit beside it: the **citation check**, of which pages the answers cite name you and which name only competitors, and **AI crawler** counts from your own access logs.

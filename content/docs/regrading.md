@@ -1,7 +1,8 @@
 ---
 title: Re-grading stored answers
 description: Grade the answers older runs already have again, under today's grader, brand and competitors, so a grading change carries the trend on instead of restarting it.
-weight: 48
+weight: 270
+group: Reading what it finds
 ---
 
 **What happens to my trend when the grading changes?** A change to what the grader reads (its prompt or model, the brand's name, aliases or `about`, a set's competitors) starts a new method, and trends start over with it. Re-grading grades the answers older runs already have again, as they would be graded today, so those runs join the new method's trend from their own dates on. Answers are never asked again.

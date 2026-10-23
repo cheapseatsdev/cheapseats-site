@@ -1,7 +1,8 @@
 ---
 title: Prompt sets
 description: The buyer questions Cheap Seats asks, as TOML files in your config repo, with ids that keep their history.
-weight: 30
+weight: 130
+group: Start here
 ---
 
 Each file in your config repo's `prompt-sets/` is one category of buyer questions. Cheap Seats only reads them, so change one with a pull request, after `cheapseats check`.

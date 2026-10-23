@@ -1,7 +1,8 @@
 ---
 title: Deploying
 description: Docker, Kubernetes with the Helm chart, or an exe.dev VM.
-weight: 50
+weight: 420
+group: Running it
 ---
 
 Each deployment is its own config repo, made from the [config template](https://github.com/cheapseatsdev/cheapseats-config-template): it builds an image of Cheap Seats with that config inside, checks and plans every pull request, and deploys every merge to a Docker host or Kubernetes. **Start there**: the template has [guides](https://github.com/cheapseatsdev/cheapseats-config-template/blob/main/deploy/README.md) for a Docker host and for Kubernetes.

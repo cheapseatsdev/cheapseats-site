@@ -1,7 +1,8 @@
 ---
 title: From fix to pull request
 description: How a quick win becomes a pull request with Claude Code, shown on cheapseats.dev's own fix list.
-weight: 45
+weight: 310
+group: Acting on it
 ---
 
 Every run ends with a fix list, and [quick wins](../reading-results/#quick-wins) ranks the fixes across sets. Each fix carries a prompt for Claude Code, so the step from "the assistants don't name us here" to a reviewed change is short. Here is the loop as we ran it on cheapseats.dev's own dashboard on 21 October 2026. We started from a baseline where Cheap Seats was named in none of the 90 answers.

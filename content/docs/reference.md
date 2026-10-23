@@ -1,7 +1,8 @@
 ---
 title: CLI, API and MCP
 description: Every command, JSON route and MCP tool, and how access works.
-weight: 70
+weight: 450
+group: Running it
 ---
 
 ## CLI

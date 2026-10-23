@@ -4,11 +4,20 @@
   <div class="prose">
     <h1>{{ .Title }}</h1>
     {{ .Content }}
-    <ol class="doc-list">
-    {{ range .Pages.ByWeight }}
+    {{ $pages := .Pages.ByWeight }}
+    {{ range $g := site.Params.docGroups }}
+    {{ $in := where $pages "Params.group" $g }}
+    {{ with $in }}
+    <h2>{{ $g }}</h2>
+    <ul class="doc-list">
+    {{ range . }}
       <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Description }}<br><span class="muted">{{ . }}</span>{{ end }}</li>
     {{ end }}
-    </ol>
+    </ul>
+    {{ end }}
+    {{ end }}
+    {{ $rest := where $pages "Params.group" "not in" site.Params.docGroups }}
+    {{ with $rest }}{{ errorf "docs pages without a group in docGroups: %s" (delimit (apply . "Path") ", ") }}{{ end }}
   </div>
 </div>
 {{ end }}

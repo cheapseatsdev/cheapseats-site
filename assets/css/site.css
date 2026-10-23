@@ -88,17 +88,20 @@ section.wrap>p,section.wrap>ul{max-width:760px}
 .docs-nav{position:sticky;top:16px;font-size:15px}
 .docs-nav-title{font-weight:600;margin:0 0 6px}
 .docs-nav-title a{text-decoration:none}
-.docs-nav ol{list-style:none;padding:0;margin:0}
+.docs-nav ul{list-style:none;padding:0;margin:0 0 10px}
+.docs-nav-group{margin:12px 0 2px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--pc-muted)}
 .docs-nav li{margin:0}
-.docs-nav ol a{display:block;padding:5px 10px;margin-left:-10px;border-left:2px solid transparent;text-decoration:none;color:var(--pc-muted)}
+.docs-nav ul a{display:block;padding:5px 10px;margin-left:-10px;border-left:2px solid transparent;text-decoration:none;color:var(--pc-muted)}
 .docs-nav a:hover{color:var(--pc-text)}
 .docs-nav a[aria-current="page"]{color:var(--pc-text);border-left-color:var(--pc-primary);font-weight:500}
+.doc-list{list-style:none;padding:0}
 .doc-list li{margin:10px 0}
+.doc-list a{font-weight:500}
 .pager{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--pc-border);margin-top:40px;padding-top:16px}
 @media (max-width:760px){
   .docs{grid-template-columns:minmax(0,1fr);gap:16px}
   .docs-nav{position:static;border:1px solid var(--pc-border);background:var(--pc-surface);border-radius:10px;padding:12px 16px}
-  .docs-nav ol a{margin-left:0}
+  .docs-nav ul a{margin-left:0}
   h1,.hero h1{font-size:26px}
 }
 

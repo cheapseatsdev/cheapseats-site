@@ -12,7 +12,7 @@ hugo --minify        # build into public/
 Every pull request builds with Hugo 0.166.0 (`.github/workflows/build.yml`). cheapseats.dev is
 served from its own server, which rebuilds `main` within five minutes of a merge.
 
-- `content/docs/`: docs pages, ordered by `weight`. Adapted from the Cheap Seats repo's README and
+- `content/docs/`: docs pages, grouped by `group` (one of `docGroups` in `hugo.toml`) and ordered by `weight`. Adapted from the Cheap Seats repo's README and
   `docs/`; keep them true of Cheap Seats as it ships.
 - `content/blog/`: posts, with `date` and `author`. The feed is at `/blog/index.xml`.
 

@@ -1,7 +1,8 @@
 ---
 title: Upgrading
 description: Cheap Seats keeps your history across upgrades.
-weight: 60
+weight: 430
+group: Running it
 ---
 
 - **Backups before schema changes.** Before it changes an existing database's schema, Cheap Seats copies it to `cheapseats.db.bak-v<N>` beside it. To roll back, stop Cheap Seats, put the copy back as `cheapseats.db`, and run the previous version.

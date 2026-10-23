@@ -1,7 +1,8 @@
 ---
 title: Reviewing your prompts
 description: A monthly review of the prompts themselves, from the answers you already have — which tell you nothing, which move for no reason, which are answered about something else, which ask the same thing twice, and what no prompt asks. Free.
-weight: 31
+weight: 260
+group: Reading what it finds
 ---
 
 Runs grade the brand. The **prompt review** grades the prompts: which ones tell you nothing, which move for no reason, which are answered about something else, which ask the same thing twice, which the assistants search for in other words, and what no prompt asks about.
