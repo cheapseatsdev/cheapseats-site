@@ -32,7 +32,7 @@ cheapseats migrate-config [dir]           give each prompt an id, in sets writte
 cheapseats version                        this build's version and database schema
 ```
 
-From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/), `review` in [Reviewing your prompts](../prompt-review/).
+From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. Running a set from a terminal or a pipeline, with the exit codes and a scheduled workflow, is in [The CLI, and runs from CI](../cli-and-ci/). `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/), `review` in [Reviewing your prompts](../prompt-review/).
 
 - **`init`**: `-name` sets the brand's name instead of what the site calls itself; `-competitors` adds `[[competitors]]` entries, alternatives prompts and head-to-heads; `-suggest` adds `-n` suggested prompts to the starter sets with one analyst call; `-dry-run` prints what it found and every file it would write, and writes nothing. It writes to `./<brand>-cheapseats-config` unless you name a directory.
 - **`regrade`**: `-since` takes `28d`, `72h` or `all` (default 28 days) and applies to a set; `-dry-run` is true by default.
