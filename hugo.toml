@@ -73,6 +73,10 @@ name = "Blog"
 pageRef = "/blog"
 weight = 20
 [[menus.main]]
+name = "Demo"
+url = "https://demo.cheapseats.dev/"
+weight = 25
+[[menus.main]]
 name = "GitHub"
 url = "https://github.com/cheapseatsdev/cheapseats"
 weight = 30
