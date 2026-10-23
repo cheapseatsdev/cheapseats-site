@@ -1,7 +1,8 @@
 ---
 title: Sharing a run
 description: A read-only, expiring, revocable link to one run's report for someone without a sign-in, what it shows and leaves out, and how the token is kept safe.
-weight: 49
+weight: 330
+group: Acting on it
 ---
 
 **How do I show a run to someone without a Cheap Seats sign-in?** Make a share link. It's a read-only page of one run's report for a manager, a colleague in marketing or a client, at `/share/<token>`.

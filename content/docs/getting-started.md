@@ -1,7 +1,8 @@
 ---
 title: Getting started
 description: Run Cheap Seats on your own machine at no cost, on the Claude subscription you already have, then point it at your own brand.
-weight: 10
+weight: 110
+group: Start here
 ---
 
 ## What you need

@@ -1,7 +1,8 @@
 ---
 title: Which AI engines Cheap Seats asks, and why
 description: Cheap Seats asks Claude and OpenAI models through their APIs and CLIs, not scraped consumer apps. Why, what that misses, and how other tools reach Google AI Overviews, Perplexity and more.
-weight: 41
+weight: 250
+group: Reading what it finds
 ---
 
 **Which AI engines does Cheap Seats ask?** Claude and OpenAI models, and only those: through the Anthropic and OpenAI APIs, or through the `claude` and `codex` command-line tools on a Claude or ChatGPT subscription. It doesn't ask Google AI Overviews, Google AI Mode, Gemini, Perplexity or Microsoft Copilot, and it asks the models directly, not the ChatGPT or Claude apps a buyer types into. That's a deliberate trade: it keeps Cheap Seats free to run on a subscription you already have. This page says what the trade costs, and how other tools cover the rest.

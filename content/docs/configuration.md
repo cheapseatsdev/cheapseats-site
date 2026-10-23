@@ -1,7 +1,8 @@
 ---
 title: Configuration
 description: cheapseats.toml, the file that says whose brand Cheap Seats measures, with which assistants, and how much it may spend.
-weight: 20
+weight: 120
+group: Start here
 ---
 
 Everything except secrets lives in `cheapseats.toml` in your config repo, with the prompt sets in `prompt-sets/` beside it. Secrets (API keys, tokens) come from the environment or `.env`. Unknown keys are errors, so a typo fails `cheapseats check` instead of being ignored.

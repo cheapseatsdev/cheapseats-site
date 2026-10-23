@@ -12,6 +12,8 @@ tagline = "the open-source AI visibility tracker"
 # The home page's meta description: 160 characters at most, so search results show all of it.
 metaDescription = "Free, open-source AI visibility tracker on the Claude subscription you already have. It grades whether AI assistants recommend you and lists what to fix."
 template = "https://github.com/cheapseatsdev/cheapseats-config-template"
+# The docs index and sidebar group pages under these headings, in this order (front matter `group`).
+docGroups = ["Start here", "Reading what it finds", "Acting on it", "Running it"]
 
 # llms.txt (llmstxt.org): an index and a full-text file at the root, and a markdown copy of every
 # page beside its HTML, linked from <head>.

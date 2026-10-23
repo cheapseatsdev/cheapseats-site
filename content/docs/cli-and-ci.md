@@ -1,7 +1,8 @@
 ---
 title: The CLI, and runs from CI
 description: Run a prompt set from the command line and get the recommended rate and share of voice back with an exit code; check prompt changes in your config repo's CI; start a run from a weekly pipeline over the JSON API.
-weight: 65
+weight: 440
+group: Running it
 ---
 
 **Can I run AI visibility checks from the command line or in a CI pipeline?** Yes. `cheapseats` is one binary: the web UI, the JSON API, the MCP server and a CLI. `cheapseats run <set>` asks every configured model your buyer questions on both tracks, waits, prints the recommended and named rates and the share-of-voice table, and exits 0 if the run finished and 1 if it didn't. The prompt sets are TOML files in a git repo you own, so a change to the questions is a pull request, and `cheapseats check` and `cheapseats plan` run in that repo's CI. Running the same questions every week needs no CI at all: the schedule is built in. A pipeline that must start a run itself does it over the JSON API.

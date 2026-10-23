@@ -1,7 +1,8 @@
 ---
 title: Reading results
 description: Verdicts, tracks, the run page's rates, share of voice, sources and sentiment, what the assistants searched, rankings, fix lists and quick wins.
-weight: 40
+weight: 210
+group: Reading what it finds
 ---
 
 ## Tracks

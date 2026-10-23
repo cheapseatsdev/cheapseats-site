@@ -1,7 +1,8 @@
 ---
 title: How big a change Cheap Seats can detect
 description: Why AI answers vary from run to run, the intervals and tests Cheap Seats uses so a fluke doesn't read as a trend, a worked example of how many points a run and a week can resolve, and when more samples help.
-weight: 44
+weight: 240
+group: Reading what it finds
 ---
 
 **How big a change can Cheap Seats detect?** On a 17-prompt set with two answerers and one answer each per track, a single run pins your named rate on one track to about ±17 points, and a week of daily runs pooled together to about ±6. A change smaller than that is reported as within noise, not as a win or a loss. Cheap Seats works it all out from the answers already stored, with no extra model calls. The rest of this page says why answers vary, what Cheap Seats tests, and how to get more precision when you need it.

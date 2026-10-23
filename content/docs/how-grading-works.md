@@ -1,7 +1,8 @@
 ---
 title: How grading works
 description: How Cheap Seats decides whether an AI assistant recommended a brand, mentioned it or left it out, which assistants it asks, and how to check every grade.
-weight: 42
+weight: 220
+group: Reading what it finds
 ---
 
 **How does Cheap Seats decide whether an AI assistant recommended a brand?** It asks each assistant your buyers' questions, then a separate Claude call reads each answer and grades it **recommended**, **mentioned** or **absent** for your brand, with the reasons. It isn't a single opaque score: every answer, every search the assistant ran, every result and citation, and every grade with its reasoning is stored, and you can open any of them from the run page or export them.
