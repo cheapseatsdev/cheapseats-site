@@ -17,7 +17,7 @@ As of October 2026, from Cheap Seats' docs and Semrush's own [AI Visibility Tool
 | **Engines** | **Claude** and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Toolkit: "platforms like Google AI Mode and ChatGPT". Pricing page: "Google Search, ChatGPT, Perplexity, Gemini & more". Claude isn't mentioned on either page |
 | **Your prompts** | TOML in your own git repo, changed by pull request | Prompt Tracking: 25 prompts, 50 more for $60/month. Semrush One Starter: 50 prompts tracked daily |
 | **Web search vs memory** | Both, as separate tracks (search and recall), reported separately | Not stated |
-| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections | Brand Performance: how AI platforms describe your brand against competitors |
+| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections; with your facts listed, what each answer got wrong about you | Brand Performance: how AI platforms describe your brand against competitors |
 | **What to fix** | A ranked fix list every run: the page, what it must say, the prompts it should flip, the owner, and a Claude Code prompt | AI-generated strategic recommendations from Brand Performance |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | Semrush API and Semrush MCP exist as products; the toolkit page doesn't describe them for AI visibility |
 | **SEO suite** | None; Cheap Seats only measures AI answers | Part of Semrush, alongside its SEO tools |

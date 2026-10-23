@@ -31,7 +31,7 @@ Everything below comes from each tool's own pages, read in October 2026. Where a
 
 | Tool | Your own prompts | Recommended vs. mentioned | Fix recommendations | API / MCP |
 | --- | --- | --- | --- | --- |
-| **Cheap Seats** | Yes, as TOML in your git repo, changed by pull request | Yes: each answer graded recommended, mentioned or absent, with position, top pick, share of voice and objections | A ranked fix list every run: the page, what it must say, the prompts it should flip, and a Claude Code prompt | JSON API and MCP server, plus web UI and CLI |
+| **Cheap Seats** | Yes, as TOML in your git repo, changed by pull request | Yes: each answer graded recommended, mentioned or absent, with position, top pick, share of voice and objections; with your facts listed, what each answer got wrong about you | A ranked fix list every run: the page, what it must say, the prompts it should flip, and a Claude Code prompt | JSON API and MCP server, plus web UI and CLI |
 | **Peec AI** | Yes, tracked prompts | Not stated | "Recommended actions", ranked and grouped by earned and owned | API and MCP |
 | **Profound** | Yes; on Enterprise, edit, disable or add prompts | Not stated | "Suggestions"; AI Marketer agents draft content | API on Enterprise; MCP not mentioned |
 | **Otterly.AI** | Yes, 15 to 400 by plan | Not stated | Recommendations, GEO URL audits, content briefs | API and MCP from Standard |

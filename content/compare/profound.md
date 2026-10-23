@@ -17,7 +17,7 @@ As of October 2026, from Cheap Seats' docs and Profound's own [pricing](https://
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Trial: ChatGPT, Gemini, Google AI Overviews. Enterprise: up to 9 of ChatGPT, Perplexity, Google AI Mode, Gemini, Microsoft Copilot, DeepSeek, Claude, Google AI Overviews and Exa Search |
 | **Your prompts** | TOML in your own git repo, changed by pull request | Enterprise: a tailored prompt plan; prompts can be edited, disabled or added |
 | **Web search vs memory** | Both, as separate tracks (search and recall), reported separately | Not stated |
-| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections | Not detailed on the pricing page |
+| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections; with your facts listed, what each answer got wrong about you | Not detailed on the pricing page; the home page lists FactCheck |
 | **What to fix** | A ranked fix list every run: the page, what it must say, the prompts it should flip, the owner, and a Claude Code prompt | "Suggestions" (limited on the trial, unlimited on Enterprise); AI Marketer agents that draft and stage content |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | API on Enterprise (none on the trial); exports in CSV and JSON. MCP not mentioned |
 | **Security and data** | Your SQLite file; prompts and answers go only to the model providers you configure | SSO/SAML and SOC 2 on Enterprise |
