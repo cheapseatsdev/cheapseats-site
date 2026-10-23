@@ -126,6 +126,17 @@ Each request is classed by its user agent:
 
 Cheap Seats keeps only daily counts per host, page, class and bot, not log lines, plus a hash of each counted request, so importing the same log twice, or one that overlaps it, counts nothing twice.
 
+### On a schedule
+
+Because a repeated import counts nothing twice, a schedule can simply re-import the current log and the last rotated one every hour. On the machine that has both the logs and Cheap Seats' data directory:
+
+```bash
+# crontab -e
+0 * * * * CHEAPSEATS_CONFIG=/srv/cheapseats/config/cheapseats.toml CHEAPSEATS_DATA_DIR=/srv/cheapseats/data /usr/local/bin/cheapseats crawl import /var/log/nginx/access.log /var/log/nginx/access.log.1
+```
+
+The import needs no API keys: it reads the config for your sites and writes only to the database. It's safe beside a running `cheapseats serve`. When the logs live on another machine, as with a site served from its own server, copy them over first in the same job; [a public read-only copy](../read-only-copy/#ai-crawler-logs-too) does that over SSH. A site on GitHub Pages or another host without access logs has nothing to import.
+
 The page lists each of your pages' fetches by class, and AI referrals, beside how often the latest finished run of each set cited and surfaced it, and flags:
 
 - **crawled, never cited**: AI crawlers fetched it, but no answer in the latest runs cited it;
