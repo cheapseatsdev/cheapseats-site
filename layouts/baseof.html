@@ -63,7 +63,8 @@
 {{ if .IsPage }}{{ if not .Date.IsZero }}{{ $ld = merge $ld (dict "datePublished" (.Date.Format "2006-01-02")) }}{{ end }}{{ if not .Lastmod.IsZero }}{{ $ld = merge $ld (dict "dateModified" (.Lastmod.Format "2006-01-02")) }}{{ end }}{{ with .Params.author }}{{ $ld = merge $ld (dict "author" (dict "@type" "Person" "name" .)) }}{{ end }}{{ end -}}
 {{ $ld | jsonify | safeJS }}
 </script>{{ end }}
-{{ $css := resources.Get "css/site.css" | minify | fingerprint }}
+{{- /* The brand tokens (brand/web/tokens.css, mounted in hugo.toml) go ahead of the site's styles in one stylesheet. */}}
+{{ $css := slice (resources.Get "css/tokens.css") (resources.Get "css/site.css") | resources.Concat "css/site.css" | minify | fingerprint }}
 {{- /* A theme picked with the header's toggle, applied before the page paints. */}}
 <script>try{var t=localStorage.getItem("cheapseats-theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">

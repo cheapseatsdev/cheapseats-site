@@ -61,6 +61,7 @@
     "web/app-icon.svg",
     "web/apple-touch-icon.png",
     "web/brand.css",
+    "web/tokens.css",
     "web/favicon-16.png",
     "web/favicon-32.png",
     "web/favicon-48.png",

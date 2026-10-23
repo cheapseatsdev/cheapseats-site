@@ -17,7 +17,16 @@ served from its own server, which rebuilds `main` within five minutes of a merge
   `docs/`; keep them true of Cheap Seats as it ships.
 - `content/blog/`: posts, with `date` and `author`. The feed is at `/blog/index.xml`.
 
-Colors and type follow the app (`internal/server/static/cheapseats.css`). The logo and favicon are the
+## Brand tokens
+
+`brand/web/tokens.css` is the one source of the brand's colors (light and dark), type stacks, radii
+and content width, as `--cs-*` custom properties. The site builds it into its stylesheet ahead of
+`assets/css/site.css` (mounts in `hugo.toml`, concatenated in `layouts/baseof.html`) and serves it
+at `/brand/tokens.css`. The app keeps a copy at `internal/server/static/tokens.css`: edit the tokens
+here, then in the app repo run `deploy/sync-brand.sh <path to this checkout>` and open a PR there;
+a test in the app fails when its copy is stale or styles use a token this file lacks.
+
+The logo and favicon are the
 [Lucide](https://lucide.dev) "cheapseats" icon, under the ISC license in `LICENSES/lucide-ISC.txt`.
 
 The site is [MIT](LICENSE) licensed, like Cheap Seats.
