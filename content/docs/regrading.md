@@ -42,7 +42,7 @@ Every answer of a run is graded first, then the new grades are written together,
 
 ## What isn't rebuilt
 
-The run's fix list and themes stay as they were. To have them follow the new grades:
+The run's fix list and themes stay as they were, and so does the [fact check](../got-wrong/), which reads answers rather than grades; rerun it with `cheapseats misstatements <run-id>` if different answers now name you. To have the fix list and themes follow the new grades:
 
 ```bash
 cheapseats fixes <run-id> -rebuild

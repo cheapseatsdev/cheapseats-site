@@ -24,9 +24,9 @@ audience = "a product marketing lead"
 
 - `aliases` are other names the grader counts as the brand.
 - `audience` is who asks the questions, for example "a software developer"; the answerers are told so.
-- `facts` is a list of public claims the analyst may build fixes on.
+- `facts` is a list of public claims the analyst may build fixes on, and that the [fact check](../got-wrong/) reads each answer naming you against.
 
-`brand.about` and `brand.facts` are sent to the grader and analyst, so keep anything private out of them. Changing `about` or `audience` restarts every trend.
+`brand.about` goes to the grader and analyst, and `brand.facts` to the analyst and the fact check, so keep anything private out of them. Changing `about` or `audience` restarts every trend; changing `facts` restarts none.
 
 ## Sites
 
@@ -124,6 +124,14 @@ themes = false   # skip the theme pass
 ```
 
 After each run is graded, one more grader call groups its objections, praise and reasons for losing into a few named **themes**, shown on the run page. It's on by default; `themes = false` turns it off. It changes no rate or trend. `themes` belongs in `[grader]`, not `[analyst]`.
+
+```toml
+[grader]
+model = "claude-haiku-5-5"
+check_facts = false   # skip the fact check
+```
+
+With `facts` listed under `[brand]`, each answer that names the brand is read once more after the run, against those facts, for claims that contradict one ([Got wrong about you](../got-wrong/)). One grader call per such answer, from the same budget; nothing on `claude-code`. It's on whenever facts are listed; `check_facts = false` turns it off. It changes no grade or trend, and like `themes` it belongs in `[grader]`.
 
 ## Budget
 
