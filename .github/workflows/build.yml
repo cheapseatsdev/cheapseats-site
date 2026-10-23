@@ -2,7 +2,7 @@ name: Build
 
 # Every pull request and push to main builds the site with the same Hugo and flags as the server,
 # so a broken template or a warning fails here. cheapseats.dev is served from its own VM, which
-# builds main itself (popcorn-zone-config's deploy/demo/site-build); nothing publishes from here.
+# builds main itself (cheapseats-config's deploy/demo/site-build); nothing publishes from here.
 on:
   push:
     branches: [main]
