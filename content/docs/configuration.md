@@ -220,4 +220,4 @@ A fix goes to its site's owner, else to the owner for its gap here, else `defaul
 | `CHEAPSEATS_DATA_DIR` | where the database lives, default `data` |
 | `CHEAPSEATS_DEBUG` | set to anything for debug logging |
 
-Cheap Seats reads `.env` at startup; the real environment wins. `POPCORN_*` names from before the rename still work, with a warning at startup ([Upgrading](../upgrading/)).
+Cheap Seats reads `.env` at startup; the real environment wins.

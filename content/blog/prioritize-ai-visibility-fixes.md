@@ -14,7 +14,7 @@ description: Rank fixes by the prompts each could flip per day of work, weighted
 A fix is only worth ranking if it answers something the assistant actually said. Every Cheap Seats run ends with the reasons the brand lost, counted by prompt, and the objections the answers raised. From our *head to heads* run on 22 October 2026, 11 prompts that name Cheap Seats against a competitor:
 
 - **No verifiable information about the product**: 8 of 11 prompts. "I can't give you an accurate feature-by-feature comparison, and I'd rather not invent one."
-- **Name collision**: search answers in 7 prompts landed on other products with our old name.
+- **Name collision**: search answers in 7 prompts landed on other products with a similar name.
 - **Incumbents framed as the safe default**: 6 prompts. Profound is "one of the best-funded and most established."
 - **Self-hosting burden**: 1 prompt.
 

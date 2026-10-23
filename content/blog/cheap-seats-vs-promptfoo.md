@@ -2,7 +2,6 @@
 title: "Cheap Seats vs. Promptfoo for AI visibility"
 date: 2026-10-22
 author: Chad Metcalf
-aliases: ["/blog/popcorn-vs-promptfoo/"]
 description: Promptfoo is a general LLM eval and red-teaming tool; Cheap Seats tracks whether AI assistants recommend you. When each fits, and what you'd build on top.
 ---
 

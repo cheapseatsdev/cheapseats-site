@@ -86,7 +86,7 @@ On 22 October 2026 we shipped a docs page, *How grading works*, for a fix on our
 | named | +0 points, margin ±29 |
 | recommended | +5 points, margin ±20 |
 | target seen | not before, not after |
-| host cited | our domain (popcorn.zone at the time) not cited before, not after |
+| host cited | our domain not cited before, not after |
 
 And per prompt, named and recommended, before → after:
 

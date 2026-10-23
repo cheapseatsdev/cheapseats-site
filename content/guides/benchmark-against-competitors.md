@@ -66,7 +66,7 @@ This is real data from Cheap Seats tracking itself on the *Choosing an AI visibi
 
 ### The competitor table
 
-Run `r-20261022-043101-41215d`, 22 October 2026. Cheap Seats was still called Popcorn, and its questions used that name. Claude Opus (via Claude Code) and an OpenAI model (via Codex), each on the search track (2 samples per question) and the recall track (1 sample): **68 graded answers**.
+Run `r-20261022-043101-41215d`, 22 October 2026. Claude Opus (via Claude Code) and an OpenAI model (via Codex), each on the search track (2 samples per question) and the recall track (1 sample): **68 graded answers**.
 
 | product | answers naming it (of 68) | named rate | top picks |
 | --- | --- | --- | --- |
