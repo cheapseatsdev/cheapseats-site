@@ -1,5 +1,5 @@
 ---
-title: Which AI visibility fix first, and who owns it
+title: Which fix first, and who owns AI visibility
 date: 2026-10-23
 author: Chad Metcalf
 description: "A method for prioritizing fixes to how AI assistants describe your product: prompts a fix could flip per day of work, weighted by what each has left to win and how directly it answers the reason you lost. Then an owner for each kind of fix, with the fields Cheap Seats puts on every one."
