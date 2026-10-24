@@ -3,8 +3,7 @@ title: Cheap Seats vs Bad Popcorn
 description: Cheap Seats, the free, self-hosted AI visibility tracker, as a place to start before Bad Popcorn. Markets, engines, grading, fixes and shop feeds, October 2026.
 weight: 35
 ---
-
-Cheap Seats (cheapseats.dev) is the MIT-licensed, self-hosted AI visibility tracker. It's a free place to start: it asks Claude and OpenAI models your buyers' questions, grades whether the answers recommend you, and ends each run with a ranked fix list. Bad Popcorn is a hosted AI visibility platform built for brands selling to shoppers in the Netherlands, Belgium, Germany and France. It asks buying questions in each market's language across ChatGPT, Claude, Gemini and Perplexity, from €890 a year; on Growth it also drafts the content to fix what it finds. Start with Cheap Seats; if you outgrow it, Bad Popcorn is one of the places to go, and your prompts come with you.
+Bad Popcorn is a hosted AI visibility platform built for brands selling to shoppers in the Netherlands, Belgium, Germany and France. It asks buying questions in each market's language across ChatGPT, Claude, Gemini and Perplexity, from €890 a year; on Growth it also drafts the content to fix what it finds. [Cheap Seats](/compare/) asks the same two model families in whatever language you write, with no per-country runs, and leaves the writing to you.
 
 ## Side by side
 
@@ -12,22 +11,20 @@ As of October 2026, from Cheap Seats' docs and Bad Popcorn's own [home](https://
 
 | | Cheap Seats | Bad Popcorn |
 | --- | --- | --- |
-| **Price** | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | Starter €890/year or €89/month (1 brand, 2 websites, 2 users, 50 monitored prompts), Growth €2,190/year or €219/month (3 brands, 5 websites, 5 users, 150 prompts), Enterprise custom; 30-day free trial |
-| **Where it runs** | Self-hosted: one Docker container with SQLite, on Docker, Kubernetes (Helm chart) or an exe.dev VM | Hosted |
+| **Price** | Free and open source (MIT); runs on your Claude subscription or API key, ChatGPT optional ([cost and budget](/docs/cost-and-budget/)) | Starter €890/year or €89/month (1 brand, 2 websites, 2 users, 50 monitored prompts), Growth €2,190/year or €219/month (3 brands, 5 websites, 5 users, 150 prompts), Enterprise custom; 30-day free trial |
+| **Where it runs** | One Docker container with SQLite; also a Helm chart or an exe.dev VM ([self-hosting](/docs/self-hosting/)) | Hosted |
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | ChatGPT, Claude, Gemini and Perplexity, "and the others enabled on the account"; its FAQ adds Mistral, Grok, Copilot and DeepSeek on larger plans |
 | **How it asks** | The models directly, through the APIs or your own CLI subscriptions; every answer, search and citation kept; daily or every few days, as you schedule it | Provider APIs, "not the same as a logged-in consumer app with personalization"; location and language follow the prompt's country; daily, full answers stored |
-| **Noise** | Repeated samples per prompt; a 95% interval on every rate, and a change tested prompt by prompt against the noise before it's called one | Repeated runs, with volatility shown, each reading to be read with its sample size; how many runs, and any interval, not stated |
+| **Noise** | A 95% interval on every rate; changes tested against noise ([how big a change](/docs/noise-and-confidence/)) | Repeated runs, with volatility shown, each reading to be read with its sample size; how many runs, and any interval, not stated |
 | **Markets** | One set of questions, as you write them; no per-country runs | Per country, starting with the Netherlands, Belgium, Germany and France, with questions in each market's language |
 | **Your prompts** | TOML in your own git repo, changed by pull request; `intent = "info"` marks questions that ask to explain rather than choose | Monitored prompts by plan, suggested from your catalogue and categories; clustered by market and by branded, non-branded, purchase, comparison and research intent |
-| **Web search vs memory** | Both, as separate tracks (search and recall), reported separately | Not stated on its methodology or product pages |
-| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections; with your facts listed, what each answer got wrong about you | Mention, citation (your site used as evidence), position and recommendation strength, and context: sentiment and whether the facts match the catalogue; summed up in a 0 to 100 visibility score, weights unpublished |
+| **Web search vs memory** | Search and recall, as separate tracks ([two tracks](/docs/how-grading-works/#two-tracks)) | Not stated on its methodology or product pages |
+| **Grading** | Recommended, mentioned or absent per answer, with position, top pick, share of voice, objections and tone; what each answer got wrong against your facts ([how grading works](/docs/how-grading-works/)) | Mention, citation (your site used as evidence), position and recommendation strength, and context: sentiment and whether the facts match the catalogue; summed up in a 0 to 100 visibility score, weights unpublished |
 | **History** | A run's grades are fixed when it's graded; a change of grading method is marked on the trend, and you can re-grade stored answers to carry it on | Not stated |
-| **What to fix** | A ranked fix list every run: the page, what it must say, the prompts it should flip, the owner, and a Claude Code prompt | The reason a competitor gets cited; on Growth, FAQs, collection copy, product facts and schema drafted for you to approve; the same questions asked again to check |
+| **What to fix** | A ranked fix list every run, each fix measured after it ships ([from fix to pull request](/docs/fix-to-pull-request/)) | The reason a competitor gets cited; on Growth, FAQs, collection copy, product facts and schema drafted for you to approve; the same questions asked again to check |
 | **Shop and crawler data** | No product feeds; AI crawler visits and AI referrals counted from your own access logs, free | AI-referred visits from Google Analytics 4; shopping and ChatGPT product feeds, and AI crawler visits from Cloudflare logs, on Enterprise |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | API access from Growth; reports and fix lists export to CSV |
 | **Data** | Your SQLite file; prompts and answers go only to the model providers you configure | Hosted by Bad Popcorn, under Dutch law |
-
-**What it costs.** Cheap Seats is free and open source (MIT). Claude is required, through a subscription or an API key; ChatGPT (Codex or an OpenAI key) is optional and adds a second assistant's answers. On your own machine, with a Claude Code subscription, answers, grading and the fix list can all run on the claude CLI, with no API key and no extra spend. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs: about $0.03 to grade a 68-answer run, under a daily budget cap). [Cost and budget](/docs/cost-and-budget/) has the details.
 
 ## What's the same
 
@@ -51,23 +48,21 @@ As of October 2026, from Cheap Seats' docs and Bad Popcorn's own [home](https://
 ## Start with Cheap Seats if…
 
 - You want to find out whether assistants recommend you before you pay for a plan.
-- You want both what the models find on the web and what they already believe, graded separately.
-- You want a strict grade per answer, recommended versus merely mentioned, with reasoning and a quote you can check, and a margin of error on every rate.
-- You want your prompts reviewed by pull request and your data in a file you own, without a prompt cap set by a plan.
 - You want site changes to go through your own repo and review, rather than be published from a vendor's tool.
+
+The rest of the case for starting here, strict grades, two tracks, intervals, prompts and data you own, is on [the compare index](/compare/#start-here).
 
 ## When to move to Bad Popcorn
 
-If you outgrow Cheap Seats, do whatever suits you. Its author would suggest [Gauge](/compare/gauge/); that team is great. If what you need is on this list, Bad Popcorn is a good fit:
+If what you need is on this list, Bad Popcorn is a good fit:
 
 - **You sell to shoppers in the Netherlands, Belgium, Germany or France.** Bad Popcorn asks in their languages and reports country by country; Cheap Seats has no per-country runs.
 - **You need Gemini or Perplexity.** Bad Popcorn asks both; Cheap Seats asks only Claude and OpenAI models.
 - **You run an online shop.** Bad Popcorn checks answers against your catalogue, and on Enterprise handles shopping and ChatGPT product feeds beside AI crawler traffic. Cheap Seats checks answers only against the facts you list, and has no feeds.
 - **You want the content drafted for you.** On Growth, Bad Popcorn drafts FAQs, collection copy, product facts and schema for you to approve. Cheap Seats tells you which page to change and what it must say, and leaves the writing to you or Claude Code, with a pull request to review for every fix.
-- **You'd rather not run anything.** Bad Popcorn is hosted, with a 30-day free trial and an onboarding sprint on every plan. Cheap Seats costs only your model calls, but someone has to host it, keep it running and edit TOML.
 
 ## Taking your prompts with you
 
-Your prompt sets are plain TOML in your own git repo. Each prompt is a line of text with an id, so the buyer questions you've refined in Cheap Seats are yours. They're plain text you can copy into Bad Popcorn when you set it up. Pick the questions that mattered most: Bad Popcorn's plans count monitored prompts, 50 on Starter and 150 on Growth.
+They're plain text in your own repo ([why that matters](/compare/#if-you-grow-out-of-it)), so copy them into Bad Popcorn. Its plans count monitored prompts, 50 on Starter and 150 on Growth.
 
-See [Getting started](/docs/getting-started/) to run it, or [all comparisons](/compare/).
+[All comparisons](/compare/).

@@ -3,8 +3,7 @@ title: Cheap Seats vs Profound
 description: "Cheap Seats, the free, self-hosted AI visibility tracker, beside Profound: engines, how each asks and grades, history, fixes and price, October 2026."
 weight: 10
 ---
-
-Cheap Seats (cheapseats.dev) is the MIT-licensed, self-hosted AI visibility tracker. It's a free place to start, inspired by tools like Profound: it does the small part of the job most teams use most of the time, asking Claude and OpenAI models your buyers' questions, grading whether the answers recommend you, and ending each run with a ranked fix list. Profound is a hosted enterprise platform for AI search visibility and marketing agents. It captures answers from the consumer front ends of up to nine answer engines, including Google AI Overviews and AI Mode, Gemini, Perplexity and Copilot, with SOC 2 Type II, SSO and custom enterprise pricing. Start with Cheap Seats; if you outgrow it, Profound is one of the places to go, and your prompts come with you.
+Profound is a hosted enterprise platform for AI search visibility and marketing agents. It captures answers from the consumer front ends of up to nine answer engines, including Google AI Overviews and AI Mode, Gemini, Perplexity and Copilot, with SOC 2 Type II, SSO and custom enterprise pricing. [Cheap Seats](/compare/) asks only Claude and OpenAI models, directly, and grades each answer; this page says where that is enough and where Profound's reach is the point.
 
 ## Side by side
 
@@ -12,21 +11,19 @@ As of October 2026, from Cheap Seats' docs and Profound's own pages, linked in e
 
 | | Cheap Seats | Profound |
 | --- | --- | --- |
-| **Price** | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | Free trial (50 prompts, run daily for 7 days). Agency Growth: $99 a month, plus $399 a month per client workspace. Enterprise is custom ([pricing](https://www.tryprofound.com/pricing)) |
-| **Where it runs** | Self-hosted: one Docker container with SQLite, on Docker, Kubernetes (Helm chart) or an exe.dev VM | Hosted SaaS |
+| **Price** | Free and open source (MIT); runs on your Claude subscription or API key, ChatGPT optional ([cost and budget](/docs/cost-and-budget/)) | Free trial (50 prompts, run daily for 7 days). Agency Growth: $99 a month, plus $399 a month per client workspace. Enterprise is custom ([pricing](https://www.tryprofound.com/pricing)) |
+| **Where it runs** | One Docker container with SQLite; also a Helm chart or an exe.dev VM ([self-hosting](/docs/self-hosting/)) | Hosted SaaS |
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Trial: ChatGPT, Gemini, Google AI Overviews. Enterprise: "up to 9" of ChatGPT, Perplexity, Google AI Mode, AI Overviews, Gemini, Copilot, DeepSeek, Claude and Exa ([pricing](https://www.tryprofound.com/pricing)); the product page lists Grok in place of Exa ([Answer Engine Insights](https://www.tryprofound.com/features/answer-engine-insights)) |
-| **Web search vs memory** | Both, as separate tracks (search and recall), reported separately; the models are asked directly, never the consumer apps | "We capture directly from the browser" ([Answer Engine Insights](https://www.tryprofound.com/features/answer-engine-insights)): one answer, searching when the app decides; not split |
+| **Web search vs memory** | Search and recall, as separate tracks ([two tracks](/docs/how-grading-works/#two-tracks)) | "We capture directly from the browser" ([Answer Engine Insights](https://www.tryprofound.com/features/answer-engine-insights)): one answer, searching when the app decides; not split |
 | **Your prompts** | TOML in your own git repo, changed by pull request; `samples` per answerer and track | Trial: a recommended set you can't edit. Enterprise: a tailored prompt plan, edited in [Prompt Designer](https://docs.tryprofound.com/answer-engine-insights/prompt-designer); one run per prompt, model, region, persona and day ([why past numbers change](https://docs.tryprofound.com/cookbook/metrics/why-past-numbers-change)) |
 | **Markets** | No region, language or persona settings | Region and language per prompt, from 150+ regions and 30+ languages ([Answer Engine Insights](https://www.tryprofound.com/features/answer-engine-insights)); up to three personas per category, each run as an extra prompt ([Personas](https://docs.tryprofound.com/answer-engine-insights/personas)) |
-| **Grading** | A Claude call grades each answer recommended, mentioned or absent, with a quote checked against the answer, position, top pick, every product named and objections; with your facts listed, what each answer got wrong about you | A model, the Entity Parser, lists the brands each answer names, and Name Matching joins variant names; which model is not stated ([settings](https://docs.tryprofound.com/answer-engine-insights/settings)). FactCheck scores claims against your Knowledge Base ([FactCheck](https://docs.tryprofound.com/answer-engine-insights/factcheck/about)) |
-| **Noise** | A 95% interval on every rate; changes tested against noise | A published study of daily noise ([Is once a day enough?](https://www.tryprofound.com/blog/is-once-a-day-enough)); no intervals stated on the numbers |
+| **Grading** | Recommended, mentioned or absent per answer, with position, top pick, share of voice, objections and tone; what each answer got wrong against your facts ([how grading works](/docs/how-grading-works/)) | A model, the Entity Parser, lists the brands each answer names, and Name Matching joins variant names; which model is not stated ([settings](https://docs.tryprofound.com/answer-engine-insights/settings)). FactCheck scores claims against your Knowledge Base ([FactCheck](https://docs.tryprofound.com/answer-engine-insights/factcheck/about)) |
+| **Noise** | A 95% interval on every rate; changes tested against noise ([how big a change](/docs/noise-and-confidence/)) | A published study of daily noise ([Is once a day enough?](https://www.tryprofound.com/blog/is-once-a-day-enough)); no intervals stated on the numbers |
 | **History** | Grades fixed when graded; re-grade when you choose, keeping the old grades | Stored answers are never re-analysed; today's topics, tags and brands are applied to them ([why past numbers change](https://docs.tryprofound.com/cookbook/metrics/why-past-numbers-change)) |
-| **What to fix** | A ranked fix list every run: the page, what it must say, the prompts it should flip, the owner, and a Claude Code prompt | Suggestions (limited on the trial, unlimited on Enterprise); an AI Marketer and Agents that draft and refresh content ([AI Marketer](https://docs.tryprofound.com/aim/about)) |
+| **What to fix** | A ranked fix list every run, each fix measured after it ships ([from fix to pull request](/docs/fix-to-pull-request/)) | Suggestions (limited on the trial, unlimited on Enterprise); an AI Marketer and Agents that draft and refresh content ([AI Marketer](https://docs.tryprofound.com/aim/about)) |
 | **Alerts** | None; trends and fix outcomes on the set's pages | Agents can run on a trigger, such as visibility moving 5%, and post to Slack or Teams ([October release](https://product.tryprofound.com/changelog/meet-the-new-agents-work-with-your-ai-marketer-in)) |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | REST API and MCP server on Enterprise ([REST API](https://docs.tryprofound.com/rest-api/introduction), [MCP](https://docs.tryprofound.com/mcp/overview)); an official Claude connector ([connector](https://www.tryprofound.com/blog/the-profound-connector-is-live-in-claude-part-2)); CSV and JSON exports |
 | **Security and data** | Your SQLite file; prompts and answers go only to the model providers you configure | SOC 2 Type II; SSO via SAML or OIDC ([enterprise](https://www.tryprofound.com/enterprise)); hosted by Profound |
-
-**What it costs.** Cheap Seats is free and open source (MIT). Claude is required, through a subscription or an API key; ChatGPT (Codex or an OpenAI key) is optional and adds a second assistant's answers. On your own machine, with a Claude Code subscription, answers, grading and the fix list can all run on the claude CLI, with no API key and no extra spend. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs: about $0.03 to grade a 68-answer run, under a daily budget cap). [Cost and budget](/docs/cost-and-budget/) has the details.
 
 ## What's the same
 
@@ -49,26 +46,23 @@ As of October 2026, from Cheap Seats' docs and Profound's own pages, linked in e
 ## Start with Cheap Seats if…
 
 - You want to start without a sales call or a contract, and keep running it at no cost.
-- Your buyers ask Claude and ChatGPT-family models, and you want both what they find on the web and what they already believe, graded separately and strictly.
-- You want an interval on every rate, and past numbers that stay as graded when you change your setup.
-- You want your prompts reviewed like code, and your data in a file you own.
-- You want each run to end with a short, ranked list of the exact pages to change, and your team writes its own pages anyway.
+
+The rest of the case for starting here, strict grades, two tracks, intervals, prompts and data you own, is on [the compare index](/compare/#start-here).
 
 ## When to move to Profound
 
-If you outgrow Cheap Seats, do whatever suits you. Its author would suggest [Gauge](/compare/gauge/); that team is great. If what you need is on this list, Profound is a good fit:
+If what you need is on this list, Profound is a good fit:
 
 - **You need engines Cheap Seats doesn't ask, or the app's own answer.** Cheap Seats asks only Claude and OpenAI models, directly. It doesn't cover Gemini, Perplexity, Microsoft Copilot, Grok, DeepSeek, Google AI Overviews or AI Mode, and it doesn't see what a consumer app adds. Profound lists all of them and captures the app.
 - **You sell in several markets.** Profound sets a region and language for each prompt, and runs personas beside the bare question. Cheap Seats has no such settings.
 - **You want to know which questions people actually ask.** Profound's Prompt Volumes comes from licensed panel data. Cheap Seats' prompts are the ones you write.
 - **You need enterprise procurement boxes ticked.** Profound lists SOC 2, SSO/SAML and support up to a dedicated specialist with a 24-hour SLA ([pricing](https://www.tryprofound.com/pricing)). Cheap Seats is software you run, so its security is your own.
-- **You'd rather not run anything.** Profound is hosted; Cheap Seats is software you or your host keeps running.
 - **You want content produced for you.** Profound's AI Marketer drafts pages, social posts and launch material ([Profound](https://www.tryprofound.com/)). Cheap Seats tells you which page to write and what it must say, and hands you a Claude Code prompt, but your team ships it.
 - **You sell products through ChatGPT.** Profound's Shopping tracks your products in its shopping results, on Enterprise.
 - **You're an agency.** Profound has an agency plan with per-client workspaces and short-lived pitch workspaces ([Agency Mode](https://docs.tryprofound.com/agencies/agency-mode-overview)). Cheap Seats has no agency tier.
 
 ## Taking your prompts with you
 
-Your prompt sets are plain TOML in your own git repo. Each prompt is a line of text with an id, so the buyer questions you've refined in Cheap Seats are yours. They're plain text you can copy into Profound's prompt plan, where Enterprise lets you edit, disable or add prompts, or upload them as a CSV in [Prompt Designer](https://docs.tryprofound.com/answer-engine-insights/prompt-designer). Your run history stays in your SQLite file.
+They're plain text in your own repo ([why that matters](/compare/#if-you-grow-out-of-it)), so copy them into Profound's prompt plan, or upload them as a CSV in [Prompt Designer](https://docs.tryprofound.com/answer-engine-insights/prompt-designer).
 
-See [Getting started](/docs/getting-started/) to run it, or [all comparisons](/compare/).
+[All comparisons](/compare/).

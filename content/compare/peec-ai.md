@@ -3,8 +3,7 @@ title: Cheap Seats vs Peec AI
 description: Cheap Seats, the free, self-hosted AI visibility tracker, as a place to start before Peec AI. Engines, pricing, grading, noise, fixes and API, October 2026.
 weight: 20
 ---
-
-Cheap Seats (cheapseats.dev) is the MIT-licensed, self-hosted AI visibility tracker. It's a free place to start, inspired by tools like Peec AI: it asks Claude and OpenAI models your buyers' questions, grades whether the answers recommend you, and ends each run with a ranked fix list. Peec AI is a hosted AI search analytics tool for marketing teams and SEO agencies. Both track your own prompts, rank what to do next and offer an API and MCP server. Peec AI is SaaS, tracks 3 models you pick from ChatGPT, Google AI Overviews and AI Mode, Gemini, Copilot and Naver AI, with Perplexity, Claude and others as add-ons, and sells self-service plans by prompt count, with Enterprise through sales. Start with Cheap Seats; if you outgrow it, Peec AI is one of the places to go, and your prompts come with you.
+Peec AI is a hosted AI search analytics tool for marketing teams and SEO agencies. Its monthly plans track three models you pick from ChatGPT, Google AI Overviews and AI Mode, Gemini, Copilot and Naver AI, with Perplexity, Claude and others as add-ons, by prompt count, and Enterprise through sales. Like [Cheap Seats](/compare/), it tracks your own prompts, ranks what to do next and has an API and an MCP server; it reaches the engines by driving their web interfaces, where Cheap Seats asks the models directly.
 
 ## Side by side
 
@@ -12,21 +11,19 @@ As of October 2026, from Cheap Seats' docs and Peec AI's own pricing, docs and c
 
 | | Cheap Seats | Peec AI |
 | --- | --- | --- |
-| **Price** | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | Starter (50 prompts), Pro (150) and Advanced (350), each with 3 models of your choice, daily, 15% off yearly; Enterprise custom and annual, through sales ([pricing](https://peec.ai/pricing)) |
-| **Where it runs** | Self-hosted: one Docker container with SQLite, on Docker, Kubernetes (Helm chart) or an exe.dev VM | Hosted SaaS |
+| **Price** | Free and open source (MIT); runs on your Claude subscription or API key, ChatGPT optional ([cost and budget](/docs/cost-and-budget/)) | Starter (50 prompts), Pro (150) and Advanced (350), each with 3 models of your choice, daily, 15% off yearly; Enterprise custom and annual, through sales ([pricing](https://peec.ai/pricing)) |
+| **Where it runs** | One Docker container with SQLite; also a Helm chart or an exe.dev VM ([self-hosting](/docs/self-hosting/)) | Hosted SaaS |
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Pick 3 of ChatGPT, Google AI Overviews, Google AI Mode, Gemini, Microsoft Copilot and Naver AI. Perplexity, Claude Sonnet and Haiku, Grok, DeepSeek, Qwen and Mistral are add-ons or on Enterprise ([pricing](https://peec.ai/pricing), [AI instructions](https://peec.ai/ai-instructions)); up to 13 models on [Enterprise](https://peec.ai/for-enterprise) |
 | **How it asks** | The models directly, through their APIs or CLIs, not the consumer apps | "UI scraping": browser automation drives each engine's web interface as a logged-out user would ([intro](https://docs.peec.ai/intro-to-peec-ai)) |
 | **Markets** | No country or language setting | A country per prompt: 1 per project on Starter, 3 on Pro and Advanced, unlimited on Enterprise ([pricing](https://peec.ai/pricing)) |
 | **Your prompts** | TOML in your own git repo, changed by pull request | Tracked prompts in topics and tags, by hand or CSV, each labelled branded or not and by intent automatically ([organizing](https://docs.peec.ai/organizing-your-setup)); monthly answers are "tracked prompts by active models and tracking frequency" ([pricing](https://peec.ai/pricing)) |
-| **Noise** | `samples` answers per prompt, answerer and track; a 95% interval on every rate; changes within noise greyed out | Each prompt once a day on each model ([organizing](https://docs.peec.ai/organizing-your-setup)); hourly or weekly on [Enterprise](https://peec.ai/for-enterprise); no interval stated |
-| **Web search vs memory** | Both, as separate tracks (search and recall), reported separately | The engine decides whether to search; each response is flagged when it did ([intro](https://docs.peec.ai/intro-to-peec-ai)) |
-| **Grading** | A Claude call grades each answer recommended, mentioned or absent, with position, top pick, every product named (share of voice), objections and a quote checked against the answer; with your facts listed, what each answer got wrong about you | Your tracked name and aliases, or a regex you write ([competitors](https://docs.peec.ai/identifying-your-competitors)); then position, win rate, sentiment and a [fact check](https://docs.peec.ai/brand-perception-fact-checking); objections come from separate questions ([objections](https://docs.peec.ai/brand-perception-objections)) |
-| **What to fix** | A ranked fix list every run: the page, what it must say, the prompts it should flip, the owner, and a Claude Code prompt; an opportunities table scores each kind of source, owned against earned; each attempt is tested against noise afterwards | Actions: site fixes, your own pages (with a brief or suggested rewrites), mentions elsewhere and wrong claims, rated on a five-level relative impact; a chart marks when each was done ([actions](https://docs.peec.ai/actions)); no test against noise stated |
+| **Noise** | A 95% interval on every rate; changes tested against noise ([how big a change](/docs/noise-and-confidence/)) | Each prompt once a day on each model ([organizing](https://docs.peec.ai/organizing-your-setup)); hourly or weekly on [Enterprise](https://peec.ai/for-enterprise); no interval stated |
+| **Web search vs memory** | Search and recall, as separate tracks ([two tracks](/docs/how-grading-works/#two-tracks)) | The engine decides whether to search; each response is flagged when it did ([intro](https://docs.peec.ai/intro-to-peec-ai)) |
+| **Grading** | Recommended, mentioned or absent per answer, with position, top pick, share of voice, objections and tone; what each answer got wrong against your facts ([how grading works](/docs/how-grading-works/)) | Your tracked name and aliases, or a regex you write ([competitors](https://docs.peec.ai/identifying-your-competitors)); then position, win rate, sentiment and a [fact check](https://docs.peec.ai/brand-perception-fact-checking); objections come from separate questions ([objections](https://docs.peec.ai/brand-perception-objections)) |
+| **What to fix** | A ranked fix list every run, each fix measured after it ships ([from fix to pull request](/docs/fix-to-pull-request/)) | Actions: site fixes, your own pages (with a brief or suggested rewrites), mentions elsewhere and wrong claims, rated on a five-level relative impact; a chart marks when each was done ([actions](https://docs.peec.ai/actions)); no test against noise stated |
 | **Agencies and teams** | One brand per instance; no seats, no agency tier | Unlimited users; agency plans ([agencies](https://peec.ai/for-agencies)); SAML SSO on Enterprise ([SSO](https://docs.peec.ai/sso)) |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | Customer API, in beta, for Enterprise ([API](https://docs.peec.ai/api/introduction)); MCP server on every paid plan, with OAuth, read and write tools ([MCP](https://docs.peec.ai/mcp/introduction)) |
 | **Data** | Your SQLite file; prompts and answers go only to the model providers you configure | Hosted by Peec AI on Google Cloud; CSV, Data Studio and API ([privacy](https://peec.ai/legal/privacy-policy)) |
-
-**What it costs.** Cheap Seats is free and open source (MIT). Claude is required, through a subscription or an API key; ChatGPT (Codex or an OpenAI key) is optional and adds a second assistant's answers. On your own machine, with a Claude Code subscription, answers, grading and the fix list can all run on the claude CLI, with no API key and no extra spend. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs: about $0.03 to grade a 68-answer run, under a daily budget cap). [Cost and budget](/docs/cost-and-budget/) has the details.
 
 ## What's the same
 
@@ -49,24 +46,21 @@ As of October 2026, from Cheap Seats' docs and Peec AI's own pricing, docs and c
 ## Start with Cheap Seats if…
 
 - You want to start today, without a sales conversation or a prompt cap, and pay nothing for the software.
-- Your buyers use Claude and ChatGPT-family models, and you want both what they find on the web and what they already believe, graded separately.
-- You want a strict grade per answer, recommended versus merely mentioned, with the quote that decided it.
-- You want to know whether a change is beyond noise, and whether a fix moved anything.
-- You want your prompts reviewed by pull request and your data in a file you own.
+
+The rest of the case for starting here, strict grades, two tracks, intervals, prompts and data you own, is on [the compare index](/compare/#start-here).
 
 ## When to move to Peec AI
 
-If you outgrow Cheap Seats, do whatever suits you. Its author would suggest [Gauge](/compare/gauge/); that team is great. If what you need is on this list, Peec AI is a good fit:
+If what you need is on this list, Peec AI is a good fit:
 
 - **You need Gemini, Copilot, Google AI Overviews, AI Mode or Perplexity.** Every Peec AI plan tracks three of the first four (or Naver AI), with Perplexity and more as add-ons. Cheap Seats asks only Claude and OpenAI models.
 - **You want what the consumer app shows.** Peec AI reads the engines' web interfaces, with their own choice of model and of whether to search. Cheap Seats asks the models directly.
 - **You sell in several countries.** Peec AI runs each prompt from the country you set. Cheap Seats has no market setting.
-- **You'd rather not run anything.** Peec AI is hosted, with unlimited users; Cheap Seats is a container you or your host keeps running. Peec AI costs more; Cheap Seats is more work.
 - **You're an agency.** Peec AI has agency plans on credits, pitch workspaces and client reports through Looker Studio ([agencies](https://peec.ai/for-agencies)). Cheap Seats measures one brand per instance and has no agency tier.
 - **You want earned-media opportunities as a workflow.** Peec AI's actions rank listings, editorial and reviews, and its agent can research who is behind a source and draft the outreach ([Actions](https://peec.ai/blog/turn-opportunities-into-impact-with-peec-agent-and-actions)). Cheap Seats scores the same owned and earned split, and with Exa lists prospect pages like the ones cited ([Opportunities](/docs/metrics/#opportunities)); but its fixes are still single pages to create or change, and the outreach is yours to do.
 
 ## Taking your prompts with you
 
-Your prompt sets are plain TOML in your own git repo. Each prompt is a line of text with an id, so the buyer questions you've refined in Cheap Seats are yours. They're plain text you can copy into Peec AI as tracked prompts when you set it up, by hand or in its CSV upload. Pick the ones that mattered most: Peec AI's plans count prompts, from 50 on Starter to 350 on Advanced.
+They're plain text in your own repo ([why that matters](/compare/#if-you-grow-out-of-it)), so copy them into Peec AI as tracked prompts, by hand or in its CSV upload. Its plans count prompts, from 50 on Starter to 350 on Advanced, so pick the ones that mattered most.
 
-See [Getting started](/docs/getting-started/) to run it, or [all comparisons](/compare/).
+[All comparisons](/compare/).
