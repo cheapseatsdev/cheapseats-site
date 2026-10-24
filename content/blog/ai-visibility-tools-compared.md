@@ -32,12 +32,12 @@ Everything below comes from each tool's own pages, read in October 2026. Where a
 | Tool | Your own prompts | Recommended vs. mentioned | Fix recommendations | API / MCP |
 | --- | --- | --- | --- | --- |
 | **Cheap Seats** | Yes, as TOML in your git repo, changed by pull request | Yes: each answer graded recommended, mentioned or absent, with position, top pick, share of voice and objections; with your facts listed, what each answer got wrong about you | A ranked fix list every run: the page, what it must say, the prompts it should flip, and a Claude Code prompt | JSON API and MCP server, plus web UI and CLI |
-| **Peec AI** | Yes, tracked prompts | Not stated | "Recommended actions", ranked and grouped by earned and owned | API and MCP |
-| **Profound** | Yes; on Enterprise, edit, disable or add prompts | Not stated | "Suggestions"; AI Marketer agents draft content | API and hosted MCP on Enterprise |
-| **Otterly.AI** | Yes, 15 to 400 by plan | Not stated | Recommendations, GEO URL audits, content briefs | API and MCP from Standard |
+| **Peec AI** | Yes, tracked prompts | Not graded; an answer counts when it contains your tracked name, an alias or your regex | Actions in four groups, from site fixes to mentions elsewhere, on a five-level impact rating | MCP on every paid plan; API on Enterprise |
+| **Profound** | Yes; on Enterprise, edit, disable or add prompts | Not graded; a model lists the brands each answer names | "Suggestions"; AI Marketer agents draft content | API and hosted MCP on Enterprise |
+| **Otterly.AI** | Yes, 15 to 400 by plan | Not graded; an exact text match of the names you list | Recommendations, GEO URL audits, content briefs | API and MCP from Standard |
 | **Scrunch** | Yes, 125 unique prompts on Core | Not stated | "Insights & Recommendations", page optimizations and content generation | Query API access and MCP access on Enterprise |
 | **Ahrefs Brand Radar** | Yes, custom prompts | Not stated | Not described | Not described for Brand Radar; Ahrefs lists an SEO API and SEO MCP separately |
-| **Semrush AI Visibility** | Yes, 25 prompts; 50 more for $60/month | Not stated | AI-generated strategic recommendations | Not described for the toolkit; Semrush lists an API and MCP separately |
+| **Semrush AI Visibility** | Yes, 25 prompts; 50 more for $60/month | Not graded; its extraction system finds the brand, and Mentions counts prompts | AI-generated strategic recommendations | Toolkit data isn't in the Semrush API or MCP yet; CSV and Google Sheets export |
 | **Elmo** | Yes, by hand or from an onboarding wizard | Mentions confirmed by a model, with sentiment; recommendation not graded | Opportunities: one LLM call over your data, refreshed about weekly | REST API, TypeScript and Python SDKs, MCP |
 | **Limelit Open** | Yes, a starter pack plus your own | Not graded; a text search finds mentions, with list rank | Not in the open core (Cloud) | JSON API and MCP |
 
