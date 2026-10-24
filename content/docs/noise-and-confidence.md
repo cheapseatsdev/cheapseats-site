@@ -116,7 +116,7 @@ When you mark a fix with its pull request, Cheap Seats judges it on the prompts 
 | one weekly run | 4 | about ±31 pts |
 | four weekly runs | 16 | about ±19 pts |
 
-Cheap Seats waits 7 days and at least 4 answers a prompt before judging (Gauge [evaluates content actions](https://docs.withgauge.com/introduction/core-aeo-metrics) no earlier than 14 days after completion). If the fix's page turns up in searches or citations after you marked it, when it didn't before, the outcome says **newly surfaced**: evidence the page is being read, though not by itself a move. See [From fix to pull request](../fix-to-pull-request/#4-merge-then-let-the-next-run-check-it).
+Cheap Seats waits 7 days and at least 4 answers a prompt before judging (Gauge [evaluates content actions](https://docs.withgauge.com/navigating/action-center) no earlier than 14 days after completion). If the fix's page turns up in searches or citations after you marked it, when it didn't before, the outcome says **newly surfaced**: evidence the page is being read, though not by itself a move. See [From fix to pull request](../fix-to-pull-request/#4-merge-then-let-the-next-run-check-it).
 
 ## When more samples help
 
