@@ -67,6 +67,7 @@ It doesn't happen at once. Search-track answers pick up a new page once it's ind
 
 - **too early** until 7 days have passed and the target prompts have at least 4 answers each since, on average;
 - **moved** when named or recommended rose beyond its 95% margin and neither fell; **worse** or **mixed** when one fell;
-- **no detectable change (±X pts)** when neither moved beyond its margin. That isn't a verdict that the fix failed: any effect is smaller than X points so far, and X shrinks with each run.
+- **no detectable change (±X pts)** when neither moved beyond its margin. That isn't a verdict that the fix failed: any effect is smaller than X points so far, and X shrinks with each run;
+- **needs regrade** when the only runs since were graded under another method, naming the runs to [re-grade](../regrading/); **not comparable** when they were asked differently, which no re-grade can change.
 
 If the fix's page starts turning up in searches or citations, the outcome says *newly surfaced*, a sign the page is being read before the rates move. Fixes are marked on the [rankings](../reading-results/#rankings) chart, so you can read the trend around them rather than one day. [How big a change Cheap Seats can detect](../noise-and-confidence/#what-no-detectable-change-means-for-a-fix) has the numbers.

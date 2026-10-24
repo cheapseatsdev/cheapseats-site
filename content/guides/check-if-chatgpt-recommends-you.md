@@ -103,7 +103,7 @@ Every answer gets a verdict from a second model, the grader, with the sentence o
 | --- | --- |
 | `recommended` | the answer's top pick, or one of at most three primary recommendations it actively endorses |
 | `mentioned` | named, but only as one option among many, in passing, or with reservations |
-| `absent` | not named at all, aliases included |
+| `absent` | not named at all, aliases included, or named only to say the answer can't find or verify it |
 
 Alongside the verdict: your **position** in the answer, the answer's **top pick**, every product it **named** in order (that's the share-of-voice board), the **objections** it raised about you, its **tone**, and the grader's reasoning. The run page shows every prompt against every answerer and track, the rates with 95% intervals, who the answers picked instead, and which pages they read first. [Mentioned vs. recommended](/guides/mentioned-vs-recommended/) explains the metrics; [How grading works](/docs/how-grading-works/) has the rules.
 

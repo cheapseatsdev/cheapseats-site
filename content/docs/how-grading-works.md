@@ -37,9 +37,13 @@ The grader is a separate Claude call (Claude Haiku on cheapseats.dev's own runs)
 | ------------- | ------------------------------------------------------------------------------------------------------ |
 | `recommended` | the answer's top pick, or one of at most three primary recommendations it actively endorses for the buyer's situation |
 | `mentioned`   | named, but only as one option among many, in passing, as a comparison point, or with reservations       |
-| `absent`      | not named at all, aliases included, or the name is used only for another product that shares it        |
+| `absent`      | not named at all, aliases included; named only to say the answer can't find, verify or doesn't know it; or the name is used only for another product that shares it |
 
-It's strict on purpose: a brand listed in a table with nine others is mentioned, not recommended. Each grade also records:
+It's strict on purpose: a brand listed in a table with nine others is mentioned, not recommended.
+
+**An echoed name is not visibility.** A question that names your brand ("Cheap Seats or X for a small team?") gets answers that repeat the name only to disclaim it: "I couldn't find a product called Cheap Seats", then advice on how to evaluate it, or hypotheticals about what it might offer. The brand is in the question, not in the assistant's knowledge, so that answer is `absent`. It becomes `mentioned` only when the answer states something about the brand itself: a feature, a price, a quality or a fit, even hedged.
+
+Each grade also records:
 
 - **position**: where your brand first appears among the products the answer names;
 - **top pick**: the one product the answer most strongly recommends, if it commits to one;
@@ -59,6 +63,8 @@ Tone and praise feed the run's **net sentiment** (the share of answers naming yo
 
 **Adding evidence changed them once more.** In Cheap Seats 0.2.5 the grader started returning an evidence quote, so each set's trend marks a new method at its first run on 0.2.5. Grades from before have no evidence.
 
+**The echoed-name rule changed them again.** Cheap Seats 0.4.4 made an answer that names the brand only to say it can't find or verify it `absent` (0.4.3 had briefly graded it `mentioned`). On an 80-answer golden set the grader's run-to-run agreement rose from 90% to 97–99% under this rule, because every disagreement had been one of these answers. Each set's trend marks a new method at its first run on 0.4.4, and head-to-head "visible" rates fall accordingly.
+
 **Re-grading carries a trend on.** Instead of letting a grading change restart the trend, you can [re-grade](../regrading/) the answers older runs already have under today's grader. The answers aren't asked again; the re-graded runs join the new method's trend from their own dates on, and the grades they replaced are kept. On the `claude` CLI it costs nothing.
 
 Questions marked `intent = "info"` ask for an explanation, not a choice, so a good answer may recommend nothing. They count toward being named, not toward recommended.
@@ -67,11 +73,11 @@ Questions marked `intent = "info"` ask for an explanation, not a choice, so a go
 
 These are real answers from Cheap Seats' runs of 22 October 2026, asked about Cheap Seats itself.
 
-**Mentioned: named, not endorsed.** Asked *"Is Cheap Seats a good open-source alternative to paid AI visibility tools?"*, Claude, answering from memory, opened with *"I can't vouch for Cheap Seats specifically"* and said it had no reliable information about a tool by that name. Cheap Seats is named first, because the question named it, but the answer doesn't endorse it, so the grade is `mentioned`, and its objections say what to fix.
+**Absent: an echoed name.** Asked *"Is Cheap Seats a good open-source alternative to paid AI visibility tools?"*, Claude, answering from memory, opened with *"I can't vouch for Cheap Seats specifically"* and said it had no reliable information about a tool by that name. Cheap Seats is named, because the question named it, but the answer states nothing about it, so the grade is `absent`: the brand is in the question, not in the model's knowledge. The reasoning records that the model didn't know it, which is still something to fix. Had the answer said even a hedged thing about the product itself, a feature or a fit, it would be `mentioned`.
 
 **A close call.** Asked *"Cheap Seats or Semrush AI Toolkit for tracking our brand in ChatGPT and Claude?"*, an OpenAI model opened with: *"I'd start by evaluating Cheap Seats if your main goal is tracking your brand in ChatGPT and Claude. Choose Semrush AI Toolkit if you also want that work tied to a broader SEO program."* That reads as one of two primary picks, which is `recommended`, but the same answer says *"I don't have reliable enough information about Cheap Seats' capabilities"*, which hedges it to `mentioned`. Graded ten more times, it came back `mentioned` nine times and `recommended` once. Close calls like this are why every question is asked more than once and every rate carries an interval, and why each grade shows its reasoning: you can read the close ones yourself.
 
-**Absent: another product with the same name.** Asked *"Cheap Seats vs Profound…"*, an answer said it *"couldn't verify the specific Cheap Seats product you mean"* and went on to describe an unrelated product that *"sells WhatsApp sales and support agents"*. The name is in the answer, but the brand isn't. The grader tells products that share your name apart using your brand's `about`, and records when every use of the name means something else; that grade is `absent`. An answer that says it can't find your brand, without taking it for something else, still names it.
+**Absent: another product with the same name.** Asked *"Cheap Seats vs Profound…"*, an answer said it *"couldn't verify the specific Cheap Seats product you mean"* and went on to describe an unrelated product that *"sells WhatsApp sales and support agents"*. The name is in the answer, but the brand isn't. The grader tells products that share your name apart using your brand's `about`, and records when every use of the name means something else; that grade is `absent`, for a different reason than the first example's echoed name.
 
 **Absent, though the answer recommends something.** A question about a competitor, such as *"Is Gauge a good tool for tracking AI visibility?"*, can get an answer that endorses Gauge warmly and never names your brand. That's `absent` for you. The grader is told that the product a question asks about is never your brand, and Cheap Seats then checks the answer's text itself: if your brand's name and aliases appear nowhere in it, the grade is absent whatever the model said.
 

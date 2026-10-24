@@ -24,7 +24,8 @@ cheapseats migrate-config [dir]           give each prompt an id, in sets writte
 
 - **Two schema migrations**, backed up first as always. An existing deployment upgrades with no config changes.
 - **New keys, all optional**: `[brand] category`, the `[typesafe]` and `[exa]` tables and their switches, `[grader] check_facts`, and `[pricing.exa-contents]`. Unknown keys are errors, so upgrade the app before adding any of them to the config. See [Optional providers](../optional-providers/) and [Got wrong about you](../got-wrong/).
-- **No grader or answer-prompt change**, so every trend carries on.
+- **0.4.0 to 0.4.2 change neither the grader nor the answer prompt**, so every trend carries on through them.
+- **0.4.4 is a new grading method.** An answer that names the brand only to say it can't find or verify it is `absent` from 0.4.4 on (0.4.3 had briefly graded it `mentioned`). Trends restart at the first run on it; `cheapseats regrade <set>` (or MCP `regrade`) brings earlier runs onto it without asking the assistants again, and a fix attempt whose runs straddle the change reads *needs regrade* until you do. See [How grading works](../how-grading-works/#three-grades).
 - **0.4.2 reads one set of names**: only `CHEAPSEATS_*` from the environment, and only `cheapseats.toml` and `cheapseats.db`. A deployment still on older names renames them before this upgrade.
 
 ## What a release can restart

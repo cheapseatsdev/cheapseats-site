@@ -34,7 +34,7 @@ Self-hosted Elmo is free software too, but it calls paid services. Its providers
 
 The two use some of the same words for different counts. [Metric definitions](/docs/metrics/#how-these-compare-to-other-tools) has the full table; the short version:
 
-- **Visibility.** Elmo's is the share of each prompt's latest answers that mention you. An answer saying it has no information about your brand isn't counted. Cheap Seats' named rate counts every graded answer that names you, and an answer that says it can't find you still names you (graded mentioned, with the objection recorded).
+- **Visibility.** Elmo's is the share of each prompt's latest answers that mention you. An answer saying it has no information about your brand isn't counted. Cheap Seats' named rate counts every graded answer that names you, and leaves out one that names you only to say it can't find you, unless it also states something about you.
 - **Recommended.** Cheap Seats grades whether the answer endorses you, not just names you. Elmo reads sentiment toward you (positive, neutral, mixed, negative) but doesn't grade recommendation.
 - **Share of voice.** Elmo divides your mentions by yours plus your tracked competitors'. Cheap Seats divides by every product the answers named, so adding a competitor to your config doesn't change your share.
 - **Position.** Elmo averages where you rank among the tracked companies an answer names; Cheap Seats counts every product named.
