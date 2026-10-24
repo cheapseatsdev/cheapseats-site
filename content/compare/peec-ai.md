@@ -4,7 +4,7 @@ description: Cheap Seats, the free, self-hosted AI visibility tracker, as a plac
 weight: 20
 ---
 
-Cheap Seats (cheapseats.dev) is the MIT-licensed, self-hosted AI visibility tracker. It's a free place to start, inspired by tools like Peec AI: it asks Claude and OpenAI models your buyers' questions, grades whether the answers recommend you, and ends each run with a ranked fix list. Peec AI is a hosted AI search analytics tool for marketing teams and SEO agencies. Both track your own prompts, rank what to do next and offer an API and MCP server. Peec AI is SaaS, tracks 3 models you pick from ChatGPT, Google AI Overviews and AI Mode, Perplexity, Gemini, Copilot and others, and sells self-service plans by prompt count, with Enterprise through sales. Start with Cheap Seats; if you outgrow it, Peec AI is one of the places to go, and your prompts come with you.
+Cheap Seats (cheapseats.dev) is the MIT-licensed, self-hosted AI visibility tracker. It's a free place to start, inspired by tools like Peec AI: it asks Claude and OpenAI models your buyers' questions, grades whether the answers recommend you, and ends each run with a ranked fix list. Peec AI is a hosted AI search analytics tool for marketing teams and SEO agencies. Both track your own prompts, rank what to do next and offer an API and MCP server. Peec AI is SaaS, tracks 3 models you pick from ChatGPT, Google AI Overviews and AI Mode, Gemini, Copilot and Naver AI, with Perplexity, Claude and others as add-ons, and sells self-service plans by prompt count, with Enterprise through sales. Start with Cheap Seats; if you outgrow it, Peec AI is one of the places to go, and your prompts come with you.
 
 ## Side by side
 
@@ -14,7 +14,7 @@ As of October 2026, from Cheap Seats' docs and Peec AI's own pricing, docs and c
 | --- | --- | --- |
 | **Price** | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | Starter (50 prompts), Pro (150) and Advanced (350), each with 3 models of your choice, daily, 15% off yearly; Enterprise custom and annual, through sales ([pricing](https://peec.ai/pricing)) |
 | **Where it runs** | Self-hosted: one Docker container with SQLite, on Docker, Kubernetes (Helm chart) or an exe.dev VM | Hosted SaaS |
-| **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Pick 3 of ChatGPT, Google AI Overviews, Google AI Mode, Perplexity, Gemini, Microsoft Copilot and Naver AI. Claude Sonnet and Haiku, Grok, DeepSeek, Qwen and Mistral are upgrades on higher tiers ([pricing](https://peec.ai/pricing), [AI instructions](https://peec.ai/ai-instructions)); up to 13 models on [Enterprise](https://peec.ai/for-enterprise) |
+| **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Pick 3 of ChatGPT, Google AI Overviews, Google AI Mode, Gemini, Microsoft Copilot and Naver AI. Perplexity, Claude Sonnet and Haiku, Grok, DeepSeek, Qwen and Mistral are add-ons or on Enterprise ([pricing](https://peec.ai/pricing), [AI instructions](https://peec.ai/ai-instructions)); up to 13 models on [Enterprise](https://peec.ai/for-enterprise) |
 | **How it asks** | The models directly, through their APIs or CLIs, not the consumer apps | "UI scraping": browser automation drives each engine's web interface as a logged-out user would ([intro](https://docs.peec.ai/intro-to-peec-ai)) |
 | **Markets** | No country or language setting | A country per prompt: 1 per project on Starter, 3 on Pro and Advanced, unlimited on Enterprise ([pricing](https://peec.ai/pricing)) |
 | **Your prompts** | TOML in your own git repo, changed by pull request | Tracked prompts in topics and tags, by hand or CSV, each labelled branded or not and by intent automatically ([organizing](https://docs.peec.ai/organizing-your-setup)); monthly answers are "tracked prompts by active models and tracking frequency" ([pricing](https://peec.ai/pricing)) |
@@ -58,7 +58,7 @@ As of October 2026, from Cheap Seats' docs and Peec AI's own pricing, docs and c
 
 If you outgrow Cheap Seats, do whatever suits you. Its author would suggest [Gauge](/compare/gauge/); that team is great. If what you need is on this list, Peec AI is a good fit:
 
-- **You need Perplexity, Gemini, Copilot, Google AI Overviews or AI Mode.** Every Peec AI plan tracks three of them, with more as add-ons. Cheap Seats asks only Claude and OpenAI models.
+- **You need Gemini, Copilot, Google AI Overviews, AI Mode or Perplexity.** Every Peec AI plan tracks three of the first four (or Naver AI), with Perplexity and more as add-ons. Cheap Seats asks only Claude and OpenAI models.
 - **You want what the consumer app shows.** Peec AI reads the engines' web interfaces, with their own choice of model and of whether to search. Cheap Seats asks the models directly.
 - **You sell in several countries.** Peec AI runs each prompt from the country you set. Cheap Seats has no market setting.
 - **You'd rather not run anything.** Peec AI is hosted, with unlimited users; Cheap Seats is a container you or your host keeps running. Peec AI costs more; Cheap Seats is more work.

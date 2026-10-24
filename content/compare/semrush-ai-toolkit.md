@@ -55,7 +55,7 @@ As of October 2026, from Cheap Seats' docs and Semrush's own pages: the [AI Visi
 
 If you outgrow Cheap Seats, do whatever suits you. Its author would suggest [Gauge](/compare/gauge/); that team is great. If what you need is on this list, Semrush is a good fit:
 
-- **You already live in Semrush.** AI visibility sits next to Semrush's SEO tools, in one bill and one login.
+- **You already live in Semrush** (or in Adobe, which [completed its acquisition of Semrush](https://news.adobe.com/news/2026/04/adobe-completes-semrush-acquisition) in April 2026). AI visibility sits next to Semrush's SEO tools, in one bill and one login.
 - **You need Google AI Overviews, AI Mode, Gemini or Perplexity,** as people see them. The toolkit collects from those surfaces; Cheap Seats asks only Claude and OpenAI models, directly, and covers none of them.
 - **You want prompt research, by market.** Semrush gives topic-level AI volume from clickstream data in 42 countries, and tracks per location and language; in Cheap Seats, you write your own prompts, and there is no location setting.
 - **You'd rather not run anything.** Semrush is hosted; Cheap Seats is a container you or your host keeps running.
