@@ -54,7 +54,6 @@ Limelit Open has no pricing of its own: you pay your providers directly, and sin
 - **Recommended.** Cheap Seats grades whether the answer endorses you. Limelit counts whether you appear, with your rank when you're in a list.
 - **Share of voice.** Limelit divides your mentions by every tracked brand's mentions in the window's answers, counting each occurrence: an answer that names you once and a rival five times is a 1:5 share. Cheap Seats counts each product once per answer, and over every product the answers named, not only the ones you configured.
 - **Position.** Limelit's is the mean rank of the list items your name appears in, each occurrence counted; a mention in prose has no rank. Cheap Seats' avg place is your place among every product an answer names, once per answer.
-- **History.** Limelit re-reads every stored answer when you add or rename a brand or a matching rule changes, so a competitor added today is counted in last month's answers. Cheap Seats keeps each run's grades as graded and marks a change of method on the trend; to carry the trend on, you [re-grade](/docs/regrading/) the stored answers, and the replaced grades are kept. One keeps the past comparable with today's setup; the other keeps a past number from moving until you choose.
 
 ## Start with Cheap Seats if…
 

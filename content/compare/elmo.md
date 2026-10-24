@@ -55,7 +55,6 @@ The two use some of the same words for different counts. [Metric definitions](/d
 - **Share of voice.** Elmo divides your mentions by yours plus your tracked competitors'. Cheap Seats divides by every product the answers named, so adding a competitor to your config doesn't change your share.
 - **Position.** Elmo averages where you rank among the tracked companies an answer names; Cheap Seats counts every product named.
 - **Sentiment.** Elmo scores positive 100, neutral and mixed 50, negative 0, on a 0 to 100 scale, for you and each tracked competitor. Cheap Seats' net sentiment is the share positive minus the share negative, from −100 to +100, for your brand only.
-- **History.** When you add a competitor or change a name, Elmo re-judges past answers for that company, and a new version of its judge re-judges them all, 90 days back by default (`REPROCESS_DAYS`); older answers keep their old judgement, so a long chart can shift at that point. Cheap Seats keeps each run's grades as graded and marks a change of method on the trend; [re-grading](/docs/regrading/) carries a trend on when you choose to.
 
 ## Start with Cheap Seats if…
 
