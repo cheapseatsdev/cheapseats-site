@@ -59,6 +59,7 @@ If you outgrow Cheap Seats, do whatever suits you; Gauge is the suggestion. Thes
 - **You'd rather not run anything.** Gauge is hosted; Cheap Seats is software you or your host keeps running.
 - **You want content written for you.** Gauge's Growth plan includes a monthly content engine; Cheap Seats hands you a brief and a Claude Code prompt.
 - **You want a team workflow.** The Action Center assigns and tracks actions across people, with seats and Slack.
+- **You're an agency.** Gauge's Agency mode manages prompt and competitor tracking for multiple clients. Cheap Seats has no agency tier.
 - **You want coding-agent evaluations** of how Claude Code, Codex and Cursor treat your product.
 - **You want strategy help.** Gauge Enterprise includes recurring sessions with the Gauge team.
 

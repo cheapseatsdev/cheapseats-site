@@ -16,12 +16,12 @@ Everything below comes from each tool's own pages, read in October 2026. Where a
 | Tool | Engines covered | Pricing model, entry price | Self-hosted or SaaS |
 | --- | --- | --- | --- |
 | **Cheap Seats** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | Self-hosted: one Docker container with SQLite |
-| **[Peec AI](/compare/peec-ai/)** | Names ChatGPT, Perplexity and Gemini; links an AI Mode tracker | Monthly plans (Starter, Pro, Advanced) and custom Enterprise; no prices shown, [see their pricing page](https://peec.ai/pricing) | SaaS |
+| **[Peec AI](/compare/peec-ai/)** | Monthly plans choose 3 of ChatGPT, Google AI Mode, AI Overviews, Copilot, Gemini and Naver AI; Enterprise up to 13, adding Claude, Perplexity, Grok, DeepSeek and more | Monthly plans (Starter 50, Pro 150, Advanced 350 prompts) and custom Enterprise; no prices shown, [see their pricing page](https://peec.ai/pricing) | SaaS |
 | **[Profound](/compare/profound/)** | Up to 9 on Enterprise: ChatGPT, Perplexity, Google AI Mode, Gemini, Copilot, DeepSeek, Claude, AI Overviews, Exa Search | Free 7-day trial; Enterprise custom; an Agency Growth plan, [see their pricing page](https://www.tryprofound.com/pricing) | SaaS |
 | **[Otterly.AI](/compare/otterly-ai/)** | ChatGPT, AI Overviews, Perplexity, Copilot included; AI Mode, Gemini and Claude as add-ons | Per plan; Lite $29/month for 15 prompts | SaaS |
-| **Scrunch** | ChatGPT, Claude, Gemini, Perplexity, Google AI Mode/Overviews, Meta | Per plan; Starter $250/month billed annually or $300 month-to-month | SaaS |
-| **Ahrefs Brand Radar** | AI Overviews, AI Mode, Gemini, Copilot, Perplexity, ChatGPT; Claude in the AI Visibility Index | Paid; [see their pricing page](https://ahrefs.com/brand-radar) | SaaS |
-| **[Semrush AI Visibility](/compare/semrush-ai-toolkit/)** | Names Google AI Mode and ChatGPT; Claude not mentioned | $99/month for the AI Visibility Toolkit | SaaS |
+| **Scrunch** | ChatGPT, Perplexity, Google AI Overviews and Copilot on Core; Enterprise adds Claude, Gemini, Google AI Mode, Meta AI and Grok | Per plan; Core $250/month (125 prompts, 5,000 responses a month), Enterprise custom; [see their pricing page](https://scrunch.com/pricing/) | SaaS |
+| **Ahrefs Brand Radar** | AI Overviews, AI Mode, ChatGPT, Perplexity, Gemini, Copilot; Claude on Custom Prompts only, at 8 checks per update | Custom Prompts from $50/month, with a daily quota included on paid Ahrefs plans; the AI Visibility Index from $199/month; [see their page](https://ahrefs.com/brand-radar) | SaaS |
+| **[Semrush AI Visibility](/compare/semrush-ai-toolkit/)** | ChatGPT, Google AI Mode and Gemini in Prompt Tracking; Claude only in the Enterprise AIO plan, per Semrush's blog | $99/month for the AI Visibility Toolkit | SaaS |
 | **[Elmo](/compare/elmo/)** | ChatGPT, Google AI Mode, AI Overviews, Gemini, Perplexity and Copilot through paid scrapers; Claude, Grok, Mistral and others through direct APIs | Free and open source (MIT); you pay the scrapers, model APIs and a TypeSafe key. Elmo Cloud from $29/month | Self-hosted (Docker Compose, PostgreSQL) or SaaS |
 | **[Limelit Open](/compare/limelit/)** | ChatGPT, Claude, Perplexity, Gemini through APIs; AI Overviews, AI Mode, Bing Copilot through scrapers | Free and open source (Apache-2.0); you pay your providers. Limelit Cloud credit packs from $19.99 | Self-hosted (one binary, SQLite); Cloud is SaaS |
 
@@ -33,9 +33,9 @@ Everything below comes from each tool's own pages, read in October 2026. Where a
 | --- | --- | --- | --- | --- |
 | **Cheap Seats** | Yes, as TOML in your git repo, changed by pull request | Yes: each answer graded recommended, mentioned or absent, with position, top pick, share of voice and objections; with your facts listed, what each answer got wrong about you | A ranked fix list every run: the page, what it must say, the prompts it should flip, and a Claude Code prompt | JSON API and MCP server, plus web UI and CLI |
 | **Peec AI** | Yes, tracked prompts | Not stated | "Recommended actions", ranked and grouped by earned and owned | API and MCP |
-| **Profound** | Yes; on Enterprise, edit, disable or add prompts | Not stated | "Suggestions"; AI Marketer agents draft content | API on Enterprise; MCP not mentioned |
+| **Profound** | Yes; on Enterprise, edit, disable or add prompts | Not stated | "Suggestions"; AI Marketer agents draft content | API and hosted MCP on Enterprise |
 | **Otterly.AI** | Yes, 15 to 400 by plan | Not stated | Recommendations, GEO URL audits, content briefs | API and MCP from Standard |
-| **Scrunch** | Yes, 350 custom on Starter | Not stated | "Actionable recommendations" and Insights | Enterprise Data API; MCP not mentioned |
+| **Scrunch** | Yes, 125 unique prompts on Core | Not stated | "Insights & Recommendations", page optimizations and content generation | Query API access and MCP access on Enterprise |
 | **Ahrefs Brand Radar** | Yes, custom prompts | Not stated | Not described | Not described for Brand Radar; Ahrefs lists an SEO API and SEO MCP separately |
 | **Semrush AI Visibility** | Yes, 25 prompts; 50 more for $60/month | Not stated | AI-generated strategic recommendations | Not described for the toolkit; Semrush lists an API and MCP separately |
 | **Elmo** | Yes, by hand or from an onboarding wizard | Mentions confirmed by a model, with sentiment; recommendation not graded | Opportunities: one LLM call over your data, refreshed about weekly | REST API, TypeScript and Python SDKs, MCP |
@@ -62,6 +62,8 @@ Others exist on GitHub, described here in their own words. They aren't reviewed 
 - [OpenSight](https://github.com/shuvamk/opensight) (MIT): "See how AI talks about your brand".
 - [Gego](https://github.com/AI2HU/gego) (GPL-3.0): "Generative Engine Optimization for your brand, track your GEO across all LLMs".
 - [OneGlanse](https://github.com/oneglanse/oneglanse) (MIT): "Open-source AI visibility, AEO & GEO tracker", monitoring answers "through real product UIs".
+- [GetCito](https://github.com/ai-search-guru/getcito-worlds-first-open-source-aio-aeo-or-geo-tool) (MIT): "Open source AI visibility tracking and optimization", self-hosted; its README says it is a fork of Elmo.
+- [GEO/AEO Tracker](https://github.com/danishashko/geo-aeo-tracker) (MIT): "Open-source, self-hosted AI visibility tracker for GEO and AEO", with answers collected through Bright Data.
 
 ## How to choose where to go next
 

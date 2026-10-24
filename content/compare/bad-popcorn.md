@@ -12,7 +12,7 @@ As of October 2026, from Cheap Seats' docs and Bad Popcorn's own [home](https://
 
 | | Cheap Seats | Bad Popcorn |
 | --- | --- | --- |
-| **Price** | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | Starter €890/year (1 brand, 2 websites, 2 users, 50 monitored prompts), Growth €2,190/year (3 brands, 5 websites, 5 users, 150 prompts), Enterprise custom; monthly billing too, up to 17% off yearly; 30-day free trial |
+| **Price** | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | Starter €890/year (1 brand, 2 websites, 2 users, 50 monitored prompts), Growth €2,190/year (3 brands, 5 websites, 5 users, 150 prompts), Enterprise custom; monthly billing too, up to 17% off yearly; 30-day free trial, and a free no-login check of one URL on ChatGPT, Claude and Gemini |
 | **Where it runs** | Self-hosted: one Docker container with SQLite, on Docker, Kubernetes (Helm chart) or an exe.dev VM | Hosted |
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | ChatGPT, Claude, Gemini and Perplexity, "and the others enabled on the account" |
 | **How it asks** | The models directly, through the APIs or your own CLI subscriptions; every answer, search and citation kept; repeated samples per prompt | Provider APIs, "not the same as a logged-in consumer app with personalization"; location and language follow the prompt's country; repeated runs, with volatility shown |
