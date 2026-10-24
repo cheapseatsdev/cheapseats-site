@@ -9,16 +9,7 @@ group: Reading what it finds
 
 ## Which assistants it asks
 
-Cheap Seats asks the models you configure, through their APIs or their command-line tools:
-
-| provider      | asks                                   | billed                     |
-| ------------- | -------------------------------------- | -------------------------- |
-| `anthropic`   | Claude models, through the API         | per token                  |
-| `openai`      | OpenAI models, through the API         | per token                  |
-| `claude-code` | Claude models, through the `claude` CLI | your Claude subscription   |
-| `codex`       | OpenAI models, through the `codex` CLI  | your ChatGPT subscription  |
-
-**Not covered:** Google AI Overviews, AI Mode, Gemini, Perplexity and Microsoft Copilot. Cheap Seats doesn't ask them. And it asks the models directly, not the ChatGPT or Claude apps a buyer types into, which can add their own memory and settings.
+Claude and OpenAI models, through their APIs or the `claude` and `codex` CLIs, and only those: not Google's AI surfaces, Perplexity or Copilot, and not the consumer apps a buyer types into. [Which AI engines Cheap Seats asks](../engines/) has the provider table and the reasons.
 
 ## Two tracks
 
