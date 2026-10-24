@@ -25,7 +25,7 @@ Everything below comes from each tool's own pages, read in October 2026. Where a
 | **[Elmo](/compare/elmo/)** | ChatGPT, Google AI Mode, AI Overviews, Gemini, Perplexity and Copilot through paid scrapers; Claude, Grok, Mistral and others through direct APIs | Free and open source (MIT); you pay the scrapers, model APIs and a TypeSafe key. Elmo Cloud from $29/month | Self-hosted (Docker Compose, PostgreSQL) or SaaS |
 | **[Limelit Open](/compare/limelit/)** | ChatGPT, Claude, Perplexity, Gemini through APIs; AI Overviews, AI Mode, Bing Copilot through scrapers | Free and open source (Apache-2.0); you pay your providers. Limelit Cloud credit packs from $19.99 | Self-hosted (one binary, SQLite); Cloud is SaaS |
 
-**What Cheap Seats costs.** Cheap Seats is free and open source (MIT). Claude is required, through a subscription or an API key; ChatGPT (Codex or an OpenAI key) is optional and adds a second assistant's answers. On your own machine, with a Claude Code subscription, answers, grading and the fix list can all run on the claude CLI, with no API key and no extra spend. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs: about $0.03 to grade a 68-answer run, under a daily budget cap). [Cost and budget](/docs/cost-and-budget/) has the details.
+**What Cheap Seats costs.** Nothing for the software; what the model calls cost, and how a Claude Code subscription makes that nothing too, is in [Cost and budget](/docs/cost-and-budget/).
 
 ## Prompts, grading, fixes and API
 

@@ -83,7 +83,7 @@ They also pair well: Promptfoo for your app's quality and safety, Cheap Seats fo
 
 ## What it costs
 
-Cheap Seats is free and open source (MIT). Claude is required, through a subscription or an API key; ChatGPT (Codex or an OpenAI key) is optional and adds a second assistant's answers. On your own machine, with a Claude Code subscription, answers, grading and the fix list can all run on the `claude` CLI, with no API key and no extra spend. Host it and you pay your host (and, in a container, API usage, since the image has no CLIs). [Cost and budget](/docs/cost-and-budget/) has the details.
+Nothing for the software, and nothing beyond a Claude Code subscription on your own machine; [Cost and budget](/docs/cost-and-budget/) has the rest.
 
 ## Try it
 

@@ -7,12 +7,7 @@ group: Reading what it finds
 
 ## Tracks
 
-Each prompt is answered by every configured assistant on two tracks:
-
-- **search**: it must search the web before answering, so you see what the web says today.
-- **recall**: no tools, so you see what the model already believes.
-
-Search and recall are always kept apart.
+Each prompt is answered by every configured assistant on two tracks, search and recall, graded and reported apart; [How grading works](../how-grading-works/#two-tracks) says what each one measures.
 
 ## Verdicts
 
