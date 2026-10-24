@@ -64,7 +64,7 @@ A run that stopped keeps what it finished; `POST /api/runs/{id}/retry`, or the *
 
 ```bash
 docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.4.2 run head-to-heads
+  ghcr.io/cheapseatsdev/cheapseats:0.4.5 run head-to-heads
 ```
 
 On a deployment that is already serving, start the run through the API instead (below) or from the set's page. It lands in the same database and the same trend, and counts against the same daily budget.
@@ -149,4 +149,4 @@ jobs:
             (.Summary.voice[:5][] | "  \(.name): named in \(.named_rate * 100 | round)% of answers")'
 ```
 
-The job fails if the run didn't finish, which is what you want in a pipeline: a `budget` stop or a provider outage shows up red, not as a quiet gap in the trend. `POST /api/runs` with `"dry_run": true` returns the plan and estimated cost without starting anything, if you want a gate before spending. The same calls are MCP tools (`start_run`, `get_run`), so Claude Code can do the same from a terminal; see [CLI, API and MCP](../reference/).
+The job fails if the run didn't finish, which is what you want in a pipeline: a `budget` stop or a provider outage shows up red, not as a quiet gap in the trend. `POST /api/runs` with `"dry_run": true` returns the plan and estimated cost without starting anything, if you want a gate before spending. The same calls are MCP tools (`start_run`, then `wait_for_run` for the finished row, then `get_run`), so Claude Code can do the same from a terminal; see [CLI, API and MCP](../reference/).

@@ -7,7 +7,7 @@ group: Start here
 
 ## What you need
 
-- A checkout of [Cheap Seats](https://github.com/cheapseatsdev/cheapseats) and Go 1.25 or later.
+- A checkout of [Cheap Seats](https://github.com/cheapseatsdev/cheapseats) and Go 1.26 or later.
 - **Claude, required.** Either the `claude` CLI logged in to a Claude subscription, which answers, grades and writes the fix list with no API key and no API spend, or an `ANTHROPIC_API_KEY`.
 - **ChatGPT, optional.** The `codex` CLI logged in to a ChatGPT subscription, or an `OPENAI_API_KEY`, adds a second assistant's answers. An answerer Cheap Seats can't call is skipped.
 

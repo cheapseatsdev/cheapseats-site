@@ -27,22 +27,24 @@ cheapseats judge <run-id>                 put the run's set's prompts to Jev: du
 cheapseats baseline <run-id>              search the web for each prompt, no domain filter ([exa])
 cheapseats prospect <run-id>              pages like the listicles the answers leaned on, as outreach ([exa])
 cheapseats discover [-json]               sites like your competitors' and yours, as [[competitors]] entries to paste ([exa], Jev optional)
-cheapseats probe [-engine claude|exa|both] [-domains a,b] [-exclude a,b] "<query>"
+cheapseats probe [-engine claude|exa|both] [-domains a,b] [-exclude a,b] [-json] "<query>"
                                        one search as the answerers' tool returns it; exa and both need [exa]
 cheapseats suggest-prompts <set-id> [-n 10]  new buyer questions for a set, as TOML to paste (one analyst call; writes nothing)
 cheapseats regrade [-since 28d] [-dry-run=false] <set-id|run-id>
                                        grade stored answers again with today's grader, brand and competitors;
                                        a dry run with its cost unless -dry-run=false
-cheapseats review [-days 30] [-json] [-suggest] <set-id>
+cheapseats review [-days 30] [-json] [-suggest] [-jev] <set-id>
                                        the prompts themselves: flat, noisy, off-target, duplicate and branded ones, and gaps (free; -suggest: one analyst call)
 cheapseats audit [-pages 10] [-info] [-json] [site...]   what AI crawlers can read on the brand's sites (free)
 cheapseats check-citations [-n 25] [-json] <run-id>      which pages the run cited name the brand, and which competitors (free)
 cheapseats crawl import [-host example.com] <logfile>... AI crawler fetches and AI referrals from access logs; - reads stdin, .gz is read as gzip
 cheapseats crawl report [-days 30] [-json]               those counts per page, beside how the latest runs cite it
 cheapseats backup <file>                  a consistent copy of the database, safe while serve runs
-cheapseats check                          validate the config and every prompt set
+cheapseats check [-no-jev]                validate the config and every prompt set
 cheapseats plan <before> [<after>]        what a config change does to trends, for its pull request
 cheapseats migrate-config [dir]           give each prompt an id, in sets written before ids
+cheapseats golden export <snapshot.db> [-n 80] [-set id] [-o dir]
+                                       sample a database's answers into the grader's golden set, for a human to label
 cheapseats version                        this build's version and database schema
 ```
 

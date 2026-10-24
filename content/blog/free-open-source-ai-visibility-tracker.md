@@ -24,7 +24,7 @@ There are no seats, no per-brand or per-prompt plans, and nothing to cancel. Pro
 
 ## Five-minute quickstart
 
-You need Go 1.25 or later and Claude: the `claude` CLI logged in to your Claude subscription, or an Anthropic API key. The `codex` CLI (or an OpenAI key) is optional and adds ChatGPT's answers. On your subscriptions, with no API key:
+You need Go 1.26 or later and Claude: the `claude` CLI logged in to your Claude subscription, or an Anthropic API key. The `codex` CLI (or an OpenAI key) is optional and adds ChatGPT's answers. On your subscriptions, with no API key:
 
 ```bash
 git clone https://github.com/cheapseatsdev/cheapseats && cd cheapseats
