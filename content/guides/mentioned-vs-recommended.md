@@ -3,7 +3,7 @@ title: "Mentioned vs. recommended: measuring brands in AI answers"
 description: The difference between being mentioned and being recommended by an AI assistant, how to measure each, and how to compute share of voice against competitors.
 ---
 
-**Being mentioned** means an AI assistant named your product somewhere in its answer. **Being recommended** means the answer told the buyer to use it: it was the top pick, or one of at most three options the answer actively endorsed. A buyer acts on the recommendation, not the mention, so measure both, separately, over many answers.
+**Being mentioned** means an AI assistant said something about your product in its answer, not just repeated its name back from the question. **Being recommended** means the answer told the buyer to use it: it was the top pick, or one of at most three options the answer actively endorsed. A buyer acts on the recommendation, not the mention, so measure both, separately, over many answers.
 
 The short version:
 
@@ -23,7 +23,7 @@ Cheap Seats has a second model read each answer and give it one of three grades:
 | ------------- | --------------------------------------------------------------------------------------------------------------- |
 | `recommended` | the answer's top pick, or one of a small set (three or fewer) of primary recommendations it actively endorses for the buyer's situation |
 | `mentioned`   | named, but only as one option among many, in passing, as a comparison point, or with reservations              |
-| `absent`      | not named at all, aliases included                                                                              |
+| `absent`      | not named at all, aliases included, or named only to say the answer can't find, verify or doesn't know it       |
 
 The grader is told to be strict: a brand listed in a table with nine others is *mentioned*, not *recommended*. If the answer's single top pick is your brand, the grade is always *recommended*.
 

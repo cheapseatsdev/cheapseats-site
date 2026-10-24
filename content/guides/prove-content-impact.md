@@ -66,7 +66,8 @@ Every fix on the list names the **prompts** it could flip, by number and by id, 
 | outcome | when |
 | --- | --- |
 | pending | the set hasn't run since |
-| not comparable | it has, but only asked or graded differently |
+| needs regrade | it has, but only under another grading method; [re-grade](/docs/regrading/) the runs it names |
+| not comparable | it has, but only with answers asked differently, which no re-grade can change |
 | too early | less than 7 days since, or fewer than 4 answers a target prompt on average |
 | moved | named or recommended rose beyond its margin, and neither fell |
 | worse | one fell beyond its margin, and neither rose |

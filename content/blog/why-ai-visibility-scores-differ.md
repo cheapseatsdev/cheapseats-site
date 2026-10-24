@@ -31,7 +31,7 @@ So Acme's name appears in 4 answers, Globex in 6, Initech in 5, and 8 answers na
 
 The first difference is the denominator.
 
-- **Every answer.** Cheap Seats' named rate, Peec AI's and Gauge's visibility, and Limelit Open's: 4 ÷ 10 = **40%**.
+- **Every answer.** Peec AI's and Gauge's visibility, Limelit Open's, and Cheap Seats' named rate all divide by all ten: 4 ÷ 10 = **40%** for a tool that counts answer 4 (the next section comes back to that).
 - **Only answers that name some brand.** Profound's visibility leaves out runs that name no brand at all: 4 ÷ 8 = **50%**. Same answers, ten points higher.
 - **Prompts, not answers.** Otterly.AI's brand coverage is the share of prompts that mention you, so a prompt asked five times counts once.
 
@@ -43,7 +43,7 @@ Answer 4 names Acme only to say it couldn't find it.
 
 - **A text search counts it.** Limelit Open finds brands by deterministic string match, and its methodology says plainly that "I could not find Acme" counts as a mention, because telling otherwise needs a model to read the sentence. 40%.
 - **A model can leave it out.** Elmo finds name matches by text, then has a model (TypeSafe's Jev) decide whether each one really means your company; an answer saying it has no information about your brand isn't counted. 3 ÷ 10 = **30%**.
-- **A grade can keep it, and say why.** Cheap Seats' grader marks answer 4 `mentioned`: you were named, not endorsed, and the objection, that the model didn't know you, is recorded as something to fix. Named stays 40%; **recommended** is 2 ÷ 10 = 20% (answers 1 and 2).
+- **A grade can leave it out, and say why.** Cheap Seats' grader marks answer 4 `absent`: the name is in the question, not in the model's knowledge, and nothing the answer says is about Acme. Its reasoning records that the model didn't know you, which is still something to fix. Named is 3 ÷ 10 = **30%**, the same as Elmo's; **recommended** is 2 ÷ 10 = 20% (answers 1 and 2). Had the answer said anything about Acme itself, even hedged, it would be `mentioned` and named would be 40%.
 
 The string match is reproducible and costs nothing per answer. A model reads meaning a string match can't, but costs a call and can disagree with itself on a close call. Both are reasonable; they give different numbers.
 
@@ -51,11 +51,11 @@ The string match is reproducible and costs nothing per answer. A model reads mea
 
 Share of voice is where tools disagree most, because it depends on who else is in the sum.
 
-- **Every product named.** Cheap Seats divides your mentions by the sum over every product the answers named, one per answer: 4 ÷ (4 + 6 + 5) = **26.7%**.
+- **Every product named.** Cheap Seats divides your mentions by the sum over every product the answers named, one per answer, with answer 4 left out: 3 ÷ (3 + 6 + 5) = **21.4%**.
 - **Tracked competitors only.** Elmo and Gauge divide by you plus the competitors you configured. Elmo, with answer 4 left out: 3 ÷ (3 + 6) = **33.3%**. Initech isn't in the sum because nobody told the tool about it.
 - **Occurrences, not answers.** Limelit Open counts every time a tracked name appears. If answer 1 writes "Acme (acme.com)" and mentions Acme twice more, Acme has 6 occurrences across its four answers; if Globex has 14 across its six, Acme's share is 6 ÷ (6 + 14) = **30%**.
 
-Now add Initech to your competitors. Cheap Seats' 26.7% doesn't move: Initech was already in the sum. Elmo's becomes 3 ÷ (3 + 6 + 5) = **21.4%**. Limelit's, if Initech has 10 occurrences, becomes 6 ÷ 30 = **20%**. Your brand did nothing, and two of three numbers fell by a third.
+Now add Initech to your competitors. Cheap Seats' 21.4% doesn't move: Initech was already in the sum. Elmo's becomes 3 ÷ (3 + 6 + 5) = **21.4%**. Limelit's, if Initech has 10 occurrences, becomes 6 ÷ 30 = **20%**. Your brand did nothing, and two of three numbers fell by a third.
 
 Position follows the same pattern: Elmo ranks you among the tracked companies an answer names, Limelit by the list item you appear in (prose has no rank), Cheap Seats among every product named. Adding a competitor can push you down a place in one tool and not another.
 

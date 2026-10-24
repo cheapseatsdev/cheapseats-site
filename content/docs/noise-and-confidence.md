@@ -101,7 +101,8 @@ When you mark a fix with its pull request, Cheap Seats judges it on the prompts 
 | status | when |
 | --- | --- |
 | pending | the set hasn't run since |
-| not comparable | it has, but only with a different method |
+| needs regrade | it has, but only under another grading method; [re-grade](../regrading/) the runs it names to measure it |
+| not comparable | it has, but only with answers asked differently, which no re-grade can change |
 | too early | the newest run is less than 7 days after, or the target prompts average fewer than 4 answers since |
 | moved | named or recommended rose beyond its margin, and neither fell |
 | worse | one fell beyond its margin, and neither rose |

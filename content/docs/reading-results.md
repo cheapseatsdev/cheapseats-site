@@ -22,7 +22,7 @@ A second Claude call grades each answer:
 | ------------- | ------------------------------------------------------------------------------- |
 | `recommended` | the answer's top pick, or one of ≤3 primary recommendations it actively endorses |
 | `mentioned`   | named, but only as one option among many, in passing, or with reservations      |
-| `absent`      | not named at all (aliases included)                                             |
+| `absent`      | not named at all (aliases included), or named only to say the answer can't find or verify it |
 
 Along with the verdict you get the brand's position in the answer, the answer's top pick, every product named (for share of voice), the grader's reasoning, a **"why not #1"** (what the answer preferred and the reasons it gave), the specific **objections** raised about the brand, its **tone** about the brand (positive, neutral, mixed or negative), the **praise** it gives, and the **evidence**: the sentence of the answer that most supports the verdict, checked to be in the answer. [How grading works](../how-grading-works/) has the rules in full, with worked examples.
 
@@ -97,7 +97,8 @@ Quick wins pulls the fix lists from the latest run of every prompt set into one 
 | outcome | when |
 | --- | --- |
 | pending | the set hasn't run since |
-| not comparable | it has, but only with a different method |
+| needs regrade | it has, but only under another grading method; [re-grade](../regrading/) the runs it names to measure it |
+| not comparable | it has, but only with answers asked differently, which no re-grade can change |
 | too early | less than 7 days since, or fewer than 4 answers a target prompt on average |
 | moved | named or recommended rose beyond its margin, and neither fell |
 | worse | one fell beyond its margin, and neither rose |

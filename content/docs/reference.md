@@ -72,7 +72,7 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `get_quick_wins`   | the ranked fixes, filterable by gap, set, site, status and priority, each with its Claude prompt and the work submitted for it; `brief` leaves out the prompts and `limit` caps the list |
 | `mark_fix`         | record the commit or pull request submitted for a fix, as proposed or accepted  |
 | `set_attempt_state` | move submitted work on: accepted when it merges, withdrawn when it's closed    |
-| `list_attempts`    | the work submitted for fixes, with each one's outcome (moved, worse, mixed, no detectable change...) tested against noise |
+| `list_attempts`    | the work submitted for fixes, with each one's outcome (moved, worse, mixed, no detectable change, needs regrade...) tested against noise |
 | `get_citations`    | every URL linked in an answer across runs, filterable by URL, set and window   |
 | `search_probe`     | one query through the answerers' web search tool, returning the exact result; with `[exa]`, `engine` is `claude`, `exa` or `both` (each link marked overlap, only Claude or only Exa) |
 | `suggest_competitors` | runs competitor discovery on Exa and returns the top 10 hosts with reasons and the `[[competitors]]` TOML to paste; needs `[exa]`, Jev optional. Nothing is written to the config |

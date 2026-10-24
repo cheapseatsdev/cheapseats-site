@@ -33,7 +33,7 @@ Limelit Open has no pricing of its own: you pay your providers directly, and sin
 
 [Metric definitions](/docs/metrics/#how-these-compare-to-other-tools) has the full table. The differences that move a number:
 
-- **Visibility.** Limelit's is the answers whose text contains your brand string, over unbranded answers. Its methodology is candid that a sentence such as "I could not find Acme" counts as a mention, because telling otherwise needs a model. Cheap Seats' named rate counts that answer too, but its grader marks it mentioned rather than recommended, and records why.
+- **Visibility.** Limelit's is the answers whose text contains your brand string, over unbranded answers. Its methodology is candid that a sentence such as "I could not find Acme" counts as a mention, because telling otherwise needs a model. Cheap Seats' grader reads the sentence and marks that answer absent, unless it also states something about the brand, and records why.
 - **Recommended.** Cheap Seats grades whether the answer endorses you. Limelit counts whether you appear, with your rank when you're in a list.
 - **Share of voice.** Limelit divides your mentions by every tracked brand's mentions in the same answers, counting each occurrence: an answer that names you once and a rival five times is a 1:5 share. Cheap Seats counts each product once per answer, and over every product the answers named, not only the ones you configured.
 - **Position.** Limelit's is the mean rank of the list items you appear in; a mention in prose has no rank. Cheap Seats' avg place is your place among every product an answer names.
