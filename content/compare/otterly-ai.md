@@ -17,7 +17,7 @@ As of October 2026, from Cheap Seats' docs and Otterly.AI's own [pricing](https:
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Included: ChatGPT, Google AI Overviews, Perplexity, Microsoft Copilot. Add-ons: Google AI Mode and Gemini (from $9/month on Lite), Claude (from $29/month on Lite) |
 | **Your prompts** | TOML in your own git repo, changed by pull request | Your search prompts, by plan; +100 prompts for $99/month on Standard and Premium |
 | **Web search vs memory** | Both, as separate tracks (search and recall), reported separately | Not stated |
-| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections; with your facts listed, what each answer got wrong about you | Brand reports, prompts and citations |
+| **Grading** | Each answer graded recommended, mentioned or absent, with position, top pick, every product named (share of voice) and objections; with your facts listed, what each answer got wrong about you | Brand reports with visibility, sentiment and average position; Brand Profiling, the attributes and objections AI attaches to you, each traced to the pages cited; prompts and citations |
 | **What to fix** | A ranked fix list every run: the page, what it must say, the prompts it should flip, the owner, and a Claude Code prompt | Recommendations (3 a week on Lite, unlimited from Standard), GEO URL audits, content audit and briefs |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | Public API and MCP from Standard (2,000 requests each a month; 5,000 on Premium) |
 | **Agencies** | No agency tier | Agency Partner status on Standard or Premium, with branded Looker Studio reports |
