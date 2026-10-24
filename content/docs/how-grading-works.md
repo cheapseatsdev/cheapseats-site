@@ -87,6 +87,8 @@ The run page reports, for each assistant and track, how often your brand was the
 
 ## Checking a grade
 
-The run page lists every answer behind its rates. For any answer you can read the full text, with the grade's evidence highlighted in it, the searches the assistant ran, every result and page it cited, and the grade with its reasoning. Each run also stores the grading instructions it used, its config commit and the Cheap Seats version, and exports to CSV or JSON. When the way answers are asked or graded changes, the trend marks the run where it changed rather than joining two methods into one line. A re-graded run says so on its page, with the method it had before.
+The run page lists every answer behind its rates. For any answer you can read the full text, with the grade's evidence highlighted in it, the searches the assistant ran, every result and page it cited, and the grade with its reasoning. Each run also stores the grading instructions it used, its config commit and the Cheap Seats version, and exports to CSV or JSON.
+
+**The grader is measured, not assumed.** A golden set of real stored answers, each labeled by a person, lives in the Cheap Seats repo (`internal/grade/testdata/golden/`); `CHEAPSEATS_GOLDEN=1 go test ./internal/grade/... -run Golden` grades every record with the real grader and fails under a threshold, and `cheapseats golden export <snapshot.db>` samples a deployment's own answers into the same format for labeling. Any change to the grader passes it first; the [grading doc](https://github.com/cheapseatsdev/cheapseats/blob/main/docs/grading.md) in the repo has the procedure. When the way answers are asked or graded changes, the trend marks the run where it changed rather than joining two methods into one line. A re-graded run says so on its page, with the method it had before.
 
 See [Reading results](../reading-results/) for the run page, and [Configuration](../configuration/) for answerers, models and samples.

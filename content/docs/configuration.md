@@ -14,7 +14,7 @@ The examples below are from [`examples/cheapseats-config/cheapseats.toml`](https
 ```toml
 [brand]
 name = "Cheap Seats"
-aliases = ["cheapseats.dev", "cheapseatsdev/cheapseats"]
+aliases = ["CheapSeats", "cheapseats.dev", "cheapseatsdev/cheapseats"]
 # What the product is, so the grader can tell it apart from other things called "cheapseats".
 about = "Cheap Seats is an open-source, self-hosted tool that asks AI assistants a brand's buyer questions, grades whether they recommend the brand, and builds a ranked list of fixes."
 # The market, as a noun phrase: what a prompt should be about, as opposed to what this one product is.
@@ -76,7 +76,7 @@ samples = { search = 2, recall = 1 }
 - Results and rankings key on `id`: never reuse an id for a different model; add a new answerer instead.
 - `name` is an optional display name.
 - `samples` is how many answers it takes per track (`search` and `recall`) for each prompt.
-- `claude-code` and `codex` only work on your own machine or a VM with the CLIs installed. `cheapseats check` fails on a config whose subscription answerers can't run where it's checked.
+- `claude-code` and `codex` only work on your own machine or a VM with the CLIs installed. `cheapseats check` notes a subscription answerer whose CLI isn't installed where it's checked, since runs skip it, and fails only when no answerer can run there.
 
 ## Shared competitors
 
@@ -216,7 +216,7 @@ page_per_1k = 1.0
 # daily_hour_utc = 13
 
 [tiers.core]
-every_days = 1
+every_days = 2
 
 [tiers.plg]
 every_days = 7

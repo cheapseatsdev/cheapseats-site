@@ -20,7 +20,7 @@ Each deployment is its own config repo, made from the [config template](https://
 Cheap Seats ships as an image, `ghcr.io/cheapseatsdev/cheapseats:<version>`, and a Helm chart, `oci://ghcr.io/cheapseatsdev/charts/cheapseats`, released together at the same version. The image has no config in it: each deployment builds its own image on top, from its config repo:
 
 ```dockerfile
-FROM ghcr.io/cheapseatsdev/cheapseats:0.4.2
+FROM ghcr.io/cheapseatsdev/cheapseats:0.4.5
 COPY cheapseats.toml /config/cheapseats.toml
 COPY prompt-sets /config/prompt-sets
 ARG REVISION=""
@@ -57,7 +57,8 @@ The chart runs one replica and replaces it rather than rolling, so two never sha
 - `existingSecret`: a Secret you create holding `CHEAPSEATS_TOKENS`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` if an answerer uses it, and `TYPESAFE_API_KEY` or `EXA_API_KEY` with `[typesafe]` or `[exa]`. The chart never takes keys as values: a value named like one fails the install. `extraEnv` and `extraEnvFrom` pick single keys out of other Secrets.
 - `env`: plain environment for values that aren't secrets, such as `CHEAPSEATS_CONFIG_REV` or the key-adding proxies `CHEAPSEATS_ANTHROPIC_BASE_URL`, `CHEAPSEATS_TYPESAFE_BASE_URL` and `CHEAPSEATS_EXA_BASE_URL`.
 - `persistence`: the volume for the database (1Gi by default), or an `existingClaim`.
-- `ingress`: off by default.
+- `ingress`: off by default, with `className`, `annotations`, `host` and `tls` when on.
+- The usual knobs: `nameOverride`, `image.pullPolicy`, `imagePullSecrets`, `service.type` and `port`, `resources`, `terminationGracePeriodSeconds`, `nodeSelector`, `tolerations`, `affinity` and `podAnnotations`.
 
 The plain app image works too, with the config mounted at `/config` by `extraVolumes` and `extraVolumeMounts`. The template's [Kubernetes guide](https://github.com/cheapseatsdev/cheapseats-config-template/blob/main/deploy/README.md) walks through it.
 
