@@ -87,10 +87,10 @@ The manifest icon URLs are relative to the manifest. Keep those files together. 
 
 `source/build.cjs` contains the mark path, layout coordinates, colors, exports, ICO assembly, and overview. `source/lettering.json` contains reusable vector paths for the wordmark and domain. These are sufficient to rebuild the assets without any font dependency.
 
-To rebuild, use Node.js with `sharp` available:
+To rebuild, from `brand/` with Node.js:
 
 ```sh
-npm install --no-save sharp
+npm ci                 # sharp, at the exact version package-lock.json pins
 node source/build.cjs
 ```
 

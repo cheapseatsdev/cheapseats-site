@@ -79,7 +79,7 @@ const micro = (size) => {const content=rect(16,16,colors.charcoal,3)+'<path fill
   const board=svg(1600,1220,boardParts.join(''),'Cheap Seats Back Row brand overview');
   save('brand-overview.svg',board);
   await render('brand-overview.png',board,1600,1220);
-  const files=[];function list(dir){for(const item of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,item.name);if(item.isDirectory())list(p);else if(!p.includes('/source/'))files.push(path.relative(root,p));}}list(root);
+  const files=[];function list(dir){for(const item of fs.readdirSync(dir,{withFileTypes:true})){if(item.name==='node_modules'||(dir===root&&/^package(-lock)?\.json$/.test(item.name)))continue;const p=path.join(dir,item.name);if(item.isDirectory())list(p);else if(!p.includes('/source/'))files.push(path.relative(root,p));}}list(root);
   save('asset-manifest.json',JSON.stringify({brand:'Cheap Seats',concept:'Back Row',colors,files},null,2)+'\n');
   console.log(`Built ${files.length} assets in ${root}`);
 })();
