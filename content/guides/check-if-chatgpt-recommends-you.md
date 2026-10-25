@@ -18,7 +18,7 @@ Repeat each question, separate search from recall, and grade consistently. Cheap
 
 The questions are a TOML file in a config repo of your own. Use `prompt-sets/discovery.toml` for this example and replace the placeholders with your category and competitors. Ask the way a buyer would, and don't name your product: being named when the question names you proves little.
 
-Roughly 15–20 questions is a starting guide for coverage, not a minimum that makes rates precise. Use real buyer needs where you have them, label hypotheses in review notes, and include constraints your product may fail. Keep open discovery separate from named shortlists when interpreting results: "Peec AI or Profound?" supplies choices that an open category question doesn't.
+Roughly 15–20 questions is a starting guide for coverage, not a minimum that makes rates precise. Use real buyer needs where you have them, label hypotheses in review notes, and include constraints your product may fail. Open questions and requests for alternatives can introduce your brand. Keep closed comparisons such as "Peec AI or Profound?" outside the tracked library when neither product is yours: answering the question does not require considering your brand. Moving it to another set still scores your brand's absence.
 
 ```toml
 id = "discovery"

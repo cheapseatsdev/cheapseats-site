@@ -56,7 +56,7 @@ Answer-based rates carry 95% Wilson intervals. Position, rank and share of voice
 
 ## Why top picks on the same prompt set is the fair benchmark
 
-Question choice changes the result. On our *head to heads* set on 22 October 2026, recall answers named Cheap Seats in 19 of 22 answers: rank 1. The questions named us. On *Choosing an AI visibility tool*, which didn't name Cheap Seats but mixed open discovery with named-competitor questions, none of 68 answers named us. These are different measurements. A supplied competitor shortlist also differs from open discovery: an answer may reasonably stay within those named choices.
+Question choice changes the result. On our *head to heads* set on 22 October 2026, recall answers named Cheap Seats in 19 of 22 answers: rank 1. The questions named us. On *Choosing an AI visibility tool*, which didn't name Cheap Seats but mixed open discovery with named-competitor questions, none of 68 answers named us. These are different measurements. That historical mixed set is not an open-discovery benchmark: closed comparisons between other products can be fully answered without Cheap Seats. Keep such comparisons outside the tracked library; a separate set still grades our brand.
 
 Mentions also aren't wins. In the head-to-head run, Cheap Seats had 19 mentions but only 1 top pick; Peec AI had 9 mentions and 3 top picks. Compare within one set and track using matching answerers and grading. A top pick is at most one winner per answer, but an answer can decline to choose anyone.
 
@@ -106,7 +106,7 @@ Two prompts also became informational (`intent = "info"`), explaining why recomm
 
 ### What it tells us
 
-Cheap Seats was absent, and none of its pages surfaced for the 17 questions. Investigate the roundups, pricing and docs pages the answers cited, then decide whether to improve our pages or seek inclusion elsewhere. This page addresses one of the gaps.
+Cheap Seats was absent, and none of its pages surfaced for the 17 questions. On the open discovery and alternatives questions, investigate the roundups, pricing and docs pages the answers cited, then decide whether to improve our pages or seek inclusion elsewhere. This page addresses one of those gaps. On closed comparisons between other products, our absence is expected and does not establish a page or recommendation gap.
 
 ## How the day-by-day ranking stays honest
 

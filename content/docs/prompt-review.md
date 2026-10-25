@@ -35,7 +35,7 @@ Noise flags use planned samples, excluding adaptive extras and runs where all an
 
 A prompt with enough data and no flag is labelled **healthy**. That means no implemented rule fired; it doesn't validate intent, buyer demand, market coverage or independence from other questions. Likewise, a flag doesn't establish its cause.
 
-Before editing, check [intent and buying situation](../prompt-sets/#say-what-a-good-answer-looks-like), the source of the buyer need, and the denominator you care about. Review open discovery, supplied competitor shortlists and known-brand evaluation separately. Informational answers can show useful source visibility without supporting a recommendation rate.
+Before editing, check [intent and buying situation](../prompt-sets/#ask-the-way-a-buyer-would), the source of the buyer need, and the denominator you care about. Distinguish open discovery and requests for alternatives from known-brand evaluation. Remove closed comparisons that only ask the buyer to choose between other products from the tracked library: a complete answer can omit your brand. A separate set still grades your brand and produces fixes for it. Informational answers can show useful source visibility without supporting a recommendation rate.
 
 ## What it reads
 
@@ -72,7 +72,7 @@ The review proposes at most five of each:
 | **Product** | Unconfigured product appears in ≥20% of answers across ≥2 prompts. Includes a `[[competitors]]` entry. |
 | **Topic** | A word absent from prompts is added in ≥5 searches across ≥2 prompts. Includes its most-run search. |
 
-Each includes a buyer-worded `[[prompts]]` entry with an unused id. These are hypotheses from model behavior, not observed buyer demand. Validate the need, context and overlap with the existing set before adding it. Reword before committing; ids are permanent.
+Each includes a buyer-worded `[[prompts]]` entry with an unused id. These are hypotheses from model behavior, not observed buyer demand. Validate the need, context and overlap with the existing set before adding it. The same review applies to **Add as prompt** entries from recorded search queries: frequent searches comparing two other products do not establish a discovery question for your brand. Keep those closed comparisons outside `prompt-sets/`. Reword before committing; ids are permanent.
 
 ## Proposed edits (optional)
 
