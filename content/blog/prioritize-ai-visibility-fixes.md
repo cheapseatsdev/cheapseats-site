@@ -5,7 +5,7 @@ author: Chad Metcalf
 description: Rank fixes by the prompts each could flip per day of work, weighted by what's left to win and how directly it answers why you lost. Then an owner for each.
 ---
 
-**How should we prioritize fixes to improve how AI assistants describe our product?** By how many buyer questions a fix could flip per day of work, discounted for questions you're already winning, and by how directly it answers the reason the assistant gave for not picking you. **What are the quickest wins?** The small fixes that touch many questions: a roundup that shaped several answers and leaves you out, a page the answers needed that you don't have, and, before either, getting your pages retrieved at all. **Who should own it?** Whoever owns the page the fix lands on. When no page does, the kind of gap decides: documentation to the docs team, positioning to product marketing, third-party listings to SEO or comms, and product gaps to product. Cheap Seats scores and assigns every fix this way, and this post shows the method on our own fix list.
+Prioritize fixes by the buyer questions they could affect, the work required, and the evidence for why you lost. Discount questions you're already winning. Assign each fix to the owner of its target page; use the gap type when no page exists. Here's the method on our own fix list.
 
 <!--more-->
 
@@ -18,7 +18,7 @@ A fix is only worth ranking if it answers something the assistant actually said.
 - **Incumbents framed as the safe default**: 6 prompts. Profound is "one of the best-funded and most established."
 - **Self-hosting burden**: 1 prompt.
 
-The first reason is a documentation gap and it's most of the loss, so most of the fixes should be pages that state verifiable facts. The second was a retrieval problem: our pages were not being read at all, which no amount of writing fixes until the site is indexed. The third is positioning and takes longest to move. That ordering is the prioritisation, before any arithmetic. The arithmetic is for ordering the fixes within it.
+The strongest evidence points to missing verifiable information and retrieval problems. Check crawl access, indexing and query relevance before assuming new wording will help. Use the arithmetic below to order fixes within those priorities.
 
 ## The score: prompts it could flip, per day
 
@@ -32,19 +32,19 @@ Here is how that ordered our own fixes from the runs of 22 October, across four 
 | --- | --- | ---: | --- | ---: | --- |
 | Get listed in a roundup that shaped the search answers | outreach | 5 | S | 5.0 | urgent |
 | Publish a guide to benchmarking against competitors | new page | 3 | S | 3.0 | urgent |
-| Publish a how-to on seeing the search results the model read | new page | 2 | S | 2.0 | high |
+| Publish a how-to on seeing the results its searches returned | new page | 2 | S | 2.0 | high |
 | Publish a dated tools-compared post | new page | 6 | M | 1.2 | urgent |
 | Get into a second roundup | outreach | 6 | M | 1.2 | high |
 | Publish a comparison against one competitor | new page | 3 | M | 0.6 | medium |
 | Add a Gemini provider | product | 1 | L | 0.07 | low |
 
-Two things the table shows. A small fix on five prompts beats a week's work on six, because the week could be five small fixes. And the product item is last not because it's wrong but because one prompt for fifteen days of engineering is the worst exchange rate on the list; a content fix can't paper over it either, which is why it's marked as a product gap rather than a page to write.
+This table shows **speed**, before the remaining-headroom weighting used for gain. A one-day fix across five prompts outruns a week-long fix across six. The product gap has low speed, but content can't substitute for the missing capability.
 
 ## How directly it answers the reason
 
-Two fixes with the same score are not equal. Each fix in Cheap Seats carries its **evidence**, a quote from the answers with the prompt number, and the page it **displaces**, the one that shaped the answer today. Prefer the fix whose evidence is the reason you lost most often, and whose target is the page the assistant actually read.
+Two fixes with the same score are not equal. Each fix in Cheap Seats carries its **evidence**, a quote from the answers with the prompt number, and the page it **displaces**, the one that shaped the answer today. Prefer the fix whose evidence is the reason you lost most often, and whose target is supported by the cited sources.
 
-For us that meant: the competitor-pricing pages and vendor help articles that shaped the answers were the pages to displace, with our own pages that state the same facts. A fix that displaces a page the assistant cited on five prompts is worth more than one that displaces nothing, at the same speed. And a fix that only restates what the answers already know about you addresses no reason at all, however many prompts it lists.
+For us, repeated citations of competitor pricing and vendor help pages provided stronger targets than a generic new article. At equal speed, prefer a fix tied to a recurring objection and a cited source.
 
 The kinds of gap, as Cheap Seats labels them, sort the reasons:
 
@@ -57,16 +57,16 @@ The kinds of gap, as Cheap Seats labels them, sort the reasons:
 
 From our list and the method above, the fastest gains were, in order:
 
-1. **Get retrieved.** No first-party page surfaced in any of 44 search answers in the head-to-heads run. Submitting the sitemap, adding `llms.txt` and structured data, and IndexNow took an afternoon and touches all 11 prompts; nothing else on the list works until it's done. This is the one SEO item, and it's first.
+1. **Get retrieved.** No first-party page surfaced in the run's search answers. We checked crawl access and submitted the sitemap and IndexNow updates. These are retrieval checks, not evidence that any one action improves recommendations. `llms.txt` and structured data also aren't guarantees of retrieval.
 2. **The roundup you're missing from.** One article shaped six of fifteen prompts in a set. A paragraph to its editor is a small fix on six prompts.
 3. **The page the answers needed.** A how-to or a comparison with a direct answer at the top, the facts the answers lacked, and a date. Small when the facts are in your repo already.
-4. **Positioning, consistently.** The same sentence on the README and the homepage. Cheap to do and slow to show: recall answers only move when models change, so it's a fix you ship once and measure over releases.
+4. **Positioning, consistently.** The same sentence on the README and the homepage. Cheap to do and slow to show: recall has no live retrieval, so a new page cannot directly enter those answers. Measure it over time without expecting an immediate response.
 
 Free checks come before paid runs: `cheapseats audit` tells you what AI crawlers can and can't read on your sites without a single model call.
 
 ## Who owns it
 
-The turf question has an answer once a fix names a page: the page's owner owns the fix. Deepak Gupta's [org-chart piece](https://guptadeepak.com/the-geo-org-chart-who-actually-owns-ai-visibility-in-2026/) reaches a similar place from the top down, four layers with four natural owners and product marketing coordinating; the fix list reaches it from the bottom up, one fix at a time. By kind of fix:
+The target page's owner owns the fix. When there's no page yet, use the gap type. Deepak Gupta's [org-chart piece](https://guptadeepak.com/the-geo-org-chart-who-actually-owns-ai-visibility-in-2026/) proposes similar owners with product marketing coordinating:
 
 | gap | the work | usually owned by | lands on |
 | --- | --- | --- | --- |
@@ -97,4 +97,4 @@ Quick wins then filter by site, so each team sees its own list, and each fix com
 
 ## Then check it worked
 
-Each fix's **done when** is a test the next run can re-run: this prompt cites that page, or names you in at least one answer. Mark a fix with its pull request when you open it and accepted when it merges, and the next run of the set reports what changed on exactly its prompts, before and after, with the noise margin. A fix that worked drops off the list; one that didn't comes back marked *retry*, with your pull request and a sharper reason. Prioritising is cheap when the list re-ranks itself from evidence every week.
+Mark each fix with its PR, then accepted when merged. Subsequent runs compare its target prompts before and after, with a margin of uncertainty. A still-losing fix can return as **retry** with the earlier attempt attached. [Measure content impact](/guides/prove-content-impact/) explains why an observed change doesn't by itself establish causation.

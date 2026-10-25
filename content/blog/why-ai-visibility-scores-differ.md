@@ -5,11 +5,11 @@ author: Chad Metcalf
 description: The same ten AI answers can read 30%, 40% or 50% visible, and 20% to 33% share of voice, depending on the tool. Denominators, matching, sampling and history.
 ---
 
-Put the same brand into two AI visibility tools and you'll get two different numbers. Neither tool is broken. They're counting different things under the same names, and the differences are big enough to matter: on the ten answers below, "visibility" comes out at 30%, 40% or 50%, and share of voice anywhere from 20% to 33%, depending on whose formula you use.
+Put the same brand into two AI visibility tools and you'll get two different numbers. That alone doesn't mean either is broken. They're counting different things under the same names, and the differences are big enough to matter: on the ten answers below, "visibility" comes out at 30%, 40% or 50%, and share of voice anywhere from 20% to 33%, depending on whose formula you use.
 
 <!--more-->
 
-There are five reasons, and once you know them you can move a number from one tool to another, or at least know why you can't. Every formula here is from each tool's own documentation as of October 2026, collected in Cheap Seats' [metric definitions](/docs/metrics/#how-these-compare-to-other-tools).
+There are five reasons, and once you know them you can move a number from one tool to another, or at least know why you can't. Every formula here is from each tool's own documentation as of October 2026, collected in Cheap Seats' [metric definitions](/docs/comparing-metrics/).
 
 ## Ten answers
 
@@ -70,7 +70,7 @@ Tools sample differently, too. Elmo asks each prompt five times per platform per
 Last month's number can change after the fact.
 
 - **Re-derived from today's config.** Profound applies today's topics, tags and brands to past answers. Limelit Open re-reads every stored answer when you add or rename a brand or its matching rules change. Elmo re-judges past answers for a changed company, 90 days back by default, and leaves older ones as they were judged, so a long chart can step where the window ends.
-- **Fixed when graded.** Cheap Seats keeps each run's grades, rates and share of voice as graded. A change in how answers are asked or graded starts a new method on the trend instead of rewriting the old line.
+- **Fixed when graded.** Cheap Seats keeps each run's grades, rates and share of voice as graded. A change in how answers are asked or graded starts a new method. Explicit re-grading can replace stored grades while preserving their history; it isn't automatic when config changes.
 
 Re-deriving keeps the past comparable with today's setup, so the Initech change above applies backwards and the trend stays smooth. Fixing keeps a number you reported last month from moving under you. Each costs something; know which your tool does before you compare a chart across a config change.
 
@@ -81,4 +81,4 @@ Re-deriving keeps the past comparable with today's setup, so the Initech change 
 - To get Otterly.AI's brand coverage, count prompts whose named rate is above zero.
 - To compare with Limelit's share of voice, you'd need occurrence counts, which Cheap Seats doesn't keep; compare named rates instead.
 
-The full mapping, tool by tool, is in [Metric definitions](/docs/metrics/#migrating-between-cheap-seats-and-these-tools). And whatever tool you use, the prompts are the part worth keeping. In Cheap Seats they're plain TOML in your own repo, so if you move, they come with you.
+The full mapping, tool by tool, is in [Metric definitions](/docs/comparing-metrics/#migrating-between-cheap-seats-and-these-tools). Keep the buyer questions and their sampling conditions when moving between tools; a similar metric label doesn't ensure a comparable number.

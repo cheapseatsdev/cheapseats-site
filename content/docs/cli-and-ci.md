@@ -5,9 +5,7 @@ weight: 440
 group: Running it
 ---
 
-**Can I run AI visibility checks from the command line or in a CI pipeline?** Yes. `cheapseats` is one binary: the web UI, the JSON API, the MCP server and a CLI. `cheapseats run <set>` asks every configured model your buyer questions on both tracks, waits, prints the recommended and named rates and the share-of-voice table, and exits 0 if the run finished and 1 if it didn't. The prompt sets are TOML files in a git repo you own, so a change to the questions is a pull request, and `cheapseats check` and `cheapseats plan` run in that repo's CI. Running the same questions every week needs no CI at all: the schedule is built in. A pipeline that must start a run itself does it over the JSON API.
-
-A hosted tool's CLI, [LLM Pulse's](https://llmpulse.ai/features/cli) for example, is a client for an account: you log in with an API key and pull the data out. With Cheap Seats the prompts, the config and the database are files you hold, so the questions themselves go through review, and every run is recorded on the commit of the config that produced it.
+Use `cheapseats run <set>` for a local run, `check` and `plan` to review config changes in CI, and the JSON API to start runs on an existing deployment. For recurring runs, `serve` has a built-in schedule.
 
 ## Run a set from the command line
 
@@ -39,7 +37,7 @@ Share of voice (Cheap Seats is #1):
    ...
 ```
 
-Each rate comes with its 95% interval in brackets, one row per answerer and track, so the same question's answers from Claude and from OpenAI sit side by side; see [Reading results](../reading-results/) and [Metric definitions](../metrics/). The run is kept, with every answer, search result and citation, and the same report is `cheapseats report <run-id>` later. `-json` prints everything the run page shows, for scripts:
+Rates include 95% intervals. Each answerer/track has a row; [Metric definitions](../metrics/) explains the denominators. Runs retain answers, searches and citations. Read one later with `cheapseats report <run-id>`, or add `-json` for scripts:
 
 ```bash
 cheapseats report -json r-20261022-051238-0c6344 |
@@ -71,7 +69,7 @@ On a deployment that is already serving, start the run through the API instead (
 
 ## Test the same questions against several models
 
-Every `[[answerers]]` entry in `cheapseats.toml` is one model: a Claude model through the `anthropic` API or the `claude` CLI, an OpenAI model through the `openai` API or the `codex` CLI. Every prompt in a set goes to every answerer, on the search track (web search forced on) and the recall track (no tools), and the report has a row for each. `summary.head_to_head` says, for each competitor, how often the answers named you ahead of it, and `summary.voice` ranks every product named. See [Which AI engines Cheap Seats asks](../engines/) and [Configuration](../configuration/#answerers).
+Add one `[[answerers]]` entry per model. Every prompt goes to each available answerer on search and recall tracks, using its configured samples. Reports separate answerers and tracks. See [Answerer configuration](../configuration/#answerers) and [supported engines](../engines/).
 
 ## Ask the same questions every week
 
@@ -89,7 +87,7 @@ every_days = 7
 max_samples = 1
 ```
 
-From that hour, `serve` runs each core set every `every_days` days and each plg set likewise, one after another, and records the result like any other run. The set's page and `GET /api/rankings` then give the day-by-day share-of-voice rank and rates with rolling averages and bands, so a week-over-week change reads as real or as noise; see [Noise and confidence](../noise-and-confidence/). cheapseats.dev runs every set weekly. Leave `daily_hour_utc` unset on a dev machine and nothing runs unless you start it.
+From 13:00 UTC, `serve` runs due sets one at a time. This config runs both tiers weekly. Leave `daily_hour_utc` unset on development machines. Read the resulting trend on the set page or `GET /api/rankings`; [Noise and confidence](../noise-and-confidence/) explains how to assess a change.
 
 ## Check prompt changes in your config repo's CI
 
@@ -149,4 +147,4 @@ jobs:
             (.Summary.voice[:5][] | "  \(.name): named in \(.named_rate * 100 | round)% of answers")'
 ```
 
-The job fails if the run didn't finish, which is what you want in a pipeline: a `budget` stop or a provider outage shows up red, not as a quiet gap in the trend. `POST /api/runs` with `"dry_run": true` returns the plan and estimated cost without starting anything, if you want a gate before spending. The same calls are MCP tools (`start_run`, then `wait_for_run` for the finished row, then `get_run`), so Claude Code can do the same from a terminal; see [CLI, API and MCP](../reference/).
+The job fails unless the run finishes, including after a `budget` stop or provider outage. To inspect cost before starting, send `"dry_run": true`. MCP offers the same workflow: `start_run`, `wait_for_run`, then `get_run`. See [CLI, API and MCP](../reference/).

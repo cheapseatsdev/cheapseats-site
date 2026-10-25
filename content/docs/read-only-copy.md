@@ -7,9 +7,11 @@ group: Acting on it
 
 A read-only copy shows your dashboard to anyone: prospects, a team without accounts, the public. It serves every page and the JSON API from a copy of your database, and it can't change anything or call a model. [demo.cheapseats.dev](https://demo.cheapseats.dev) is one, a copy of Cheap Seats measuring itself.
 
-Run it on a separate machine that holds no API keys, no tokens and nothing that can reach your deployment. Your deployment sends the copy a fresh database on a schedule, never the other way round. Someone who breaks into the copy gets only what it already shows.
+Run it on a separate machine that holds no API keys, no tokens and nothing that can reach your deployment. Your deployment sends the copy a fresh database on a schedule, never the other way round. Treat the copied database and config as public, including raw answers, historical snapshots and notes that a summary page may omit. Check them for private material before publishing.
 
 ## What read-only means
+
+{{< figure name="deployment" >}}
 
 Set `CHEAPSEATS_READONLY=1` and `cheapseats serve`:
 
@@ -34,7 +36,7 @@ CHEAPSEATS_PUBLIC_URL=https://demo.example.com \
 cheapseats serve -addr 127.0.0.1:3000
 ```
 
-Use the same version as your deployment. A newer binary would upgrade the copy's database (harmless: the next refresh replaces it); an older one refuses a newer database. Sending the binary with each refresh keeps them in step.
+Use the same version as your deployment. A newer binary can upgrade the copy's database; an older one refuses a newer schema. Sending the binary with each refresh keeps them in step.
 
 ## Keep it current
 

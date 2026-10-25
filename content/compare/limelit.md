@@ -12,17 +12,17 @@ As of October 2026, from Cheap Seats' docs and Limelit's own [README](https://gi
 | | Cheap Seats | Limelit Open |
 | --- | --- | --- |
 | **License** | MIT | Apache-2.0; contributions under the DCO, no CLA |
-| **Price** | Free and open source (MIT); runs on your Claude subscription or API key, ChatGPT optional ([cost and budget](/docs/cost-and-budget/)) | Free; bring your own provider keys, or start on a free Limelit Cloud allowance. Limelit Cloud sells credit packs from $19.99 (2,000 credits) to $399.99 (40,000), with 1,000 credits free on signup |
-| **Where it runs** | One Docker container with SQLite; also a Helm chart or an exe.dev VM ([self-hosting](/docs/self-hosting/)) | One binary with SQLite, no Docker, Node or Postgres needed; also `go install` or a Docker image. Pre-release: the newest tag is `v0.1.0-rc.14`, of 1 October |
+| **Price** | Free MIT software; API calls or installed subscription CLIs ([cost and budget](/docs/cost-and-budget/)) | Free; bring your own provider keys, or start on a free Limelit Cloud allowance. Limelit Cloud sells credit packs from $19.99 (2,000 credits) to $399.99 (40,000), with 1,000 credits free on signup |
+| **Where it runs** | Self-hosted SQLite; Docker, Helm or exe.dev ([self-hosting](/docs/self-hosting/)) | One binary with SQLite, no Docker, Node or Postgres needed; also `go install` or a Docker image. Pre-release: the newest tag is `v0.1.0-rc.14`, of 1 October |
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | ChatGPT, Claude, Perplexity and Gemini through vendor APIs; Google AI Overviews and AI Mode through DataForSEO or SearchApi, and Copilot through SearchApi. ChatGPT and Gemini as a person sees them only through the free Limelit Cloud allowance. Four more scrapers and OpenRouter are listed but not built yet |
 | **Your prompts** | TOML in your own git repo, changed by pull request | A setup wizard fills up to 14 template prompts from your category and competitors; add more on the Prompts page. `limelit.yaml` holds the brand, competitors and targets |
 | **Web search vs memory** | Search and recall, as separate tracks ([two tracks](/docs/how-grading-works/#two-tracks)) | The search tool is offered and the model decides whether to use it. An API target and a scraped one on the same engine are tracked apart, never averaged |
-| **Grading** | Recommended, mentioned or absent per answer, with position, top pick, share of voice, objections and tone; what each answer got wrong against your facts ([how grading works](/docs/how-grading-works/)) | A whole-word search for your brand's name, aliases and domain, and each competitor's name and domain, kept at byte offsets; rank from the list item a name appears in. No model reads the answer |
+| **Grading** | Recommended, mentioned or absent; position, top pick, objections and optional fact checking ([how grading works](/docs/how-grading-works/)) | A whole-word search for your brand's name, aliases and domain, and each competitor's name and domain, kept at byte offsets; rank from the list item a name appears in. No model reads the answer |
 | **Samples** | `samples` per answerer and track, set in your config | One answer per prompt per target per pass, on demand, daily or hourly |
-| **Noise** | A 95% interval on every rate; changes tested against noise ([how big a change](/docs/noise-and-confidence/)) | Every number shows `n`, the answers behind it; under 20 it's captioned a small sample, and a grid cell under 5 answers can't take the top colour |
+| **Noise** | 95% intervals on named, recommended and top pick; changes tested against noise ([how big a change](/docs/noise-and-confidence/)) | Every number shows `n`, the answers behind it; under 20 it's captioned a small sample, and a grid cell under 5 answers can't take the top colour |
 | **History** | Grades stay as graded; a grading change starts a new method on the trend, and you can re-grade stored answers to carry it on | Every stored answer is read again when a brand, a competitor or a matching rule changes, so past numbers follow today's setup |
 | **Markets** | Prompts are asked as written; no country or language setting | A country per prompt is passed to the scrapers, but no screen sets one in v0.1; DataForSEO defaults to the United States and English |
-| **What to fix** | A ranked fix list every run, each fix measured after it ships ([from fix to pull request](/docs/fix-to-pull-request/)) | Not in the open core; opportunities, sentiment and prompt generation are Limelit Cloud features |
+| **What to fix** | Ranked fix briefs; before/after attempt checks ([from fix to pull request](/docs/fix-to-pull-request/)) | Not in the open core; opportunities, sentiment and prompt generation are Limelit Cloud features |
 | **Data** | A SQLite file on your machine; prompts go only to the model providers you configure | A SQLite file on your machine; on the free allowance, prompts pass through Limelit Cloud, which keeps the engine and cost, not the prompt or answer |
 | **Alerts** | On the exe.dev setup, an email when a run fails, stalls or runs out of budget | None in the open core; digest emails are Limelit Cloud's |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | Dashboard, JSON API and an MCP server whose tools share Limelit Cloud's names. Chart tools that draw inline in MCP Apps hosts are on `main`, not yet in a release |
@@ -32,23 +32,19 @@ Limelit Open has no pricing of its own: you pay your providers directly, and sin
 
 ## What's the same
 
-- **Branded prompts stay out of the headline.** Both tag a prompt that names your brand as a whole word, keep it on screen, tagged, and leave it out of the headline rates. Limelit tags it with the same matcher that reads answers; Cheap Seats leads with the unbranded rates and shows the branded ones underneath.
-- **Your data is one SQLite file.** Each keeps every answer in a file on your machine, its settings in a file meant for git that never holds a key, and exports everything.
-- **Searches are evidence.** Both ask the vendor APIs with their web search tools and store the searches the engine ran beside each answer, so you can see what it looked for.
-- **An MCP server built for assistants.** Each has a first tool that says where the instance stands and what to do next (Limelit's `get_active_property`, Cheap Seats' `get_started`), a dry run before anything is spent, and prompt templates of the same shape: a weekly pulse, a competitor radar, and why one prompt isn't cited or recommended.
-- **A spend guard before the run.** Limelit refuses a pass that would pass `runs_per_day`; Cheap Seats keeps API spend under a daily budget.
-- **A public read-only mode.** `LIMELIT_DEMO=1` and `CHEAPSEATS_READONLY=1` each serve a dashboard anyone can read and nobody can change, with a banner saying so.
+Both keep answers in SQLite, expose stored search traces, separate branded prompts, provide MCP access and a public read-only mode. Both offer a dry run before spending.
+
+Their limits differ: Limelit gates passes by `runs_per_day`; Cheap Seats reserves estimated API spend against a daily admission budget, then settles actual cost ([budget details](/docs/cost-and-budget/#the-daily-budget)).
 
 ## What's different
 
-- **How a mention is found.** Limelit searches the stored text for your name, aliases and domain, and each competitor's name and domain, and stores the byte offsets of each match. Cheap Seats has a Claude call read the whole answer and grade it, then checks the text: an answer that never contains your name or an alias is absent whatever the model said.
-- **What counts as named.** In Limelit, "I could not find Acme" is a mention, as its [methodology](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/methodology.md#finding-brands-a-text-search-on-purpose) says, and so is an unrelated product that shares your name. Cheap Seats grades both absent: the first only echoes the question, and the second is told apart by your brand's `about`.
-- **Competitor names.** Limelit's competitors have a name and a domain, no aliases ([config](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/internal/config/config.go)), so a rival written another way isn't counted. Cheap Seats folds the aliases you list onto one name.
-- **Who is on the board.** Limelit counts only the brands you listed; finding others is a Limelit Cloud feature. Cheap Seats' share of voice counts every product the answers named.
+- **Matching:** Limelit searches names, aliases and domains and stores match offsets. Cheap Seats grades the whole answer, then checks that a name or alias is present.
+- **Disclaimers and namesakes:** Limelit's [methodology](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/methodology.md#finding-brands-a-text-search-on-purpose) counts “I could not find Acme” as a mention. Cheap Seats treats that alone as absent and uses brand context to distinguish namesakes.
+- **Competitors:** Limelit Open counts configured brands, and its [competitor config](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/internal/config/config.go) has names and domains without aliases. Cheap Seats normalizes configured aliases and includes every product named on its board. Discovery is a Limelit Cloud feature.
 
 ## How the numbers differ
 
-[Metric definitions](/docs/metrics/#how-these-compare-to-other-tools) has the full table. The differences that move a number:
+[Metric definitions](/docs/comparing-metrics/) has the full table. The differences that move a number:
 
 - **Visibility.** Limelit's is the unbranded answers whose text contains your brand string, over unbranded answers. Cheap Seats' named rate is the answers graded recommended or mentioned, over every graded answer, so on the same answers it leaves out the ones that only say they can't find you, and the ones about another product with your name.
 - **Recommended.** Cheap Seats grades whether the answer endorses you. Limelit counts whether you appear, with your rank when you're in a list.
@@ -57,14 +53,9 @@ Limelit Open has no pricing of its own: you pay your providers directly, and sin
 
 ## Start with Cheap Seats if…
 
-- You want to start at no cost on a subscription you already have, with no provider key, no account elsewhere and nothing routed through a vendor.
-- You want each answer graded recommended versus merely mentioned, with reasoning you can check, rather than whether your name appears. That matters most when your name is a common word, or when you're new enough that answers say they can't find you.
-
-The rest of the case for starting here, strict grades, two tracks, intervals, prompts and data you own, is on [the compare index](/compare/#start-here).
+You want recommendation judgments with checkable evidence, particularly for a common product name. Local subscription CLIs can avoid API charges; [cost and budget](/docs/cost-and-budget/) explains the setup.
 
 ## When to move to Limelit
-
-If what you need is on this list, Limelit Open is a strong choice, and an open-source one:
 
 - **You need Perplexity, Gemini, Google AI Overviews, AI Mode or Copilot.** Limelit Open asks all of them; Cheap Seats asks only Claude and OpenAI models. See [Which AI engines Cheap Seats asks](/docs/engines/).
 - **You want the simplest install there is.** One file, no container, a setup wizard that reads your brand from your site, and a first number in about ten minutes.
@@ -76,6 +67,6 @@ If what you need is on this list, Limelit Open is a strong choice, and an open-s
 
 ## Taking your prompts with you
 
-They're plain text in your own repo ([why that matters](/compare/#if-you-grow-out-of-it)), so add them on Limelit's Prompts page, in place of or beside its starter pack.
+Copy your prompt text from TOML: add them on Limelit's Prompts page, in place of or beside its starter pack.
 
 [All comparisons](/compare/).

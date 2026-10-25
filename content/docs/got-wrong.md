@@ -1,11 +1,11 @@
 ---
 title: "Got wrong about you: the fact check"
-description: "Each answer naming you is read against your listed facts for claims that contradict one, quoted from the answer and handed to the fix list. No grade changes."
+description: Find answers contradicting your listed facts, with verified quotes and evidence for the fix list.
 weight: 265
 group: Reading what it finds
 ---
 
-An answer can name you and get you wrong: a hosted product you aren't, a price you don't have, a platform you don't run on. The grader records whether you were recommended, named or absent, and the answer's tone, and nothing flags the error. The **fact check** does. After a run, each answer that names the brand is read once more by the grader model, beside the `facts` listed under `[brand]`, for the claims that contradict one. The run page lists them under **Got wrong about you**, by fact, with the answer's own words, and the fix list gets them as evidence.
+An answer can recommend you and get your price, platform or product wrong. List facts under `[brand]` to check answers that name you for contradictions. Findings appear under **Got wrong about you** and feed the fix list. They do not change grades or trends.
 
 ```toml
 [brand]
@@ -18,25 +18,31 @@ facts = [
 check_facts = false   # off; on by default when facts are listed
 ```
 
-It needs Cheap Seats 0.4.0 or later, and nothing else: no key, no new section. List facts and it runs.
+Requires Cheap Seats 0.4.0 or later. No additional key or provider is needed.
 
 ## What it checks, and what it never does
 
-- Only answers whose verdict is recommended or mentioned, and that name the brand itself, not a namesake the grader marked as [another product](../how-grading-works/).
-- Only contradictions of a listed fact: the claim and the fact can't both be true. A fact an answer leaves out, a vaguer or lesser version of one, an answer that says it can't verify you, a claim about a competitor, and an opinion are not misstatements. The checker is told that an empty list is the usual answer.
-- Each misstatement names the fact, says in a sentence what the answer got wrong, and quotes the answer's span. The quote is checked to be in the answer, the same check as the grader's [evidence](../reading-results/#the-run-page); one the model didn't copy is dropped, and so is a fact number off the list.
+The grader model reads each eligible answer beside your listed facts:
 
-It changes no grade and no trend. The grader's prompt and inputs are part of a run's method ([re-grading](../regrading/)); the fact check is a separate reading, stored in its own tables, and the facts never reach the grader. Add, change or remove a fact and every trend carries on.
+- **Eligible:** recommended or mentioned answers about your brand, excluding namesakes marked as [another product](../how-grading-works/#three-grades).
+- **Contradictions only:** the claim and listed fact cannot both be true. Omissions, vaguer statements, inability to verify, competitor claims and opinions aren't misstatements. The expected result is usually empty.
+- **Verified evidence:** each finding identifies the fact, explains the contradiction and quotes the answer. Invalid fact numbers and quotes absent from the answer are dropped, using the same [evidence check](../how-grading-works/#three-grades) as grading.
+
+Facts never reach the visibility grader. The fact check is stored separately, so changing facts doesn't restart trends.
 
 ## Cost, and when it runs again
 
-One grader call per answer that names the brand. On `provider = "claude-code"` it's $0, on your subscription; through the API it's spent from the same [daily budget](../cost-and-budget/) as runs, a few cents a run on Haiku. An answer is checked once per facts list: running the pass again asks nothing. Change, add or remove a fact and the next run's pass, or `cheapseats misstatements <run-id>` on an older run, checks every answer again under the new list and replaces what it found. Until then the page says how many answers were checked, and how many under an older list.
+One grader call per eligible answer. Your subscription covers `claude-code` calls; API calls use the [daily budget](../cost-and-budget/) and cost a few cents per run on Haiku.
 
-A [re-grade](../regrading/) doesn't run it: the grades change, the answers don't. Rerun it with the command if the verdicts moved enough that different answers now name you.
+Answers are checked once per facts list. Changing the list makes the next run's pass—or `cheapseats misstatements <run-id>` on an older run—check again and replace findings. Until then, the page shows how many answers were checked under the current and older lists.
+
+[Re-grading](../regrading/) doesn't run this pass. Rerun it manually if changed verdicts alter which answers are eligible.
 
 ## Where it shows
 
-- **Run page**: *Got wrong about you* lists each contradicted fact with the answers that did, most answers first; the prompt grid marks prompts with a misstatement; each answer shows its own under its grade.
-- **Fix list**: the analyst gets each contradicted fact, the prompts and one quote, as evidence for a `positioning` or `fix-page` fix on the page that should state the fact, with a `done_when` like "no answer to prompts 3, 7 contradicts fact 2".
-- **API and MCP**: `misstatements` in `/api/runs/<id>` and `get_run`: answers checked, and the facts contradicted with their answers, claims and quotes.
-- **CLI**: `cheapseats misstatements <run-id>` runs it on a finished run and prints the facts ([reference](../reference/#cli)).
+| surface | what you get |
+| --- | --- |
+| **Run page** | Contradicted facts, most answers first; prompt markers and findings under each answer's grade. |
+| **Fix list** | Facts, prompts and a quote as evidence for `positioning` or `fix-page` work, with a checkable `done_when`. |
+| **API / MCP** | `misstatements` in `/api/runs/<id>` and `get_run`: checked count, contradicted facts, answers, claims and quotes. |
+| **CLI** | `cheapseats misstatements <run-id>` checks a finished run and prints findings ([reference](../reference/#cli)). |

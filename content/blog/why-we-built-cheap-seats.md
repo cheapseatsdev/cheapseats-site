@@ -21,13 +21,13 @@ If you want to start measuring without buying anything, start here. If you grow 
 
 - **recommended**: you're the top pick, or one of at most three primary recommendations the answer actively endorses;
 - **mentioned**: you're named, but only as one option among many, in passing, or with reservations;
-- **absent**: you're not named at all.
+- **absent**: you're not named, or the answer only repeats your name to say it can't verify you.
 
 The grade comes with the reasons: your position in the answer, what it picked instead, a "why not #1", and the specific objections it raised about you. Every product it named feeds share of voice, so you see who's winning the questions you're losing.
 
 ## What the web says, and what the model believes
 
-Each question is asked twice per assistant. On the **search** track the assistant has to search the web before answering, which tells you what the web says today. On the **recall** track it has no tools, which tells you what the model already believes. The two move differently: search with the web over days to weeks, recall only when models change. Cheap Seats keeps them apart, so you can see which one you're losing on.
+Each question is asked on two tracks, with configurable samples per assistant. On the **search** track the assistant has to search the web before answering, which tells you what the web says today. On the **recall** track it has no tools, which tells you what the model already believes. A new page can enter search-backed answers; recall has no live retrieval and can still vary between runs. Cheap Seats keeps them apart, so you can see which one you're losing on.
 
 Every search, result URL and citation is kept, so you can see which third-party pages shape the answers, which of your own pages show up, and which of your sites the answers never reach.
 
@@ -39,7 +39,7 @@ A dashboard that says you're losing doesn't help on its own. When a run finishes
 
 ## Yours to run
 
-Your buyer questions, brand facts and competitors live in a config repo you own, as TOML, and change by pull request. `cheapseats plan` tells the reviewer what a change does to the trends before it merges. On your own machine Cheap Seats runs on your Claude subscription, and ChatGPT's if you have it, with no API key. Hosted, it's one container with a SQLite database, on a Docker host, Kubernetes or an exe.dev VM, with a daily budget on what it spends through the APIs. Prompts and answers go to the model providers you configure, and nowhere else.
+Your buyer questions, brand facts and competitors live in a config repo you own, as TOML, and change by pull request. `cheapseats plan` tells the reviewer what a change does to the trends before it merges. On your own machine Cheap Seats runs on your Claude subscription, and ChatGPT's if you have it, with no API key. Hosted, it's one container with a SQLite database, on a Docker host, Kubernetes or an exe.dev VM, with a daily admission budget for API calls. Model calls go to the providers you configure; optional providers receive the inputs their passes need.
 
 ## When you outgrow it
 

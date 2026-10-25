@@ -1,0 +1,9 @@
+{{ range slice (dict "title" "One reading" "key" "reading") (dict "title" "Change between two readings" "key" "change") }}
+<div class="figure-plot"><b>{{ .title }}</b><div class="figure-axis"><span>Answers per prompt</span><span>Sampling margin around the estimate</span><span>± points</span></div>
+{{ $key := .key }}
+{{ range slice (dict "n" 2 "reading" 17 "change" 24) (dict "n" 4 "reading" 12 "change" 17) (dict "n" 8 "reading" 8 "change" 12) (dict "n" 14 "reading" 6 "change" 9) }}
+{{ $margin := index . $key }}{{ $span := div (mul (float $margin) 100.0) 60.0 }}
+<div class="figure-range-row"><span>{{ .n }} answers</span><div class="figure-range" style="--from:{{ sub 50.0 $span }}%;--to:{{ add 50.0 $span }}%;--point:50%" aria-hidden="true"><i></i><b></b></div><strong>±{{ $margin }}</strong></div>
+{{ end }}<div class="figure-axis figure-axis-bottom"><span></span><span><span>−30 pts</span><span>estimate</span><span>+30 pts</span></span><span></span></div></div>
+{{ end }}
+<p class="figure-note">At 2 answers per prompt, a 10-point change is inside the ±24-point margin. At 14, the example margin narrows to ±9 points. Model and web changes remain possible.</p>

@@ -9,12 +9,12 @@ group: Running it
 
 ```
 cheapseats init [-name X] [-competitors a,b] [-suggest [-n 10]] [-dry-run] <url> [dir]
-                                       a new config repo from the brand's website (free unless -suggest)
+                                       a new config repo from the brand's website (no model calls unless -suggest)
 cheapseats serve [-addr 127.0.0.1:3000]   web UI, JSON API, MCP and the daily schedule
 cheapseats sets                           list prompt sets
-cheapseats run <set-id>                   run one set and wait for it (costs money)
-cheapseats report <run-id> [-json]        rates, share of voice and top pages for a run
-cheapseats fixes <run-id> [-rebuild]      the run's fix list as markdown
+cheapseats run <set-id>                   run one set and wait for it (API calls cost money)
+cheapseats report [-json] <run-id>        rates, share of voice and top pages for a run
+cheapseats fixes [-rebuild] <run-id>      the run's fix list as markdown
 cheapseats themes <run-id> [-rebuild]     net sentiment and the run's themes; -rebuild runs the theme pass again (one grader call)
 cheapseats fold <run-id>                  put the run's new product names to Jev ([typesafe])
 cheapseats coverage <run-id>              search the brand's sites for each prompt ([exa])
@@ -35,8 +35,8 @@ cheapseats regrade [-since 28d] [-dry-run=false] <set-id|run-id>
                                        a dry run with its cost unless -dry-run=false
 cheapseats review [-days 30] [-json] [-suggest] [-jev] <set-id>
                                        the prompts themselves: flat, noisy, off-target, duplicate and branded ones, and gaps (free; -suggest: one analyst call)
-cheapseats audit [-pages 10] [-info] [-json] [site...]   what AI crawlers can read on the brand's sites (free)
-cheapseats check-citations [-n 25] [-json] <run-id>      which pages the run cited name the brand, and which competitors (free)
+cheapseats audit [-pages 10] [-info] [-json] [site...]   what AI crawlers can read on the brand's sites (optional Exa reads are billed)
+cheapseats check-citations [-n 25] [-json] <run-id>      which cited pages name the brand and competitors (optional Exa reads are billed)
 cheapseats crawl import [-host example.com] <logfile>... AI crawler fetches and AI referrals from access logs; - reads stdin, .gz is read as gzip
 cheapseats crawl report [-days 30] [-json]               those counts per page, beside how the latest runs cite it
 cheapseats backup <file>                  a consistent copy of the database, safe while serve runs
@@ -48,10 +48,37 @@ cheapseats golden export <snapshot.db> [-n 80] [-set id] [-o dir]
 cheapseats version                        this build's version and database schema
 ```
 
-From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. Running a set from a terminal or a pipeline, with the exit codes and a scheduled workflow, is in [The CLI, and runs from CI](../cli-and-ci/). `audit`, `check-citations` and `crawl` call no model and cost nothing; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/), `review` in [Reviewing your prompts](../prompt-review/), `fold`, `coverage`, `cluster`, `verdicts`, `classify`, `match-fixes`, `judge`, `baseline`, `prospect`, `discover` and the probe's `-engine` in [Optional providers](../optional-providers/), `misstatements` in [Got wrong about you](../got-wrong/). `check -no-jev` skips the prompt judgments and `review -jev` asks for them.
+From a checkout, run any of them with `go run ./cmd/cheapseats <command>`. Running a set from a terminal or a pipeline, with the exit codes and a scheduled workflow, is in [The CLI, and runs from CI](../cli-and-ci/). `audit`, `check-citations` and `crawl` call no model; optional Exa fallback page reads can cost money; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/), `review` in [Reviewing your prompts](../prompt-review/), `fold`, `coverage`, `cluster`, `verdicts`, `classify`, `match-fixes`, `judge`, `baseline`, `prospect`, `discover` and the probe's `-engine` in [Optional providers](../optional-providers/), `misstatements` in [Got wrong about you](../got-wrong/). `check -no-jev` skips the prompt judgments and `review -jev` asks for them.
 
-- **`init`**: `-name` sets the brand's name instead of what the site calls itself; `-competitors` adds `[[competitors]]` entries, alternatives prompts and head-to-heads; `-suggest` adds `-n` suggested prompts to the starter sets with one analyst call; `-dry-run` prints what it found and every file it would write, and writes nothing. It writes to `./<brand>-cheapseats-config` unless you name a directory.
 - **`regrade`**: `-since` takes `28d`, `72h` or `all` (default 28 days) and applies to a set; `-dry-run` is true by default.
+
+## init options
+
+`init` writes `./<brand>-cheapseats-config` unless you supply a directory:
+
+```bash
+cheapseats init yoursite.com ../acme-config -dry-run
+cheapseats init yoursite.com -name "Acme" -competitors "Asana,Trello" -suggest
+```
+
+| Flag | Effect |
+| --- | --- |
+| `-name X` | Override the discovered brand name |
+| `-competitors a,b` | Add competitor entries, alternatives prompts and head-to-heads |
+| `-suggest [-n 10]` | Add suggested prompts with one analyst call on the `claude` CLI, using its subscription |
+| `-dry-run` | Print discovered values and every proposed file; write nothing. With `-suggest`, the analyst call still runs |
+
+Discovery fetches the home page, `/llms.txt` and `/sitemap.xml`, following sitemap indexes within its limits, through the guarded public-address fetcher. It chooses:
+
+- **Name:** first available `og:site_name`, `application-name`, JSON-LD Organization/SoftwareApplication name, domain-matching title, llms.txt heading, or domain.
+- **About:** meta description, then `og:description`, JSON-LD description, or llms.txt summary.
+- **Aliases:** domain and the name without spaces.
+- **Sites:** marketing host; linked docs/blog/community hosts and paths; brand-named Read the Docs or GitBook sites; up to three matching GitHub repositories or owners.
+- **Category:** a product noun phrase from the description, or a TODO with “tool” as the stand-in.
+
+The output contains `cheapseats.toml` plus discovery, use-cases, alternatives, pricing and head-to-head prompt sets. Only head-to-heads names the brand. The grader, analyst and Claude answerer use `claude-code`; Codex is commented out and scheduling is off.
+
+Generated files are validated before writing. Existing target files abort the write. Review all TODOs, especially guessed brand details, `audience`, `facts` and buyer questions, then follow [Getting started](../getting-started/#point-cheap-seats-at-it).
 
 ## MCP server
 
@@ -82,8 +109,8 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `get_rankings`     | the brand's daily share-of-voice rank and rates per set, with rolling averages and 95% bands, and day-over-day change with its margin (`within_noise` when it could be chance); takes `set`, `last_days` and `window` (7, 14 or 28) |
 | `get_search_queries` | the searches behind a run's search-track answers: top queries, names the assistants added, words added and dropped, and queries worth adding as prompts; takes `run`, `pool` and `limit`. Free |
 | `suggest_prompts`  | drafts new buyer questions for a set as TOML to paste, with repeats dropped; takes `set` and `n` (default 10, max 50). One analyst call; writes nothing |
-| `audit_sites`      | audits the brand's sites for AI crawlers and returns the errors and warnings, each with a fix; takes `site`, `cached` and `info`. Free |
-| `check_citations`  | fetches a run's most-cited third-party pages and says which name the brand and which competitors; takes `run`, `limit` and `cached`. Free |
+| `audit_sites`      | audits sites for AI crawlers, returning findings and fixes; takes `site`, `cached` and `info`. No model calls; optional Exa page reads are billed |
+| `check_citations`  | fetches cited third-party pages and checks brand/competitor names; takes `run`, `limit` and `cached`. No model calls; optional Exa page reads are billed |
 | `get_crawlers`     | AI crawler fetches and AI referrals per page from imported logs, beside how often runs cite each; takes `last_days`, `flag` and `limit`. User agent only, unverified |
 | `review_prompts`   | a set's [prompt review](../prompt-review/): flat, noisy, off-target, duplicate, rewritten and branded prompts, and gaps; takes `set`, `days` (30, 60 or 90) and `suggest`. Free unless `suggest`, which is one analyst call for proposed edits |
 | `regrade`          | grade a set's, or one run's, stored answers again with today's grader, brand and competitors; takes `target` (a set or run id), `since_days` (default 28, 0 for all) and `dry_run` (true unless set to false). The dry run says how many answers and the estimated cost; the real one runs in the background within the daily budget. See [Re-grading](../regrading/) |
@@ -111,7 +138,7 @@ The server also offers three **prompts**, each telling the model which tools to 
 | `GET /api/runs`                      | runs with headline rates; takes `set` and `limit`                     |
 | `POST /api/runs`                     | starts a run over `{"set": "<id>"}` (costs money); with `"dry_run": true` it returns the plan and estimated cost and starts nothing |
 | `GET /api/runs/{id}`                 | one run in full: every answer with its grade and sources, fixes, insights |
-| `GET`/`POST /api/runs/{id}/fixes`    | the fix list; POST rebuilds it and the insights (one paid Claude call) |
+| `GET`/`POST /api/runs/{id}/fixes`    | the fix list; POST rebuilds it and insights (one analyst call, subscription or API) |
 | `POST /api/runs/{id}/cancel`, `/retry` | stop a run, or finish an unfinished one                             |
 | `GET`/`POST /api/runs/{id}/shares`   | the run's share links; POST makes one from `{"days"?, "include_answers"?}` and returns it as `url`, once |
 | `DELETE /api/shares/{id}`            | revokes a share link                                                  |
@@ -121,8 +148,8 @@ The server also offers three **prompts**, each telling the model which tools to 
 | `GET /api/attempts`                  | the work submitted for fixes, newest first, with outcomes; takes `set` |
 | `GET /api/rankings`                  | daily rank and rates per set, with rolling averages, bands and day-over-day margins; takes `lastDays`, `set` and `window` (7, 14 or 28) |
 | `GET /api/runs/{id}/searches`        | what the assistants searched in a run; `pool=1` adds the set's earlier same-method runs |
-| `GET`/`POST /api/audit`              | the latest site audit; POST runs one over the brand's sites and waits for it (free) |
-| `GET`/`POST /api/runs/{id}/citation-check` | the run's latest citation check; POST runs one over its `n` most-cited third-party pages (default 25) and waits for it (free) |
+| `GET`/`POST /api/audit`              | the latest audit; POST runs one and waits (optional Exa reads are billed) |
+| `GET`/`POST /api/runs/{id}/citation-check` | the latest citation check; POST checks the `n` most-cited third-party pages (default 25) and waits (optional Exa reads are billed) |
 | `GET /api/crawlers`                  | AI crawler and referral counts per page, from imported logs; takes `days` (default 30) |
 | `GET /api/citations`                 | cited URLs across runs; takes `urlContains`, `lastDays` and `set`     |
 | `POST /api/search-probe`             | one search, verbatim; takes `{"query", "allowed_domains"?, "blocked_domains"?, "engine"?}` |
@@ -153,6 +180,20 @@ Behind a proxy on the same machine, set `CHEAPSEATS_HOSTS` to the host names it 
 ## Data and privacy
 
 Prompts and answers are sent to the model providers on every run; `brand.about` goes to the grader and analyst, and `brand.facts` to the analyst and the fact check, so keep anything private out of them. With the optional providers on, Jev sees product names, objection and praise wordings, graded answers, page titles and URLs, fix titles and prompt wordings, and Exa sees prompt texts and the sites searched; neither sees a key or a token. API keys are masked out of provider error messages before they're logged or stored.
+
+## Optional provider mechanics
+
+Passes store decisions and reuse unchanged inputs. Re-running a pass can still make calls for missing or changed inputs, or after a web-content cache expires.
+
+- **Name folding:** one decision per new name against plausible known products, with a “different product” option; configured aliases remain authoritative.
+- **Phrase clustering:** new objection and praise wordings are compared with established clusters. JSON exposes each cluster's `wordings`.
+- **Second opinions:** stored opinions are compared with the answer's current grade when read: agrees, disagrees or unsure below `min_confidence`.
+- **Classification:** Jev handles pages the rules call `other` and third-party hosts they call `editorial`. `[sources]` wins over Jev, which wins over the built-in default.
+- **Fix matching:** pairs from different sets are considered when they share a type and site. Matched cards retain each fix as a valid `mark_fix` target.
+- **Prompt judgments:** cached by exact inputs, so changing one prompt re-asks its affected questions. `check -no-jev` skips them; `review -jev` requests them before review.
+- **Exa page reads:** fallback content is cached for a day. Coverage, baseline and prospects are stored with their run; competitor discovery is on demand and never edits config.
+
+Each Jev decision retains its provider and probability. `min_confidence` is applied when reports read decisions, so a threshold change needs no new calls. See [Optional providers](../optional-providers/) for switches and visible results.
 
 ## CLI answerers
 

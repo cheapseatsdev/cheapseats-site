@@ -6,8 +6,8 @@ group: Running it
 ---
 
 - **Backups before schema changes.** Before it changes an existing database's schema, Cheap Seats copies it to `cheapseats.db.bak-v<N>` beside it. To roll back, stop Cheap Seats, put the copy back as `cheapseats.db`, and run the previous version.
-- **No running old on new.** It refuses to start on a database from a newer version, rather than run an older one on it.
-- **Old runs stay useful.** Runs recorded by earlier versions stay readable, comparable and retryable.
+- **No running old on new.** It refuses to open a database with a newer schema.
+- **Old runs stay useful.** Runs recorded by earlier versions stay readable and retryable. Comparisons still respect method boundaries.
 - **Config changes come with a migration.** When a release changes the config format, `cheapseats check` says what to change, and a `cheapseats migrate-config` step converts it. Upgrading the app before converting the config loses nothing: Cheap Seats links old results to prompts by their text once the converted config is in place.
 
 With an image per config commit (see [Deploying](../deploying/)), upgrading Cheap Seats is a reviewed change to the `FROM` line in your config repo.

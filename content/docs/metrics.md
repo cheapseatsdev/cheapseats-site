@@ -1,11 +1,11 @@
 ---
 title: Metric definitions
-description: Every number Cheap Seats reports, with its formula and denominator, and how each maps to Peec AI, Profound, Gauge, Otterly.AI, Ahrefs, SE Ranking and Elmo.
+description: Every Cheap Seats metric, with its formula, denominator, exclusions and export field.
 weight: 230
 group: Reading what it finds
 ---
 
-**What exactly does each Cheap Seats number mean?** Almost every metric below is a count of graded answers over a count of graded answers, worked out from what's stored. No model is called to build a report. The same numbers are on the run page, in the run's JSON (`/api/runs/<id>` and `/runs/<id>/export.json`, under `Summary`), in `cheapseats report <run-id> -json` (under `summary`) and in MCP `get_run`.
+These metrics are calculated from stored answers and grades, without new model calls. Find them on the run page, in JSON (`/api/runs/<id>` and `/runs/<id>/export.json`, under `Summary`), in `cheapseats report -json <run-id>` (under `summary`) and MCP `get_run`.
 
 Terms used throughout:
 
@@ -36,20 +36,22 @@ A **branded prompt** names your brand or one of its aliases as a whole word ("Is
 
 ## Share of voice and position
 
+{{< figure name="mention-counts" >}}
+
 The share-of-voice board lists every product the answers named, not only the competitors you configured.
 
 | column | formula | adds up to | JSON |
 | --- | --- | --- | --- |
-| **Named** | answers naming the product ÷ every graded answer | more than 100% | `named_rate` |
+| **Named** | answers naming the product ÷ every graded answer | can exceed 100% | `named_rate` |
 | **Share of voice** | answers naming the product ÷ the sum, over every product, of answers naming it | 100% | `share_of_voice` |
 | **Avg place** | mean of the product's place among the products an answer names, over the answers naming it at a known place | | `avg_position` |
 | **First** | answers naming it first ÷ answers to choice prompts | | `named_first` |
 | **Top 3** | answers naming it first, second or third ÷ answers to choice prompts | | `top3` |
-| **Weighted** | mean over every graded answer of (N − place + 1) / N, where N is the number of products the answer names, and 0 where it isn't named | | `position_weighted` |
+| **Weighted** | mean over every graded answer of (N − place + 1) / N at a known place, where N = max(products named, place); 0 when absent or place is unknown | | `position_weighted` |
 | **Top pick** | answers whose top pick is the product | | `top_pick` |
 
 - **Named rate was called share of voice.** In earlier versions the board's one rate column was labelled share of voice. That number is now **named rate**; **share of voice** is the true share, which sums to 100%. The JSON still writes the old field, `share`, with the named rate in it, so existing readers keep working.
-- **Place.** Your brand's place is the `position` from its grade. Another product's place is where it comes in the grader's list of names. An answer that names your brand without listing it has no known place for it, and is left out of avg place, first, top 3 and weighted.
+- **Place.** Every product uses its order in the grader's canonicalized list of names. If that list omits your brand but its grade says named, the grade's `position` is used when available. Unknown positions are excluded from avg place and contribute zero to first, top 3 and weighted.
 - **First and top 3** carry 95% Wilson intervals in JSON.
 - **Weighted** is position-weighted visibility as SE Ranking defines it: first of four scores 1, fourth of four 0.25, absent 0.
 - **Rank** is your place on the board: 1 + the number of products named in more answers than you. Products named in the same number of answers share a rank, and a brand no answer named has none (0 in the API).
@@ -94,7 +96,7 @@ With `[typesafe]` and `second_opinions` on, Jev reads every graded answer again 
 | **disagrees** | Jev chose another verdict, at a probability of at least `min_confidence` |
 | **unsure** | Jev's probability for its choice is under the threshold |
 
-**Agreement rate** = agreed ÷ (agreed + disagreed), over the answers Jev was sure about. The set page's **Jev agrees** column is this rate per run; since the answers and the definitions don't change between runs, its movement is a measure of the grader's drift. The evidence comparison is **same** (the two sentences are equal once case, spacing and punctuation are folded, or one contains the other), **differs** or **none**. `second_opinion` in the run's JSON carries the counts and each disagreement; MCP `get_run` the counts and up to ten disagreements, `get_result` one answer's.
+**Agreement rate** = agreed ÷ (agreed + disagreed), over opinions Jev was sure about. The set page shows it per run as **Jev agrees**. Changes can reflect different answers as well as grading variation; inspect disagreements before drawing conclusions. Evidence is **same** when the sentences match after folding case, spacing and punctuation, or one contains the other; otherwise **differs** or **none**. `second_opinion` in JSON carries counts and disagreements. MCP `get_run` returns counts and up to ten disagreements; `get_result` returns one answer's.
 
 ## Sources
 
@@ -193,7 +195,7 @@ How much the hosts a set's answers cite move from one run to the next, per track
 - **A run that cited nothing** (an outage, or the recall track, which has no search) is skipped rather than read as every host leaving.
 - **A change of prompts** flags its transition `prompts_changed`: some of its churn is the questions.
 
-A high score says the answers lean on the same sources run after run, so a host entering or leaving means something. A low one says each run's sources table is a sample. It's on the set page, at `GET /api/sets/{id}/citation-stability` and in MCP `get_citation_stability`.
+A high score means sources have been consistent; a low score means they vary between runs. Neither establishes why a host entered or left. Find it on the set page, at `GET /api/sets/{id}/citation-stability` and MCP `get_citation_stability`.
 
 ## Trends and outcomes
 
@@ -212,35 +214,8 @@ A high score says the answers lean on the same sources run after run, so a host 
 
 ## How these compare to other tools
 
-Most AI visibility tools use the same few words for different formulas. The table below is from each vendor's published documentation as of October 2026: [Peec AI](https://docs.peec.ai/metrics/brand-metrics) and its [domains](https://docs.peec.ai/domains), [Profound](https://docs.tryprofound.com/cookbook/metrics/how-metrics-are-calculated.md), [Gauge](https://docs.withgauge.com/introduction/core-aeo-metrics), [Otterly.AI](https://help.otterly.ai/brand-report-kpi-definition) and its [API docs](https://docs.otterly.ai/api-reference/brand-reports/update-a-brand-report), [Ahrefs Brand Radar](https://help.ahrefs.com/en/articles/15501968-ai-visibility-metrics), [SE Ranking](https://visible.seranking.com/?p=4633), and the two open-source trackers, Elmo ([visibility](https://www.elmohq.com/docs/user-guide/visibility), [sentiment](https://www.elmohq.com/docs/user-guide/sentiment), [share of voice code](https://github.com/elmohq/elmo/blob/ed3c6a23227f90e653df8b8722ee3a8fb6c4e5e6/apps/web/src/lib/visibility-stats.ts)) and Limelit Open ([methodology](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/methodology.md)). Check their pages for changes since.
-
-| concept | Cheap Seats | Peec AI | Profound | Gauge | Otterly.AI | Ahrefs | SE Ranking | Elmo | Limelit Open |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Visibility** | **named rate**: answers naming you ÷ every graded answer | visibility: responses mentioning you ÷ all responses | visibility: runs naming you ÷ runs naming any brand | visibility: answers naming you ÷ all answers | brand coverage: prompts mentioning you ÷ all prompts | a mention: you appear at least once in an answer | visibility: mean of (N − best position + 1)/N, 0 when absent | visibility: each prompt's latest answers mentioning you ÷ those answers; a name match is confirmed by a model (Jev) | visibility: answers containing your name string ÷ unbranded answers |
-| **Share of voice** | your mentions ÷ every product's mentions, one per answer, all products named | your mentions ÷ all brand mentions | your mentions ÷ all brand mentions, one per run | your mentions ÷ yours plus selected competitors' | your mentions ÷ all brand mentions | your share of impressions, weighted by search volume, against tracked brands | | your mentions ÷ yours plus tracked competitors' | your mention occurrences ÷ every tracked brand's occurrences in the same answers |
-| **Position** | **avg place**, over answers naming you; every product named counts | average rank among all brands detected, where you appear | average position, over runs naming you | not scored | avg. brand position: the sum of your positions ÷ the prompts you appeared in | | in visibility, as above | average rank among the tracked companies an answer names | mean rank of the list items you appear in; prose has none |
-| **Win** | **top pick**, and **first** (named first ÷ choice answers) | win rate: chats where you're position 1 ÷ all chats | | | | | | | |
-| **Position-weighted** | **weighted**, SE Ranking's formula | | | | | | visibility | | |
-| **Sentiment** | **net sentiment**: % positive − % negative of answers naming you | 0–100 score | positive claims ÷ all claims | positive ÷ (positive + neutral + negative) | net sentiment: (positive − negative) ÷ total × 100 | | net sentiment: % positive − % negative | 0–100: positive 100, neutral and mixed 50, negative 0 | Limelit Cloud only |
-| **Citations** | cited rate (÷ answers) and citation share (÷ all citations) | cited (chats citing it ÷ all chats), citation share (its citations ÷ all citations), citation rate (citations per chat that used it) | citation share: your domain's citations ÷ all citations | citation rate: answers citing the page or domain ÷ all answers | | | | citations by URL, domain and category | citation share: your site's citations ÷ all citations |
-| **Branded prompts** | left out of the headline rates; shown underneath | | | left out of rankings by default | | | | | left out of the headline; kept in the grid, tagged |
-| **After a config change** | grades and rates stay as graded, unless you re-grade stored answers under today's grader; which pages are whose follows today's config | past chats reprocessed when a name or alias changes | re-applied to history from today's config | | every past day recalculated when names or competitors change | | | past answers re-judged for the changed company, 90 days back by default | every stored answer re-read from today's brands and rules |
-| **Intervals** | 95% intervals on every rate; changes tested against noise | none published | none published | none published | none published | "directional indicators" | none published | none published; 5 samples a run by default | `n` on every number; under 20 answers captioned a small sample |
-
-The Semrush AI Toolkit [sorts sources](https://www.semrush.com/kb/1594-ai-seo-metrics) into the same four buckets Cheap Seats uses, missing, shared, strong and unique, by what the answers citing them name. Its "shared" means a site whose citing answers name every competitor in the set; Cheap Seats' means one named at least as often as you.
+See [Comparing metrics across tools](../comparing-metrics/#how-these-compare-to-other-tools) for the vendor definition table and its dated sources.
 
 ### Migrating between Cheap Seats and these tools
 
-- **Cheap Seats' visibility is stricter than Profound's.** Profound leaves out the runs that name no brand at all; Cheap Seats' named rate counts every graded answer. On the same answers, Cheap Seats' number is lower or equal. To reproduce Profound's, take Cheap Seats' export and drop the answers whose `named` list is empty.
-- **Profound averages per model.** It works each metric out per AI model, then averages the models with equal weight. Cheap Seats' run-level rates pool the answers; its per-answerer rates are the per-model numbers, so average those to match.
-- **Gauge's share of voice depends on whom you compare with.** It divides by your mentions plus the selected competitors'. Cheap Seats divides by every product the answers named, so adding a competitor to your config doesn't change your share, except where it folds two spellings into one name.
-- **Peec AI's visibility is Cheap Seats' named rate.** Responses mentioning you over all responses. Peec's position also counts every brand detected, as Cheap Seats' avg place does.
-- **Otterly.AI counts prompts, not answers.** Brand coverage is the share of prompts that mention you. In Cheap Seats, count the prompts in the prompt list whose named rate is above zero.
-- **Ahrefs weights by search volume.** Brand Radar's AI share of voice is a share of estimated impressions. Cheap Seats weights every prompt you choose to ask the same, and estimates no traffic.
-- **SE Ranking's visibility is Cheap Seats' weighted column**, the same formula.
-- **History.** Profound applies today's topics, tags and brands to past answers, so editing your setup changes past numbers ([why past numbers change](https://docs.tryprofound.com/cookbook/metrics/why-past-numbers-change.md)). In Cheap Seats, a run's grades, rates and share of voice are fixed when it's graded; a change in how answers are asked or graded starts a new method on the trend rather than rewriting the old one. To carry the trend on after a grading change, [re-grade](../regrading/) the stored answers: it's a step you take, it keeps the replaced grades, and the run page says so. Only which pages count as yours or a competitor's, and the source kinds, are read from today's config for every run.
-- **Elmo's share of voice also depends on whom you track.** Like Gauge, it divides by your mentions plus your tracked competitors'. Its position is your rank among the tracked companies an answer names, where Cheap Seats' avg place counts every product named.
-- **Elmo leaves out "I don't know that brand".** A model reads each name match, and an answer saying it has no information about your brand isn't counted. Cheap Seats grades it `absent` too, unless the answer also states something about your brand (a feature, a price, a fit), which makes it `mentioned`. Elmo's visibility also counts each prompt's latest answers, where Cheap Seats' run rates pool the run's.
-- **Limelit Open counts strings, and occurrences.** Its visibility is a deterministic text search, so "I could not find Acme" counts as a mention, as its methodology says, where Cheap Seats grades it `absent`. Its share of voice counts every occurrence, not one per answer: an answer that names you once and a rival five times is a 1:5 share, where in Cheap Seats it's 1:1.
-- **History, again.** Elmo re-judges past answers when you add a competitor or change a name, 90 days back by default, and leaves older answers as they were, so a long chart can step at that point. Limelit Open re-reads every stored answer whenever the brands or its matching rules change.
-- **Your prompts move with you.** Cheap Seats' prompt sets are plain TOML in your own repo. Each prompt is a line of text, so you can paste them into any of these tools. See [Compare](/compare/).
+See [migration differences](../comparing-metrics/#migrating-between-cheap-seats-and-these-tools) before comparing numbers or moving prompts.

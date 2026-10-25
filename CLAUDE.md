@@ -3,6 +3,8 @@
 The website, docs and blog for Cheap Seats, built with Hugo. `README.md` has the layout and
 commands; `content/docs/` must stay true of Cheap Seats as it ships.
 
+For prose and explanatory visuals, follow the [Cheap Seats editor skill](skills/cheapseats-editor/SKILL.md).
+
 ## Before you push
 
 ```sh

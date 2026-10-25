@@ -1,6 +1,6 @@
 ---
 title: Getting started
-description: Run Cheap Seats on your own machine at no cost, on the Claude subscription you already have, then point it at your own brand.
+description: Run the example, create a config for your brand, and check your first results.
 weight: 110
 group: Start here
 ---
@@ -15,7 +15,7 @@ group: Start here
 
 The repo includes a complete config in `examples/cheapseats-config`, with Cheap Seats itself as the brand, in two versions that differ only in how models are called.
 
-**On your subscriptions**, at no cost:
+**On your existing subscriptions**, with no additional API spend:
 
 ```bash
 CHEAPSEATS_CONFIG=examples/cheapseats-config/cheapseats.subscriptions.toml go run ./cmd/cheapseats serve
@@ -39,42 +39,14 @@ What Cheap Seats asks, and about whom, lives in a config repo of your own, which
 ### Start one from your website: `cheapseats init`
 
 ```bash
-go run ./cmd/cheapseats init https://yoursite.com                  # writes ./<brand>-cheapseats-config
-go run ./cmd/cheapseats init yoursite.com ../acme-config -dry-run  # prints what it found and would write
-go run ./cmd/cheapseats init yoursite.com -name "Acme" -competitors "Asana,Trello" -suggest
+go run ./cmd/cheapseats init https://yoursite.com
 ```
 
-It makes three requests, through the same guarded fetcher as the [site audit](../site-audit/) (public addresses only): the home page, `/llms.txt` and `/sitemap.xml`. No model is called unless you pass `-suggest`. From them it works out:
+This reads your home page, `/llms.txt` and `/sitemap.xml` and writes `./<brand>-cheapseats-config`: `cheapseats.toml` and five starter prompt sets. It calls no model unless you add `-suggest`, uses only public addresses, and refuses to overwrite existing files.
 
-- **Name**: the first of `og:site_name`, `application-name`, a JSON-LD Organization or SoftwareApplication `name`, the part of `<title>` that spells the domain, llms.txt's heading, the domain.
-- **About**: the meta description, else `og:description`, the JSON-LD description, llms.txt's summary.
-- **Aliases**: the domain, and the name without spaces.
-- **Sites**: the host (marketing); `docs.`, `developers.`, `help.`, `blog.` and `community.` subdomains and `/docs`, `/blog`, `/community` paths it finds linked; docs on readthedocs.io or gitbook.io named after the brand; up to three GitHub repositories or owners named after the brand or its domain, as `code`.
-- **Category**: what buyers would call the product, from the description ("platform", "app", "database"...). With none, the prompts say "tool" and a TODO says to replace it.
+Review every TODO (`grep -rn TODO` in the new directory). Fill in `audience` and `facts`, and check the guessed name, `about`, category, sites and questions. Settle `about` and `audience` before the first run: changing either starts a new trend. Commit the directory as its own git repo.
 
-It writes:
-
-```
-<brand>-cheapseats-config/
-  cheapseats.toml                   brand, sites, competitors; claude-code answerer, grader and
-                                 analyst (codex commented out); budget; schedule off
-  prompt-sets/
-    discovery.toml      core     "What's the best <category> for a small team?" ...
-    use-cases.toml      plg      the jobs buyers hire it for (a TODO: use theirs)
-    alternatives.toml   plg      "What are good alternatives to <competitor>?" ...
-    pricing.toml        plg      cost and value
-    head-to-heads.toml  plg      "<brand> vs <competitor>: which should I pick?": the only set
-                                 that names the brand
-```
-
-| flag | |
-| --- | --- |
-| `-name X` | the brand's name, instead of what the site calls itself |
-| `-competitors a,b` | competitors, comma-separated: `[[competitors]]` entries, alternatives prompts and head-to-heads |
-| `-suggest [-n 10]` | add suggested prompts to the starter sets: one analyst call on the `claude` CLI, so nothing on a subscription |
-| `-dry-run` | print what it found and every file it would write; write nothing |
-
-The generated files pass `cheapseats check` before they're written. `init` refuses to overwrite a file that exists, and writes nothing if one does. Review every TODO (`grep -rn TODO`): `audience` and `facts` are left for you, and `about` and the category are guesses. Settle `about` and `audience` before the first run, since changing them restarts every trend. Commit the directory as its own git repo.
+See [init options and discovery rules](../reference/#init-options) for a dry run, explicit competitors and suggested prompts.
 
 ### Or start from the template
 
@@ -89,7 +61,7 @@ CHEAPSEATS_CONFIG=../your-config/cheapseats.toml go run ./cmd/cheapseats serve
 
 `cheapseats check` validates the config and every prompt set.
 
-**A free first step: `cheapseats audit`.** Before you ask a single question, check what AI crawlers can read on your sites: robots.txt and firewall blocks per AI bot, llms.txt, the sitemap, and pages that are empty without JavaScript. It calls no model and costs nothing. See [Free site checks](../site-audit/).
+**A free first step: `cheapseats audit`.** Before you ask a single question, check what AI crawlers can read on your sites: robots.txt and firewall blocks per AI bot, llms.txt, the sitemap, and pages that are empty without JavaScript. It calls no model; optional Exa fallback reads can incur page-read charges. See [Free site checks](../site-audit/).
 
 ```bash
 CHEAPSEATS_CONFIG=../your-config/cheapseats.toml go run ./cmd/cheapseats audit
@@ -102,12 +74,12 @@ Then:
 3. Run a set from its page, or `go run ./cmd/cheapseats run <set-id>`.
 4. Read the run page and the fix list. See [Reading results](../reading-results/).
 
-Your prompt sets are plain TOML in your own repo. If you outgrow Cheap Seats, the buyer questions you've refined go with you to whichever tool you move to; see [Compare](/compare/).
-
 ## Running on your subscriptions
 
-On your own machine, everything can run through the `claude` and `codex` CLIs, logged in to your Claude and ChatGPT subscriptions, instead of the APIs: answerers with `provider = "claude-code"` or `"codex"`, and the grader and analyst with `provider = "claude-code"`. Each call runs in an empty temp directory with your own CLAUDE.md, hooks, skills, MCP servers and Codex config switched off, keeps no session, and has the API key removed from its environment so it can't bill the API instead.
+Set answerers to `provider = "claude-code"` or `"codex"`, and the grader and analyst to `provider = "claude-code"`. The CLIs must be installed and logged in on the machine running Cheap Seats; the [subscription example](https://github.com/cheapseatsdev/cheapseats/blob/main/examples/cheapseats-config/cheapseats.subscriptions.toml) supplies this config.
 
-At most three calls per CLI run at once, since subscriptions are rate limited and share their limit with your own use: a 15-prompt set is 90 answers plus their grades, so expect it to take a while and to use a noticeable share of a day's allowance. Check that automated use fits your plans' terms.
+Each call uses an empty temporary directory, disables your local agent configuration and removes API keys from its environment. See [CLI answerers](../reference/#cli-answerers) for the isolation boundaries and separate-user setup.
 
-A run uses the answerers this machine can call and lists the rest as skipped. The Docker image has no CLIs, so a deployed Cheap Seats in a container uses the API providers; a VM, such as [exe.dev](../deploying/#exedev), can run the CLIs.
+At most three calls per CLI run at once. A 15-prompt set with two answerers and one sample per track produces 60 answers, plus grading, so expect it to take time and share your subscription's allowance. Check that automated use fits your plans' terms.
+
+Unavailable answerers are listed as skipped. The Docker image has no CLIs; use API providers there, or a [VM](../deploying/#exedev) for subscriptions.

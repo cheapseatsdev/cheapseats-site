@@ -1,32 +1,34 @@
 ---
 title: "Self-hosted AI visibility tracker: Docker and Kubernetes"
-description: Run Cheap Seats in Docker, on Kubernetes with the Helm chart, or on an exe.dev VM. One container, one SQLite file; prompts go only to providers you choose.
+description: Choose Docker, Kubernetes or a VM, try the container locally, and understand where your data goes.
 weight: 410
 group: Running it
 ---
 
-Cheap Seats is a self-hosted AI visibility tracker you can run in Docker or on your own Kubernetes cluster. It asks Claude and OpenAI models your buyers' questions, grades whether they recommend your brand, and lists the pages to fix. It is free and open source (MIT).
+Cheap Seats is free, open-source software (MIT). Run one instance with one SQLite database:
 
-- **Docker:** one container, `ghcr.io/cheapseatsdev/cheapseats`, with its database in a single SQLite file on a `/data` volume.
-- **Kubernetes:** a Helm chart, `oci://ghcr.io/cheapseatsdev/charts/cheapseats`, released at the same version as the image.
-- **exe.dev:** a VM behind exe.dev's email sign-in, deployed with one script.
-- **No other SaaS vendor:** prompts and answers go only to the model providers you configure. Results stay in your database.
+| Platform | Best fit |
+| --- | --- |
+| Local `go run` or Docker | Trying it or working alone |
+| Docker host or Kubernetes with Helm | A team with existing infrastructure and API keys |
+| [exe.dev](https://exe.dev) VM | Subscription CLIs or email sign-in without running an identity proxy |
+
+[Deploying](../deploying/) covers production setup, backups and operations.
 
 ## What it costs
 
-Cheap Seats itself costs nothing. Run it on your laptop for free, or host it and pay your host. That's the whole bill for Cheap Seats.
+Pay your host and the providers you use. On a machine or VM with logged-in `claude` and `codex` CLIs, answering, grading and fixes can use existing subscriptions. The Docker image has no CLIs and uses APIs billed per token.
 
-Separately, the models: Claude is required and ChatGPT optional. On a machine or VM with the `claude` and `codex` CLIs, answering, grading and the fix list can all run on your subscriptions, with no API key ([details](../getting-started/#running-on-your-subscriptions)). In a container, which has no CLIs, they go through the APIs and are billed per token: grading with Haiku is a fraction of a cent an answer and the fix list a few cents a run, and a daily budget caps the spend ([Cost and budget](../cost-and-budget/)).
+Set a [daily admission budget](../cost-and-budget/#the-daily-budget), and provider-side spending limits: reservations are checked before calls, but actual costs can exceed them.
 
 ## Where your data goes
 
-Cheap Seats sends prompts to the answerers you list in `cheapseats.toml` and nowhere else:
+- **Answers:** the Anthropic/OpenAI APIs, or their logged-in local CLIs, including provider web tools on the search track.
+- **Grades and fixes:** Anthropic's API (direct or through your configured proxy), or the `claude` CLI when those roles use `claude-code`.
+- **Optional analysis:** Jev receives selected names, phrases, answers, page metadata, fixes and prompts; Exa receives searches and page-read requests when enabled. See [Optional providers](../optional-providers/).
+- **Site checks:** HTTP requests go to audited sites, cited pages and discovered website metadata.
 
-- `anthropic` and `openai` answerers call those providers' APIs, which also run the web searches on the search track.
-- `claude-code` and `codex` answerers run those CLIs on the same machine, which talk to Anthropic and OpenAI.
-- Grading and the fix list go to the Anthropic API, or to the proxy named by `CHEAPSEATS_ANTHROPIC_BASE_URL` if you set one.
-
-Those are the only outbound calls in Cheap Seats' code: there is no telemetry and no Cheap Seats service in the middle. Answers, grades, citations and fix lists are stored in the SQLite file on your volume, and your prompt sets live in a config repo you own. Whoever hosts the machine (your cloud, your cluster, exe.dev) is the only other party involved.
+Cheap Seats has no telemetry or service in the middle. Answers, grades, citations and fixes stay in your SQLite file; prompt sets stay in your config repo. Your host and the configured providers still handle the data sent to them. Keep private material out of prompts and public brand facts; [Data and privacy](../reference/#data-and-privacy) gives the details.
 
 ## Docker
 
@@ -50,69 +52,16 @@ Run one container per database: progress lives in the process, so never point tw
 
 ## Kubernetes with Helm
 
-The chart runs one replica and replaces it rather than rolling, so two never share the database. It needs your deployment's image (Cheap Seats with your config copied to `/config`) and a Secret you create; it never takes keys as values.
+Use the versioned chart `oci://ghcr.io/cheapseatsdev/charts/cheapseats`. It runs one replica with replacement updates so two instances never share the database. Build an image containing your config, supply secrets separately, and use TLS for ingress.
 
-```dockerfile
-# Dockerfile in your config repo: one image per config commit
-FROM ghcr.io/cheapseatsdev/cheapseats:0.4.5
-COPY cheapseats.toml /config/cheapseats.toml
-COPY prompt-sets /config/prompt-sets
-ARG REVISION=""
-ENV CHEAPSEATS_CONFIG_REV=$REVISION
-```
-
-```bash
-# Build and push that image to your registry, then put the keys in a file only you can read,
-# not on the command line, where shell history keeps them:
-umask 077
-printf 'CHEAPSEATS_TOKENS=%s\n' "$(openssl rand -hex 32)" >cheapseats.env
-"${EDITOR:-vi}" cheapseats.env    # add ANTHROPIC_API_KEY=<key>, and OPENAI_API_KEY if an answerer uses it
-kubectl create secret generic cheapseats --from-env-file=cheapseats.env && rm cheapseats.env
-
-helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.4.5 \
-  --set image.repository=ghcr.io/acme/cheapseats-config \
-  --set image.tag=<config commit> \
-  --set existingSecret=cheapseats
-
-kubectl port-forward svc/cheapseats 3000:3000         # or set ingress.enabled, ingress.host and ingress.tls
-```
-
-An ingress needs TLS: set `ingress.tls`, or terminate TLS in front of it (a load balancer, a CDN). Every request carries an access token.
-
-The chart creates a 1Gi volume for the database (`persistence.size`, or bring your own with `persistence.existingClaim`). The plain app image works too, with the config mounted at `/config` through `extraVolumes` and `extraVolumeMounts`. [Deploying](../deploying/#kubernetes-with-helm) lists the values; the template's [Kubernetes guide](https://github.com/cheapseatsdev/cheapseats-config-template/blob/main/deploy/README.md) adds CI that deploys every merge.
+Follow [Kubernetes deployment](../deploying/#kubernetes-with-helm) for commands, storage and chart values.
 
 ## An exe.dev VM
 
-An [exe.dev](https://exe.dev) VM runs Cheap Seats as a systemd service behind exe.dev's HTTPS proxy, which signs people in by email. Because it's a whole VM, answerers can also be the `claude` and `codex` CLIs on your subscriptions.
+An [exe.dev](https://exe.dev) VM runs Cheap Seats as a systemd service behind HTTPS and email sign-in. It can use API providers or the subscription CLIs. The deploy script checks the config, swaps binary and config, and rolls back if health checks fail.
 
-```bash
-# 1. Create the VM; https://<vm>.exe.xyz is private to people you share it with
-ssh exe.dev "new --name=<vm> --comment='Cheap Seats'"
-
-# 2. Write its secrets, readable only by its user
-{ printf 'ANTHROPIC_API_KEY=%s\n' "<key>"
-  printf 'CHEAPSEATS_AUTH_HEADER=X-ExeDev-Email\n'
-  printf 'CHEAPSEATS_ALLOWED_EMAILS=%s\n' "you@example.com,@yourcompany.com"
-  printf 'CHEAPSEATS_HOSTS=%s\n' "<vm>.exe.xyz"
-  printf 'CHEAPSEATS_TOKENS=%s\n' "$(openssl rand -hex 32)"
-} | ssh <vm>.exe.xyz 'mkdir -p ~/cheapseats && umask 077 && cat > ~/cheapseats/cheapseats.env'
-
-# 3. Deploy, from a checkout of Cheap Seats, with your config repo committed
-deploy/exe-dev.sh <vm> ../your-config
-
-# 4. Nightly backups, and email alerts for failed or stalled runs
-deploy/exe-dev-ops.sh <vm> you@example.com
-
-# 5. Share it
-ssh exe.dev share add <vm> someone@example.com
-```
-
-**Keeping the Anthropic key off the VM.** Add the key as an exe.dev integration, and replace the `ANTHROPIC_API_KEY` line with `CHEAPSEATS_ANTHROPIC_BASE_URL=https://anthropic.int.exe.xyz`. Cheap Seats' own Anthropic calls (grading, the fix list, `anthropic` answerers) then go through that proxy, which adds the key. The `claude` CLI doesn't read this variable, so `claude-code` answerers stay on your subscription.
-
-`deploy/exe-dev.sh` checks the config on the VM, swaps in the new binary and config, and rolls back if Cheap Seats doesn't come up healthy. [Deploying](../deploying/#exedev) covers logging the CLIs in, connecting Claude Code over MCP, and running it day to day.
+Follow [exe.dev deployment](../deploying/#exedev) for setup, isolated CLI logins, backups and access.
 
 ## Which to pick
 
-- **Trying it, or one person using it:** run it locally with `go run` ([Getting started](../getting-started/)), or the `docker run` above.
-- **A team with a Docker host or a cluster:** the Helm chart, or the image on a Docker host, deployed from your config repo's CI.
-- **A team that wants answers on Claude and ChatGPT subscriptions, or email sign-in without running an identity proxy:** exe.dev.
+Use the platform table above to choose, then [deploy from your config repo](../deploying/). For a first local run without Docker, follow [Getting started](../getting-started/).

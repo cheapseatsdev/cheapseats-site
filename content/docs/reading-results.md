@@ -1,125 +1,95 @@
 ---
 title: Reading results
-description: Verdicts, tracks, the run page's rates, share of voice, sources and sentiment, what the assistants searched, rankings, fix lists and quick wins.
+description: Find the answers behind your rates, diagnose why you lost, and choose what to fix next.
 weight: 210
 group: Reading what it finds
 ---
 
+Start with the run's rates, then open the answers behind a weak prompt. Use their objections, searches and citations to choose a fix. [Metric definitions](../metrics/) gives the formulas; this page helps you find the evidence.
+
 ## Tracks
 
-Each prompt is answered by every configured assistant on two tracks, search and recall, graded and reported apart; [How grading works](../how-grading-works/#two-tracks) says what each one measures.
+**Search** answers use web search; **recall** answers use no tools. They are graded and reported separately. [How grading works](../how-grading-works/#two-tracks) explains what each measures.
 
 ## Verdicts
 
-A second Claude call grades each answer:
+A separate Claude call grades your brand in each answer:
 
-| verdict       | meaning                                                                         |
-| ------------- | ------------------------------------------------------------------------------- |
-| `recommended` | the answer's top pick, or one of ≤3 primary recommendations it actively endorses |
-| `mentioned`   | named, but only as one option among many, in passing, or with reservations      |
-| `absent`      | not named at all (aliases included), or named only to say the answer can't find or verify it |
+| verdict | meaning |
+| --- | --- |
+| `recommended` | the top pick, or one of at most three primary recommendations actively endorsed |
+| `mentioned` | named in passing, among many options, as a comparison point or with reservations |
+| `absent` | not named, named only to disclaim knowledge of it, or confused with another product |
 
-Along with the verdict you get the brand's position in the answer, the answer's top pick, every product named (for share of voice), the grader's reasoning, a **"why not #1"** (what the answer preferred and the reasons it gave), the specific **objections** raised about the brand, its **tone** about the brand (positive, neutral, mixed or negative), the **praise** it gives, and the **evidence**: the sentence of the answer that most supports the verdict, checked to be in the answer. [How grading works](../how-grading-works/) has the rules in full, with worked examples.
+Open a grade to see its reasoning, evidence, brand position, top pick and reasons for preferring something else. [How grading works](../how-grading-works/#three-grades) defines these fields and the edge cases.
 
 ## The run page
 
-Everything on a run page is worked out from the answers and grades already stored. [Metric definitions](../metrics/) has every formula and denominator.
+{{< figure name="run-atlas" >}}
 
-- **Scores**: top-pick, recommended and named rates per answerer and track, with 95% intervals. The track cards lead with the **unbranded** rates, leaving out prompts that name the brand or an alias, since being named when the question names you proves little; the rates with them are underneath, and the prompt list marks each branded prompt. Info prompts (`intent = "info"`) count toward named only.
-- **Prompt by prompt**: every prompt against every answerer, with its grades. With `[typesafe]`, a **Second opinion** block follows it: Jev's reading of every grade under the grader's own definitions, as agreed, disagreed and unsure counts, the agreement rate, and each disagreement with what the grader and Jev said, linking to the answer. The disagreements are the answers to read first.
-- **What the answers say about you**: **net sentiment**, the share of answers naming you that are positive about you minus the share negative, in points; the tone mix; what they praise and object to most; and a few named **themes**, each with the competitor it helps and a quote.
-- **Your sites in these answers**: which of the brand's sites the answers drew on, including any they never reached.
-- **Share of voice**: every product the answers named, with its **named** rate (answers naming it, of all answers, so the column adds up to more than 100%), its **share of voice** (its mentions of all products' mentions, which adds up to 100%), its **avg place** in the answers that name it, how often it's named **first** and in the **top 3**, a **position-weighted** score, and its top picks.
-- **Head to head**: the brand against each product on the board: answers naming both and which of the two led, answers naming only one, and answers naming neither.
-- **Objections**: the concerns answers raised about the brand, counted once per answer, with an example prompt. With Jev clustering wordings, a row that gathered several says so, "(3 wordings)".
-- **Got wrong about you**: with `facts` listed under `[brand]`, each listed fact the answers contradicted, with the answers that did and their own words; the prompt grid marks those prompts. See [The fact check](../got-wrong/).
-- **Sources**: every page an answer cited or its searches returned, sorted by kind of site (own, competitor, ugc, review, reference, institutional, editorial), with how often each kind and host was **retrieved**, **cited**, its **share of citations**, and how often it was **cited when retrieved**. Each host that isn't yours is bucketed **missing**, **shared**, **strong** or **unique** by whether the answers citing it name competitors, you, or both.
-- **Page types**: after the kinds of site, what the cited and retrieved pages are: listicle, comparison, review, docs, forum, repo, article, product or other, from each page's URL and title. The kind of site says whose page it is; the page type says what it does. [Metric definitions](../metrics/#page-types) has the rules. With Jev on, a page the rules call other is typed by Jev once and its chip says so.
-- **Cited without you**: the third-party hosts the answers cite while naming competitors and never you, ranked by competitors named × answers citing it. That's the outreach list.
-- **Opportunities**: kind of site and page type together, scored: each row's share of the run's citations, the answers citing it, how often those answers name you (**brand presence**) and a competitor, and a **gap** of citation share × (1 − brand presence), biggest first. **Owned** rows are your own pages, so the fix is writing that kind of page; **earned** rows are everyone else's, so the fix is getting onto them. A row under 3 citations counts toward its kind of site only. [Metric definitions](../metrics/#opportunities) has the formula.
-- **Found but not cited**: your own pages that searches returned and no answer linked.
-- **Prospects** (with `[exa]`): under the outreach table, pages like the cited listicles and comparisons that no answer in the run cited, each with the page it's similar to, whom it names, an `outreach` chip when it names competitors and not you, and Jev's probability that it's a roundup in your category.
-- **Your pages for this question** (with `[exa]`): under each prompt, the pages of yours a neutral index finds for it, each **cited**, **retrieved** (a search returned it, no answer cited it) or **unseen**, or "none found"; and the neutral top pages for the prompt with no domain filter, carrying whose they are. Above the prompts, a **Neutral retrieval** table reads the two together per host: `neutral`, the prompts a neutral index ranks it for, `assistants`, the prompts any answer retrieved or cited it for, and **content** (the web agrees with the assistants), **query** (only the assistants' own searches find it) or **both**. See [Optional providers](../optional-providers/).
-- **Pages referenced** and **every answer** with its grade. The grade's **evidence** is highlighted in the answer's text, and quoted under the grader's reasoning.
-- **Fix these first** and **insights** (below).
-- **Share**: on a finished run, a read-only link to its report for someone without a sign-in. See [Sharing a run](../sharing/).
+| What you want to know | Where to look | What to check |
+| --- | --- | --- |
+| Are assistants choosing us? | **Scores**, then **Prompt by prompt** | Named, recommended and top-pick rates by answerer and track, with 95% intervals. The track cards lead with unbranded prompts; info prompts count toward named only. |
+| Why did we lose? | Expand an **answer**; read **Objections** and **What the answers say about you** | The highlighted evidence, why not #1, praise, tone and themes. With second opinions enabled, start with grades Jev disagreed with. |
+| Who wins instead? | **Share of voice**, **Head to head** | Named rate measures how often a product appears; share of voice divides its mentions by all products' mentions. Head to head compares answers naming both brands. |
+| Which pages shape the answers? | **Sources**, **Page types**, **Your sites in these answers** | Which pages were retrieved or cited, including your sites that were never reached. Site kind says whose page it is; page type says what it does. |
+| Should we write or seek coverage? | **Opportunities**, **Cited without you**, **Found but not cited** | Owned opportunities suggest pages to write; earned ones suggest coverage to seek. The outreach list identifies third-party hosts cited alongside competitors and never you. |
+| Are our pages discoverable? | **Your pages for this question**, **Neutral retrieval** (with Exa) | Compare a neutral index with the assistants' retrieval. Pages are marked cited, retrieved or unseen. [Optional providers](../optional-providers/) explains the diagnosis and prospects. |
+| Did an answer get a fact wrong? | **Got wrong about you** | Contradictions of the facts you listed, with quotes and prompt markers. See [The fact check](../got-wrong/). |
+| What should we do next? | **Fix these first**, **Insights** | Proposed pages and changes tied to the answers that lost. |
 
-**Evidence is always in the answer.** The grader is asked to copy the sentence that backs its verdict. Cheap Seats then looks for it in the answer, ignoring case, spacing, markdown emphasis and curly quotes, and keeps the answer's own span of text, or nothing if it isn't there. So a highlighted quote is always one the answer contains. Absent answers have none, nor do grades from before evidence was added. It's `evidence` in the grade, in the JSON and CSV exports and in MCP `get_result`.
+**Check the evidence.** A highlighted quote is checked against the answer's text; an unverified quote is dropped. Absent answers and grades from before evidence was added have none. See [the evidence rules](../how-grading-works/#three-grades).
 
-**Re-graded runs say so.** A run whose stored answers were [re-graded](../regrading/) shows *re-graded &lt;date&gt; (was method X)* under its header, and keeps the grades it replaced.
-
-**Share of voice used to mean named rate.** In earlier versions the board's one column was labelled share of voice and held what is now the **named** rate. True share of voice now sits beside it. The JSON keeps the old `share` field, still holding the named rate, so existing scripts keep working; use `named_rate` or `share_of_voice` in new ones.
-
-Export a run as CSV or JSON. Pages update themselves while a run is going; no need to refresh. Each run records the config repo's commit and the Cheap Seats version, shown on the run page and in its exports.
+Export CSV or JSON to inspect the data, or use **Share** on a finished run for a [read-only report](../sharing/). The page updates while a run is in progress. Each run records its config commit and Cheap Seats version. [Re-graded runs](../regrading/) say when they changed and keep the grades they replaced.
 
 ## What the assistants searched
 
-Before a search-track answer, the assistant types its own queries into the web search tool. The **searches** page (`/runs/<id>/searches`, linked from the run page and the set page) shows what it typed and what came back. `?pool=1` adds up to six of the set's earlier finished runs asked and graded the same way; `/sets/<id>/searches` opens that pooled view for the set's latest run. It's worked out from stored answers and costs nothing.
+The **searches** page (`/runs/<id>/searches`) shows the queries search-track answers issued and what came back. It uses stored answers and costs nothing. Open it from a run or set; `?pool=1` adds up to six earlier finished runs of the same method. `/sets/<id>/searches` opens that pooled view for the latest run.
 
-- **Answers searched**, **searches** and **distinct queries** (lowercased, quotes stripped, whitespace collapsed, so `"Peec AI"  vs Profound` and `peec ai vs profound` count once).
-- **Top queries**, with the prompts that ran each, whether its results reached the brand's sites, which competitors showed up in its results, and how often the answers that ran it named the brand. A `+Name` chip marks a query that names a product its prompt didn't.
-- **Names the assistants added**: the brand or a competitor in a search whose prompt didn't name it.
-- **How the prompts were rewritten**: **from prompt**, the share of a search's words that were in its prompt (low means it searched in its own words), and **prompt kept**, the share of the prompt's words still in the search (low means it searched for a narrow piece of the question). **Added** and **dropped** list the words searches add across the set ("best", "alternatives", "reddit", years) and the prompt words they leave out.
-- **Add as prompt**: queries whose results named competitors and never reached your sites, as a `[[prompts]]` entry to paste into the set's file. Cheap Seats doesn't write it. Reword it as a buyer would ask before you merge it.
-- **Prompt by prompt**: answers that searched, searches per answer, distinct queries, both overlap scores, and each prompt's queries.
+Use it to check:
 
-The same data is at `/api/runs/<id>/searches` and over MCP as `get_search_queries`.
+- **Rewritten questions.** **From prompt** is the share of a search's words found in its prompt; **prompt kept** is the share of the prompt's words kept in the search. Low values show rephrasing or narrowing. **Added** and **dropped** list the recurring changes.
+- **Added names.** A `+Name` chip marks a brand or competitor added to a query that wasn't in the prompt.
+- **Missed pages.** Top queries show whether results reached your sites, which competitors appeared, and how often their answers named you.
+- **New prompts.** **Add as prompt** gives a TOML entry for queries whose results named competitors and never reached your sites. Reword it as a buyer would ask before merging; Cheap Seats writes nothing.
+
+The page also counts answers searched, searches and distinct queries, with a prompt-by-prompt breakdown. Distinct queries ignore case, quotes and repeated whitespace. The same data is at `/api/runs/<id>/searches` and MCP `get_search_queries`.
 
 ## Fix these first
 
-When a run finishes it builds a ranked list of actions, each with:
+A finished run builds a ranked fix list. Each fix names the page to create or change, what it must say, a verifiable **done when**, the prompts it could flip and the page it displaces. It includes effort, priority, gap (documentation, positioning, third-party or product), destination site and owner: the site's owner, falling back to `[owners]` by gap.
 
-- the exact page or slug to create, and what it must say;
-- a verifiable "done when";
-- the prompts it would flip, and the page it displaces;
-- an effort estimate, and a priority from the share of prompts it could flip and its effort;
-- a gap: documentation, positioning, third-party or product;
-- the brand's site it belongs on (how-tos on the docs, comparisons on the blog or marketing site), and an owner: that site's owner, else `[owners]` by gap;
-- a ready-to-paste prompt that asks Claude Code to make the fix without inventing numbers.
-
-The same call writes a short **insights** report: why the brand lost, the objections raised, where it wins, and which pages shaped the answers.
+A ready-to-paste prompt asks Claude Code to make the change without inventing numbers. **Insights** explains the losses, objections, strengths and influential pages behind the list.
 
 ## Quick wins
 
-Quick wins pulls the fix lists from the latest run of every prompt set into one list, ranked by **expected gain**: the prompts a fix could flip per working day, each weighted by what it has left to win (1 minus its recommended rate over the last 14 days, or its named rate for an info prompt). A prompt already won in most answers adds little. Filter it by site to hand each team its own list. Each fix has a prompt for Claude Code: see [From fix to pull request](../fix-to-pull-request/) for the whole loop, shown on cheapseats.dev. With Jev on, fixes from different sets that ask for the same page are one card, the highest ranked, with "also asked for by" naming the others; marking it marks the one you chose, and the others can still be marked on their own.
+Quick wins combines the latest fix list from every set. It ranks by **expected gain**: prompts a fix could flip per working day, weighted by their remaining room to improve. [Metric definitions](../metrics/#trends-and-outcomes) gives the formula. Filter by site to hand each team its list.
 
-**Marking a fix.** When you've submitted something for a fix, mark it with the commit or pull request: **proposed** while it's open, **accepted** once it merges, or **withdrawn** if it's closed, which reopens the fix. Filter by **status** to see what's left: *urgent* and *open* is the list nobody has touched.
+With Jev enabled, fixes from different sets asking for the same page become one card, the highest ranked, with the rest under **also asked for by**. Marking the card marks the selected fix; the others can still be marked individually.
 
-**A fix that wasn't enough comes back.** Fix lists are written fresh each run, and marking a fix settles only that fix. If the prompts still lose, the next run proposes a fix for the same page again: it's open, marked *retry*, and shows the earlier work and its outcome, how often its prompts were named and recommended before and after, and whether its page turned up in any answer.
+Record the commit or pull request as **proposed**, **accepted** or **withdrawn**; withdrawal reopens the fix. Filter by status to find open work. [From fix to pull request](../fix-to-pull-request/) walks through the process.
 
-**How an outcome is judged.** Cheap Seats pools the target prompts' answers before the fix (its run and up to 4 same-method runs in the 28 days before) and after it (every same-method run since, within 28 days of the newest), and tests the change in named and recommended against the noise of a few answers a prompt:
+**A fix that wasn't enough comes back.** Each run writes a fresh list. If its prompts still lose, a fix for the same page can return as **retry**, with the earlier work and outcome. Work recorded after a list was built also covers that list's fix for the same page.
 
-| outcome | when |
-| --- | --- |
-| pending | the set hasn't run since |
-| needs regrade | it has, but only under another grading method; [re-grade](../regrading/) the runs it names to measure it |
-| not comparable | it has, but only with answers asked differently, which no re-grade can change |
-| too early | less than 7 days since, or fewer than 4 answers a target prompt on average |
-| moved | named or recommended rose beyond its margin, and neither fell |
-| worse | one fell beyond its margin, and neither rose |
-| mixed | one rose and the other fell |
-| no detectable change (±X pts) | neither moved beyond its margin; a smaller effect could still be there |
-
-The fix's page turning up in searches or citations after the fix, when it didn't before, is shown as *newly surfaced*. The outcome also says whether the fix's host entered or left the cited set: whether any answer on each side cited a page on it. See [How big a change Cheap Seats can detect](../noise-and-confidence/#what-no-detectable-change-means-for-a-fix). The analyst writing the list is told what was tried, so a retry says what to do differently. Work recorded after a fix list was built covers that list's fix for the same page too, since the list didn't know about it.
+Outcomes compare the target prompts before and after the work, with a sampling margin. **No detectable change** does not establish that a fix failed; **newly surfaced** means its page appeared in searches or citations after the work. Host citation changes are shown separately. See [outcome statuses and comparison windows](../noise-and-confidence/#what-no-detectable-change-means-for-a-fix).
 
 ## Rankings
 
-Rankings turns runs into a day-by-day series per set: the brand's place on the share-of-voice board, who leads, its rates (each prompt counting once) and a rolling average over 7, 14 or 28 days (`?window=`), with a 95% band. Pick the rate the chart draws with `?metric=named|recommended|top_pick`.
+Rankings shows each set's daily share-of-voice rank, leader and rates, with every prompt counting once. Choose named, recommended or top pick (`?metric=named|recommended|top_pick`) and a 7-, 14- or 28-day rolling window (`?window=`).
 
-Prompt sets change over time, so the series carries on through added, removed and reworded prompts, changed intents, new competitors and new answerer models: each day lists what changed since the day before, and its comparison with that day only counts the prompts both asked, worded the same, of the same answerers ("on 13 of 15 prompts"). A change in how answers are asked or graded starts the comparison over.
+- **Shaded band:** uncertainty across prompt-day rates in the window. **Hover a day:** its rate and sampling interval for that day's prompts. These answer different questions; see [the interval definitions](../noise-and-confidence/#the-intervals).
+- **Vs day before:** compares shared, unchanged prompts of the same answerers. Changes whose interval covers zero are greyed out as **within noise**. Rank arrows also require a crossing beyond noise.
+- **Triangles:** proposed (gold) or accepted (green) fixes, linked to their commits or pull requests.
+- **Method breaks:** a change in how answers are asked or graded restarts comparisons. Added, removed or reworded prompts, intents, competitors and answerer models are annotated; comparisons say how many prompts matched. [Re-grade](../regrading/) older answers after a grading change to reconnect eligible runs.
 
-**Changes are tested against noise.** "Vs day before" pairs the two days prompt by prompt and shows each change with its 95% margin; a change whose interval covers zero is greyed out as **within noise**. A rank move is shown only if a product that crossed the brand moved beyond the noise; otherwise the table says *within noise* and draws no arrow. Hover a day for its own rate with the interval for this set's prompts that day. Triangles under the chart mark the days a fix was proposed (gold) or accepted (green), linked to its commit or pull request. [How big a change Cheap Seats can detect](../noise-and-confidence/) explains the band, the intervals and the test.
+The set page also shows each prompt's daily history and pooled rates over the selected window. A prompt's history follows its id through rewording or a move between sets; pooling stops at changes of wording, intent or method. When answerers take multiple samples, the page reports whether they improve precision.
 
-**Citation stability.** Each set's page also shows how much the hosts its answers cite move from run to run: a **stability score** (the mean Bray–Curtis similarity of consecutive runs' citation shares, with the mean overlap of hosts beside it), the hosts new and gone in the newest run, and each transition's similarity. It's shown once there are three transitions of the same method. A high score says a host entering or leaving means something; a low one says each run's sources are a sample. [Metric definitions](../metrics/#citation-stability) has the formulas.
-
-**After a grading change**, [re-grade](../regrading/) the answers you already have to carry the trend on instead of starting it over.
-
-Each set's page shows every prompt's results day by day, with named and recommended pooled over the same 7, 14 or 28 days and a 95% interval, so one prompt's history survives being reworded or moved to another set. When some answerer takes more than one sample, it also says whether the extra samples are buying precision.
+**Citation stability** shows how consistently the same hosts retain citation share across runs. It needs three same-method transitions. A high score makes a host entering or leaving more informative; a low score means sources vary substantially between runs. [Metric definitions](../metrics/#citation-stability) gives the formulas.
 
 ## Search probe
 
-Type a query and Cheap Seats runs it through the same web search tool the answerers use, and shows the result exactly as the model receives it: the links in order, before it writes anything. Optionally restrict it to, or block, a list of domains. Each probe costs a few cents. With `[exa]`, pick an engine: `claude` (the default), `exa`, the same query on Exa's neutral index, or `both`, which runs the two at once and marks each link as overlap, only Claude or only Exa, so you can tell the assistant's results from the web's. The Exa side costs under half a cent.
+Test a query against the answerers' web search tool and see its ordered results before an answer is written. You can restrict or block domains. Each probe costs a few cents. With Exa, choose `claude`, `exa` or `both`; the combined view marks overlap and results unique to each index. The Exa side costs under half a cent.
 
 ## Retrying
 
-A run that hits an error or the daily budget ends `partial` or `budget`; **Retry unfinished** picks up where it left off and reuses any answer that was saved but not yet graded. A run cut off by a restart or deploy resumes by itself when Cheap Seats starts again, and a fix list cut off is built then too. A run can't be finished after the answer or grading prompts change, so one run never mixes two rubrics.
+For `partial` or `budget` runs, **Retry unfinished** resumes work and reuses saved answers awaiting grades. Runs interrupted by restart or deploy resume automatically, including unfinished fix lists. A run cannot finish after the answer or grading prompts change: it never mixes rubrics.

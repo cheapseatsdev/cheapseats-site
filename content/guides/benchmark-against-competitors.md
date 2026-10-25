@@ -4,35 +4,37 @@ description: Benchmark your brand against competitors in ChatGPT and Claude answ
 weight: 30
 ---
 
-**The short answer.** To benchmark your brand against competitors in AI answers, ask the assistants your buyers' questions, several times each, and record every product each answer names, not only yours. Then, for one fixed set of questions, count how many answers named each product (its named rate and share of voice) and how many made it the top pick, rank everyone on that list, and repeat daily so you see the trend. [Cheap Seats](/docs/getting-started/) does exactly this: it records every product named in each answer, computes each prompt set's share-of-voice rank and recommended and mentioned rates day by day, and keeps the answers, searches and citations behind every number so you can check them.
+Ask the same buyer questions of the same assistants, grade every brand consistently, and repeat. Compare top picks alongside named rate and share of voice: being listed isn't the same as winning. Keep search and recall separate, and show uncertainty.
 
-The fair comparison is **top picks on the same prompt set**: the same questions, asked of the same assistants, graded the same way, for every brand. Being named is easy to inflate by choosing the questions; being the one product an answer tells the buyer to use is not.
+Cheap Seats asks Claude and OpenAI models directly; it doesn't ask Gemini, Perplexity, Copilot or Google AI Overviews.
 
-Cheap Seats asks Claude and OpenAI models, on two tracks (search, where the assistant must search the web first, and recall, from what the model already believes). It does not ask Gemini, Perplexity, Microsoft Copilot or Google AI Overviews.
+## How to set up the benchmark
+
+1. Write a [prompt set](/docs/prompt-sets/) in your buyers' words. Include open category questions; questions naming you inflate presence.
+2. List competitors and aliases in [configuration](/docs/configuration/), so variants count as the same product.
+3. Use multiple answerers and samples, keeping search and recall separate.
+4. Run on a schedule. Compare the board, top picks and [rankings trend](/docs/reading-results/).
+5. Open the answers behind surprising results to see what won and why.
 
 ## Is there a way to measure share of voice in AI chatbot answers?
 
-Yes. A second model, the grader, reads each answer and lists every product, company or platform it names, in order; Cheap Seats counts those lists, once per product per answer however many times it repeats the name. Each product on the board gets two rates:
+Yes. A grader lists every product each answer names. Count each product once per answer, even if its name repeats:
 
-> named rate = answers that named it ÷ all graded answers in the run
+> named rate = answers naming the product ÷ all graded answers
 >
-> share of voice = answers that named it ÷ the sum of that count over every product named
+> share of voice = answers naming the product ÷ the sum of that count over every product named
 
-Your own brand is counted as named exactly when its grade is *recommended* or *mentioned*, so your row always matches your named rate. Because most answers name several products, named rates add up to well over 100%; shares of voice add up to 100%.
-
-Many tools define share of voice as *your mentions ÷ mentions of the tracked brands*. That ratio changes when you add or drop a tracked competitor, even if no answer changed. Cheap Seats' denominator is every product the answers named, including ones you never configured, so a product's number depends only on the answers. Earlier versions of Cheap Seats showed only the named rate and called it share of voice; [Metric definitions](/docs/metrics/#how-these-compare-to-other-tools) maps both onto other tools' definitions.
-
-Next to each product's share, Cheap Seats counts its **top picks**: answers whose single strongest recommendation was that product.
+Named rates can total more than 100%; shares total 100% when any products are named. The denominator includes unconfigured products, so adding a tracked competitor doesn't by itself change the share. Your brand's count follows its recommended/mentioned grade. Earlier versions labelled named rate “share of voice”; [Metric definitions](/docs/metrics/#share-of-voice-and-position) explains the distinction.
 
 ## How rank is computed
 
-Your **share-of-voice rank** is your place on that board, from the code in `report.BrandRank`:
+Your **share-of-voice rank** is your place on that board:
 
 - rank = 1 + the number of products named in **more** answers than you;
 - products named in the same number of answers share a rank;
 - a brand no answer named has no rank (shown as 0 in the API).
 
-The board is everything the answers named, not just the competitors you listed, so a new entrant that starts appearing in answers pushes you down even if you never heard of it.
+A newly appearing product can push you down even if you never configured it.
 
 ## What metrics a marketing team should use
 
@@ -40,7 +42,7 @@ Track these per prompt set and per track, each from the same graded answers:
 
 | metric | what it is | why it matters |
 | --- | --- | --- |
-| top-pick rate | answers whose single top pick is you ÷ answers to questions that ask for a choice | the strictest, fairest win: one per answer |
+| top-pick rate | answers whose single top pick is you ÷ answers to questions that ask for a choice | at most one winner per answer |
 | recommended rate | answers graded *recommended* ÷ choice answers | you were among at most three products the answer endorsed |
 | named rate | answers graded *recommended* or *mentioned* ÷ all answers | the assistant knows you exist |
 | share of voice | answers naming you ÷ answers naming each product, summed over every product | your slice of the conversation, out of 100% |
@@ -48,17 +50,15 @@ Track these per prompt set and per track, each from the same graded answers:
 | share-of-voice rank | your place on the board of every product named | where you stand against the whole field |
 | top-pick counts per competitor | how many answers each product won | who is actually winning the questions |
 | objections | the concerns answers raised about you | what to fix |
-| pages cited and surfaced | which web pages the search track read and linked | where the answers came from |
+| pages cited and surfaced | which pages searches returned and answers linked | where the answers came from |
 
-Every rate carries a 95% Wilson interval, so 0 of 17 reads as uncertain, not as zero. The definitions are in [Mentioned vs. recommended](/guides/mentioned-vs-recommended/); how each answer is graded is in [How grading works](/docs/how-grading-works/).
+Answer-based rates carry 95% Wilson intervals. Position, rank and share of voice need different interpretation; [Metric definitions](/docs/metrics/) has the formulas. [How grading works](/docs/how-grading-works/) explains the verdicts.
 
 ## Why top picks on the same prompt set is the fair benchmark
 
-**Share of voice depends on the questions.** Ask "Cheap Seats or Semrush AI Toolkit?" and every answer names Cheap Seats. On Cheap Seats' own *head to heads* set, whose questions name Cheap Seats, Claude and an OpenAI model answering from memory on 22 October 2026 named Cheap Seats in 19 of 22 answers: rank 1, ahead of Profound (10), Peec AI (9) and Otterly.AI (9). On the *Choosing an AI visibility tool* set the same day, where buyers ask open questions, Cheap Seats was named in none of 68. Neither number means anything next to a competitor's figure from a different set of questions.
+Question choice changes the result. On our *head to heads* set on 22 October 2026, recall answers named Cheap Seats in 19 of 22 answers: rank 1. The questions named us. On *Choosing an AI visibility tool*, which uses open buyer questions, none of 68 answers named us. These are different measurements.
 
-**Mentions are not wins.** In that same head-to-head run, Cheap Seats was named in 19 answers and the top pick in 1. Peec AI was named in 9 and the top pick in 3. Each answer has at most one top pick, so top-pick counts are zero-sum in a way mentions are not: one brand's win is another's loss, on the same answer.
-
-**So compare like for like.** Benchmark only within one prompt set, on one track, with the same answerers and the same grader, and compare top-pick counts first, then recommended and named. Cheap Seats keeps all of that fixed per set: prompt sets live in a git repo, every run snapshots the questions, answerers, grader and grading instructions it used, and the rankings only compare days on what both days asked.
+Mentions also aren't wins. In the head-to-head run, Cheap Seats had 19 mentions but only 1 top pick; Peec AI had 9 mentions and 3 top picks. Compare within one set and track using matching answerers and grading. A top pick is at most one winner per answer, but an answer can decline to choose anyone.
 
 ## Worked example: Cheap Seats against its competitors
 
@@ -66,7 +66,7 @@ This is real data from Cheap Seats tracking itself on the *Choosing an AI visibi
 
 ### The competitor table
 
-Run `r-20261022-043101-41215d`, 22 October 2026. Claude Opus (via Claude Code) and an OpenAI model (via Codex), each on the search track (2 samples per question) and the recall track (1 sample): **68 graded answers**.
+Run `r-20261022-043101-41215d`, 22 October 2026. Claude Opus (via Claude Code) and an OpenAI model (via Codex), on search and recall: **68 recorded graded answers**. The table reports those stored answers; it does not infer a sample count per track.
 
 | product | answers naming it (of 68) | named rate | top picks |
 | --- | --- | --- | --- |
@@ -84,9 +84,9 @@ Run `r-20261022-043101-41215d`, 22 October 2026. Claude Opus (via Claude Code) a
 
 What it says:
 
-- **Cheap Seats has no rank.** No answer, on either track, named it. Zero of 60 choice answers still leaves a 95% interval up to about 6% for the top-pick rate, but the direction is not in doubt.
+- **Cheap Seats has no rank.** No answer, on either track, named it. Zero of 60 choice answers still leaves a 95% upper bound near 6% for top-pick rate.
 - **Profound leads on mentions; Peec AI leads top picks.** Profound was named in 3 more answers, but Peec AI was the top pick in 11 against Profound's 8. If you only tracked mentions, you'd call the wrong leader.
-- **Ahrefs Brand Radar is named often and never chosen**: 33 answers, 0 top picks. It is a comparison point, not a winner.
+- **Ahrefs Brand Radar is named often and never chosen**: 33 answers, 0 top picks. It was a comparison point in this sample.
 - **Check the board for split names.** "Scrunch AI" and "Scrunch" are one company counted twice, because Scrunch isn't in this set's competitor list. The grader folds names onto the canonical ones you configure, so add it under `[[competitors]]` with its aliases. Don't add the two rows together yourself: an answer naming both would be counted twice.
 
 ### The rank trend
@@ -100,43 +100,28 @@ The rankings page turns runs into one series per set and per track, from the new
 | 22 Oct 2026 | search | `r-20261022-043101-41215d` | none (new method) | Profound | 0 / 34 | 0 / 30 |
 | 22 Oct 2026 | recall | `r-20261022-043101-41215d` | none (new method) | Profound | 0 / 34 | 0 / 30 |
 
-It looks like a drop from 23rd to nothing. It isn't. All three answers that "named" Cheap Seats on 21 October were answers to *"Is Gauge a good tool for tracking AI visibility?"*; they were about Gauge, and the grader credited them to Cheap Seats. On 22 October the grading changed: the grader is told the product a question asks about is never your brand, and Cheap Seats checks the answer's text itself, so an answer that never names your brand is *absent* whatever the model said. That changes the run's **method** (a fingerprint of the answer and search instructions, the grading instructions, the grader model, and the brand's name, aliases and description), so the trend marks 22 October as a new method: it doesn't report a rank change, and the 7-day average starts over. Cheap Seats' real position on 21 October was also unranked; the new method just stopped counting Gauge as Cheap Seats.
+The apparent drop isn't comparable. The 21 October grader incorrectly credited answers about Gauge to Cheap Seats. On 22 October, revised grading and a text check stopped that error. This changed the **method**, so the trend starts a new comparison and rolling average. The corrected reading of 21 October would also be unranked.
 
-Two prompts also became informational (`intent = "info"`) on 22 October, which is why recommended is out of 30 and named out of 34: answers to questions that ask for an explanation count toward named only.
+Two prompts also became informational (`intent = "info"`), explaining why recommended uses 30 answers per track while named uses 34.
 
 ### What it tells us
 
-Cheap Seats isn't losing on objections; it isn't in the answers at all. The search track built its answers from roundups and competitors' pricing and docs pages, and none of Cheap Seats' pages surfaced for any of the 17 questions. That makes each fix concrete: get into the roundups the answers read, and publish the pages the questions need. This page is one of them.
+Cheap Seats was absent, and none of its pages surfaced for the 17 questions. Investigate the roundups, pricing and docs pages the answers cited, then decide whether to improve our pages or seek inclusion elsewhere. This page addresses one of the gaps.
 
 ## How the day-by-day ranking stays honest
 
-Questions, answerers and competitors change over time. Cheap Seats keeps one series through those changes and says what changed, rather than restarting or silently mixing:
+The series uses the newest finished run per set on each UTC day, split by track. It records changed prompts, intent, competitors, answerers, model versions and sample counts.
 
-- **Each day** is the newest finished run of that set on that UTC day, split by track.
-- **Each day lists what changed** since the one before: prompts added, removed or reworded, a prompt's intent, competitors added or removed, answerers added or removed, a model version, or the number of samples.
-- **The day-over-day comparison** of recommended and named rates uses only the prompts both days asked, worded the same, of the answerers both days used ("on 13 of 15 prompts").
-- **Rank movement is reported only** when both days asked the same prompts of the same answerers and both days ranked you; otherwise a rank change says more about the questions than about you.
-- **The daily rates count each prompt once**, however many answers it got, and the 7-day average comes with a 95% band computed across prompts, since answers to the same prompt aren't independent.
-- **A change of method starts over**: changing the grading instructions, grader model, answer or search instructions, or your brand's name, aliases or description. Adding a competitor is noted but never restarts the trend.
+Rate comparisons use matching prompts, wording and answerers. Rank movement requires matching prompts and answerers and a rank on both days. Daily rates weight prompts equally; rolling bands account for repeated answers within prompts. Changes to answer/search instructions, grading, grader model or brand identity start a new method; adding a competitor is noted without restarting it. See [Noise and confidence](/docs/noise-and-confidence/) and [Re-grading](/docs/regrading/).
 
-## How to set up the benchmark
-
-1. **Write the questions your buyers ask**, in their words, as a [prompt set](/docs/prompt-sets/). Include open category questions, not only ones that name you, or your share of voice will flatter you.
-2. **List your competitors and their aliases** under `[[competitors]]` in `cheapseats.toml`, so "Peec" and "peec.ai" count as Peec AI. A set can add its own. See [Configuration](/docs/configuration/).
-3. **Ask more than one assistant, more than once**, with `samples` per track, and keep search and recall separate.
-4. **Run it on a schedule** and read the board, the top picks and the trend on the run page and the rankings page ([Reading results](/docs/reading-results/)).
-5. **Open the answers behind any number.** Every answer, search, result and citation is stored, so you can see why a competitor won a question, not just that it did.
-
-The same data is available outside the web UI:
+For analysis outside the UI:
 
 ```
-cheapseats report <run-id> -json     # summary.voice: name, answers, named_rate, share_of_voice, avg_position, top_pick per product
+cheapseats report -json <run-id>     # summary.voice: name, answers, named_rate, share_of_voice, avg_position, top_pick per product
 ```
 
 ```bash
 curl -H "Authorization: Bearer <token>" "https://<host>/api/rankings?lastDays=30&set=<set-id>"
 ```
 
-and through the MCP tools `get_run` (the competitor table) and `get_rankings` (the daily rank, leader, rates and board). Every route is in [CLI, API and MCP](/docs/reference/).
-
-To benchmark your own brand, [start here](/docs/getting-started/).
+MCP tools `get_run` and `get_rankings` expose the same board and trend. See [CLI, API and MCP](/docs/reference/).

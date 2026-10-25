@@ -5,22 +5,22 @@ author: Chad Metcalf
 description: "A free, MIT-licensed AI visibility tracker you run yourself: what it costs, a five-minute quickstart, a real graded answer and fix, and the free checkers."
 ---
 
-**Is there a free AI visibility tracker that's actually useful?** Yes: Cheap Seats is free, open source under the MIT license, and runs as one Docker container with a SQLite database. It asks Claude and OpenAI models your buyers' questions on a schedule, grades whether each answer recommends you, merely mentions you or leaves you out, and ends every run with a ranked list of fixes.
+**Is there a free AI visibility tracker that's actually useful?** Yes: Cheap Seats is free, open source under the MIT license, and can run as one Docker container with SQLite. It asks Claude and OpenAI models your buyers' questions on a schedule, grades whether each answer recommends you, merely mentions you or leaves you out, and ends every run with a ranked list of fixes.
 
-The software costs nothing, and on your own machine it can run entirely on the Claude subscription you already pay for (ChatGPT's too, optionally), with no API key. Through the APIs the model calls are small: one of our own runs, 17 questions and 68 answers answered on subscriptions, cost **$0.03** in grading.
+The software costs nothing, and on your own machine it can run entirely on the Claude subscription you already pay for (ChatGPT's too, optionally), with no API key. In one measured run, subscription answerers produced 68 answers to 17 questions; API grading alone cost **$0.03**. Analysis and optional passes are separate.
 
 <!--more-->
 
 ## What a cheap start looks like
 
-If you're a small startup measuring AI visibility for the first time, you need three things: your buyers' questions, asked of the assistants they use, repeatedly; a judgment on each answer that's stricter than "were we named"; and a list of what to change. Cheap Seats does all three, and here's what each part costs:
+Budget separately for answering, grading and analysis:
 
-- **Answers.** Each question is asked of each assistant on two tracks: **search**, where it must search the web first, and **recall**, from what the model already believes. On a laptop, answerers can be the `claude` and `codex` CLIs on your existing subscriptions, with no API bill. On a server, they're the Anthropic and OpenAI APIs, billed per token.
-- **Grading.** Claude Haiku grades every answer, through the API or, with `provider = "claude-code"`, on your Claude subscription. Through the API, grading the 68 answers in the run above cost $0.033 in total; the most expensive single grade was under a tenth of a cent.
-- **The fix list.** One Claude Opus call per run: a few cents through the API, or on the subscription.
-- **A ceiling.** `budget.daily_usd` caps API spend: every call reserves against it before it goes out.
+- **Answers.** Each question is asked of each assistant on two tracks: **search**, where it must search the web first, and **recall**, from what the model already believes. On a laptop, answerers can be the `claude` and `codex` CLIs on your existing subscriptions, with no API bill. API answerers are billed by the providers; subscription CLIs require a machine or VM where they're installed and logged in.
+- **Grading.** The configured Claude grader reads every answer, through the API or, with `provider = "claude-code"`, on your Claude subscription. Through the API, grading the 68 answers in the run above cost $0.033 in total; the most expensive single grade was under a tenth of a cent.
+- **Analysis.** Theme and fix-list passes also use the configured Claude provider. Optional passes can add costs; see [Cost and budget](/docs/cost-and-budget/).
+- **Admission control.** Each API call reserves against `budget.daily_usd` before starting. Settled costs can exceed the reservation; it is not a guaranteed final-bill ceiling.
 
-There are no seats, no per-brand or per-prompt plans, and nothing to cancel. Prompts and answers go only to the model providers you configure.
+There are no software seats or per-prompt plans. Subscription usage limits still apply, and optional providers may charge separately.
 
 ## Five-minute quickstart
 
@@ -50,7 +50,7 @@ reasoning: The answer never names Cheap Seats or any of its aliases; it discusse
            visibility trackers and recommends Amplitude AI Visibility.
 ```
 
-Every answer is graded the same way: **recommended** (the top pick, or one of at most three it actively endorses), **mentioned** (named, but as one of many, in passing or with reservations) or **absent**, with your position, the top pick, every product named and the objections raised. The products named add up to share of voice. Across that run's 68 answers, Peec AI was named in 78% and Profound in 76%, and Cheap Seats was 27th. Every search, result URL and citation behind each answer is kept, so you can check any number on the page against the answers it came from.
+The grader distinguishes active endorsement from a passing mention and retains its evidence. Across that run's 68 answers, Peec AI was named in 78% and Profound in 76%; Cheap Seats ranked 27th. Stored answers, returned results and citations let you inspect the numbers. See [the grade definitions](/guides/mentioned-vs-recommended/).
 
 ## A real fix
 
@@ -62,7 +62,7 @@ Every run ends with **Fix these first**. This was the top fix from that same run
 >
 > **Why:** On "Is there a free AI visibility tracker that's actually useful?", the top pick was Amplitude AI Visibility, and no Cheap Seats page surfaced in any search.
 >
-> **Must say:** Cheap Seats is a free, MIT-licensed AI visibility tracker that runs as one Docker container with SQLite, on subscriptions you already pay for or API keys with a daily budget cap. Include a five-minute quickstart, a sample graded answer and fix list, and compare it with HubSpot AEO Grader, Ahrefs' free checker and Amplitude AI Visibility.
+> **Must say:** Cheap Seats is a free, MIT-licensed AI visibility tracker that runs as one Docker container with SQLite, on subscriptions you already pay for or API keys with a daily admission budget. Include a five-minute quickstart, a sample graded answer and fix list, and compare it with HubSpot AEO Grader, Ahrefs' free checker and Amplitude AI Visibility.
 >
 > **Done when:** a re-run of the free and cheap questions shows this page among the pages that shaped the answers.
 
@@ -74,7 +74,7 @@ As of October 2026, from each vendor's own pages:
 
 | | Cheap Seats | [HubSpot AEO Grader](https://www.hubspot.com/aeo-grader) | [Ahrefs AI Visibility Checker](https://ahrefs.com/ai-visibility-checker) | [Amplitude AI Visibility](https://amplitude.com/docs/amplitude-ai/ai-visibility) |
 | --- | --- | --- | --- | --- |
-| **Free** | The software, always; you pay model calls | Yes; a form for the full report | Yes; no signup | A limited free report; full product in Amplitude plans |
+| **Free** | The software; model/provider usage depends on setup | Yes; a form for the full report | Yes; no signup | A limited free report; full product in Amplitude plans |
 | **Ongoing tracking** | Yes, on a schedule | No, one-time; HubSpot AEO is $50/month | No, one-time; Brand Radar is paid | Yes, in an Amplitude plan |
 | **Assistants** | Claude and OpenAI models | GPT-5.4 mini, Perplexity, Gemini | ChatGPT, Gemini, Perplexity, Copilot, AI Overviews, AI Mode | ChatGPT, Google AI Overviews |
 | **Your own questions** | Yes, in your git repo | No | No (Brand Radar has custom prompts) | Generated for you |
