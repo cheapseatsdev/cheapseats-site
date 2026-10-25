@@ -67,7 +67,10 @@ const note = (d) => {
 
 const color = light.map((d) => ({
   name: d.name,
-  value: dark[d.name] ? { light: alias(d.value), dark: alias(dark[d.name]) } : alias(d.value),
+  // An alias with no dark value of its own follows its target in both themes: say so in both.
+  value: dark[d.name] ? { light: alias(d.value), dark: alias(dark[d.name]) }
+    : d.value.startsWith("var(") ? { light: alias(d.value), dark: alias(d.value) }
+    : alias(d.value),
   usage: note(d),
 }));
 
