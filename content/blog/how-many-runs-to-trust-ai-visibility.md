@@ -20,7 +20,11 @@ Four findings worth knowing:
 
 ## The arithmetic for one rate
 
-Start with the simplest case: a rate near 50%, from `n` independent answers. The 95% margin is about 1.96 × √(0.25 / n):
+Start with the simplest case: a rate near 50%, from \(n\) independent answers. The approximate 95% margin is
+
+$$
+1.96\sqrt{\frac{0.25}{n}}
+$$
 
 | answers | margin |
 | ---: | ---: |
@@ -29,33 +33,71 @@ Start with the simplest case: a rate near 50%, from `n` independent answers. The
 | 100 | ±10 pts |
 | 400 | ±5 pts |
 
-To tell two such readings apart, the margin on the difference is √2 times wider. For the margin on a difference near 50% to be 10 points, you need about 2 × 0.25 × (1.96 / 0.10)² ≈ **192 answers on each side**; a 5-point margin, about **768**. These are margin calculations, not a statistical-power target, and assume independent answers with no drift.
+To tell two such readings apart, the margin on the difference is \(\sqrt{2}\) times wider. For a 10-point margin on a difference near 50%, the answer count on each side is
+
+$$
+n = 2 \times 0.25\left(\frac{1.96}{0.10}\right)^2 \approx 192
+$$
+
+A 5-point margin needs about **768 answers on each side**. These are margin calculations, not a statistical-power target, and assume independent answers with no drift.
 
 ## Prompts are the units
 
-Answers to the same prompt aren't independent draws about your whole category. They're repeated draws on one question, so Cheap Seats treats each prompt as the unit: a trend's rate is the mean of each prompt's own rate, and each prompt's sampling variance is
+Answers to the same prompt aren't independent draws about your whole category. They're repeated draws on one question, so Cheap Seats treats each prompt as the unit: a trend's rate is the mean of each prompt's own rate. For \(h\) hits in \(n\) answers, the smoothed rate is
 
-> var = p̃ (1 − p̃) / n, with p̃ = (h + 0.5) / (n + 1)
+$$
+\tilde p = \frac{h + 0.5}{n + 1}
+$$
 
-for `h` hits in `n` answers. Over `K` prompts, a day's margin is 1.96 · √(Σ var) / K.
+and the prompt's sampling variance is
 
-Cheap Seats' own *Choosing an AI visibility tool* set has 17 prompts and two answerers, each answering once on each track. On one track, each prompt gets **n = 2** answers a run. At a rate near 50%:
+$$
+v = \frac{\tilde p(1 - \tilde p)}{n}
+$$
 
-> p̃ = (1 + 0.5) / 3 = 0.5, var = 0.25 / 2 = 0.125 per prompt
->
-> Σ var = 17 × 0.125 = 2.125, √2.125 = 1.458
->
-> one run: ± 1.96 × 1.458 / 17 = **±16.8 points**
->
-> one run against the next: ± 1.96 × √(2 × 2.125) / 17 = **±23.8 points**
+Over \(K\) prompts, the day's approximate 95% margin is
 
-A week of daily runs pooled gives each prompt **n = 14**:
+$$
+\frac{1.96}{K}\sqrt{\sum_{i=1}^{K} v_i}
+$$
 
-> var = 0.25 / 14 = 0.0179 per prompt, Σ var = 0.304, √0.304 = 0.551
->
-> one week: ± 1.96 × 0.551 / 17 = **±6.4 points**
->
-> one week against another: **±9.0 points**
+where \(v_i\) is prompt \(i\)'s variance.
+
+Cheap Seats' own *Choosing an AI visibility tool* set has 17 prompts and two answerers, each answering once on each track. On one track, each prompt gets \(n = 2\) answers a run. At a rate near 50%:
+
+$$
+\tilde p = \frac{1 + 0.5}{3} = 0.5
+$$
+
+$$
+v = \frac{0.25}{2} = 0.125
+$$
+
+Across the 17 prompts, the variances sum to \(17 \times 0.125 = 2.125\), whose square root is about 1.458. In percentage points, the margin on **one run** is
+
+$$
+\pm 100\frac{1.96 \times 1.458}{17} \approx \pm 16.8\text{ points}
+$$
+
+For **one run against the next**, it is
+
+$$
+\pm 100\frac{1.96\sqrt{2 \times 2.125}}{17} \approx \pm 23.8\text{ points}
+$$
+
+A week of daily runs pooled gives each prompt \(n = 14\):
+
+$$
+v = \frac{0.25}{14} \approx 0.0179
+$$
+
+The variances sum to about 0.304, whose square root is about 0.551. The margin on **one week** is
+
+$$
+\pm 100\frac{1.96 \times 0.551}{17} \approx \pm 6.4\text{ points}
+$$
+
+For **one week against another**, it is **±9.0 points**.
 
 The same arithmetic for other set-ups:
 

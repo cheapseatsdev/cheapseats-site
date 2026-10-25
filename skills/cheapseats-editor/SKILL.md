@@ -49,6 +49,12 @@ Use existing `figure` shortcodes and brand tokens. Every new figure needs a text
 
 Replace the explanation a visual makes redundant. Keep a short caption with assumptions and the relevant limitation. Capture current UI in both themes; crop to readable detail and identify historical examples. Check narrow screens, both themes and meaning without color.
 
+## Typeset equations
+
+Use `\( ... \)` for inline math and `$$` on separate lines for display equations. Hugo renders them to native MathML at build time; Markdown and `llms-full` keep the source notation. Single dollar signs are reserved for prices.
+
+Use fractions, roots, sums and subscripts for actual formulas; keep simple counts, rates and export field names in prose or code. Introduce variables beside the equation and retain assumptions and units. Split long derivations into short steps for narrow screens. Do not use screenshots, code blocks or quotations for math. Check the rendered equation, arithmetic and text exports; do not change a statistical definition while improving its notation.
+
 ## Verify the edit
 
 Run the Hugo build and brand-token check from `CLAUDE.md`. Inspect representative rendered pages, figures, mobile layout, local links/anchors and Markdown/text exports. For app template changes, run the relevant server tests and required repository checks. Review the diff for deleted caveats and accidental factual changes. Report the practical result, meaningful validation and any remaining limitation briefly.

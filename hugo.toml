@@ -71,6 +71,13 @@ endLevel = 2
 [markup.goldmark.renderer]
 unsafe = false
 
+# Render equations at build time. Single dollars remain ordinary currency.
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['$$', '$$']]
+inline = [['\(', '\)']]
+
 [menus]
 [[menus.main]]
 name = "Docs"

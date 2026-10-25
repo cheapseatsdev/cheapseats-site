@@ -22,11 +22,15 @@ Terms used throughout:
 | **Recommended** | answers graded `recommended` | answers to choice prompts | `recommended` |
 | **Top pick** | answers whose single top pick is the brand | answers to choice prompts | `top_pick` |
 
-Each comes with a 95% Wilson interval, so 0 of 10 and 0 of 1,000 don't read the same. For `h` hits of `n` answers, with `p = h/n` and `z = 1.96`:
+Each comes with a 95% Wilson interval, so 0 of 10 and 0 of 1,000 don't read the same. For \(h\) hits of \(n\) answers, with \(p = h/n\) and \(z = 1.96\):
 
-> centre = (p + z²/2n) / (1 + z²/n)
->
-> half-width = z · √(p(1 − p)/n + z²/4n²) / (1 + z²/n)
+$$
+\text{centre} = \frac{p + \frac{z^2}{2n}}{1 + \frac{z^2}{n}}
+$$
+
+$$
+\text{half-width} = \frac{z\sqrt{\frac{p(1-p)}{n} + \frac{z^2}{4n^2}}}{1 + \frac{z^2}{n}}
+$$
 
 The run page shows these per answerer and track, and for the run as a whole. The run's rates pool its answers: a prompt with more answers counts for more. Rankings and trends instead take the mean over prompts, each prompt counting once (see [Trends](#trends-and-outcomes)).
 
@@ -47,7 +51,7 @@ The share-of-voice board lists every product the answers named, not only the com
 | **Avg place** | mean of the product's place among the products an answer names, over the answers naming it at a known place | | `avg_position` |
 | **First** | answers naming it first ÷ answers to choice prompts | | `named_first` |
 | **Top 3** | answers naming it first, second or third ÷ answers to choice prompts | | `top3` |
-| **Weighted** | mean over every graded answer of (N − place + 1) / N at a known place, where N = max(products named, place); 0 when absent or place is unknown | | `position_weighted` |
+| **Weighted** | mean over every graded answer of \(\frac{N - \text{place} + 1}{N}\) at a known place, where \(N = \max(\text{products named}, \text{place})\); 0 when absent or place is unknown | | `position_weighted` |
 | **Top pick** | answers whose top pick is the product | | `top_pick` |
 
 - **Named rate was called share of voice.** In earlier versions the board's one rate column was labelled share of voice. That number is now **named rate**; **share of voice** is the true share, which sums to 100%. The JSON still writes the old field, `share`, with the named rate in it, so existing readers keep working.
@@ -181,14 +185,24 @@ A kind of page the answers lean on and that rarely names you scores highest. A r
 
 ## Citation stability
 
-How much the hosts a set's answers cite move from one run to the next, per track, over the same daily runs the trends use (each day's newest finished run, the last 30 days by default). A run's citations are a vector of host **citation shares** `s_h`: a host's citations over all the run's citations, so `Σ s_h = 1`. For each run against the one before it, with shares `a` and `b`:
+How much the hosts a set's answers cite move from one run to the next, per track, over the same daily runs the trends use (each day's newest finished run, the last 30 days by default). A run's citations are a vector of host **citation shares** \(s_h\): a host's citations over all the run's citations, so \(\sum_h s_h = 1\). For each run against the one before it, with shares \(a\) and \(b\):
 
 | metric | formula | range |
 | --- | --- | --- |
-| **Similarity** (Bray–Curtis × 100) | 100 · (1 − Σ\|a_h − b_h\| / Σ(a_h + b_h)), which for shares is 100 · Σ min(a_h, b_h): the share of citations the two runs have in common by host | 100 when every host kept its share; 0 when no host was cited in both |
+| **Similarity** (Bray–Curtis × 100) | the share of citations the two runs have in common by host; calculated below | 100 when every host kept its share; 0 when no host was cited in both |
 | **Overlap** (Jaccard × 100) | 100 · hosts cited in both ÷ hosts cited in either | 0 to 100 |
 | **New**, **gone** | hosts cited this run and not the one before, and the other way round, largest share first | |
 | **Stability score** | the mean similarity over the transitions, with the mean overlap beside it | shown from **3 transitions** |
+
+$$
+\text{Similarity} = 100\left(1 - \frac{\sum_h \lvert a_h - b_h \rvert}{\sum_h (a_h + b_h)}\right)
+$$
+
+For citation shares, this simplifies to:
+
+$$
+\text{Similarity} = 100\sum_h \min(a_h, b_h)
+$$
 
 - **One or two transitions can be a fluke**, so the score waits for three.
 - **The chain stops at a change of method**: the run that changed it is the oldest compared.
@@ -203,14 +217,21 @@ A high score means sources have been consistent; a low score means they vary bet
 | --- | --- |
 | **A day's rate** (rankings) | the newest finished run that UTC day, per track: the mean over prompts of each prompt's rate, each prompt counting once |
 | **Rolling average** | the mean of the window's days: 7 by default, or 14 or 28 |
-| **Band, across prompts** | rolling mean ± 1.96 · s / √m, where s is the standard deviation of the m prompt-day rates in the window |
-| **This set, today** | the day's mean ± 1.96 · √(Σ_k var_k) / K over its K prompts |
-| **Vs day before** | D = mean over the prompts both days asked of (today − yesterday), with a 95% margin; within noise when D ± margin covers 0 |
+| **Band, across prompts** | rolling mean \(\pm 1.96\frac{s}{\sqrt{m}}\), where \(s\) is the standard deviation of the \(m\) prompt-day rates in the window |
+| **This set, today** | the day's mean \(\pm 1.96\frac{\sqrt{\sum_k \operatorname{var}_k}}{K}\) over its \(K\) prompts |
+| **Vs day before** | \(D\) = mean over the prompts both days asked of (today − yesterday), with a 95% margin; within noise when \(D \pm \text{margin}\) covers 0 |
 | **A set's prompts** | each prompt's answers pooled over the window, with a Wilson interval |
-| **Fix outcome** | the same paired D, before and after the fix, over its target prompts |
-| **Quick wins gain** | speed × mean over the fix's prompts of (1 − p), where speed is prompts per working day and p is the prompt's recommended rate (named, for an info prompt) pooled over the last 14 days |
+| **Fix outcome** | the same paired \(D\), before and after the fix, over its target prompts |
+| **Quick wins gain** | speed × mean over the fix's prompts of \((1 - p)\), where speed is prompts per working day and \(p\) is the prompt's recommended rate (named, for an info prompt) pooled over the last 14 days |
 
-`var_k` is a prompt's sampling variance, p̃(1 − p̃)/n with p̃ = (h + 0.5)/(n + 1). [How big a change Cheap Seats can detect](../noise-and-confidence/) explains these intervals and tests, with a worked example.
+\(\operatorname{var}_k\) is a prompt's sampling variance:
+
+$$
+\operatorname{var}_k = \frac{\tilde p(1 - \tilde p)}{n},
+\qquad \tilde p = \frac{h + 0.5}{n + 1}
+$$
+
+[How big a change Cheap Seats can detect](../noise-and-confidence/) explains these intervals and tests, with a worked example.
 
 ## How these compare to other tools
 
