@@ -40,7 +40,9 @@ The 16px favicon uses optically simplified, pixel-aligned geometry. Use it only 
 | `--cs-gold-bg` | `#FFF0CB` | `#3B2C14` | Highlight badge background |
 | `--cs-gold-text` | `#765000` | `#F2B544` | Text on highlight badges |
 
-The complete set (these, plus hover, chip, control, series and status colors, type stacks, radii and content width) is `web/tokens.css`, the source of truth the site and the app both build from.
+The complete set (these, plus hover, chip, control, chart, seat-meter and status colors, type stacks, spacing, radii, shadows and layout sizes) is `web/tokens.css`, the source of truth the site, the app and the design system all build from.
+
+**Chart colors.** Series take `--cs-data-1` to `--cs-data-4` in order (blue, magenta, violet, teal), never cycled; series 1 is always your own brand (`--cs-series`). A fifth or later series folds into Other in `--cs-muted`. Scatter plots and small multiples use only series 1 and 2. Each is at least 3:1 on bg, surface and chip in both themes and passes color-blind separation against its neighbors; they are kept clear of the brand red, gold and the status colors, which never stand in for a series.
 
 The logo's dark neutral is `#1B1917` and its reverse lettering is `#FAF8F5`. UI text uses the separate text tokens above.
 
