@@ -11,7 +11,11 @@ The Cheap Seats design system on Claude is built from this repo:
 
 After changing `tokens.css` or `type.json`, run `node brand/design-system/build.mjs` and commit
 `tokens.json` with the change; CI runs it with `--check` and fails on a stale copy. Every token
-needs a usage note (the comment after it on its line), or the build fails.
+needs a usage note (the comment after it, on the same line), or the build fails. Every color needs
+a value in both dark blocks or must be an alias of one that has. A shared token must fit one of
+the families `build.mjs` knows (spacing, radius, shadow, font, focus, opacity, layout, breakpoint),
+so a new kind of token needs a rule there first. The build also rewrites `type.json` in its
+canonical form, and `--check` fails when it is not.
 
 To update the design system itself, merge here and ask Claude to re-sync the Cheap Seats design
 system from `cheapseatsdev/cheapseats-site`. A token edited on the design system's page is

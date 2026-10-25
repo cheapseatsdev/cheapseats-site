@@ -23,30 +23,44 @@ function fail(msg) {
   process.exit(1);
 }
 
-// The body of the first block that opens with `opener`, up to its matching brace.
-function block(opener) {
-  const start = css.indexOf(opener);
-  if (start < 0) fail(`tokens.css has no block starting ${opener}`);
-  let depth = 0;
-  for (let i = start; i < css.length; i++) {
-    if (css[i] === "{") depth++;
-    if (css[i] === "}" && --depth === 0) return css.slice(css.indexOf("{", start) + 1, i);
+// tokens.css is read a line at a time, not as CSS: its contract is one token a line, with the
+// usage note after it on the same line, inside four blocks that each open on their own line.
+// Braces inside a note therefore cannot confuse the parse, and a note that wraps onto a second
+// line is reported as such rather than as a missing note.
+const openers = {
+  light: /^:root\{color-scheme:light;$/,
+  darkMedia: /^@media \(prefers-color-scheme:dark\)\{:root:not\(\[data-theme="light"\]\)\{color-scheme:dark;$/,
+  darkAttr: /^:root\[data-theme="dark"\]\{color-scheme:dark;$/,
+  shared: /^:root\{$/,
+};
+const decl = /^\s*--([a-z0-9-]+)\s*:\s*([^;]+);[ \t]*(?:\/\*\s*(.*?)\s*\*\/)?\s*$/;
+const blocks = { light: [], darkMedia: [], darkAttr: [], shared: [] };
+let open = null;
+css.split("\n").forEach((line, i) => {
+  const n = i + 1;
+  if (open === null) {
+    const name = Object.keys(openers).find((k) => openers[k].test(line));
+    if (!name) return; // between blocks: comments and blank lines
+    if (blocks[name].length) fail(`line ${n}: a second ${name} block`);
+    open = name;
+    blocks[name].push(null); // marks the block as seen even when it holds no declarations
+    return;
   }
-  fail(`unclosed block ${opener}`);
+  if (/^\}/.test(line)) {
+    open = null;
+    return;
+  }
+  if (/^\s*$/.test(line)) return;
+  const m = decl.exec(line);
+  if (!m) fail(`line ${n}: expected \`--name:value; /* note */\` on one line, got: ${line.trim()}`);
+  blocks[open].push({ name: m[1], value: m[2].trim(), usage: m[3] || "" });
+});
+if (open !== null) fail(`the ${open} block is never closed`);
+for (const name of Object.keys(blocks)) {
+  if (!blocks[name].length) fail(`tokens.css has no ${name} block (expected a line matching ${openers[name]})`);
+  blocks[name] = blocks[name].filter(Boolean);
 }
-
-// `--name:value; /* note */` lines, in order.
-function decls(body) {
-  const out = [];
-  const re = /--([a-z0-9-]+)\s*:\s*([^;]+);[ \t]*(?:\/\*\s*(.*?)\s*\*\/)?/g;
-  for (const m of body.matchAll(re)) out.push({ name: m[1], value: m[2].trim(), usage: m[3] || "" });
-  return out;
-}
-
-const light = decls(block(":root{color-scheme:light;"));
-const darkMedia = decls(block(':root:not([data-theme="light"]){'));
-const darkAttr = decls(block(':root[data-theme="dark"]{'));
-const shared = decls(css.slice(css.lastIndexOf("/* The same in both themes")).replace(/^[^{]*\{/, ""));
+const { light, darkMedia, darkAttr, shared } = blocks;
 
 if (JSON.stringify(darkMedia) !== JSON.stringify(darkAttr))
   fail('the two dark blocks differ: @media (prefers-color-scheme:dark) and :root[data-theme="dark"] must hold the same values');
@@ -54,6 +68,9 @@ if (JSON.stringify(darkMedia) !== JSON.stringify(darkAttr))
 const dark = Object.fromEntries(darkAttr.map((d) => [d.name, d.value]));
 for (const name of Object.keys(dark))
   if (!light.some((d) => d.name === name)) fail(`--${name} has a dark value but no light one`);
+for (const d of light)
+  if (!dark[d.name] && !d.value.startsWith("var("))
+    fail(`--${d.name} has a light value but no dark one: add it to both dark blocks, or make it an alias of a token that has one`);
 
 const alias = (v) => {
   const m = /^var\(--([a-z0-9-]+)\)$/.exec(v);
@@ -74,14 +91,22 @@ const color = light.map((d) => ({
   usage: note(d),
 }));
 
-const families = { spacing: [], radius: [], shadow: [], font: [], layout: [], breakpoint: [] };
+// Every shared token belongs to exactly one family; a new token that fits none fails the build
+// rather than landing somewhere misleading.
+const layoutNames = ["cs-content", "cs-prose", "cs-masthead", "cs-touch-target"];
+const familyOf = (name) =>
+  name.startsWith("cs-space-") ? "spacing"
+    : name.startsWith("cs-radius") || name === "cs-control-radius" ? "radius"
+    : name.startsWith("cs-shadow-") ? "shadow"
+    : name === "cs-sans" || name === "cs-mono" ? "font"
+    : name.startsWith("cs-focus-") ? "focus"
+    : name.startsWith("cs-opacity-") ? "opacity"
+    : layoutNames.includes(name) ? "layout"
+    : name.startsWith("cs-app-bp-") ? "breakpoint"
+    : fail(`--${name} fits no token family (spacing, radius, shadow, font, focus, opacity, layout, breakpoint): add a rule for it in build.mjs`);
+const families = { spacing: [], radius: [], shadow: [], font: [], focus: [], opacity: [], layout: [], breakpoint: [] };
 for (const d of shared) {
-  const family = d.name.startsWith("cs-space-") ? "spacing"
-    : d.name.includes("radius") ? "radius"
-    : d.name.startsWith("cs-shadow-") ? "shadow"
-    : d.name === "cs-sans" || d.name === "cs-mono" ? "font"
-    : d.name.startsWith("cs-bp-") ? "breakpoint"
-    : "layout";
+  const family = familyOf(d.name);
   const value = family === "font" ? d.value.replace(/"/g, "").replace(/,/g, ", ") : d.value;
   families[family].push({ name: d.name, value, usage: note(d) });
 }
@@ -111,8 +136,10 @@ const tokens = {
   radius: { tokens: families.radius },
   shadow: { note: "Only floating layers get a shadow; cards use a border.", tokens: families.shadow },
   font: { note: "The type stacks under their codebase names.", tokens: families.font },
+  focus: { note: "The focus ring: a solid cs-primary outline on every focusable element.", tokens: families.focus },
+  opacity: { note: "Unitless alpha values applied to whole elements.", tokens: families.opacity },
   layout: { tokens: families.layout },
-  breakpoint: { note: "Media queries repeat these as literals; the custom properties are for scripts and reference.", tokens: families.breakpoint },
+  breakpoint: { note: "The app's breakpoints; the site's own are 400, 720 and 800px. Media queries repeat these as literals; the custom properties are for scripts and reference.", tokens: families.breakpoint },
 };
 
 const text = JSON.stringify(tokens, null, 1) + "\n";
@@ -122,8 +149,12 @@ if (process.argv.includes("--check")) {
     current = readFileSync(outPath, "utf8");
   } catch {}
   if (current !== text) fail("brand/design-system/tokens.json is stale: run node brand/design-system/build.mjs and commit it");
+  const typeText = readFileSync(typePath, "utf8");
+  if (typeText !== JSON.stringify(type, null, 1) + "\n")
+    fail("brand/design-system/type.json is not in its canonical form: run node brand/design-system/build.mjs and commit it");
   console.log("brand/design-system/tokens.json is up to date");
 } else {
   writeFileSync(outPath, text);
+  writeFileSync(typePath, JSON.stringify(type, null, 1) + "\n");
   console.log(`wrote brand/design-system/tokens.json: ${color.length} colors, ${shared.length} other tokens`);
 }
