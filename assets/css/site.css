@@ -177,7 +177,7 @@ footer.site p{margin:var(--cs-space-1) 0}
 .figure-success{color:var(--cs-success)}
 .figure-warning{color:var(--cs-warning)}
 .figure-matrix caption{text-align:left;color:var(--cs-muted);font-size:13px;padding-bottom:var(--cs-space-2)}
-.figure-matrix td{text-align:center}
+.figure-matrix td,.figure-matrix thead th:not(:first-child){text-align:center}
 .figure-bars{list-style:none;padding:0;margin:var(--cs-space-3) 0}
 .figure-bars li{margin:0 0 var(--cs-space-3)}
 .figure-bars span{display:block;margin-bottom:var(--cs-space-1);font-variant-numeric:tabular-nums}
