@@ -57,7 +57,7 @@ The chart runs one replica and replaces it rather than rolling, so two never sha
 - `existingSecret`: a Secret you create holding `CHEAPSEATS_TOKENS`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` if an answerer uses it, and `TYPESAFE_API_KEY` or `EXA_API_KEY` with `[typesafe]` or `[exa]`. The chart never takes keys as values: a value named like one fails the install. `extraEnv` and `extraEnvFrom` pick single keys out of other Secrets.
 - `env`: plain environment for values that aren't secrets, such as `CHEAPSEATS_CONFIG_REV` or the key-adding proxies `CHEAPSEATS_ANTHROPIC_BASE_URL`, `CHEAPSEATS_TYPESAFE_BASE_URL` and `CHEAPSEATS_EXA_BASE_URL`.
 - `persistence`: the volume for the database (1Gi by default), or an `existingClaim`.
-- `ingress`: off by default, with `className`, `annotations`, `host` and `tls` when on.
+- `ingress`: off by default, with `className`, `annotations`, `host` and `tls` when on. Set `tls`, or terminate TLS in front of the ingress: every request carries an access token.
 - The usual knobs: `nameOverride`, `image.pullPolicy`, `imagePullSecrets`, `service.type` and `port`, `resources`, `terminationGracePeriodSeconds`, `nodeSelector`, `tolerations`, `affinity` and `podAnnotations`.
 
 The plain app image works too, with the config mounted at `/config` by `extraVolumes` and `extraVolumeMounts`. The template's [Kubernetes guide](https://github.com/cheapseatsdev/cheapseats-config-template/blob/main/deploy/README.md) walks through it.
