@@ -1,0 +1,9 @@
+{
+  "name": "cheapseats-brand",
+  "private": true,
+  "description": "Rebuilds the brand assets: npm ci && node source/build.cjs",
+  "license": "SEE LICENSE IN ../LICENSE",
+  "devDependencies": {
+    "sharp": "0.35.5"
+  }
+}
