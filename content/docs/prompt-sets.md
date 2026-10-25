@@ -11,13 +11,13 @@ Each file in your config repo's `prompt-sets/` is one category of buyer question
 
 ```toml
 id = "ai-search-visibility"       # never change it: runs and rankings key on it
-name = "Finding out whether AI assistants recommend us"
+name = "Understanding and measuring AI visibility"
 tier = "core"                     # cadence and samples follow [tiers.core] or [tiers.plg]
 description = """What the category is, who is competing for it, and what the brand claims."""
 
 [[prompts]]
-id = "find-whether-chatgpt-recommends-product"
-text = "How can I find out whether ChatGPT recommends my product when people ask about my category?"
+id = "tools-track-chatgpt-recommendations"
+text = "Which tools can track whether ChatGPT recommends my product when people ask about my category?"
 
 [[prompts]]
 id = "recommended-versus-mentioned-ai-answers"
@@ -36,14 +36,17 @@ aliases = ["Peec"]
 Results, trends and fix lists follow a prompt by its id, so:
 
 - **Same id, same question.** Fixing a typo or rewording keeps the id: the prompt's history carries on, marked as reworded that day. Asking something different gets a new id.
-- **Ids are unique across every set** and never reused. Moving a prompt to another set keeps its id, and its history moves with it. Once removed, an id stays retired.
+- **Ids are unique across every set** and never reused. Keep the id when moving a prompt to another set; stored runs retain their original set and prompt ids. Once removed, an id stays retired.
 - Order in the file is only display order.
 
 ## Say what a good answer looks like
 
-Most questions ask an assistant to choose ("what should I use for...", "X vs Y"), so the brand is scored on being recommended and being the top pick. A question that asks it to explain or how-to ("what is...", "how do I...") can be answered well without naming any product.
+Choose intent by what a complete, useful answer requires, not by the opening words:
 
-Mark those `intent = "info"`. Their answers count toward named rate, but are excluded from recommended and top-pick denominators. A good explanation need not recommend a product. Citations are tracked separately.
+- **Selection** (the default) asks for a product choice, comparison, alternative or suitability decision: "Which tracker should our team use?" A question starting "how" can still require a choice.
+- **Information** (`intent = "info"`) can be answered completely with an explanation, method, checklist or calculation: "What should I compare when evaluating trackers?" A product example might help without being required. Details of an already-named product can also be informational.
+
+Info answers count toward named rate, but are excluded from recommended and top-pick denominators. Citations are tracked separately. A 20-question set with only three selection questions has a three-question recommendation benchmark; the other seventeen broaden its informational coverage.
 
 Don't reword an explanation question into "recommend a tool" to make it scoreable: that's a different question, which needs a new id. Changing a prompt's intent keeps its id and history, and the day it changes is marked like a reword; its rates before and after aren't compared.
 
@@ -91,9 +94,29 @@ It produces Markdown for the pull request: prompt, competitor and answerer chang
 
 ## Ask the way a buyer would
 
-Only `head-to-heads` names the brand; in every other set it has to be named on its own merits. `cheapseats check` enforces this, matching the brand name and aliases as whole words.
+Only `head-to-heads` may name your brand; every other set must omit it. `cheapseats check` enforces this, matching the brand name and aliases as whole words.
 
-Write each question as someone who has never heard of the brand would ask it. Start with 15–20 distinct buyer questions; precision depends on the number of prompts and comparable runs, not a minimum set size alone.
+Outside branded evaluation, write as someone who has never heard of the brand would ask. Keep three situations distinct:
+
+| situation | example | what it measures |
+| --- | --- | --- |
+| Open discovery | Which visibility tracker should a small team use? | Whether the assistant independently brings a product into consideration. |
+| Competitor-aware discovery or shortlist | What are alternatives to Profound? / Peec AI or Profound? | Alternatives to a known product, or preference within a supplied shortlist. An answer may reasonably stay within the named choices. |
+| Known-brand evaluation (`head-to-heads`) | Is Cheap Seats a good fit for our agency? | Fit, preference and objections after the buyer already knows the brand. Named presence alone proves little. |
+
+These are review categories, not new TOML fields. Cheap Seats' unbranded rates exclude questions naming your brand; they can still include competitor shortlists. Use separate sets when you need separate reported rates for these buying situations.
+
+Start with roughly **15–20 distinct buyer questions** as a planning guide, not a precision threshold. A smaller coherent set needn't be padded, and many paraphrases of one need don't establish broad market coverage.
+
+- **Distinct questions** cover different buyer needs and constraints.
+- **Repeated samples** estimate answer variability for those questions.
+- **Runs across days** capture variation over time. A week containing one weekly run isn't seven daily runs.
+
+Check the selection-question count, answer counts and intervals for the metric you plan to use. [Sampling and change detection](../noise-and-confidence/) explains the assumptions behind precision estimates; neither a question count nor a narrow sampling interval proves the set represents your market.
+
+Record why a question belongs in the set: a public buyer question, recurring sales or support need, research finding, or an unvalidated hypothesis. Keep this evidence in comments or review notes and omit private customer information. Cover constraints that can rule your product out, such as operating capacity, engine or locale requirements, and multi-client needs. Feature-specific questions can be useful, but their frequency in your set isn't evidence of market demand.
+
+The configured `brand.audience` is sent to answerers. Put any additional buyer or task context needed to interpret a particular question in its text; a technical operator's question may need more context than the global audience supplies.
 
 ## Sets written before ids
 
@@ -101,7 +124,9 @@ Sets written before prompts had ids (`prompts = ["...", "..."]`) are converted b
 
 ## Review them monthly
 
-Once a set has a month of runs, the [prompt review](../prompt-review/) says which of its prompts tell you nothing, move for no reason, get answered about something else or ask the same thing twice, and what no prompt asks. The review is free; requesting proposed edits makes one analyst call. Review the diff before opening a pull request.
+Once a set has a month of runs, the [prompt review](../prompt-review/) flags flat rates, noisy answers, possible category mismatches and overlap, and suggests gaps to investigate. These are review candidates, not proof a question is bad or a buyer need is missing. The review is free; requesting proposed edits makes one analyst call.
+
+Keep a stable core for comparison and test new questions separately before replacing it. Preserve legitimate unfavorable questions as gap or regression checks. Retire a question when its buyer need is no longer relevant or another question covers the same need and constraints, not simply because the brand always loses or wins. Review the diff before opening a pull request.
 
 ## Keep them public
 

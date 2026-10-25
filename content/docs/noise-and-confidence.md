@@ -5,7 +5,7 @@ weight: 240
 group: Reading what it finds
 ---
 
-On a 17-prompt set with two answerers and one sample per track, one run has a worst-case sampling margin of about **±17 points for a reading** and **±24 points for a change between two runs**. Pool seven daily runs on each side and those margins shrink to about **±6** and **±9**. Reading uncertainty and change detection are different calculations.
+For named rate on 17 fixed prompts with two answerers and one sample per track, one run has a worst-case sampling margin of about **±17 points for a reading** and **±24 points for a change between two runs**. Pool seven daily runs on each side and those margins shrink to about **±6** and **±9**. Reading uncertainty and change detection are different calculations.
 
 Cheap Seats calculates both from stored answers, without extra model calls. A change beyond its margin is evidence against sampling noise; it does not establish that your work caused the change.
 
@@ -16,6 +16,8 @@ For 17 fixed prompts, on one track, with rates near 50% and equal answer counts 
 {{< figure name="precision" >}}
 
 These are approximate 95% sampling margins, not the chart's across-prompts band. Rates far from 50% are less noisy. A 10-point swing between two single runs is within noise in this example. [The calculation](#calculating-the-example) is below.
+
+Seven daily runs are seven observations over time, not one weekly run or a promise about a seven-day window. Recommendation rates use only selection questions, so a mixed-intent set has fewer eligible prompts than the named-rate example. Use the actual comparable prompts and answers for the metric being compared. These margins cover sampling answers to the chosen questions; they don't establish that those questions represent buyer demand.
 
 ## What "no detectable change" means for a fix
 
@@ -48,7 +50,7 @@ A page is **newly surfaced** if searches or citations reached it after the work 
 
 ## When more samples help
 
-Start with one sample per track and weekly runs to find gaps. The 28-day window and fix outcomes pool runs. Extra samples improve a single run's precision; runs over time also capture day-to-day variation.
+Start with one sample per track and weekly runs to find gaps. This is an economical starting cadence, not a precision guarantee. The 28-day window and fix outcomes pool the comparable runs available. Extra samples improve a single run's precision; runs over time also capture day-to-day variation. Adding distinct buyer questions expands coverage, while repeating one question measures variability for that question.
 
 When an answerer takes multiple samples, the set page estimates whether they help. It splits run-to-run named-rate variance as:
 

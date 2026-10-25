@@ -46,7 +46,7 @@ Each grade also records:
 
 **Evidence is checked.** Cheap Seats matches the grader's quote to the answer, ignoring case, spacing, markdown emphasis and curly quotes, then keeps the answer's own span. Unmatched quotes are dropped. The run page highlights the retained text; exports and MCP `get_result` include it as `evidence`.
 
-Tone and praise feed [net sentiment and themes](../metrics/#sentiment-and-themes). Questions marked `intent = "info"` ask for explanations, so they count toward named only, not recommended or top pick.
+Tone and praise feed [net sentiment and themes](../metrics/#sentiment-and-themes). Questions marked `intent = "info"` can be answered completely without a product choice, so they count toward named only, not recommended or top pick. See [choosing intent](../prompt-sets/#say-what-a-good-answer-looks-like).
 
 Grading changes mark new methods in trends. Older grades may have no tone or evidence; evidence arrived in 0.2.5. Version 0.4.4 restored `absent` for echoed names after 0.4.3 briefly graded them `mentioned`; agreement on the 80-answer golden set rose from 90% to 97–99%. [Re-grade stored answers](../regrading/) to apply today's grading without asking the assistants again; replaced grades are retained.
 
