@@ -1,36 +1,78 @@
 ---
 title: Getting started
-description: Run the example, create a config for your brand, and check your first results.
+description: Use Docker with API keys or Go with your subscriptions, then configure your brand.
 weight: 110
 group: Start here
 ---
 
 ## What you need
 
-- A checkout of [Cheap Seats](https://github.com/cheapseatsdev/cheapseats) and Go 1.26 or later.
-- **Claude, required.** Either the `claude` CLI logged in to a Claude subscription, which answers, grades and writes the fix list with no API key and no API spend, or an `ANTHROPIC_API_KEY`.
-- **ChatGPT, optional.** The `codex` CLI logged in to a ChatGPT subscription, or an `OPENAI_API_KEY`, adds a second assistant's answers. An answerer Cheap Seats can't call is skipped.
+**Use Go with subscriptions, or Docker for the quickest setup with API keys.**
+
+| How you access models | Setup | What you need |
+| --- | --- | --- |
+| API keys | [Docker](#docker-with-api-keys) | Docker, Git and an `ANTHROPIC_API_KEY`. `OPENAI_API_KEY` is optional. |
+| Claude subscription (ChatGPT optional) | [Go](#go-with-subscriptions) | Go 1.27 or later, Git and the `claude` CLI installed and logged in. The `codex` CLI is optional. |
+
+Claude is required for grading and the fix list; OpenAI adds a second assistant's answers.
+The Docker image contains neither subscription CLI. The Go route below uses your subscriptions
+without API keys or API spend; calls share your plan's allowance.
 
 ## Run the example
 
-The repo includes a complete config in `examples/cheapseats-config`, with Cheap Seats itself as the brand, in two versions that differ only in how models are called.
+Both routes start with Cheap Seats itself as the example brand. Choose one.
 
-**On your existing subscriptions**, with no additional API spend:
+### Docker with API keys
+
+Clone the [config template](https://github.com/cheapseatsdev/cheapseats-config-template).
+The released image supplies the app; no Go installation or compilation is needed.
 
 ```bash
+git clone https://github.com/cheapseatsdev/cheapseats-config-template cheapseats-config
+cd cheapseats-config
+umask 077
+printf 'CHEAPSEATS_TOKENS=%s\n' "$(openssl rand -hex 32)" > .env
+"${EDITOR:-vi}" .env
+```
+
+Keep the generated `CHEAPSEATS_TOKENS` line and add `ANTHROPIC_API_KEY=<your key>` in the editor.
+Add `OPENAI_API_KEY=<your key>` if you want OpenAI answers too; otherwise that answerer is skipped.
+The template ignores `.env` in git.
+
+Start the container:
+
+```bash
+docker run --rm --name cheapseats --stop-timeout 30 \
+  -p 127.0.0.1:3000:3000 \
+  --env-file .env \
+  -v "$PWD:/config:ro" \
+  -v cheapseats-data:/data \
+  ghcr.io/cheapseatsdev/cheapseats:0.5.3
+```
+
+Open <http://127.0.0.1:3000> and sign in with the token from `.env`. The `cheapseats-data` volume
+keeps your results after the container stops. Press Ctrl+C to stop it.
+
+**API runs cost money.** Check the model IDs, prices and budget in `cheapseats.toml` before
+starting a set. The budget admits calls against estimated reservations; actual charges can
+exceed them. See [Cost and budget](../cost-and-budget/).
+
+### Go with subscriptions
+
+With Go 1.27 or later and the `claude` CLI installed and logged in:
+
+```bash
+git clone https://github.com/cheapseatsdev/cheapseats
+cd cheapseats
 CHEAPSEATS_CONFIG=examples/cheapseats-config/cheapseats.subscriptions.toml go run ./cmd/cheapseats serve
 ```
 
-**Through the APIs.** `cheapseats.toml` is what Cheap Seats uses when `CHEAPSEATS_CONFIG` isn't set:
+Open <http://127.0.0.1:3000>, choose a set and run it. The `claude` CLI handles answers, grading
+and analysis. An installed, logged-in `codex` CLI adds OpenAI answers; unavailable answerers
+are skipped. These calls use your subscription allowances, with no API spend.
 
-```bash
-cp .env.example .env              # then fill in ANTHROPIC_API_KEY (and OPENAI_API_KEY, optionally)
-go run ./cmd/cheapseats serve
-```
-
-Open <http://127.0.0.1:3000>, pick a prompt set and run it. Through the APIs, **runs cost money**: check the model ids and prices in `cheapseats.toml` before the first paid run, and see [Cost and budget](../cost-and-budget/).
-
-With `CHEAPSEATS_TOKENS` unset, `serve` only listens on 127.0.0.1 and everything is open. See [Access](../reference/#access) for listening anywhere else.
+This local setup has no sign-in by default: local users and programs can read results and start
+runs. See [Access](../reference/#access) for tokens and remote access.
 
 ## Measure your own brand
 
@@ -38,11 +80,13 @@ What Cheap Seats asks, and about whom, lives in a config repo of your own, which
 
 ### Start one from your website: `cheapseats init`
 
+**For the Go/subscription route**, run this from the app checkout:
+
 ```bash
-go run ./cmd/cheapseats init https://yoursite.com
+go run ./cmd/cheapseats init https://yoursite.com ../your-config
 ```
 
-This reads your home page, `/llms.txt` and `/sitemap.xml` and writes `./<brand>-cheapseats-config`: `cheapseats.toml` and five starter prompt sets. It calls no model unless you add `-suggest`, uses only public addresses, and refuses to overwrite existing files.
+This reads your home page, `/llms.txt` and `/sitemap.xml` and writes `../your-config`: `cheapseats.toml` and five starter prompt sets. It calls no model unless you add `-suggest`, uses only public addresses, and refuses to overwrite existing files.
 
 Review every TODO (`grep -rn TODO` in the new directory). Fill in `audience` and `facts`, and check the guessed name, `about`, category, sites and questions. Settle `about` and `audience` before the first run: changing either starts a new trend. Commit the directory as its own git repo.
 
@@ -50,9 +94,24 @@ See [init options and discovery rules](../reference/#init-options) for a dry run
 
 ### Or start from the template
 
-Start a config repo from the [template](https://github.com/cheapseatsdev/cheapseats-config-template), or copy the example, instead.
+**For the Docker/API route**, edit the template you cloned above: replace the example brand
+in `cheapseats.toml` and the questions in `prompt-sets/`. Keep its API providers.
+The [template](https://github.com/cheapseatsdev/cheapseats-config-template) can be your own private
+repo. [Configuration](../configuration/) and [prompt sets](../prompt-sets/) explain the fields.
 
 ### Point Cheap Seats at it
+
+**Docker:** from your config checkout, validate it with the released image:
+
+```bash
+docker run --rm --env-file .env -v "$PWD:/config:ro" \
+  ghcr.io/cheapseatsdev/cheapseats:0.5.3 check
+```
+
+Then stop and restart the [Docker command above](#docker-with-api-keys) to load your changes.
+It mounts the config read-only; edit the files on your machine.
+
+**Go:** from the app checkout, point the app at your generated config:
 
 ```bash
 CHEAPSEATS_CONFIG=../your-config/cheapseats.toml go run ./cmd/cheapseats check
@@ -61,18 +120,11 @@ CHEAPSEATS_CONFIG=../your-config/cheapseats.toml go run ./cmd/cheapseats serve
 
 `cheapseats check` validates the config and every prompt set.
 
-**A free first step: `cheapseats audit`.** Before you ask a single question, check what AI crawlers can read on your sites: robots.txt and firewall blocks per AI bot, llms.txt, the sitemap, and pages that are empty without JavaScript. It calls no model; optional Exa fallback reads can incur page-read charges. See [Free site checks](../site-audit/).
+Before asking questions, use **Checks → Site audit** in the web UI to
+[check what AI crawlers can read on your sites](../site-audit/). It makes no model calls;
+optional Exa fallback reads can cost money.
 
-```bash
-CHEAPSEATS_CONFIG=../your-config/cheapseats.toml go run ./cmd/cheapseats audit
-```
-
-Then:
-
-1. Set your brand, audience and sites. See [Configuration](../configuration/).
-2. Write prompt sets of the questions your buyers ask. See [Prompt sets](../prompt-sets/).
-3. Run a set from its page, or `go run ./cmd/cheapseats run <set-id>`.
-4. Read the run page and the fix list. See [Reading results](../reading-results/).
+Then run a set from its dashboard page and [read the results and fix list](../reading-results/).
 
 ## Running on your subscriptions
 

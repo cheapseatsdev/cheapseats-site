@@ -24,16 +24,16 @@ There are no software seats or per-prompt plans. Subscription usage limits still
 
 ## Five-minute quickstart
 
-You need Go 1.26 or later and Claude: the `claude` CLI logged in to your Claude subscription, or an Anthropic API key. The `codex` CLI (or an OpenAI key) is optional and adds ChatGPT's answers. On your subscriptions, with no API key:
+Choose the route that matches your model access:
 
-```bash
-git clone https://github.com/cheapseatsdev/cheapseats && cd cheapseats
-CHEAPSEATS_CONFIG=examples/cheapseats-config/cheapseats.subscriptions.toml go run ./cmd/cheapseats serve
-```
+| Route | What you need | Model costs |
+| --- | --- | --- |
+| [Go with subscriptions](/docs/getting-started/#go-with-subscriptions) | Go 1.27+ and an installed, logged-in `claude` CLI; `codex` is optional. | No API spend; calls share your subscription allowance. |
+| [Docker with API keys](/docs/getting-started/#docker-with-api-keys) — quickest API setup | Docker and an Anthropic API key; an OpenAI key is optional. No Go installation. | Paid API usage. |
 
-That example config measures Cheap Seats itself, with every model on the CLIs. (With an API key instead: `cp .env.example .env`, fill in `ANTHROPIC_API_KEY`, and run `go run ./cmd/cheapseats serve`.) Then open <http://127.0.0.1:3000>, pick a prompt set and run it. Our 17-question run on subscriptions took under six minutes.
+The Docker image has neither subscription CLI. Both routes start with Cheap Seats itself as the example brand. Pick a prompt set in the web UI and run it. Our 17-question run on subscriptions took under six minutes.
 
-To measure your own brand, start a config repo from the [template](https://github.com/cheapseatsdev/cheapseats-config-template): your brand, competitors and buyer questions, as TOML you change by pull request. [Getting started](/docs/getting-started/) has the details, and [Deploying](/docs/deploying/) covers Docker, the Helm chart and exe.dev.
+To [measure your own brand](/docs/getting-started/#measure-your-own-brand), use `init` on the Go/subscription route or edit the API config template on the Docker route. Your brand, competitors and buyer questions live in TOML you change by pull request. [Deploying](/docs/deploying/) covers Docker, the Helm chart and exe.dev.
 
 ## A real graded answer
 

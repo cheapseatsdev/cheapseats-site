@@ -58,11 +58,13 @@ A run that stopped keeps what it finished; `POST /api/runs/{id}/retry`, or the *
 
 ### Where to run it
 
-`cheapseats run` opens the database directly, so use it where nothing else has that database open: your own machine, with the `claude` and `codex` CLIs on your subscriptions (`CHEAPSEATS_CONFIG` pointing at your config repo's `cheapseats.toml`, data in `./data` or `CHEAPSEATS_DATA_DIR`), or a container of its own with its own data volume:
+`cheapseats run` opens the database directly, so use it where nothing else has that database open. For subscriptions, use your own machine with a logged-in `claude` CLI (`codex` is optional), `CHEAPSEATS_CONFIG` pointing at your config repo's `cheapseats.toml`, and data in `./data` or `CHEAPSEATS_DATA_DIR`. See [Go with subscriptions](../getting-started/#go-with-subscriptions).
+
+For API keys, use a container with its own data volume; no Go or subscription CLIs are needed. From your API config checkout, with the keys in `.env`:
 
 ```bash
 docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.4.5 run head-to-heads
+  ghcr.io/cheapseatsdev/cheapseats:0.5.3 run head-to-heads
 ```
 
 On a deployment that is already serving, start the run through the API instead (below) or from the set's page. It lands in the same database and the same trend, and counts against the same daily budget.
