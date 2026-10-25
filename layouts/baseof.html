@@ -65,8 +65,8 @@
 </script>{{ end }}
 {{- /* The brand tokens (brand/web/tokens.css, mounted in hugo.toml) go ahead of the site's styles in one stylesheet. */}}
 {{ $css := slice (resources.Get "css/tokens.css") (resources.Get "css/site.css") | resources.Concat "css/site.css" | minify | fingerprint }}
-{{- /* A theme picked with the header's toggle, applied before the page paints. */}}
-<script>try{var t=localStorage.getItem("cheapseats-theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+{{- /* Light, or the theme picked with the header's toggle, applied before the page paints. */}}
+<script>var d=document.documentElement;d.dataset.theme="light";try{var t=localStorage.getItem("cheapseats-theme");if(t==="dark")d.dataset.theme=t;else if(t==="system")delete d.dataset.theme}catch(e){}</script>
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 </head>
 <body>
@@ -77,12 +77,13 @@
 </main>
 {{ partial "footer.html" . }}
 <script>
-// The header's theme toggle cycles system, light, dark; a pick is remembered in this browser.
+// The header's theme toggle cycles light, dark, system; a pick is remembered in this browser, and
+// back to light forgets it.
 // Screenshots follow it too: their dark image's media query is pinned on or off while one is picked.
 (function () {
   var button = document.querySelector(".theme-toggle");
   if (!button) return;
-  var modes = ["system", "light", "dark"], root = document.documentElement;
+  var modes = ["light", "dark", "system"], root = document.documentElement;
   var mode = root.dataset.theme || "system";
   function apply() {
     if (mode === "system") delete root.dataset.theme; else root.dataset.theme = mode;
@@ -97,7 +98,7 @@
   apply();
   button.addEventListener("click", function () {
     mode = modes[(modes.indexOf(mode) + 1) % modes.length];
-    try { if (mode === "system") localStorage.removeItem("cheapseats-theme"); else localStorage.setItem("cheapseats-theme", mode); } catch (e) {}
+    try { if (mode === "light") localStorage.removeItem("cheapseats-theme"); else localStorage.setItem("cheapseats-theme", mode); } catch (e) {}
     apply();
   });
 })();
