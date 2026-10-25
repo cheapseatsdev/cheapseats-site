@@ -103,8 +103,11 @@ A per-visitor limit stops one client from hogging the copy. It doesn't stop a fl
 If the copy's machine also serves your site, its access log is where AI crawlers show up. Pull the log in the same sync, before the database copy, and import it on your deployment, so the AI crawlers page fills on both:
 
 ```bash
-ssh -i ~/cheapseats/demo-key <copy-vm>.exe.xyz 'tar -C /var/log/caddy -cf - site.log' | tar -x -C "$work"
+ssh -i ~/cheapseats/demo-key -o IdentitiesOnly=yes <copy-vm>.exe.xyz 'cat /var/log/caddy/site.log' |
+  head -c 100000000 >"$work/site.log"
 cheapseats crawl import "$work/site.log"
 ```
+
+The public copy is the less trusted machine, so take one file's bytes into a name you chose, capped at 100 MB, rather than unpacking an archive whose paths and size it decides.
 
 [Importing on a schedule](../site-audit/#on-a-schedule) has more.
