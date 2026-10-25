@@ -13,6 +13,10 @@
     "asset-manifest.json",
     "brand-overview.png",
     "brand-overview.svg",
+    "design-system/README.md",
+    "design-system/build.mjs",
+    "design-system/tokens.json",
+    "design-system/type.json",
     "logos/cheapseats-horizontal-black.png",
     "logos/cheapseats-horizontal-black.svg",
     "logos/cheapseats-horizontal-dark.png",
@@ -61,7 +65,6 @@
     "web/app-icon.svg",
     "web/apple-touch-icon.png",
     "web/brand.css",
-    "web/tokens.css",
     "web/favicon-16.png",
     "web/favicon-32.png",
     "web/favicon-48.png",
@@ -71,6 +74,7 @@
     "web/icon-192.png",
     "web/icon-512.png",
     "web/icon-maskable-512.png",
-    "web/site.webmanifest"
+    "web/site.webmanifest",
+    "web/tokens.css"
   ]
 }
