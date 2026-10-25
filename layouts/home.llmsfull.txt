@@ -1,10 +1,9 @@
 # {{ site.Title }}
 
-> {{ site.Params.description }}
+Every page of {{ site.BaseURL }}, with the homepage and section indexes, as markdown. Source: {{ site.Params.github }}
 
-Every page of {{ site.BaseURL }}, docs first, as markdown. Source: {{ site.Params.github }}
+{{ partial "home-text.html" site.Home | htmlUnescape }}
 {{ range site.Sections.ByWeight }}
-{{- if eq .Section "compare" }}
 
 ---
 
@@ -16,6 +15,27 @@ Every page of {{ site.BaseURL }}, docs first, as markdown. Source: {{ site.Param
 {{- end }}
 
 {{ .RenderShortcodes }}
+{{- if eq .Section "docs" }}
+{{ $pages := .Pages.ByWeight }}
+{{ range $group := site.Params.docGroups }}
+{{ with where $pages "Params.group" $group }}
+## {{ $group }}
+
+{{ partial "landing-links.html" (dict "pages" . "format" "markdown") | htmlUnescape }}
+{{ end }}
+{{ end }}
+{{- else if eq .Section "guides" }}
+{{ partial "landing-links.html" (dict "pages" .Pages.ByWeight "format" "markdown") | htmlUnescape }}
+{{- else if eq .Section "blog" }}
+{{ with .OutputFormats.Get "rss" }}[RSS]({{ .Permalink }}){{ end }}
+{{ $summaries := index hugo.Data "blog-listing" }}
+{{ range .Pages.ByDate.Reverse }}
+{{ $post := . }}
+{{ $summary := index $summaries .File.ContentBaseName | default .Description }}
+{{ with .OutputFormats.Get "markdown" }}
+- [{{ $post.Title }}]({{ .Permalink }}){{ with $summary }}: {{ . }}{{ end }} ({{ $post.Date.Format "2006-01-02" }}{{ with $post.Params.author }} · {{ . }}{{ end }})
+{{ end }}
+{{ end }}
 {{- end }}
 {{- range .Pages.ByWeight }}
 

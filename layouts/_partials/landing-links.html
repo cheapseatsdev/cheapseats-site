@@ -1,0 +1,21 @@
+{{- /* Short task summaries belong to the index, not the articles' SEO descriptions.
+     Use the same list for HTML and text exports. */ -}}
+{{- $summaries := index hugo.Data "landing-links" | default dict -}}
+{{- if eq .format "markdown" }}
+{{ range .pages -}}
+{{- $section := index $summaries .Section | default dict -}}
+{{- $summary := index $section .File.BaseFileName | default .Description -}}
+{{- $page := . -}}
+{{- with .OutputFormats.Get "markdown" -}}
+- [{{ $page.Title }}]({{ .Permalink }}){{ with $summary }}: {{ . }}{{ end }}
+{{ end -}}
+{{- end -}}
+{{- else -}}
+<ul class="doc-list">
+{{- range .pages -}}
+  {{- $section := index $summaries .Section | default dict -}}
+  {{- $summary := index $section .File.BaseFileName | default .Description -}}
+  <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with $summary }}<p class="muted">{{ . }}</p>{{ end }}</li>
+{{- end -}}
+</ul>
+{{- end -}}

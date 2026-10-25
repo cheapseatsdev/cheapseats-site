@@ -3,7 +3,6 @@
   {{ partial "docs-nav.html" . }}
   <div class="prose">
     <header class="page-heading">
-      <p class="eyebrow">Run it. Read it. Improve it.</p>
       <h1>{{ .Title }}</h1>
       {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
     </header>
@@ -13,11 +12,7 @@
     {{ $in := where $pages "Params.group" $g }}
     {{ with $in }}
     <h2>{{ $g }}</h2>
-    <ul class="doc-list">
-    {{ range . }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Description }}<br><span class="muted">{{ . }}</span>{{ end }}</li>
-    {{ end }}
-    </ul>
+    {{ partial "landing-links.html" (dict "pages" .) }}
     {{ end }}
     {{ end }}
     {{ $rest := where $pages "Params.group" "not in" site.Params.docGroups }}
