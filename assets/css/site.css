@@ -23,7 +23,7 @@ header.site nav a[aria-current="page"]{color:var(--cs-text);border-bottom-color:
 .theme-toggle{margin-left:auto;width:32px;height:32px;background:transparent;color:var(--cs-muted);border:1px solid var(--cs-border);border-radius:var(--cs-control-radius);padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer}
 .theme-toggle:hover{color:var(--cs-text);background:var(--cs-chip)}
 .theme-toggle span{display:none}
-.theme-toggle:not([data-mode]) .t-system,.theme-toggle[data-mode="system"] .t-system,.theme-toggle[data-mode="light"] .t-light,.theme-toggle[data-mode="dark"] .t-dark{display:inline-flex}
+.theme-toggle:not([data-mode]) .t-light,.theme-toggle[data-mode="system"] .t-system,.theme-toggle[data-mode="light"] .t-light,.theme-toggle[data-mode="dark"] .t-dark{display:inline-flex}
 .mobile-menu{display:none}
 
 main{padding:var(--cs-space-8) 0 var(--cs-space-16)}
