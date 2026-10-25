@@ -33,9 +33,11 @@ Every search, result URL and citation is kept, so you can see which third-party 
 
 ## Make the fix specific
 
-A dashboard that says you're losing doesn't help on its own. When a run finishes, Cheap Seats builds **Fix these first**: a ranked list where each fix names the exact page to create or change, what it must say, how you'll know it's done, the prompts it would flip and the page it would displace. Each one is placed on whichever of your sites suits it, how-tos on the docs and comparisons on the blog or marketing site, and assigned to that site's owner. It comes with a prompt you can paste into Claude Code to make the change without inventing numbers.
+**Fix these first** assigns page fixes to site owners, with evidence, target prompts and a Claude Code prompt. This example became [our free-tracker article](/blog/free-open-source-ai-visibility-tracker/):
 
-**Quick wins** pulls those lists together across every prompt set, ranked by the prompts a fix could flip per working day, and filters by site so each team gets its own list.
+{{< figure name="tracker-fix" >}}
+
+**Quick wins** combines sets' lists, core sets first, then prompts a fix could flip per working day weighted by remaining headroom. Filter by site to give each team its list.
 
 ## Yours to run
 

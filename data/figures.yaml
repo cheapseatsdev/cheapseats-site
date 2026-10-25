@@ -39,6 +39,7 @@ precision:
     | 4 | ±12 points | ±17 points |
     | 8 | ±8 points | ±12 points |
     | 14 | ±6 points | ±9 points |
+
     These are sampling margins. More same-day samples do not remove changes in models or the web.
 source-trace:
   title: Find the missing evidence
@@ -78,3 +79,85 @@ fix-impact:
     Named change: 0 ±29 points (interval −29 to +29).
     Recommended change: +5 ±20 points (interval −15 to +25).
     Both intervals include zero. The target page did not surface on either side. These answers do not distinguish a change from sampling noise or establish that the fix caused it.
+
+score-counting:
+  title: Ten answers, three visibility readings
+  caption: Illustrative answers, counted under different mention and denominator rules. The answers do not change.
+  text: |
+    Ten illustrative answers to "what should I use for X?" Acme is your brand; Globex is a configured competitor; Initech is not configured.
+
+    | Answer | Acme | Globex | Initech |
+    | --- | --- | --- | --- |
+    | 1 | top pick | — | — |
+    | 2 | recommended | named | — |
+    | 3 | named | — | named |
+    | 4 | echo only | recommended | recommended |
+    | 5 | — | named | named |
+    | 6 | — | named | named |
+    | 7 | — | named | — |
+    | 8 | — | named | named |
+    | 9 | — | — | — |
+    | 10 | — | — | — |
+
+    Answer 4 says "I couldn't find reliable information about Acme," then recommends Globex and Initech. It contains no product information about Acme. Answers 9 and 10 name no product.
+    - 30% = 3/10: count answers containing product information about Acme; divide by all answers.
+    - 40% = 4/10: count name matches, including Acme's echo-only mention; divide by all answers.
+    - 50% = 4/8: count name matches, including Acme's echo-only mention; divide only by answers naming any product.
+
+    Acme appears by name in 4 answers, with product information in 3; Globex in 6; Initech in 5. Eight answers name some product.
+share-denominators:
+  title: Same three mentions, different share
+  caption: Same illustrative answers, with Acme's echo-only mention excluded. Count each product at most once per answer.
+  text: |
+    - Tracked set, Acme + Globex: 3 Acme + 6 Globex = 9 mentions. Acme's share is 3/9 = 33.3%.
+    - Every product, including Initech: 3 Acme + 6 Globex + 5 Initech = 14 mentions. Acme's share is 3/14 = 21.4%.
+    The counted set changes; Acme still has three mentions. These are counts of answers naming each product, not name occurrences.
+
+tracker-answer:
+  title: A recommendation for somebody else
+  caption: Historical answer reported in this article on 21 October 2026. Verbatim excerpt; stored grade fields below.
+  text: |
+    Question: Is there a free AI visibility tracker that's actually useful?
+    Claude Opus, search track, five searches. Answer excerpt: “Mostly no. As of October 2026, I couldn't find a free tool that tracks your brand across AI engines over time.”
+    Cheap Seats: absent, never named; position: none. Top pick: Amplitude AI Visibility, recommended by this answer.
+tracker-fix:
+  title: The page the answer needed
+  caption: Top fix reported in the 21 October 2026 free-tracker article, paraphrased. Completion is a target, not a measured outcome.
+  text: |
+    Publish a free-tracker quickstart. Effort: small. Priority: urgent. Gap: documentation.
+    Where: cheapseats.dev/blog/free-open-source-ai-visibility-tracker/.
+    Why: Amplitude was the top pick. No Cheap Seats page surfaced in the recorded searches for this question.
+    Must say: Free, MIT-licensed; one Docker container with SQLite. Subscriptions or API keys with a daily admission budget. Include a five-minute quickstart, a graded answer and fix list, and comparisons with HubSpot AEO Grader, Ahrefs' free checker and Amplitude AI Visibility.
+    Done when: a re-run of the free and cheap questions shows this page among the pages that shaped the answers.
+
+fix-speed:
+  title: Compare the reach per working day
+  caption: "Historical fixes from 22 October 2026, across four prompt sets of 15 to 20 prompts. Shared 0–5 target prompts per working day."
+  text: |
+    | Fix | Type | Target prompts | Effort | Speed (prompts / working day) | Priority |
+    | --- | --- | ---: | --- | ---: | --- |
+    | Get listed in a roundup that shaped the search answers | outreach | 5 | S (1 day) | 5.0 | urgent |
+    | Publish a guide to benchmarking against competitors | new page | 3 | S (1 day) | 3.0 | urgent |
+    | Publish a how-to on seeing the results its searches returned | new page | 2 | S (1 day) | 2.0 | high |
+    | Publish a dated tools-compared post | new page | 6 | M (5 days) | 1.2 | urgent |
+    | Get into a second roundup | outreach | 6 | M (5 days) | 1.2 | high |
+    | Publish a comparison against one competitor | new page | 3 | M (5 days) | 0.6 | medium |
+    | Add a Gemini provider | product | 1 | L (15 days) | 0.07 | low |
+
+    Speed is reach per day before gain's remaining-headroom weighting. It does not predict return on investment or the chance a fix will work. The last speed is rounded from 1/15; its bar uses the exact ratio.
+
+visibility-workflows:
+  title: The workflow you get, and the one you configure
+  caption: Different purposes, as described in the October 2026 comparison. Both can ask several models and evaluate answers.
+  text: |
+    Cheap Seats supplies a visibility workflow:
+    1. Buyer questions in TOML.
+    2. Search and recall answers.
+    3. Verdicts, objections and source evidence.
+    4. Trends and ranked page fixes.
+    Promptfoo supplies a configurable evaluation workflow:
+    1. Tests and provider configuration.
+    2. Answers from configured providers.
+    3. Deterministic or model-graded assertions.
+    4. Evaluation results and comparisons.
+    For visibility, configure the rubric, aliases, source capture, brand aggregation, uncertainty and fix logic.

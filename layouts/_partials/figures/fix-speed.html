@@ -1,0 +1,25 @@
+<div class="figure-speed">
+  <div class="figure-speed-scale" aria-hidden="true"><span>0</span><span>5 prompts / working day</span></div>
+  <ol class="figure-bars">
+  {{ range slice
+    (dict "title" "Get listed in a roundup that shaped the search answers" "kind" "outreach" "prompts" 5 "effort" "S" "days" 1 "priority" "urgent")
+    (dict "title" "Publish a guide to benchmarking against competitors" "kind" "new page" "prompts" 3 "effort" "S" "days" 1 "priority" "urgent")
+    (dict "title" "Publish a how-to on seeing the results its searches returned" "kind" "new page" "prompts" 2 "effort" "S" "days" 1 "priority" "high")
+    (dict "title" "Publish a dated tools-compared post" "kind" "new page" "prompts" 6 "effort" "M" "days" 5 "priority" "urgent")
+    (dict "title" "Get into a second roundup" "kind" "outreach" "prompts" 6 "effort" "M" "days" 5 "priority" "high")
+    (dict "title" "Publish a comparison against one competitor" "kind" "new page" "prompts" 3 "effort" "M" "days" 5 "priority" "medium")
+    (dict "title" "Add a Gemini provider" "kind" "product" "prompts" 1 "effort" "L" "days" 15 "priority" "low")
+  }}
+    {{ $speed := div (float .prompts) (float .days) }}
+    {{ $width := mul (div $speed 5.0) 100.0 }}
+    {{ $display := printf "%.1f" $speed }}
+    {{ if lt $speed 0.1 }}{{ $display = printf "%.2f" $speed }}{{ end }}
+    <li>
+      <span><b>{{ .title }}</b><strong>{{ $display }}</strong></span>
+      <small>{{ .kind }} · {{ .prompts }} {{ if eq .prompts 1 }}prompt{{ else }}prompts{{ end }} / {{ .days }} {{ if eq .days 1 }}day{{ else }}days{{ end }} ({{ .effort }}) · {{ .priority }} priority</small>
+      <i style="--value:{{ $width }}%;--series:var(--cs-data-1)" aria-hidden="true"></i>
+    </li>
+  {{ end }}
+  </ol>
+  <p class="figure-note">Speed is reach per day before gain’s remaining-headroom weighting. It does not predict return on investment or the chance a fix will work.</p>
+</div>

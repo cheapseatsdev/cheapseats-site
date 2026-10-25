@@ -22,23 +22,13 @@ The strongest evidence points to missing verifiable information and retrieval pr
 
 ## The score: prompts it could flip, per day
 
-Each fix names the prompts it could flip. Cheap Seats divides that count by the working days behind its effort size, S, M or L as one, five and fifteen days, to get a **speed**: prompts per day. It then weights each prompt by what it has left to win, 1 minus its recommended rate over the last 14 days (named rate, for an information prompt), so a question you already win in most answers adds little and a question you've never been named on counts in full. That is the **gain**, and quick wins are sorted by it, core sets first.
+**Speed** is target prompts divided by estimated working days: S = one day, M = five, L = fifteen. For **gain**, weight each prompt by what it has left to win—1 minus its recommended rate over the last 14 days (named rate for an information prompt)—then divide the sum by days. Quick wins sort by gain, core sets first.
 
 Priority is reach against effort: a fix that could flip 40% of a set's prompts is urgent, 20% high, 10% medium, else low; a one-day fix moves up a step because it's cheap to just do, and a big job is never more than high.
 
-Here is how that ordered our own fixes from the runs of 22 October, across four prompt sets of 15 to 20 prompts:
+{{< figure name="fix-speed" >}}
 
-| fix | type | prompts | effort | speed | priority |
-| --- | --- | ---: | --- | ---: | --- |
-| Get listed in a roundup that shaped the search answers | outreach | 5 | S | 5.0 | urgent |
-| Publish a guide to benchmarking against competitors | new page | 3 | S | 3.0 | urgent |
-| Publish a how-to on seeing the results its searches returned | new page | 2 | S | 2.0 | high |
-| Publish a dated tools-compared post | new page | 6 | M | 1.2 | urgent |
-| Get into a second roundup | outreach | 6 | M | 1.2 | high |
-| Publish a comparison against one competitor | new page | 3 | M | 0.6 | medium |
-| Add a Gemini provider | product | 1 | L | 0.07 | low |
-
-This table shows **speed**, before the remaining-headroom weighting used for gain. A one-day fix across five prompts outruns a week-long fix across six. The product gap has low speed, but content can't substitute for the missing capability.
+The product gap has low speed, but content can't substitute for the missing capability.
 
 ## How directly it answers the reason
 
