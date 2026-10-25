@@ -1,0 +1,14 @@
+{{- /* Native MathML keeps equations selectable and accessible without scripts or external assets.
+     https://gohugo.io/functions/transform/tomath/ */ -}}
+{{- $options := dict "output" "mathml" "displayMode" (eq .Type "block") -}}
+{{- with try (transform.ToMath .Inner $options) -}}
+  {{- with .Err -}}
+    {{- errorf "Unable to render equation at %s: %s" $.Position . -}}
+  {{- else -}}
+    {{- if eq $.Type "block" -}}
+      <div class="math-block" tabindex="0" role="group" aria-label="Equation">{{ .Value }}</div>
+    {{- else -}}
+      {{- .Value -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

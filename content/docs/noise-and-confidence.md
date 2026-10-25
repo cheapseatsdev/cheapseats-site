@@ -50,11 +50,21 @@ A page is **newly surfaced** if searches or citations reached it after the work 
 
 Start with one sample per track and weekly runs to find gaps. The 28-day window and fix outcomes pool runs. Extra samples improve a single run's precision; runs over time also capture day-to-day variation.
 
-When an answerer takes multiple samples, the set page estimates whether they help. It splits run-to-run named-rate variance as **V = S/n + D**: S is within-run variance, n the samples and D between-run drift. This is calculated per prompt, answerer and track over 28 days of same-method runs, with at least 4 runs and 6 cells.
+When an answerer takes multiple samples, the set page estimates whether they help. It splits run-to-run named-rate variance as:
 
-Going down to one sample would widen the interval by **w = √((S + D) / (S/n + D))**:
+$$
+V = \frac{S}{n} + D
+$$
 
-- **w < 1.25:** extra samples buy little precision because drift dominates; consider reducing samples.
+\(S\) is within-run variance, \(n\) the samples and \(D\) between-run drift. This is calculated per prompt, answerer and track over 28 days of same-method runs, with at least 4 runs and 6 cells.
+
+Going down to one sample would widen the interval by:
+
+$$
+w = \sqrt{\frac{S + D}{S/n + D}}
+$$
+
+- **\(w < 1.25\):** extra samples buy little precision because drift dominates; consider reducing samples.
 - **Otherwise:** the page says samples are paying off and gives the estimated widening at one sample.
 
 **Adaptive sampling** (`[sampling] adaptive = true`, `max_extra = N`) assigns up to N extra answers before a run, using uncertainty in the last 28 days of same-method named rates. Each extra goes where it most reduces total variance. A cell gets at most its planned sample count in extras; API extras must fit the daily budget. A prompt named in 0 of 40 answers gets none. Adaptive sampling is off by default, does not restart trends, and its extras count in run rates. See [Configuration](../configuration/#sampling) and [Cost and budget](../cost-and-budget/#keeping-the-spend-down).
@@ -69,9 +79,12 @@ More same-day answers cannot remove all variation: [Profound](https://www.trypro
 
 Repeated answers to one question aren't independent questions about your category. Trends therefore average each prompt's own rate, so prompts with more samples don't carry more weight.
 
-For a cell of **h hits out of n answers**, sampling variance is:
+For a cell of **\(h\) hits out of \(n\) answers**, sampling variance is:
 
-> var = p̃ (1 − p̃) / n, with p̃ = (h + 0.5) / (n + 1)
+$$
+\operatorname{var} = \frac{\tilde p(1 - \tilde p)}{n},
+\qquad \tilde p = \frac{h + 0.5}{n + 1}
+$$
 
 Smoothing prevents 0/6 or 6/6 from claiming zero noise.
 
@@ -80,8 +93,8 @@ Smoothing prevents 0/6 or 6/6 from claiming zero noise.
 | where | calculation and meaning |
 | --- | --- |
 | **Run page** | 95% Wilson intervals over answers; see [Your rates](../metrics/#your-rates) |
-| **Rankings: band, across prompts** | rolling mean ± 1.96 · s / √m, where s is the standard deviation of m prompt-day rates. Describes variation across questions like these. |
-| **Rankings: this set, today** | day's mean ± 1.96 · √(Σ var_k) / K over K fixed prompts. Covers sampling answers to this set, not variation in the choice of questions. |
+| **Rankings: band, across prompts** | rolling mean \(\pm 1.96\frac{s}{\sqrt{m}}\), where \(s\) is the standard deviation of \(m\) prompt-day rates. Describes variation across questions like these. |
+| **Rankings: this set, today** | day's mean \(\pm 1.96\frac{\sqrt{\sum_k \operatorname{var}_k}}{K}\) over \(K\) fixed prompts. Covers sampling answers to this set, not variation in the choice of questions. |
 | **Set page: each prompt** | answers pooled over the selected window, with Wilson intervals on named and recommended |
 
 Windows are 7 days by default, or 14 or 28 (`?window=`, `/api/rankings`' `window`, or MCP `get_rankings`). Rankings windows stop at method changes. Per-prompt pooling starts from the newest day asking it and also stops at wording or intent changes.
@@ -90,13 +103,19 @@ Windows are 7 days by default, or 14 or 28 (`?window=`, `/api/rankings`' `window
 
 Day-over-day and fix comparisons pair the prompts both sides asked:
 
-> D = mean over prompts k of (p_after,k − p_before,k)
->
-> Var(D) = Σ_k (var_after,k + var_before,k) / K²
->
-> margin = 1.96 · √Var(D)
+$$
+D = \frac{1}{K}\sum_k \left(p_{\text{after},k} - p_{\text{before},k}\right)
+$$
 
-A change is **within noise** when D ± margin covers zero. Rankings greys it out and shows `±X pts`.
+$$
+\operatorname{Var}(D) = \frac{\sum_k \left(\operatorname{var}_{\text{after},k} + \operatorname{var}_{\text{before},k}\right)}{K^2}
+$$
+
+$$
+\text{margin} = 1.96\sqrt{\operatorname{Var}(D)}
+$$
+
+A change is **within noise** when \(D \pm \text{margin}\) covers zero. Rankings greys it out and shows `±X pts`.
 
 Rank changes use the paired change in the gap between your brand's and each crossing product's answer shares. If no crossing is significant in the rank move's direction, the table shows **within noise** without an arrow.
 
@@ -106,20 +125,52 @@ These tests cover sampling variation under this calculation. They do not rule ou
 
 The 17-prompt example has two answers per prompt on one track. At 50%:
 
-> p̃ = (1 + 0.5) / (2 + 1) = 0.5; var = 0.25 / 2 = 0.125
->
-> Σ var = 17 × 0.125 = 2.125
->
-> reading: ± 1.96 × √2.125 / 17 = ±16.8 points
->
-> two runs: ± 1.96 × √(2 × 2.125) / 17 = ±23.8 points
+$$
+\tilde p = \frac{1 + 0.5}{2 + 1} = 0.5
+$$
+
+$$
+\operatorname{var} = \frac{0.25}{2} = 0.125
+$$
+
+$$
+\sum_k \operatorname{var}_k = 17 \times 0.125 = 2.125
+$$
+
+Multiplying by 100 converts the margins to percentage points. For one reading:
+
+$$
+\pm 100 \times 1.96\frac{\sqrt{2.125}}{17} \approx \pm 16.8
+$$
+
+For a change between two runs:
+
+$$
+\pm 100 \times 1.96\frac{\sqrt{2 \times 2.125}}{17} \approx \pm 23.8
+$$
 
 Seven daily runs give each prompt 14 answers on the track:
 
-> p̃ = (7 + 0.5) / 15 = 0.5; var = 0.25 / 14 = 0.0179
->
-> Σ var = 17 × 0.0179 = 0.304
->
-> one pool: ± 1.96 × √0.304 / 17 = ±6.4 points
->
-> two such pools: ±9.0 points
+$$
+\tilde p = \frac{7 + 0.5}{15} = 0.5
+$$
+
+$$
+\operatorname{var} = \frac{0.25}{14} \approx 0.0179
+$$
+
+$$
+\sum_k \operatorname{var}_k \approx 17 \times 0.0179 \approx 0.304
+$$
+
+For one pool, in percentage points:
+
+$$
+\pm 100 \times 1.96\frac{\sqrt{0.304}}{17} \approx \pm 6.4
+$$
+
+For a change between two such pools:
+
+$$
+\pm 100 \times 1.96\frac{\sqrt{2 \times 0.304}}{17} \approx \pm 9.0
+$$
