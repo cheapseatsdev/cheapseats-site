@@ -37,14 +37,14 @@ To try it with the example config in Cheap Seats' repo:
 ```bash
 git clone https://github.com/cheapseatsdev/cheapseats && cd cheapseats
 cp .env.example .env               # fill in ANTHROPIC_API_KEY, and CHEAPSEATS_TOKENS (openssl rand -hex 32)
-docker run -p 3000:3000 \
+docker run -p 127.0.0.1:3000:3000 \
   -v cheapseats-data:/data \
   -v "$PWD/examples/cheapseats-config:/config:ro" \
   --env-file .env \
   ghcr.io/cheapseatsdev/cheapseats:0.4.5
 ```
 
-Open <http://localhost:3000> and enter one of your tokens. To measure your own brand, mount your config repo at `/config` instead (start one from the [config template](https://github.com/cheapseatsdev/cheapseats-config-template)). Pin an exact version; the [releases](https://github.com/cheapseatsdev/cheapseats/releases) list them.
+Open <http://localhost:3000> and enter one of your tokens. The `127.0.0.1:` keeps it to this machine; to serve it further, put a TLS-terminating proxy in front rather than publishing the port, since every request carries an access token. To measure your own brand, mount your config repo at `/config` instead (start one from the [config template](https://github.com/cheapseatsdev/cheapseats-config-template)). Pin an exact version; the [releases](https://github.com/cheapseatsdev/cheapseats/releases) list them.
 
 Run one container per database: progress lives in the process, so never point two at the same volume. Back up with `cheapseats backup` ([Deploying](../deploying/#backups)).
 
@@ -62,18 +62,22 @@ ENV CHEAPSEATS_CONFIG_REV=$REVISION
 ```
 
 ```bash
-# Build and push that image to your registry, then:
-kubectl create secret generic cheapseats \
-  --from-literal=CHEAPSEATS_TOKENS="$(openssl rand -hex 32)" \
-  --from-literal=ANTHROPIC_API_KEY="<key>"         # add OPENAI_API_KEY if an answerer uses it
+# Build and push that image to your registry, then put the keys in a file only you can read,
+# not on the command line, where shell history keeps them:
+umask 077
+printf 'CHEAPSEATS_TOKENS=%s\n' "$(openssl rand -hex 32)" >cheapseats.env
+"${EDITOR:-vi}" cheapseats.env    # add ANTHROPIC_API_KEY=<key>, and OPENAI_API_KEY if an answerer uses it
+kubectl create secret generic cheapseats --from-env-file=cheapseats.env && rm cheapseats.env
 
 helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.4.5 \
   --set image.repository=ghcr.io/acme/cheapseats-config \
   --set image.tag=<config commit> \
   --set existingSecret=cheapseats
 
-kubectl port-forward svc/cheapseats 3000:3000         # or set ingress.enabled and ingress.host
+kubectl port-forward svc/cheapseats 3000:3000         # or set ingress.enabled, ingress.host and ingress.tls
 ```
+
+An ingress needs TLS: set `ingress.tls`, or terminate TLS in front of it (a load balancer, a CDN). Every request carries an access token.
 
 The chart creates a 1Gi volume for the database (`persistence.size`, or bring your own with `persistence.existingClaim`). The plain app image works too, with the config mounted at `/config` through `extraVolumes` and `extraVolumeMounts`. [Deploying](../deploying/#kubernetes-with-helm) lists the values; the template's [Kubernetes guide](https://github.com/cheapseatsdev/cheapseats-config-template/blob/main/deploy/README.md) adds CI that deploys every merge.
 
