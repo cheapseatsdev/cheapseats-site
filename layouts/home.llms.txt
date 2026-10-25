@@ -2,13 +2,25 @@
 
 > {{ site.Params.description }}
 
-Cheap Seats asks each configured assistant every buyer question on two tracks: search, where it must search the web first, and recall, with no tools. It grades each answer recommended, mentioned or absent, and ends every run with a ranked list of fixes: the page to create or change, what it must say, and the prompts it should flip. It is MIT licensed and self-hosted (one container with SQLite, on Docker, Kubernetes or an exe.dev VM), with a web UI, CLI, JSON API and MCP server. Source: {{ site.Params.github }}
+[Get started]({{ "/docs/getting-started/" | absURL }}) · [Explore the demo](https://demo.cheapseats.dev/) · [Requirements and costs]({{ "/docs/cost-and-budget/" | absURL }})
 
 Each link below is the page's markdown; drop `index.md` for the HTML.
 {{- /* Every section, by its _index.md weight; one without a weight sorts last. */}}
 {{- range site.Sections.ByWeight }}
 
 ## {{ .Title }}
+{{ if in (slice "docs" "guides") .Section }}
+{{ partial "landing-links.html" (dict "pages" .Pages.ByWeight "format" "markdown") | htmlUnescape }}
+{{ else if eq .Section "blog" }}
+{{ $summaries := index hugo.Data "blog-listing" }}
+{{ range .Pages.ByDate.Reverse }}
+{{- $p := . }}
+{{- $summary := index $summaries .File.ContentBaseName | default .Description }}
+{{- with .OutputFormats.Get "markdown" }}
+- [{{ $p.Title }}]({{ .Permalink }}){{ with $summary }}: {{ . }}{{ end }} ({{ $p.Date.Format "2006-01-02" }})
+{{- end }}
+{{- end }}
+{{ else }}
 {{ range .Pages.ByWeight }}
 {{- $p := . }}
 {{- with .OutputFormats.Get "markdown" }}
@@ -16,9 +28,11 @@ Each link below is the page's markdown; drop `index.md` for the HTML.
 {{- end }}
 {{- end }}
 {{- end }}
+{{- end }}
 
 ## Optional
 
+- [Homepage]({{ "index.md" | absURL }})
 - [Source code]({{ site.Params.github }})
 - [Config repo template]({{ site.Params.template }})
 - [Full text of every page]({{ "llms-full.txt" | absURL }})

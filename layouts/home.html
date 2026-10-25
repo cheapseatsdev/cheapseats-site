@@ -4,87 +4,33 @@
     <div class="hero-copy">
       <p class="eyebrow">Open-source, self-hosted AI visibility tracker</p>
       <h1>Do AI assistants recommend you?</h1>
-      <p class="lede">Ask your buyers' questions. See where your brand stands. Know which pages to fix first.</p>
+      <p class="lede">{{ .Description }}</p>
       <p class="actions">
         <a class="btn" href="{{ "/docs/getting-started/" | relURL }}">Get started <span aria-hidden="true">→</span></a>
         <a class="btn ghost" href="https://demo.cheapseats.dev/">Explore the demo</a>
       </p>
-      <p class="muted small">Free on your Claude subscription; ChatGPT optional. Your prompts stay in your own git repo.</p>
+      <p class="muted small">Free MIT software; <a href="{{ "/docs/cost-and-budget/" | relURL }}">model and hosting costs</a> depend on your setup.</p>
     </div>
+    {{ $preview := .Params.preview }}
     <section class="product-preview" aria-labelledby="preview-title">
       <div class="preview-bar"><span>Illustrative snapshot</span><span>Cheap Seats</span></div>
       <div class="preview-content">
         <p class="eyebrow">Prompt set</p>
-        <h2 id="preview-title">Head-to-heads</h2>
-        <p class="muted preview-description">Does AI choose Cheap Seats when buyers compare?</p>
+        <h2 id="preview-title">{{ $preview.title }}</h2>
+        <p class="muted preview-description">{{ $preview.description }}</p>
         <dl class="preview-metrics">
-          <div><dt>Recommended · 1/4 answers</dt><dd>25<span>%</span></dd></div>
-          <div><dt>Named · 3/4 answers</dt><dd>75<span>%</span></dd></div>
+          <div><dt>Recommended · {{ $preview.recommended }}/{{ $preview.answers }} answers</dt><dd>{{ printf "%g" (mul 100.0 (div (float $preview.recommended) (float $preview.answers))) }}<span>%</span></dd></div>
+          <div><dt>Named · {{ $preview.named }}/{{ $preview.answers }} answers</dt><dd>{{ printf "%g" (mul 100.0 (div (float $preview.named) (float $preview.answers))) }}<span>%</span></dd></div>
         </dl>
-        <div class="preview-track" aria-hidden="true"><span></span></div>
-        <p class="preview-caption">Illustrative results · Search track · 4 choice answers</p>
+        <div class="preview-track" aria-hidden="true"><span style="width:{{ printf "%g" (mul 100.0 (div (float $preview.recommended) (float $preview.answers))) }}%"></span></div>
+        <p class="preview-caption">Illustrative results · {{ $preview.track }} track · {{ $preview.answers }} {{ $preview.kind }} answers</p>
         <a class="text-link" href="https://demo.cheapseats.dev/">Inspect the real dashboard <span aria-hidden="true">↗</span></a>
       </div>
     </section>
   </div>
 </section>
 
-<section class="wrap home-section workflow" aria-labelledby="how">
-  <h2 id="how">From buyer questions to better answers</h2>
-  <ol class="steps">
-    <li><h3>Ask real questions</h3><p>Run the prompts your buyers use, across search and recall.</p></li>
-    <li><h3>See where you stand</h3><p>Separate recommendations from mentions, with the evidence behind each answer.</p></li>
-    <li><h3>Fix what matters</h3><p>Work through ranked page improvements and track the results.</p></li>
-  </ol>
-</section>
-
-<section class="wrap home-section" aria-labelledby="inside">
-  <h2 id="inside">Inside each run</h2>
-  <ol class="features">
-    <li>
-      <h3>Your buyers' questions</h3>
-      <p>Write buyer questions as TOML prompt sets in your own git repo. Review changes through pull requests.</p>
-    </li>
-    <li>
-      <h3>Two tracks, every assistant</h3>
-      <p>Each assistant answers with web search and without tools. Keep live retrieval separate from the model's existing knowledge.</p>
-    </li>
-    <li>
-      <h3>Graded answers</h3>
-      <p>A separate Claude call grades each answer <code>recommended</code>, <code>mentioned</code> or <code>absent</code>, with evidence and reasons.</p>
-    </li>
-    <li>
-      <h3>Share of voice and rankings</h3>
-      <p>Compare rates with 95% intervals and track your share-of-voice rank over time. Changes to prompts and methods stay visible.</p>
-    </li>
-    <li>
-      <h3>A ranked fix list</h3>
-      <p><strong>Fix these first</strong> names the page to change, what it must say, the questions it could help win, its effort and owner.</p>
-    </li>
-  </ol>
-</section>
-
-<section class="wrap home-section reading-section" aria-labelledby="who">
-  <h2 id="who">Start here, move on when you're ready</h2>
-  <p>I built Cheap Seats for the people who own product messaging: marketing, docs and the website. It runs on your own machine using your subscriptions, and the software is free, always. If you need more engines, managed hosting or client reporting, <a href="{{ "/compare/" | relURL }}">compare the alternatives</a>; I'd suggest <a href="{{ "/compare/gauge/" | relURL }}">Gauge</a>. Your buyer questions stay in your repo, ready to take with you.</p>
-</section>
-
-<section class="wrap home-section reading-section" aria-labelledby="yours">
-  <h2 id="yours">Open source, on your own infrastructure</h2>
-  <ul>
-    <li><strong>MIT licensed.</strong> Read it, run it, change it.</li>
-    <li><strong>Self-hosted.</strong> One container with a SQLite database, on a Docker host, Kubernetes (Helm chart) or an exe.dev VM.</li>
-    <li><strong>Your config in your git repo.</strong> Keep your brand, assistants, budget, schedule and questions private. Preview trend changes with <code>cheapseats plan</code>.</li>
-    <li><strong>Your subscriptions, or the APIs.</strong> Use local <code>claude</code> and <code>codex</code> subscriptions, or provider APIs. API calls are admitted against a daily budget; settled charges can exceed estimates. Prompts and answers go to the services you configure.</li>
-    <li><strong>Web UI, CLI, JSON API and MCP server</strong>, so Claude Code or any MCP client can start runs and read results.</li>
-  </ul>
-</section>
-
-<section class="wrap home-section reading-section" aria-labelledby="start">
-  <h2 id="start">Get started</h2>
-  <p>A fresh checkout runs against an example config that measures Cheap Seats itself. You need Go and Claude: the <code>claude</code> CLI logged in to a Claude subscription (no API key, no spend), or an Anthropic API key. ChatGPT is optional: the <code>codex</code> CLI or an OpenAI key adds its answers.</p>
-<pre><code>CHEAPSEATS_CONFIG=examples/cheapseats-config/cheapseats.subscriptions.toml go run ./cmd/cheapseats serve
-# then open http://127.0.0.1:3000</code></pre>
-  <p><a href="{{ "/docs/getting-started/" | relURL }}">Read Getting started</a>, then start your own config repo from the <a href="{{ site.Params.template }}">template</a>.</p>
+<section class="wrap home-section" aria-labelledby="how">
+  <div class="prose article-content">{{ .Content }}</div>
 </section>
 {{ end }}

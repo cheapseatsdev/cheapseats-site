@@ -1,18 +1,18 @@
 {{ define "main" }}
 <div class="wrap blog-index">
   <header class="page-heading blog-heading">
-    <div><p class="eyebrow">Notes from Cheap Seats</p><h1>{{ .Title }}</h1>{{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}</div>
+    <div><h1>{{ .Title }}</h1>{{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}</div>
     {{ with .OutputFormats.Get "rss" }}<a class="rss-link" href="{{ .RelPermalink }}">RSS ↗</a>{{ end }}
   </header>
   {{ .Content }}
   {{ $posts := .Pages.ByDate.Reverse }}
+  {{ $summaries := index hugo.Data "blog-listing" }}
   {{ range first 1 $posts }}
   <article class="featured-post">
     <p class="eyebrow">Latest article</p>
     <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
     {{ partial "article-meta.html" . }}
-    <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 220 }}{{ end }}</p>
-    <a class="text-link" href="{{ .RelPermalink }}">Read the article <span aria-hidden="true">→</span></a>
+    <p>{{ with index $summaries .File.ContentBaseName }}{{ . }}{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 220 }}{{ end }}{{ end }}</p>
   </article>
   {{ end }}
   {{ if gt (len $posts) 1 }}
@@ -21,11 +21,10 @@
     <li>
       <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
       {{ partial "article-meta.html" . }}
-      <p>{{ with .Description }}{{ . | truncate 180 }}{{ else }}{{ .Summary | plainify | truncate 180 }}{{ end }}</p>
+      <p>{{ with index $summaries .File.ContentBaseName }}{{ . }}{{ else }}{{ with .Description }}{{ . | truncate 180 }}{{ else }}{{ .Summary | plainify | truncate 180 }}{{ end }}{{ end }}</p>
     </li>
   {{ end }}
   </ul>
   {{ end }}
-  {{ with .OutputFormats.Get "rss" }}<p class="muted"><a href="{{ .RelPermalink }}">Subscribe by RSS</a></p>{{ end }}
 </div>
 {{ end }}

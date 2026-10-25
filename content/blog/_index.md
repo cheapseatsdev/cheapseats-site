@@ -1,5 +1,5 @@
 ---
 title: Blog
 weight: 30
-description: Notes on Cheap Seats and on how AI assistants recommend products.
+description: Findings on AI visibility, measurement and choosing what to fix.
 ---

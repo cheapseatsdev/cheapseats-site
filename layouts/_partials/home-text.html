@@ -1,0 +1,20 @@
+{{ with .Description }}
+> {{ . }}
+{{ end }}
+
+[Get started]({{ "/docs/getting-started/" | absURL }}) · [Explore the demo](https://demo.cheapseats.dev/)
+
+Free MIT software; [model and hosting costs]({{ "/docs/cost-and-budget/" | absURL }}) depend on your setup.
+
+{{ with .Params.preview }}
+## Illustrative snapshot: {{ .title }}
+
+{{ .description }}
+
+- Recommended: {{ .recommended }}/{{ .answers }} answers = {{ printf "%g%%" (mul 100.0 (div (float .recommended) (float .answers))) }}.
+- Named: {{ .named }}/{{ .answers }} answers = {{ printf "%g%%" (mul 100.0 (div (float .named) (float .answers))) }}.
+
+Illustrative results · {{ .track }} track · {{ .answers }} {{ .kind }} answers. [Inspect the real dashboard](https://demo.cheapseats.dev/).
+{{ end }}
+
+{{ .RenderShortcodes }}

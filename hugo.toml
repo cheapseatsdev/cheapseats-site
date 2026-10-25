@@ -21,12 +21,12 @@ source = "brand/web/tokens.css"
 target = "static/brand/tokens.css"
 
 [params]
-description = "Cheap Seats is a free, open-source AI visibility tracker, inspired by tools like Gauge, Profound and Peec AI, that runs on the Claude subscription you already have (ChatGPT optional). It asks your buyers' questions, grades whether AI assistants recommend you, and builds a ranked fix list."
+description = "Cheap Seats is an MIT-licensed, self-hosted tracker of Claude and OpenAI answers. It grades recommendations, keeps the evidence and ranks page fixes."
 github = "https://github.com/cheapseatsdev/cheapseats"
 # How every page title, meta description and the footer name the product.
 tagline = "the open-source AI visibility tracker"
 # The home page's meta description: 160 characters at most, so search results show all of it.
-metaDescription = "Free, open-source AI visibility tracker on the Claude subscription you already have. It grades whether AI assistants recommend you and lists what to fix."
+metaDescription = "Free, self-hosted AI visibility software for Claude and OpenAI. Check recommendations, inspect evidence and rank page fixes."
 template = "https://github.com/cheapseatsdev/cheapseats-config-template"
 # The docs index and sidebar group pages under these headings, in this order (front matter `group`).
 docGroups = ["Start here", "Reading what it finds", "Acting on it", "Running it"]
@@ -54,7 +54,7 @@ isPlainText = true
 notAlternative = true
 
 [outputs]
-home = ["html", "llms", "llmsfull"]
+home = ["html", "markdown", "llms", "llmsfull"]
 section = ["html", "rss", "markdown"]
 page = ["html", "markdown"]
 

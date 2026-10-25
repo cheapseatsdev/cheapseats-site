@@ -1,0 +1,31 @@
+docs:
+  getting-started: Run the example, configure your brand and check the first results.
+  configuration: Set the brand, assistants, prices and schedule in cheapseats.toml.
+  prompt-sets: Write buyer questions with stable IDs that retain their history.
+  cost-and-budget: Choose subscriptions or API keys. The budget limits admissions, not provider bills.
+  reading-results: Find the answers behind your rates and choose what to fix.
+  how-grading-works: Check recommended, mentioned and absent grades against their evidence.
+  metrics: Look up formulas, denominators, exclusions and export fields.
+  comparing-metrics: Compare published definitions and migration differences across tools.
+  noise-and-confidence: Read uncertainty and decide whether a change is detectable.
+  engines: Claude and OpenAI coverage, including API and CLI limitations.
+  prompt-review: Retire uninformative prompts, clarify noisy questions and fill gaps.
+  got-wrong: Find contradictions of your listed facts, with verified quotes.
+  regrading: Re-apply grading while keeping original answers and replaced grades.
+  fix-to-pull-request: Turn a ranked fix into a pull request with Claude Code.
+  site-audit: Check crawler access, cited pages and logs. No model calls; optional Exa reads can cost money.
+  sharing: Share one run through an expiring, revocable, read-only link.
+  read-only-copy: Publish an isolated dashboard copy. Treat its database and config as public.
+  self-hosting: Choose a host, try the container and see where data goes.
+  deploying: Deploy with Docker, Helm or an exe.dev VM.
+  upgrading: Upgrade while keeping your history.
+  cli-and-ci: Run sets, validate prompt changes and trigger runs from CI.
+  optional-providers: Optional, off by default. Jev makes typed decisions; Exa adds web evidence.
+  reference: Look up commands, JSON routes, MCP tools and access rules.
+guides:
+  mentioned-vs-recommended: Distinguish mention, recommendation and share-of-voice rates, with their denominators.
+  track-ai-citations: Find cited pages and understand coverage alongside Google and Bing reports.
+  benchmark-against-competitors: Compare brands on the same questions, with a real table and trend.
+  check-if-chatgpt-recommends-you: Run buyer questions and check each recommendation against its answer.
+  see-ai-search-results: Trace queries, results and citations. Retrieval alone does not prove a page was read.
+  prove-content-impact: Compare target prompts and report uncertainty. Before/after alone does not establish causation.
