@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cheap Seats editor"
+  short_description: "Concise, accurate Cheap Seats prose and visuals"
+  default_prompt: "Use $cheapseats-editor to tighten this Cheap Seats content while preserving definitions and evidence."

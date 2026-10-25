@@ -1,0 +1,6 @@
+{{- $name := .Get "name" -}}
+{{- $meta := index hugo.Data.figures $name -}}
+{{- if not $meta }}{{ errorf "Unknown figure %q in %s" $name .Position }}{{ end -}}
+**{{ $meta.title }}.** {{ $meta.caption }}
+
+{{ $meta.text }}

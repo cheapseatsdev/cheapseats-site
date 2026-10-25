@@ -1,0 +1,80 @@
+run-atlas:
+  title: Read a run in three steps
+  caption: Crops from the public demo's 24 October 2026 head-to-head run. Open a view to inspect it; click a capture for full size.
+  text: |
+    1. Compare tracks and uncertainty. Search and recall have separate cards. The answerer table below them shows 95% intervals. Named and recommended can have different denominators when informational prompts are included.
+    2. Find a losing prompt. Each row is a buyer question; each column is an assistant/track combination. Open a question to inspect its answers rather than inferring the reason from a meter.
+    3. Check the grade's evidence. The expanded answer shows the verdict, reasons and a quote checked against the answer. Read the full answer and its search trace before choosing a fix.
+    Captures: /images/docs/run-scores-light.jpg, /images/docs/run-grid-light.jpg and /images/docs/run-evidence-light.jpg.
+    Inspect the source run: https://demo.cheapseats.dev/runs/r-20261024-222715-986b58
+run-pipeline:
+  title: From question to fix
+  caption: Available assistants answer on enabled tracks, for the configured samples. Answers and grades stay separate by track.
+  text: |
+    Buyer questions → each available configured assistant on enabled tracks, repeated for the configured samples. A track can have zero samples.
+    - Search: search the web, then answer; keep the searches, returned URLs and citations.
+    - Recall: answer with no tools; keep the answer.
+    A separate Claude call grades each answer. Stored answers and grades feed the rates, evidence and ranked fixes.
+grade-examples:
+  title: The sentence behind the grade
+  caption: Illustrative answers to a choice question about Acme. A repeated name alone does not establish visibility.
+  text: |
+    - Recommended: “For your small team, choose Acme. Its workflow fits your needs.” The answer actively endorses it.
+    - Mentioned: “Acme is one of ten products you could evaluate.” It is an option, not a primary pick.
+    - Absent: “I couldn't verify a product called Acme.” This only echoes the name without information about it.
+mention-counts:
+  title: Same answers, different denominators
+  caption: Illustrative data. Each product counts at most once per answer.
+  text: |
+    Four answers name these products: (1) Acme and Globex; (2) Acme and Globex; (3) Acme and Initech; (4) none.
+    Named rates divide by four answers: Acme 3/4 = 75%; Globex 2/4 = 50%; Initech 1/4 = 25%. They sum to 150% because an answer can name several products.
+    Share of voice divides by six product mentions: Acme 3/6 = 50%; Globex 2/6 = 33.3%; Initech 1/6 = 16.7%. These shares sum to 100%.
+precision:
+  title: More answers narrow the sampling margin
+  caption: 17 fixed prompts, one track, a rate near 50%, with equal answer counts on each side. Approximate 95% sampling margins, not universal thresholds.
+  text: |
+    | Answers per prompt on the track | One reading | Change between two such readings |
+    | ---: | ---: | ---: |
+    | 2 | ±17 points | ±24 points |
+    | 4 | ±12 points | ±17 points |
+    | 8 | ±8 points | ±12 points |
+    | 14 | ±6 points | ±9 points |
+    These are sampling margins. More same-day samples do not remove changes in models or the web.
+source-trace:
+  title: Find the missing evidence
+  caption: Follow the recorded trace. Returned URLs, citations and brand recommendations are different observations.
+  text: |
+    Buyer question → assistant's rewritten searches → returned URLs → answer with citations → grade. Citations can also refer to URLs absent from the recorded results; this is a trace map, not a numerical funnel.
+    - Your pages did not surface: inspect the actual queries and compare the pages that returned. This alone does not prove an indexing problem.
+    - Your pages surfaced but were not cited: inspect the cited alternatives and the answer. A returned URL does not prove the full page was read.
+    - The answer names you with objections: inspect the quoted objection and the facts your content can support.
+fix-lifecycle:
+  title: Shipping and measuring are separate steps
+  caption: A merged PR records work shipped. Later comparable answers measure what changed; they do not prove its cause.
+  text: |
+    Work: record a commit or PR → proposed → accepted when merged, or withdrawn when closed. A later fix for the same page can return as a retry.
+    Measurement: collect same-method answers for the target prompts → check comparability and enough data → report named and recommended changes with their margins.
+    Pending means no later run; too early means there is not yet a comparable run at least seven days after marking, or fewer than four answers per target prompt on average. A method mismatch may need re-grading; differently asked answers cannot be repaired by re-grading.
+    Outcomes: moved, worse, mixed, or no detectable change. A newly surfaced page is supporting evidence, not a measured rate improvement.
+method-timeline:
+  title: Re-grade the answers, preserve their dates
+  caption: Re-grading can reconnect a grading-method break. It cannot change how an old answer was asked.
+  text: |
+    Before re-grading: old answers with old grades | grading-method break | current answers with current grades.
+    After re-grading: the same old answers, graded with today's inputs, join the current-method trend from their original dates. The replaced grades remain stored; no buyer questions are asked again.
+    An answer-prompt or search-policy change remains a comparison boundary. Competitor-only changes can require re-grading without starting a new Method.
+deployment:
+  title: One private instance, a separate public copy
+  caption: Publish only a database and config whose contents you are willing to expose. Read-only prevents writes, not disclosure of copied data.
+  text: |
+    Private config + provider credentials → one running Cheap Seats instance → persistent SQLite database.
+    The private instance calls configured model providers, optional services and the sites it checks.
+    A consistent database snapshot, binary and a publishable config are copied to a separate read-only instance, behind a TLS and rate-limiting proxy. Provider credentials stay private. Public viewers reach only that separate instance.
+fix-impact:
+  title: A change that still includes zero
+  caption: "Historical example: 5 target prompts, 20 answers per side, same-day follow-up. Still too early to judge; approximate 95% sampling margins."
+  text: |
+    Five target prompts, 20 answers per side, same-day follow-up.
+    Named change: 0 ±29 points (interval −29 to +29).
+    Recommended change: +5 ±20 points (interval −15 to +25).
+    Both intervals include zero. The target page did not surface on either side. These answers do not distinguish a change from sampling noise or establish that the fix caused it.

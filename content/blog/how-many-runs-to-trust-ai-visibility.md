@@ -5,7 +5,7 @@ author: Chad Metcalf
 description: AI answers change every time you ask. What the research says about that variance, how far one run and a week of runs can be trusted, and what to do about it.
 ---
 
-Ask an assistant the same question twice and you'll get two different answers. So when an AI visibility tool says you're named in 40% of answers this week and 30% last week, the first question isn't "what did we break?" It's "is that a change at all?" Usually, at the sample sizes most people run, it isn't.
+Ask an assistant the same question twice and you'll get two different answers. So when an AI visibility tool says you're named in 40% of answers this week and 30% last week, the first question isn't "what did we break?" It's "is that a change at all?" With small samples, it may be noise.
 
 <!--more-->
 
@@ -13,7 +13,7 @@ Ask an assistant the same question twice and you'll get two different answers. S
 
 Four findings worth knowing:
 
-- **No two lists match.** SparkToro and Gumshoe found less than a 1 in 100 chance that two responses list the same brands, and less than 1 in 1,000 that they list them in the same order. A brand's visibility across many responses, though, was fairly stable ([SparkToro](https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/)). Single answers are noise; rates over many answers are signal.
+- **Lists rarely match.** SparkToro and Gumshoe found less than a 1 in 100 chance that two responses list the same brands, and less than 1 in 1,000 that they list them in the same order. A brand's visibility across many responses, though, was fairly stable ([SparkToro](https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/)). Repeated answers make a rate more informative than one list.
 - **One run is a noisy reading.** "Don't Measure Once" measured a standard error of 0.37 for detecting a brand from one run, and 0.081 from seven, and recommends pooling over two to four weeks ([arXiv 2604.07585](https://arxiv.org/abs/2604.07585)).
 - **Small moves aren't evidence.** Sielinski's bootstrap intervals on citation share were typically 3 to 6 points wide: "a 3-point improvement (8% to 11%) cannot be attributed to an intervention" ([arXiv 2603.08924](https://arxiv.org/abs/2603.08924)).
 - **More answers a day buy less than you'd think.** Profound found that 10 runs a day instead of 1 cut daily movement in visibility by only about 11% ([Profound](https://www.tryprofound.com/blog/is-once-a-day-enough)). Much of the movement is the model and the web changing between days, which more answers on the same day can't remove.
@@ -29,7 +29,7 @@ Start with the simplest case: a rate near 50%, from `n` independent answers. The
 | 100 | ±10 pts |
 | 400 | ±5 pts |
 
-To tell two such readings apart, the margin on the difference is √2 times wider. Detecting a 10-point change between two weeks needs about 2 × 0.25 × (1.96 / 0.10)² ≈ **192 answers on each side**; a 5-point change, about **768**. Few prompt sets get there in a single run.
+To tell two such readings apart, the margin on the difference is √2 times wider. For the margin on a difference near 50% to be 10 points, you need about 2 × 0.25 × (1.96 / 0.10)² ≈ **192 answers on each side**; a 5-point margin, about **768**. These are margin calculations, not a statistical-power target, and assume independent answers with no drift.
 
 ## Prompts are the units
 
@@ -59,14 +59,9 @@ A week of daily runs pooled gives each prompt **n = 14**:
 
 The same arithmetic for other set-ups:
 
-| answers per prompt on the track | how you get there | one reading | a change between two |
-| ---: | --- | ---: | ---: |
-| 2 | one run, 2 answerers × 1 sample | ±17 pts | ±24 pts |
-| 4 | one run with 2 samples, or two runs | ±12 pts | ±17 pts |
-| 8 | four weekly runs (a 28-day window) | ±8 pts | ±12 pts |
-| 14 | seven daily runs (a 7-day window) | ±6 pts | ±9 pts |
+{{< figure name="precision" >}}
 
-So a swing of 10 points between two single runs is well inside the noise, and a week against a week can just about see it.
+Under those assumptions, a 10-point swing is within the margin between two single runs. Pooled weeks have a narrower sampling margin; day-to-day drift can add uncertainty.
 
 ## What to do about it
 
@@ -74,9 +69,9 @@ So a swing of 10 points between two single runs is well inside the noise, and a 
 - **Pool before you compare.** Compare a 7- or 28-day window against the one before, not yesterday against today.
 - **Spread answers over days rather than piling them into one.** Extra samples in a run narrow that run's interval, but much of the noise is day-to-day drift, which only more days average out. Profound's 10-a-day result is the warning.
 - **Check whether your samples pay off.** When a prompt takes more than one sample, Cheap Seats splits its run-to-run variance into within-run noise and between-run drift (Profound's decomposition), and tells you when extra samples are buying little. If drift dominates, cut samples and save the answers.
-- **Wait before judging a fix.** Cheap Seats waits 7 days and at least 4 answers a prompt before calling a fix's outcome. A fix aimed at three prompts, with four answers a prompt a run, has a margin of about ±31 points after one weekly run and ±19 after four. "No detectable change" means any effect is smaller than that, not that the fix failed.
+- **Wait before judging a fix.** Cheap Seats waits 7 days and at least 4 answers a prompt before calling a fix's outcome. With five pre-fix runs pooled, a fix aimed at three prompts with four answers per prompt per run has a margin of about ±31 points after one weekly run and ±19 after four. “No detectable change” means the interval includes zero; it doesn't prove no effect or bound the effect to the stated margin alone.
 - **Distrust a number without an interval.** If a tool shows 40% and not the range around it, work out the range yourself from the answer count. If it doesn't show the answer count either, ask for it.
 
-A change beyond the margin still isn't proof that your work caused it: a model update or the web changing can move a rate too. But a change inside the margin isn't evidence of anything, and treating it as a win or a loss is how teams end up chasing noise.
+A change beyond the margin still isn't proof that your work caused it: a model update or the web changing can move a rate too. An interval that includes zero leaves the direction uncertain. Report that uncertainty rather than declaring a win or loss.
 
 [How big a change Cheap Seats can detect](/docs/noise-and-confidence/) has the full method: the two kinds of interval on the rankings, the paired test for a change, rank moves, fix outcomes and adaptive sampling. For why the same answers can give different numbers in different tools, see [Why AI visibility scores differ between tools](/blog/why-ai-visibility-scores-differ/).

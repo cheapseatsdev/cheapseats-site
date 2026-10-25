@@ -10,7 +10,7 @@ Each deployment is its own config repo, made from the [config template](https://
 ## What any deployment needs
 
 - **One instance, one volume.** Run progress lives in the process and the database is SQLite on `/data`; never run two against the same data. A run takes minutes with no inbound HTTP, so keep it always on.
-- **Secrets in the environment:** `CHEAPSEATS_TOKENS` (Cheap Seats refuses to listen beyond localhost without it), `ANTHROPIC_API_KEY` (grading), `OPENAI_API_KEY` for OpenAI answerers, and `TYPESAFE_API_KEY` or `EXA_API_KEY` only with `[typesafe]` or `[exa]` in the config (or their `CHEAPSEATS_*_BASE_URL` proxies; see [Optional providers](../optional-providers/)). Deployed answerers use the APIs: the image has no Claude Code or Codex CLI, and `cheapseats check` fails on a config that needs one.
+- **Secrets in the environment:** `CHEAPSEATS_TOKENS` (required beyond localhost), `ANTHROPIC_API_KEY` for API grading and analysis, `OPENAI_API_KEY` for OpenAI answerers, and `TYPESAFE_API_KEY` or `EXA_API_KEY` only with `[typesafe]` or `[exa]` in the config (or their `CHEAPSEATS_*_BASE_URL` proxies; see [Optional providers](../optional-providers/)). Containers use API providers: the image has no Claude Code or Codex CLI. Subscription answerers are skipped there; `check` fails if none can run, or if the grader or analyst requires a missing CLI.
 - **Time to stop.** On SIGTERM Cheap Seats stops starting runs and marks the ones in progress as interrupted; on the next start it resumes them, oldest first, keeping every answer they already had. Give it 30 seconds.
 - **Probes:** `GET /healthz` answers `ok` without a token.
 - **Share links:** `GET /share/<token>` answers without a token, serving only that link's run ([Sharing a run](../sharing/)). Set `CHEAPSEATS_PUBLIC_URL` to the address people reach Cheap Seats at, such as `https://cheapseats.example.com`, so the links point there. Behind a proxy, without it, a link can point at the address the proxy reaches Cheap Seats on; one that would point at a loopback address gets a warning. A proxy that signs people in must let `/share/` through for links to work.
@@ -37,13 +37,13 @@ Mounting a checkout of your config repo at `/config`, read-only, works too. The 
 
 ```bash
 docker build -t cheapseats .
-docker run -p 3000:3000 \
+docker run -p 127.0.0.1:3000:3000 \
   -v cheapseats-data:/data \
   -v "$PWD/../your-config:/config:ro" \
   --env-file .env cheapseats
 ```
 
-To mount the config somewhere else, pass `-e CHEAPSEATS_CONFIG=/that/path/cheapseats.toml` too.
+Keep the published port on loopback and put a TLS-terminating proxy in front for remote access: requests carry access tokens. To mount the config somewhere else, pass `-e CHEAPSEATS_CONFIG=/that/path/cheapseats.toml` too.
 
 Cheap Seats reads the config and every prompt set once, at startup, so each deploy runs one consistent version of them; to pick up a change, update the checkout and restart. It won't start on a broken config (a set that doesn't parse, an id used twice), so a bad deploy fails loudly instead of running without part of it; `cheapseats check` catches the same problems in the config repo's CI first.
 
@@ -51,7 +51,27 @@ Cheap Seats reads the config and every prompt set once, at startup, so each depl
 
 ## Kubernetes with Helm
 
-The chart runs one replica and replaces it rather than rolling, so two never share the database. The values you set:
+The chart runs one replica and replaces it rather than rolling, so two never share the database. After building and pushing the config image above, create its Secret and install it:
+
+```bash
+# Build and push that image to your registry, then put the keys in a file only you can read,
+# not on the command line, where shell history keeps them:
+umask 077
+printf 'CHEAPSEATS_TOKENS=%s\n' "$(openssl rand -hex 32)" >cheapseats.env
+"${EDITOR:-vi}" cheapseats.env    # add ANTHROPIC_API_KEY=<key>, and OPENAI_API_KEY if an answerer uses it
+kubectl create secret generic cheapseats --from-env-file=cheapseats.env && rm cheapseats.env
+
+helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.4.5 \
+  --set image.repository=ghcr.io/acme/cheapseats-config \
+  --set image.tag=<config commit> \
+  --set existingSecret=cheapseats
+
+kubectl port-forward svc/cheapseats 3000:3000         # or set ingress.enabled, ingress.host and ingress.tls
+```
+
+An ingress needs TLS, either in `ingress.tls` or at a proxy in front. Requests carry access tokens.
+
+Chart values:
 
 - `image.repository` and `image.tag`: your deployment's image (required). Deploy an exact tag, so a rollback is redeploying the previous one.
 - `existingSecret`: a Secret you create holding `CHEAPSEATS_TOKENS`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` if an answerer uses it, and `TYPESAFE_API_KEY` or `EXA_API_KEY` with `[typesafe]` or `[exa]`. The chart never takes keys as values: a value named like one fails the install. `extraEnv` and `extraEnvFrom` pick single keys out of other Secrets.

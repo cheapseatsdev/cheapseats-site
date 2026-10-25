@@ -5,9 +5,9 @@ weight: 320
 group: Acting on it
 ---
 
-**Can AI assistants read my site?** `cheapseats audit` checks what an AI crawler sees on each of your sites: whether robots.txt or a firewall blocks it, whether there's an llms.txt and a fresh sitemap, and whether each page has its content in the HTML or is empty without JavaScript. Two more checks sit beside it: the **citation check**, of which pages the answers cite name you and which name only competitors, and **AI crawler** counts from your own access logs.
+Start with `cheapseats audit` to check what crawlers can read: robots.txt, firewall responses, llms.txt, sitemaps and raw HTML. Then check whether cited pages name you, and import access logs to compare crawler activity with citations.
 
-None of the three calls a model. They're plain HTTP requests and your own logs, so they cost nothing, on any setup, and don't count against the [daily budget](../cost-and-budget/).
+These checks call no model. HTTP requests and log imports are free; if [Exa fallback reads](../optional-providers/) are enabled, empty or challenged pages may incur a page-read charge against the daily admission budget.
 
 ## Site audit
 
@@ -20,7 +20,7 @@ cheapseats audit -json           # the findings as JSON
 
 Also **Site audit** in the web UI (`/audit`, "Audit now"), `POST /api/audit` to run one and `GET /api/audit` for the latest, and the MCP tool `audit_sites`.
 
-For each site it fetches robots.txt, the home page, `/llms.txt`, the sitemap and up to 10 pages from the sitemap, spread through it. It fetches as `Mozilla/5.0 (compatible; CheapSeats-Audit/<version>; +https://cheapseats.dev)`, 4 requests at a time, with a 15-second timeout and a 2 MB cap per page, and reads the raw HTML, as a crawler that runs no JavaScript does.
+The audit fetches robots.txt, the home page, `/llms.txt`, the sitemap and up to 10 sampled sitemap pages. It reads raw HTML without JavaScript, with 4 concurrent requests, a 15-second timeout and a 2 MB page limit. Its user agent is `Mozilla/5.0 (compatible; CheapSeats-Audit/<version>; +https://cheapseats.dev)`.
 
 - A host/path site (`github.com/example`) gets its robots.txt rules checked for that path, but no llms.txt or sitemap check: those belong to the host.
 - Sites of kind `code` or `community` (your GitHub, a forum) raise no robots.txt, firewall, llms.txt, sitemap or markup findings: none of that is yours to fix. Which crawlers the host blocks is still recorded on the site's `blocked` line, so you know it, without a fix you can't apply.
@@ -90,7 +90,7 @@ Also on the **Site audit** page ("Check citations", for any finished run), `POST
 
 It takes the run's third-party pages, most cited first, then most surfaced in searches, and fetches each one as Cheap Seats, where its robots.txt allows `CheapSeats-Audit`. Each page is fetched at most once a day and kept for a month. It reads the page's visible text and says whether it names your brand or an alias, and which of the set's competitors.
 
-A page that names competitors but not you is marked **outreach**: the answers read it, and it leaves you out. That's the same idea as the run page's [Cited without your brand](../metrics/#buckets-outreach-and-found-but-not-cited) list, checked against the page itself rather than the answers.
+A page naming competitors but not you is marked **outreach**. This checks the page itself; the run's [Cited without your brand](../metrics/#buckets-outreach-and-found-but-not-cited) list is based on the answers. A retrieved page was surfaced in search, not necessarily read or cited.
 
 Matching is by whole word, ignoring case. That's stricter than the grader's own check, so a short alias doesn't match inside another word.
 
@@ -145,4 +145,4 @@ The page lists each of your pages' fetches by class, and AI referrals, beside ho
 
 ## Where to start
 
-Run `cheapseats audit` before your first paid run. It's free, it takes a minute, and an error there, such as a firewall that blocks ChatGPT-User or a docs site that's empty without JavaScript, explains a lot of "never cited" before you've asked a single question. Then read [Reading results](../reading-results/) for what a run adds.
+Run `cheapseats audit` before your first model run, then use [Reading results](../reading-results/) to investigate the answers and citations.

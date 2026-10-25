@@ -5,7 +5,7 @@ author: Chad Metcalf
 description: Cheap Seats, Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar, Semrush, Elmo and Limelit Open, row by row from their own pages, October 2026.
 ---
 
-**How do the AI visibility tools compare?** As of October 2026, the hosted tools (Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar and Semrush AI Visibility) cover more engines, including Gemini, Perplexity and Google's AI surfaces, and charge from about $29 a month to custom enterprise contracts. Elmo and Limelit Open are open source and cover those engines too, through vendor APIs and paid scraping services. Cheap Seats is an open-source project I wrote to make my own product better, inspired by those tools; it's free and always will be, and it does the part most teams use most of the time. It asks Claude and OpenAI models your buyers' questions, grades every answer recommended, mentioned or absent, ends every run with a ranked fix list, and runs on the Claude subscription you already have (ChatGPT optional). When you outgrow it, this page is how to choose where to go next.
+Compare **engine coverage, collection method, grading and workflow** before price. Hosted tools cover more consumer surfaces; open-source trackers give you more control over data and operation. Cheap Seats asks Claude and OpenAI models directly and adds recommendation grades and fix briefs. The tables below show the tradeoffs.
 
 <!--more-->
 
@@ -25,7 +25,7 @@ Everything below comes from each tool's own pages, read in October 2026. Where a
 | **[Elmo](/compare/elmo/)** | ChatGPT, Google AI Mode, AI Overviews, Gemini, Perplexity and Copilot through paid scrapers; Claude, Grok, Mistral and others through direct APIs | Free and open source (MIT); you pay the scrapers, model APIs and a TypeSafe key. Elmo Cloud from $29/month | Self-hosted (Docker Compose, PostgreSQL) or SaaS |
 | **[Limelit Open](/compare/limelit/)** | ChatGPT, Claude, Perplexity, Gemini through APIs; AI Overviews, AI Mode, Bing Copilot through scrapers | Free and open source (Apache-2.0); you pay your providers. Limelit Cloud credit packs from $19.99 | Self-hosted (one binary, SQLite); Cloud is SaaS |
 
-**What Cheap Seats costs.** Nothing for the software; what the model calls cost, and how a Claude Code subscription makes that nothing too, is in [Cost and budget](/docs/cost-and-budget/).
+Cheap Seats' software is free; API calls, optional providers and hosting depend on your setup. Installed subscription CLIs can avoid API charges within their usage limits. See [Cost and budget](/docs/cost-and-budget/).
 
 ## Prompts, grading, fixes and API
 
@@ -45,13 +45,13 @@ Table dated October 2026. Prices and engine lists change often; follow the links
 
 ## Start with Cheap Seats
 
-If you're just finding out whether AI assistants recommend you, start free. Cheap Seats asks Claude and OpenAI models your questions with web search and from memory, grades each answer strictly, and stores everything in a SQLite file you keep. Its prompts change by pull request, and its fixes land as pull requests. You'll learn which buyer questions matter, and those questions carry over to any tool you pick later.
+Use it when Claude/OpenAI coverage is enough and you can run the service yourself. [Getting started](/docs/getting-started/) covers the setup.
 
 ## Free, open-source trackers
 
 Three trackers here are open source and free to self-host. They differ more in approach than in price.
 
-- **Cheap Seats** (MIT) asks Claude and OpenAI models directly, through their APIs or the `claude` and `codex` CLIs, so it runs on a subscription you already have. A Claude call grades every answer recommended, mentioned or absent; every rate carries an interval; each run ends in a fix list. No hosted tier. It doesn't reach Google's AI surfaces, Perplexity, Gemini or Copilot; [Which AI engines Cheap Seats asks](/docs/engines/) says why.
+- **Cheap Seats** (MIT): direct Claude/OpenAI model calls, recommendation grading, uncertainty and fix briefs. No hosted tier or Google/Perplexity/Gemini/Copilot coverage ([engines](/docs/engines/)).
 - **[Elmo](/compare/elmo/)** (MIT, Blue Whale Software) reaches the consumer surfaces through paid scrapers and adds direct model APIs. A TypeSafe model confirms each name match and reads sentiment. PostgreSQL, multi-brand, shareable reports, SDKs. Elmo Cloud is the hosted version.
 - **[Limelit Open](/compare/limelit/)** (Apache-2.0) is one Go binary with SQLite and an MCP server, asking seven engines through APIs and scrapers, and finding your brand by deterministic text search. It's the open core of Limelit Cloud.
 
@@ -67,7 +67,7 @@ Others exist on GitHub, described here in their own words. They aren't reviewed 
 
 ## How to choose where to go next
 
-If you outgrow Cheap Seats, do whatever suits you. I'd suggest [Gauge](/compare/gauge/); that team is great. These are the usual signs, and where each points:
+Choose from the capabilities you need:
 
 - **You need Gemini, Perplexity, Copilot, Google AI Overviews or AI Mode.** Cheap Seats asks only Claude and OpenAI models. Otterly.AI includes AI Overviews, Perplexity and Copilot on its entry plan; Profound lists the most engines, nine on Enterprise.
 - **You need SOC 2 and SSO.** Profound lists SOC 2 and SSO/SAML on Enterprise, and Scrunch lists SOC 2 Type II.
@@ -78,6 +78,6 @@ If you outgrow Cheap Seats, do whatever suits you. I'd suggest [Gauge](/compare/
 
 ## Taking your prompts with you
 
-Cheap Seats' prompt sets are plain TOML in your own git repo, each prompt a line of text with an id. The buyer questions you refined are yours: plain text you can copy into whichever tool you choose. You can also keep Cheap Seats running alongside, for the strict grading and the fix list. For one tool at a time, see [Compare](/compare/).
+Copy the question text from Cheap Seats' TOML prompt sets into the next tool. Check its prompt quotas, grouping and sampling rules before comparing results. See [Compare](/compare/) for individual tools.
 
 The code is on [GitHub](https://github.com/cheapseatsdev/cheapseats), and [Getting started](/docs/getting-started/) takes you from a checkout to your first run.

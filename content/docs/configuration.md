@@ -25,7 +25,7 @@ audience = "a product marketing lead"
 ```
 
 - `aliases` are other names the grader counts as the brand.
-- `category` is the market in a noun phrase. With `[typesafe]`, the prompt review's off-target question is asked against it; without a category that question isn't asked, since against `about` it would flag every prompt that isn't about this one product. New in 0.4.0.
+- `category` names the market. Jev uses it for off-target prompt checks; without it, those checks are skipped.
 - `audience` is who asks the questions, for example "a software developer"; the answerers are told so.
 - `facts` is a list of public claims the analyst may build fixes on, and that the [fact check](../got-wrong/) reads each answer naming you against.
 
@@ -33,7 +33,7 @@ audience = "a product marketing lead"
 
 ## Sites
 
-The brand's websites. Pages on them count as its own; the fix list puts each fix on the site that suits it and assigns it to that site's owner; each run shows which sites the answers drew on, including ones they never reached.
+List your sites to identify your pages, assign fixes to owners, and see which sites assistants use or miss.
 
 ```toml
 [[brand.sites]]
@@ -87,9 +87,9 @@ aliases = ["Peec", "peec.ai"]
 domains = ["peec.ai"]
 ```
 
-Competitors the grader folds onto one canonical name in every prompt set, so share of voice counts "Peec" as Peec AI. A set's own `[[competitors]]` adds to the list, and its entry for the same name wins. See [prompt sets](../prompt-sets/#competitors-shared-by-every-set).
+Shared aliases fold competitor spellings onto one share-of-voice row. A set adds its own competitors; its entry for the same name wins. See [Prompt sets](../prompt-sets/#competitors-shared-by-every-set).
 
-- `domains` are the competitor's own sites, each a host (covering its subdomains) or a host/path prefix (`github.com/withgauge`). The run page counts pages on them as that competitor's, in its sources, buckets and outreach list. Like the brand's sites, domains only decide whose pages are whose: they're read from today's config for every run, and adding or changing them changes no trend.
+`domains` identifies the competitor's sites: a host covers subdomains; a host/path covers that prefix. Reports use today's domain config to assign page ownership, including for old runs. Changing domains does not restart trends.
 
 ## Sources
 
@@ -112,49 +112,27 @@ review = ["example.com/reviews"]
 ```toml
 [grader]
 model = "claude-haiku-5-5"
-# provider = "claude-code"   # on your Claude subscription, through the claude CLI
+# provider = "claude-code"  # default: anthropic
+# themes = false           # skip the theme pass (on by default)
+# check_facts = false      # skip fact checks when [brand] facts are listed
 
 [analyst]
 model = "claude-opus-5-5"
 # provider = "claude-code"
 ```
 
-The grader grades each answer; the analyst writes the fix list and insights, and drafts prompts for `cheapseats suggest-prompts`. By default both go through the Anthropic API, with `ANTHROPIC_API_KEY` or the proxy in `CHEAPSEATS_ANTHROPIC_BASE_URL`. With `provider = "claude-code"` they run on the local `claude` CLI and your Claude subscription instead; with subscription answerers too, Cheap Seats needs no API key at all (`examples/cheapseats-config/cheapseats.subscriptions.toml` is set up that way). The Docker image has no CLIs, so keep the API there. Switching the grader's provider starts a new method on every trend, since answers are graded a different way.
+The grader scores every answer. The analyst writes fixes and insights, and drafts prompt suggestions. Both default to the Anthropic API, using `ANTHROPIC_API_KEY` or `CHEAPSEATS_ANTHROPIC_BASE_URL`; `provider = "claude-code"` uses your logged-in local Claude CLI instead. The Docker image has no CLIs. Changing the grader's provider starts a new method.
 
-```toml
-[grader]
-model = "claude-haiku-5-5"
-themes = false   # skip the theme pass
-```
+Two optional grader passes run after grading:
 
-After each run is graded, one more grader call groups its objections, praise and reasons for losing into a few named **themes**, shown on the run page. It's on by default; `themes = false` turns it off. It changes no rate or trend. `themes` belongs in `[grader]`, not `[analyst]`.
+- **Themes:** one call groups objections, praise and reasons for losing. Set `themes = false` to skip it.
+- **[Fact check](../got-wrong/):** when `[brand] facts` is present, one call per answer naming you checks for contradictions. Set `check_facts = false` to skip it.
 
-```toml
-[grader]
-model = "claude-haiku-5-5"
-check_facts = false   # skip the fact check
-```
-
-With `facts` listed under `[brand]`, each answer that names the brand is read once more after the run, against those facts, for claims that contradict one ([Got wrong about you](../got-wrong/)). One grader call per such answer, from the same budget; nothing on `claude-code`. It's on whenever facts are listed; `check_facts = false` turns it off. It changes no grade or trend, and like `themes` it belongs in `[grader]`.
+Both use the grader's provider and cost $0 API spend on `claude-code`. Neither changes grades or trends. Their switches belong in `[grader]`, not `[analyst]`.
 
 ## Optional providers
 
-```toml
-[typesafe]
-model = "jev-1.14.0"
-# fold_names, cluster_phrases, second_opinions, page_types, fix_matches, prompt_review: on unless false
-# min_confidence = 0.7
-
-[exa]
-# coverage, baseline, prospects, contents_fallback: on unless false
-# results = 3
-# baseline_results = 10
-# prospect_seeds = 10
-# prospect_results = 5
-# discover_results = 10
-```
-
-Two optional services for jobs the core models do badly or not at all, each off until its table is present and then on in full. Every switch, what each pass adds, where it shows and what it costs are on [Optional providers](../optional-providers/). Keys are `TYPESAFE_API_KEY` and `EXA_API_KEY`, or the proxies `CHEAPSEATS_TYPESAFE_BASE_URL` and `CHEAPSEATS_EXA_BASE_URL` ([Environment](#environment)). Each model needs a `[pricing]` entry (below). Unknown keys are errors, so upgrade the app before adding a switch the running version doesn't know.
+Add `[typesafe]` for Jev's typed judgments or `[exa]` for a separate search index and fallback page reads. Each table enables its switches by default. [Optional providers](../optional-providers/#turning-them-on) has the full config, prices, keys and switches; omit the tables to leave them off.
 
 ## Budget
 
@@ -166,9 +144,9 @@ reservation_usd = 0.60
 concurrency = 6
 ```
 
-Every API call (API answers, grading, the theme pass, the fix list, prompt suggestions, search probes) reserves an allowance against `budget.daily_usd` in a SQLite ledger before it goes out, and settles to the real cost after. A run that would go over stops with status `budget`; retry it the next day.
+Every billable attempt reserves an allowance in the SQLite ledger before it starts, then settles to known usage. If a new reservation won't fit, the call is refused; a run stopped as `budget` keeps completed work and can be retried the next UTC day. Unknown or cancelled attempts retain at least their reservation.
 
-This is an admission limit, not a provider billing cap: one call can cost more than its reservation, so set provider-side limits too. Subscription answers are recorded at $0 and don't count against the budget.
+This is an admission limit, not a provider billing cap: actual costs, including calls already in flight, can exceed reservations. Set provider-side limits too. Subscription calls in any role are recorded at $0. See [Cost and budget](../cost-and-budget/#the-daily-budget).
 
 ## Sampling
 
@@ -225,7 +203,7 @@ max_samples = 1
 
 Set `schedule.daily_hour_utc` and, from that hour, every `core` set runs every `tiers.core.every_days` days (default 1, daily) and every `plg` set every `tiers.plg.every_days` with one sample, one set after another. Locally it's off unless you set it.
 
-Weekly is usually enough: recall only moves when models change, and search with the web over days to weeks. Daily mostly buys a smoother trend line, at seven times the answers.
+Weekly runs use one-seventh the answers of daily runs. Choose the cadence for how soon you need to detect changes; either track can vary between runs.
 
 ## Owners
 

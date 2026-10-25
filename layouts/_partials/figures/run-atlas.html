@@ -1,0 +1,10 @@
+{{ range slice
+  (dict "name" "run-scores" "height" 480 "title" "1. Compare tracks and uncertainty" "alt" "Separate search and recall cards above an answerer table with 95% intervals." "note" "Search and recall have separate cards. Check the intervals in the answerer table. Named and recommended can use different denominators when info prompts are present.")
+  (dict "name" "run-grid" "height" 485 "title" "2. Find a losing prompt" "alt" "Buyer-question rows against Claude and OpenAI search and recall columns, each cell showing its answer's verdict." "note" "Each row is one buyer question; columns separate assistants and tracks. Open a question to inspect the answers behind its meters.")
+  (dict "name" "run-evidence" "height" 275 "title" "3. Check the grade's evidence" "alt" "An expanded mentioned answer with its reasoning, objections and the evidence quote copied from the answer." "note" "Read the reasoning and checked quote alongside the full answer and search trace. A meter alone does not explain why you lost.") }}
+<details class="atlas-view"{{ if eq .name "run-scores" }} open{{ end }}><summary>{{ .title }}</summary>
+<p>{{ .note }}</p>
+<a href="{{ printf "images/docs/%s-light.jpg" .name | relURL }}" title="View full-size capture"><picture><source data-dark srcset="{{ printf "images/docs/%s-dark.jpg" .name | relURL }}" media="(prefers-color-scheme: dark)"><img src="{{ printf "images/docs/%s-light.jpg" .name | relURL }}" width="1132" height="{{ .height }}" alt="{{ .alt }}" loading="lazy"></picture></a>
+</details>
+{{ end }}
+<p class="figure-note"><a href="https://demo.cheapseats.dev/runs/r-20261024-222715-986b58">Inspect the source run</a>. Captures show historical data, not a current performance claim.</p>

@@ -5,16 +5,18 @@ weight: 445
 group: Running it
 ---
 
-Cheap Seats runs on Claude, optionally OpenAI, and nothing else has to be configured. Two more services can be switched on for jobs the core models do badly or not at all. Both are optional in the strict sense: with neither table in `cheapseats.toml`, nothing about them is called, and switching one off later leaves every page as it was.
+Cheap Seats needs Claude; OpenAI is optional. Two additional services can enrich a run:
 
-- **[TypeSafe](https://typesafe.ai)'s Jev** returns typed judgments, not text: a probability, a choice among options you define, a score on described levels, each with a calibrated probability and a confidence. It can't generate, count or do arithmetic, which is why it only gets small decisions over data Cheap Seats already has. Input is $0.042 per million tokens, output free, as of October 2026.
-- **[Exa](https://exa.ai)** is a web search API, a neutral index to ask what the web has, as opposed to what an assistant found. About $4 per thousand searches, and about $1 per thousand pages when it reads a page, which it does only for a page plain HTTP can't.
+- **[TypeSafe](https://typesafe.ai)'s Jev** makes typed judgments over names, phrases, grades and prompts.
+- **[Exa](https://exa.ai)** searches a separate web index and can read pages that plain HTTP cannot.
 
-Every use of either follows the same rules: a switch in its table, on by default when the table is present; a key or a key-adding proxy; a run after the run finishes, or on demand, writing to the database, so no page ever calls a provider; a price in `[pricing]`, spent from the [daily budget](../cost-and-budget/); and the rule the code already had as the floor when the provider is off. None of them changes how answers are asked or graded, so no trend restarts. Cheap Seats 0.4.0 or later has all of them.
+Each is off until its table is present in `cheapseats.toml`; its switches then default on. Calls use the [daily admission budget](../cost-and-budget/#the-daily-budget). Neither changes how answers are asked or graded, so enabling them does not restart trends. Name folding and clustering can still change displayed counts.
+
+Most passes run after a run or on demand and store their results. Reports read those results without calling a provider; the interactive search probe is the exception. These features require Cheap Seats 0.4.0 or later.
 
 ## What they add
 
-Each line is a **pass**: it runs after a run, or by hand as `cheapseats <command> <run-id>`, and skips whatever it already decided, so running one again costs nothing.
+The tables list each pass, its switch and command. Passes reuse stored decisions where their inputs are unchanged; some web content caches expire. Costs below use the example `[pricing]` rates and exclude hosting.
 
 ### Jev
 
@@ -27,17 +29,9 @@ Each line is a **pass**: it runs after a run, or by hand as `cheapseats <command
 | **One card for one page**: fixes from different sets that want the same page | `fix_matches` | quick wins, "also asked for by"; `cheapseats match-fixes` | under a cent |
 | **Prompt judgments**: duplicates, off-target, intent and branded wording | `prompt_review` | `cheapseats check` suggestions, the prompt review's Jev section; `cheapseats judge` | a fraction of a cent, once per wording |
 
-**Folding product names.** The grader writes product names as the answers do, so one product can sit on the board twice: "Scrunch" and "Scrunch AI". Your competitor aliases fold the spellings you thought of; Jev folds the ones you didn't. After each run, every new name is put to Jev once, as a choice over the known products it plausibly matches with a "different product" option, given your category and the sentence of an answer that named each. A name is folded when Jev's probability that the two are one product is at or above `min_confidence`. Each name is its own request, since batching lowers the probabilities; a run's pass is a few dozen requests.
+Jev supplements the existing rules: configured competitor aliases still fold names, and `[sources]` overrides Jev's host classification. Decisions below `min_confidence` do not take effect. Second opinions appear beside the original grades and never replace them; read disagreements first when checking a grade.
 
-**Clustering objections and praise.** The objections table and the sentiment's top praise and objections count the grader's free-text phrases by their exact wording, so "coverage unverified" and "coverage of ChatGPT and Claude unverified" were two rows. After each run, each new wording is put to Jev once against the clusters it plausibly matches, established wordings first, so the same complaint can be followed from run to run. A row that gathered several wordings says so, and `wordings` lists them in the run's JSON and MCP `get_run`.
-
-**Second opinions on grades.** The grader is one model's reading of each answer. After each run, Jev reads every graded answer again, under the grader's own verdict definitions (the two are built from one text, so they can't drift apart), and picks the sentence that most supports the verdict. Each opinion is compared with the answer's *current* grade when read: **agrees**, **disagrees**, or **unsure** below `min_confidence`. The run page shows the counts, the agreement rate and each disagreement with what both said; the set page gains a **Jev agrees** column, which is the drift measure run over run. The disagreements are the answers to read first when the grader is in doubt. `second_opinion` in the run's JSON; MCP `get_run` has the counts and up to ten disagreements, `get_result` one answer's. See [Reading results](../reading-results/).
-
-**Page types and source classes.** The run page types every cited page (listicle, comparison, review, docs and so on) and classes every host (ugc, review, reference, institutional, editorial) from rule lists, with `other` and `editorial` as the defaults, which is where a good share of real citations land. After each run, each page the rules call `other`, and each third-party host they call `editorial`, is put to Jev once, with the rule file's definitions as the criteria. A page or host is decided once ever, whatever run cites it. `[sources]` still wins over Jev, and Jev over the built-in default ([Metric definitions](../metrics/#page-types)).
-
-**One card for one page.** Quick wins list the latest fix list of every set, so three sets that each want a pricing page showed three cards. After a fix list is built, each pair of fixes from different sets with the same type on the same site is decided once: the same page by rule, or a yes/no to Jev when their paths or titles share a word. Matched fixes become one card, the highest ranked, with the others under "also asked for by", and `mark_fix` can still target any of them ([Quick wins](../reading-results/#quick-wins)).
-
-**Prompt judgments.** The [prompt review](../prompt-review/) finds duplicates and off-target prompts from a month of answers, so a new set has none. With `[typesafe]`, the prompts' wording itself is put to Jev, one question per request: whether two prompts would be served by one good answer (`duplicate`), whether a prompt asks about something other than `brand.category` (`off_target`; not asked without a category), whether the useful answer names a product or none (`intent`), and whether a prompt names the brand in any spelling (`branded`). Each answer is keyed by exactly what the question saw, so rewording one prompt re-asks only its own questions and a `cheapseats check` that changes nothing asks nothing. `check` prints one `suggestion:` line per flag and never fails on one (`-no-jev` skips it); the review page lists the same flags; the pass also runs after every run on the run's set, and `cheapseats review -jev` asks before reviewing. A 20-prompt set is about 70 requests the first time, and nothing after.
+Prompt judgments can help before a set has a month of answers. They flag possible duplicates, off-target questions, intent and branded wording. Off-target checks require `brand.category`. `cheapseats check` prints suggestions without failing on them; `-no-jev` skips these judgments.
 
 ### Exa
 
@@ -50,26 +44,24 @@ Each line is a **pass**: it runs after a run, or by hand as `cheapseats <command
 | **Reading a page through Exa** when plain HTTP gets an empty shell | `contents_fallback` | the site audit and the citation check, marked `via: exa` | $0.001 a page, once a day |
 | **A second engine for the search probe** | none: on with `[exa]` | the probe's engine selector; `cheapseats probe -engine exa` | under half a cent a probe |
 
-**Coverage.** A miss has two different causes, and a run alone can't tell them apart: no page of yours answers the question, or one does and the assistants never read it. After each run, every prompt is searched once on Exa, restricted to your sites. What it finds is shown under each prompt, each page marked **cited** (an answer to the prompt cited it), **retrieved** (a search returned it and no answer cited it) or **unseen**, or "none found". `coverage` in the run's JSON, `own_pages` per prompt in MCP `get_run`. A search that finds nothing is information: on cheapseats.dev's own first run, Exa found no page of ours for any of 11 prompts, because a neutral index hadn't picked the new domain up yet.
+Use coverage and baseline together:
 
-**Neutral retrieval baseline.** When a competitor dominates a run, the web may agree with the assistants (their pages answer the question better, a content problem), or the assistants' own queries may be finding them where a neutral search wouldn't (a query problem). After each run, every prompt is searched once on Exa with no domain filter. Under each prompt the neutral top pages carry whose they are and the coverage status; above them a **Neutral retrieval** table has a row per host: `neutral`, the prompts a neutral index ranks it for, `assistants`, the prompts any answer retrieved or cited it for, and a reading of **content**, **query** or **both**. `baseline` in the JSON, `neutral_retrieval` in `get_run`.
+- **Coverage** asks whether a separate index finds relevant pages on your sites. Each result is marked cited, retrieved or unseen in the run. No result can mean an indexing gap; it does not establish that no useful page exists.
+- **Neutral retrieval** compares hosts returned for the original prompt with hosts surfaced by the assistants. The content/query/both labels are diagnostic clues, not proof of why an assistant chose a source. Different indexes and rankings can also explain a gap.
+- **Prospects** finds pages similar to cited third-party listicles and comparisons, excluding pages already cited, retrieved or fetched in the run. Pages naming competitors but not you come first.
+- **Competitor discovery** runs only on demand. It prints `[[competitors]]` entries to review and paste; it never changes your config. Jev can check whether a suggested host competes in your category.
+- **Page reads** retry empty app shells or bot challenges through Exa, caching the text for a day. A `via: exa` label identifies that result. The audit downgrades the finding to info: content exists, but crawlers without JavaScript may still see empty HTML. Pages plain HTTP can read are not sent to Exa.
+- **Search probe** accepts `claude` (default), `exa` or `both`. With both, links are marked `overlap`, `only_claude` or `only_exa`. It stores nothing and is called only when requested.
 
-**Outreach prospects.** The outreach list is the hosts the answers already cited without you. After each run, the most-cited third-party listicles and comparisons each go to Exa's find-similar, and the pages it returns from other domains that no answer in the run cited, retrieved or fetched are kept: pages that shape answers like these, that the run didn't know about. Each is read once a day for whether it names you or a competitor, and with `[typesafe]` Jev says whether it's a roundup in your category. They're listed under the outreach table, pages naming competitors and not you first, with an `outreach` chip. `prospects` in the JSON and `get_run`.
-
-**Competitor discovery.** Competitors are configured by hand. `cheapseats discover` asks Exa what resembles each configured competitor's home page and your own, gathers the results by host, cross-references each with the share-of-voice board (`on_board`: answers naming it on the latest runs), asks Jev whether it competes in your category, and prints `[[competitors]]` entries to paste, each with its reason as a comment. It runs on demand only, never after a run. `GET /api/competitors/suggestions` reads the table and `POST /api/competitors/suggestions/<host>/dismiss` hides a host for good. Nothing edits the config: a suggestion becomes a competitor by pull request, like a prompt.
-
-**Reading a page through Exa.** The [site audit and citation check](../site-audit/) read pages with plain HTTP, as a crawler that runs no JavaScript does. A page that is an empty app shell, or that serves a bot challenge, reads as empty or as naming nobody, when the assistants read it fine. With `contents_fallback` on, such a page is read once more through Exa, which renders it; the text is kept for a day. The citation row says whom it names with `via: exa`, and the audit's `page.needs-js` or `page.challenge` finding becomes an info one: the content exists, and crawlers that run no JavaScript still see the empty HTML. A page plain HTTP reads is never sent to Exa.
-
-**A second engine for the search probe.** The [search probe](../reading-results/#search-probe) runs one query through the web search tool the answerers use. With `[exa]`, it takes an engine: `claude` (the default), `exa`, the same query on Exa's index under the model name `exa-search`, or `both`, which returns each result with `overlap`, `only_claude` and `only_exa`. It has no switch and stores nothing: someone asks a question and pays for the answer.
+See [provider mechanics](../reference/#optional-provider-mechanics) for caching and decision provenance.
 
 ## Getting a key
 
-Both have self-serve sign-ups and free tiers, and for most teams the free tiers are all either will ever need.
+Create keys in the [Exa dashboard](https://dashboard.exa.ai) and [TypeSafe console](https://console.typesafe.ai/keys). Check each service’s current prices and allowances before relying on an estimate.
 
-- **Exa**: sign up at [dashboard.exa.ai](https://dashboard.exa.ai) and make a key under API keys. As of October 2026 the free plan gives $10 of credits every month, plus a $10 onboarding bonus, with no payment method. At $4 per thousand searches that's 2,500 searches a month. Coverage and the baseline each use one search per prompt per run and prospects one per seed, so five prompt sets of 15 to 20 prompts, run weekly, is about 900 searches a month, inside the free plan.
-- **TypeSafe**: make a key in the [TypeSafe console](https://console.typesafe.ai/keys). As of October 2026 the free tier is $5 of usage a month. Jev bills input tokens only, at $0.042 per million, so that's about 119 million tokens, and a run's passes together are tens of thousands: the free tier covers this many hundreds of times over.
+At the example rates below, Exa costs $0.004 per search and $0.001 per page read; Jev costs $0.042 per million input tokens. Coverage and baseline each use one search per prompt, and prospects one per seed. A 15-prompt run with both searches and 10 prospect seeds uses 40 searches, about $0.16, before page reads. Jev's small judgments typically total under a cent per run.
 
-Keys go in the environment or `.env` like the others; on exe.dev, add each as an integration and the VM holds no key (below).
+Put keys in the environment or `.env`. On exe.dev, a key-adding integration can keep them off the VM.
 
 ## Turning them on
 
@@ -110,21 +102,18 @@ search_per_1k = 4.0
 page_per_1k = 1.0
 ```
 
-Each needs a way to reach its API, and either of two will do:
+Provide each service's key (`TYPESAFE_API_KEY`, `EXA_API_KEY`) or key-adding proxy (`CHEAPSEATS_TYPESAFE_BASE_URL`, `CHEAPSEATS_EXA_BASE_URL`). On [exe.dev](../deploying/#exedev), add integrations for the proxies.
 
-- **A key**: `TYPESAFE_API_KEY`, `EXA_API_KEY`, from the environment or `.env`, like the other keys (see [Getting a key](#getting-a-key)).
-- **A key-adding proxy**: `CHEAPSEATS_TYPESAFE_BASE_URL`, `CHEAPSEATS_EXA_BASE_URL`, exactly as `CHEAPSEATS_ANTHROPIC_BASE_URL` works for Anthropic. On [exe.dev](../deploying/#exedev), add each as an integration and the VM holds no key at all.
+`cheapseats check` lists enabled passes. A configured provider without a key or proxy is noted and skipped at run time; a missing `[pricing]` entry or unknown key fails validation. Upgrade the app before adding a switch an older version doesn't recognize.
 
-`cheapseats check` lists the passes the config switches on and, with a table present and neither key nor proxy set, prints a note; the passes are then skipped at run time, the way an answerer whose key is missing is skipped, and the readiness report lists them under `optional`. A missing `[pricing]` entry fails `check`, as it does for any model. Unknown keys are errors too, so upgrade the app before you add a switch the running version doesn't know.
-
-On Kubernetes, keys go in the Secret the chart loads, or in `extraEnv` as a `secretKeyRef`; the proxy URLs, which aren't secrets, go in `env`. See [Self-hosting](../self-hosting/).
+On Kubernetes, put keys in the chart's Secret or `extraEnv` with `secretKeyRef`; proxy URLs belong in plain `env`. See [Deploying](../deploying/#kubernetes-with-helm).
 
 ## What stays the same
 
-- **Pages never call them.** Every pass runs after a run finishes, or on demand, and writes to the database; the run page, the API and MCP read what was stored. A deployment without them renders the same pages at the same speed, and a provider outage changes no report. The one on-demand use from a page is the search probe's Exa engine, and the probe always was on demand.
-- **The budget covers them.** Each call reserves and settles against the daily budget under its `[pricing]` entry, like every other call. Exa's own cost estimate is used when it returns one.
-- **Trends don't restart.** No pass changes how an answer is asked or graded. Folding and clustering change how a board or a table is counted, the way adding a competitor alias does; second opinions sit beside the grade and never replace it.
-- **The rule stays as the floor.** Without Jev, configured aliases fold, the rule lists type pages and the review reads the answers, as before. Without Exa, the per-prompt lines and the prospects simply aren't there.
-- **Decisions keep their provenance.** Each stored decision says who made it and with what probability, and the threshold is read from the config each time, so tightening `min_confidence` never asks anything again.
+- **Reports read stored results.** An outage leaves earlier results available; it can prevent new passes from completing.
+- **All billable attempts are budgeted.** Calls reserve and settle under their `[pricing]` entries. Exa's returned cost estimate is used when available. This remains an admission limit, not a billing ceiling.
+- **Grades and methods stay intact.** Second opinions never replace a grade. Folding and clustering change grouped counts, like adding an alias, without restarting trends.
+- **Rules remain the fallback.** Without Jev, aliases and rule lists still apply. Without Exa, its per-prompt coverage and prospects are absent.
+- **Provenance is retained.** Stored Jev decisions identify the provider and probability. Changing `min_confidence` reinterprets them without new calls.
 
-The design rules, what each pass learned from its first live calls, and the tables each writes are in the repo's [docs/optional-providers.md](https://github.com/cheapseatsdev/cheapseats/blob/main/docs/optional-providers.md).
+Implementation details and first-call observations are in the repo's [optional-provider spec](https://github.com/cheapseatsdev/cheapseats/blob/main/docs/optional-providers.md).
