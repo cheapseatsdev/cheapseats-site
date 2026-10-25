@@ -10,7 +10,7 @@ These metrics are calculated from stored answers and grades, without new model c
 Terms used throughout:
 
 - **Graded answer**: one answer from one answerer, on one track, that the grader graded. Errors and unfinished answers count nowhere.
-- **Choice prompt**: a prompt that asks for a choice. Prompts marked `intent = "info"` ask for an explanation, so their answers count toward named only, never toward recommended, top pick, named first or top 3.
+- **Choice prompt**: a prompt whose useful answer requires a product choice, comparison, alternative or suitability decision. Prompts marked `intent = "info"` can be answered completely without that choice, so their answers count toward named only, never toward recommended, top pick, named first or top 3. See [choosing intent](../prompt-sets/#say-what-a-good-answer-looks-like).
 - **Named**: graded `recommended` or `mentioned`. For your brand this is always the grade, never the grader's list of names, so your named rate and your share-of-voice row always agree.
 - **Products named**: the grader's list of every product an answer names, in order, folded onto your competitors' canonical names. Each product counts at most once per answer.
 

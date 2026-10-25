@@ -56,7 +56,7 @@ Answer-based rates carry 95% Wilson intervals. Position, rank and share of voice
 
 ## Why top picks on the same prompt set is the fair benchmark
 
-Question choice changes the result. On our *head to heads* set on 22 October 2026, recall answers named Cheap Seats in 19 of 22 answers: rank 1. The questions named us. On *Choosing an AI visibility tool*, which uses open buyer questions, none of 68 answers named us. These are different measurements.
+Question choice changes the result. On our *head to heads* set on 22 October 2026, recall answers named Cheap Seats in 19 of 22 answers: rank 1. The questions named us. On *Choosing an AI visibility tool*, which didn't name Cheap Seats but mixed open discovery with named-competitor questions, none of 68 answers named us. These are different measurements. A supplied competitor shortlist also differs from open discovery: an answer may reasonably stay within those named choices.
 
 Mentions also aren't wins. In the head-to-head run, Cheap Seats had 19 mentions but only 1 top pick; Peec AI had 9 mentions and 3 top picks. Compare within one set and track using matching answerers and grading. A top pick is at most one winner per answer, but an answer can decline to choose anyone.
 

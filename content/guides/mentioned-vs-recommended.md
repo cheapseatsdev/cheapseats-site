@@ -33,7 +33,7 @@ Named, recommended and top-pick rates count graded answers. Each carries a 95% W
 
 Answers graded *recommended* ÷ answers to **choice** questions.
 
-Mark explanatory questions `intent = "info"` in a [prompt set](/docs/prompt-sets/). They count toward named, but not recommended or top pick: a good explanation may recommend nothing.
+Mark questions `intent = "info"` when a complete, useful answer doesn't require a product choice. A method or checklist may qualify even when a product example would help. They count toward named, but not recommended or top pick. [Prompt sets](/docs/prompt-sets/#say-what-a-good-answer-looks-like) explains how to decide.
 
 ### Top-pick rate
 

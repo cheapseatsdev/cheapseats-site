@@ -14,9 +14,11 @@ ChatGPT can personalize answers using memory about you and your product. For a c
 
 Repeat each question, separate search from recall, and grade consistently. Cheap Seats stores the answers and sources behind the resulting rates.
 
-## Step 1: write 10 to 20 buyer questions as a prompt set
+## Step 1: write a small set of distinct buyer questions
 
 The questions are a TOML file in a config repo of your own. Use `prompt-sets/discovery.toml` for this example and replace the placeholders with your category and competitors. Ask the way a buyer would, and don't name your product: being named when the question names you proves little.
+
+Roughly 15–20 questions is a starting guide for coverage, not a minimum that makes rates precise. Use real buyer needs where you have them, label hypotheses in review notes, and include constraints your product may fail. Keep open discovery separate from named shortlists when interpreting results: "Peec AI or Profound?" supplies choices that an open category question doesn't.
 
 ```toml
 id = "discovery"
@@ -37,6 +39,8 @@ id = "how-to-choose"
 text = "How do I choose a <category>, and what should I compare?"
 intent = "info"    # asks to explain, not to choose: scored on named, not recommended
 ```
+
+Choose intent by what a complete, useful answer requires. A method or evaluation checklist can be informational even when products could help; a question starting "how" can still ask for a product choice. Only selection questions contribute to recommendation and top-pick denominators. [Prompt sets](/docs/prompt-sets/#say-what-a-good-answer-looks-like) covers the distinction and question design.
 
 For **Go with subscriptions**, [`cheapseats init`](/docs/getting-started/#start-one-from-your-website-cheapseats-init) writes starter config from your website, with five prompt sets like this and Claude CLI providers for answers, grading and analysis. Review its TODOs before running: brand details and buyer questions need your input. It calls no model unless you add `-suggest`.
 
@@ -67,6 +71,8 @@ samples = { search = 2, recall = 1 }
 **Or use [Go with subscriptions](/docs/getting-started/#go-with-subscriptions)**, with the `codex` CLI logged in to ChatGPT and the required `claude` CLI logged in to Claude: `provider = "codex"` and `provider = "claude-code"` for answerers. Configure the grader and analyst with `provider = "claude-code"` too for a setup without API keys. These CLIs must be installed locally; they aren't in the Docker image. Subscription calls add no API charge and share your plan's allowance. See [Cost, API keys and the daily budget](/docs/cost-and-budget/#your-own-api-keys-or-your-own-subscriptions).
 
 `samples = { search = 2, recall = 1 }` asks each question twice with web search forced on and once with no tools, so you get both what the web says about you today and what the model already believes. See [Which AI engines Cheap Seats asks](/docs/engines/).
+
+The two search samples per answerer support repeated-answer noise checks once enough runs accumulate. You can start with one sample per track and weekly runs to find gaps at lower volume; use the [sampling guidance](/docs/noise-and-confidence/#when-more-samples-help) to choose additional samples or a faster cadence.
 
 ## Step 3: set a daily budget and run
 

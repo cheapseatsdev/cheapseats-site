@@ -2,7 +2,7 @@
 title: How many runs do you need to trust an AI visibility number?
 date: 2026-10-22
 author: Chad Metcalf
-description: AI answers change every time you ask. What the research says about that variance, how far one run and a week of runs can be trusted, and what to do about it.
+description: AI answers vary. What the research says about that variance, how one run compares with seven daily runs, and what to do about it.
 ---
 
 Ask an assistant the same question twice and you'll get two different answers. So when an AI visibility tool says you're named in 40% of answers this week and 30% last week, the first question isn't "what did we break?" It's "is that a change at all?" With small samples, it may be noise.
@@ -63,11 +63,11 @@ $$
 
 where \(v_i\) is prompt \(i\)'s variance.
 
-Cheap Seats' own *Choosing an AI visibility tool* set has 17 prompts and two answerers, each answering once on each track. On one track, each prompt gets \(n = 2\) answers a run:
+On 21 October 2026, Cheap Seats' own *Choosing an AI visibility tool* set had 17 prompts and two answerers, each answering once on each track. For named rate on one track, each prompt gets \(n = 2\) answers a run:
 
 {{< figure name="precision" >}}
 
-A 10-point swing is within the margin between two single runs. Pooled weeks have a narrower sampling margin; day-to-day drift can add uncertainty. Here's the calculation at a rate near 50%:
+A 10-point swing is within the margin between two single runs. Pooling seven daily runs narrows the sampling margin; day-to-day drift can add uncertainty. Seven daily runs are an illustrative schedule; the configured cadence determines how many observations actually fit in a week. Here's the calculation at a rate near 50%:
 
 $$
 \tilde p = \frac{1 + 0.5}{3} = 0.5
@@ -103,10 +103,12 @@ $$
 
 For **one week against another**, it is **±9.0 points**.
 
+That result requires seven daily runs on each side, with the same 17 prompts and comparable answers. A seven-day window containing one weekly run still has one run. For recommendation rates, count only selection questions: informational questions increase named-rate coverage without increasing the recommendation denominator. None of these sampling margins validates which buyer questions you chose.
+
 ## What to do about it
 
-- **Read one run for where you stand, not for whether you moved.** A single run tells you roughly how often you're named and who's beating you. A week or a month tells you whether that changed.
-- **Pool before you compare.** Compare a 7- or 28-day window against the one before, not yesterday against today.
+- **Read one run for gaps and uncertainty.** It shows which sampled questions named you and which products appeared instead. More comparable runs can help distinguish a change; elapsed time alone cannot.
+- **Pool before you compare.** Compare windows with enough comparable observations for the precision you need. Check how many runs a 7- or 28-day window actually contains.
 - **Spread answers over days rather than piling them into one.** Extra samples in a run narrow that run's interval, but much of the noise is day-to-day drift, which only more days average out. Profound's 10-a-day result is the warning.
 - **Check whether your samples pay off.** When a prompt takes more than one sample, Cheap Seats splits its run-to-run variance into within-run noise and between-run drift (Profound's decomposition), and tells you when extra samples are buying little. If drift dominates, cut samples and save the answers.
 - **Wait before judging a fix.** Cheap Seats waits 7 days and at least 4 answers a prompt before calling a fix's outcome. With five pre-fix runs pooled, a fix aimed at three prompts with four answers per prompt per run has a margin of about ±31 points after one weekly run and ±19 after four. “No detectable change” means the interval includes zero; it doesn't prove no effect or bound the effect to the stated margin alone.
