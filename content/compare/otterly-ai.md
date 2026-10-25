@@ -1,9 +1,11 @@
 ---
 title: Cheap Seats vs Otterly.AI
-description: "Cheap Seats, the free, self-hosted AI visibility tracker, beside Otterly.AI: engines, pricing, how each detects a mention, and fixes, October 2026."
+description: "Recommendation grades and exact-name matching: collection, prompt units, plans and history, October 2026."
 weight: 30
 ---
-Otterly.AI is a hosted AI search monitoring tool with published self-serve prices, from $29 a month for 15 prompts. It includes ChatGPT, Google AI Overviews, Perplexity and Copilot on every plan, with Gemini, AI Mode and Claude as paid add-ons, and asks all but Claude through their own websites, in a country you choose. [Cheap Seats](/compare/) asks Claude and OpenAI models directly and has a model grade each answer; Otterly.AI matches the names you list.
+Choose [Cheap Seats](/compare/) for self-hosted recommendation grading on Claude and OpenAI. Choose Otterly.AI for hosted name monitoring across consumer search surfaces and countries, from $29/month for 15 prompts. A detected name does not necessarily mean an endorsement.
+
+{{< figure name="compare-otterly" >}}
 
 ## Side by side
 
@@ -19,7 +21,7 @@ As of October 2026, from Cheap Seats' docs and Otterly.AI's own [pricing](https:
 | **Markets** | No country setting; prompts in the language you write them | A country per prompt, 70+ countries ([countries](https://help.otterly.ai/countries-otterlyai)), each using its own prompt slot ([prompt counts](https://help.otterly.ai/amount-searchprompts)); prompts run in any language, as written ([languages](https://help.otterly.ai/languages)) |
 | **Your prompts** | TOML in your own git repo, changed by pull request; no cap | Counted by plan; +100 prompts for $99/month on Standard and Premium |
 | **How often** | Your schedule, daily or weekly, with as many samples a prompt as you set | [Daily](https://help.otterly.ai/monitoring-interval), not adjustable; one answer per prompt and engine a day ([KPIs](https://help.otterly.ai/brand-report-kpi-definition)) |
-| **Grading** | Recommended, mentioned or absent; position, top pick, objections and optional fact checking ([how grading works](/docs/how-grading-works/)) | An exact text match of the names you list, since 27 November 2025 ([brand detection](https://help.otterly.ai/brand-detection)), with a [regex option](https://help.otterly.ai/add-brands) |
+| **Grading** | Model-graded: recommended, mentioned or absent; position, top pick, objections and optional fact checking ([how grading works](/docs/how-grading-works/)) | Exact name matching since 27 November 2025 ([brand detection](https://help.otterly.ai/brand-detection)), with a [regex option](https://help.otterly.ai/add-brands); no separate recommendation grade |
 | **What it reports** | Named, recommended and top pick, position, share of voice, objections, net sentiment; with your facts listed, what each answer got wrong about you | Brand coverage, share of voice, position, net sentiment, domain coverage ([KPIs](https://help.otterly.ai/brand-report-kpi-definition)); ChatGPT Shopping cards (Ads paused since 16 September 2026, [changelog](https://help.otterly.ai/changelog)); weekly [Brand Profiling](https://help.otterly.ai/what-is-brand-profiling) |
 | **Noise** | 95% intervals on named, recommended and top pick; changes tested against noise ([how big a change](/docs/noise-and-confidence/)) | No intervals; it advises a broad prompt set read over weeks ([prompt tracking](https://otterly.ai/features/ai-prompt-tracker)) |
 | **What to fix** | Ranked fix briefs; before/after attempt checks ([from fix to pull request](/docs/fix-to-pull-request/)) | [Recommendations](https://help.otterly.ai/ai-recommendations) every 7 days (3 a cycle on Lite, all from Standard), each with its prompt and the source beating you ([features](https://otterly.ai/features/geo-recommendations)); GEO audits; content briefs. Completed ones go on the trend chart as [annotations](https://help.otterly.ai/annotations-in-brand-reports); no measured outcome |
@@ -35,24 +37,22 @@ Net sentiment has the same −100 to +100 shape, but Otterly.AI counts sentiment
 
 ## What's different
 
-- **Recommendation:** Otterly.AI uses exact name matches, position and tone; it has no separate recommendation grade. Cheap Seats distinguishes endorsement, passing mention and absence, including disclaimed knowledge or a namesake.
 - **Unit:** Otterly.AI's brand coverage counts prompts once per engine/day. Cheap Seats' named rate counts graded answers. For a prompt-level comparison, count prompts with at least one named answer ([metric mappings](/docs/comparing-metrics/)).
 - **Fix evaluation:** Otterly.AI refreshes recommendations every 7 days once a report has 15 prompts, 3 competitors and 3 days of data; completed items mark the chart. Cheap Seats compares each attempt's preselected prompts before and after with uncertainty.
 - **History:** Otterly.AI [recalculates past days](https://docs.otterly.ai/api-reference/brand-reports/update-a-brand-report) after name or competitor edits; it doesn't say whether its November 2025 matching-method change reached older answers. Cheap Seats retains grades until explicit [re-grading](/docs/regrading/).
 
 ## Start with Cheap Seats if…
 
-Claude is central to your benchmark, and you prefer local grading and separate search/recall results. Compare total model and hosting costs in [Cost and budget](/docs/cost-and-budget/).
+You want local grading and separate search/recall results. Compare model and hosting costs in [Cost and budget](/docs/cost-and-budget/).
 
 ## When to move to Otterly.AI
 
-- **You need Google AI Overviews, Perplexity or Copilot.** Otterly.AI includes them on every plan; Cheap Seats asks only Claude and OpenAI models, and doesn't cover Gemini or AI Mode either.
-- **You need the app's answer, in a market.** Otterly.AI asks the engines' own websites, per country. Cheap Seats asks the models cleanly and has no country setting, so its answers aren't what a buyer in Germany sees in ChatGPT.
+- **You need consumer-app answers in a market.** Check the table for included engines, paid add-ons and Claude's API exception. Cheap Seats has no country setting.
 - **You're an agency.** Otterly.AI offers unlimited workspaces, one invoice and client reports with your branding through Looker Studio. Cheap Seats measures one brand per instance.
-- **You want page audits and shopping placements.** Otterly.AI audits pages for crawlability and content, writes content briefs, and tracks ChatGPT's Shopping cards. Cheap Seats' free [site audit](/docs/site-audit/) checks what AI crawlers can read (robots.txt and firewall blocks, llms.txt, the sitemap, pages empty without JavaScript), not what a page says, and it doesn't track shopping cards or ads.
+- **You want page audits and shopping placements.** Otterly.AI audits crawlability and content, writes briefs and tracks ChatGPT Shopping cards. Cheap Seats' free [site audit](/docs/site-audit/) checks crawler access (robots.txt and firewall blocks), llms.txt, sitemaps and JavaScript-only pages; it doesn't assess page copy or track shopping cards or ads.
 
 ## Taking your prompts with you
 
-Copy your prompt text from TOML: copy them into Otterly.AI, in any language, with the country you want them asked in. Its plans count prompts, from 15 on Lite to 400 on Premium, and each country you ask in counts again.
+Paste your TOML prompt text into Otterly.AI, in any language. Each country uses another prompt slot; plan allowances are above.
 
 [All comparisons](/compare/).

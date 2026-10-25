@@ -4,6 +4,19 @@
 
 Every page of {{ site.BaseURL }}, docs first, as markdown. Source: {{ site.Params.github }}
 {{ range site.Sections.ByWeight }}
+{{- if eq .Section "compare" }}
+
+---
+
+# {{ .Title }}
+
+- URL: {{ .Permalink }}
+{{- with .Description }}
+- Description: {{ . }}
+{{- end }}
+
+{{ .RenderShortcodes }}
+{{- end }}
 {{- range .Pages.ByWeight }}
 
 ---

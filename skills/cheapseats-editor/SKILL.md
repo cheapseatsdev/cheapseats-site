@@ -3,18 +3,21 @@ name: cheapseats-editor
 description: Tighten Cheap Seats website articles, documentation and dashboard copy, and choose explanatory visuals while preserving product definitions, evidence and operational caveats. Use when authoring or editing this project's user-facing content.
 ---
 
-# Cheap Seats editor
+# Cheap Seats editorial guide
 
-Help the reader finish the page's task with less reading. This repository's `CLAUDE.md` owns build and brand rules. Treat published docs as a specification: verify behavior against implementation before changing a factual claim.
+Respect the reader's time: make the answer easy to find and preserve what they need to act correctly. This repository's `CLAUDE.md` owns build and brand rules. Treat published docs as a specification: verify behavior against implementation before changing a factual claim.
 
 ## Give each page a job
 
 - Guides: answer the question, show the shortest working path and one useful example. Keep enough context for a direct arrival; link advanced variants and reference details.
+- Blogs: lead with the finding, show its evidence and explain the practical implication. Keep historical dates and examples accurate; link specialist methodology instead of repeating a full product introduction.
 - Reference: preserve exact definitions, formulas, flags, fields and exclusions. Make them easy to look up with tables and stable headings.
 - Comparisons: retain dated provenance, material qualifications and source links. Let the table carry shared facts; prose should explain consequential differences and selection criteria. An editing pass is not a new external fact check.
 - Dashboard: put the interpretation or action beside the result. Explain chart symbols once; keep the metric, window and relevant denominator local. Hide optional methodology behind a clearly named disclosure or link.
 
-Cut repeated product pitches, previews followed by identical summaries, duplicate worked examples and release history interrupting current instructions. Move useful specialist detail rather than deleting it. Preserve working commands, meaningful examples and caveats beside actions. Use estimates to find opportunities, not page-length quotas.
+Put the useful result before background: an answer, buying decision, working path or next action. On hubs, let readers browse before the product pitch. Keep titles, descriptions and openings useful on their own; cut boilerplate repeated within the reading path.
+
+Give each explanation one home: comparable facts in tables, relationships in diagrams, consequences in prose. Cut repeated product pitches, engine lists, workflow descriptions, previews followed by identical summaries and release history interrupting current instructions. Link useful specialist detail from its canonical home. Repeat brief units and qualifications where readers need them locally; preserve working commands and meaningful examples.
 
 Canonical homes, relative to the site repository:
 
@@ -31,6 +34,14 @@ Canonical homes, relative to the site repository:
 
 Preserve incoming headings when moving material: leave a brief section linking to its new home. Check local links and fragments after restructuring.
 
+## Make comparisons quick to use
+
+Put the buying decision and the most consequential difference before the full reference table. On the hub, put the comparison links first. Keep plan limits, prices, exceptions and dated source links in the table; remove prose that only repeats its lists.
+
+Start with the visual that explains the most consequential difference: a collection path, work handoff, annotated answer or counting example. When illustrating one counting rule, hold the answers, matching and other rules fixed; state the cohort and denominator. Preserve unknowns and conflicting source claims rather than smoothing them into a definitive diagram.
+
+Keep qualifications attached to simplified claims. In the October 2026 examples, [Bad Popcorn](../../content/compare/bad-popcorn.md) keeps Growth drafting separate from Enterprise feeds; [Gauge and Cheap Seats](../../content/compare/gauge.md) retain different timing and sample gates. Different completion criteria need distinct endpoints. Describe each tool on its own terms; unpublished weights or an unknown denominator cannot support a numerical winner.
+
 ## Protect these distinctions
 
 - **Named** includes answers to informational prompts; **recommended** and **top pick** use choice-prompt answers. Named counts contain recommended counts, but percentages with different denominators need not preserve that ordering. Run rates pool answers; rankings average prompts.
@@ -43,11 +54,22 @@ Preserve incoming headings when moving material: leave a brief section linking t
 
 ## Make visuals earn their space
 
-Prefer annotated UI crops for orientation, process diagrams for relationships, answer excerpts for verdicts, and interval plots for uncertainty. Use native HTML/SVG for simple diagrams and charts. Keep exact commands and definitions selectable.
+Choose the format by the reader's question:
+
+| Reader needs to see | Use | Prose it can replace |
+| --- | --- | --- |
+| Who does what next | Workflow lanes | Repeated handoff and execution paragraphs |
+| Why the same answers yield different rates | Counting chart with explicit units | A repeated arithmetic walkthrough |
+| Why an answer received its grade | Annotated answer excerpt | Repeated explanation of that example |
+| Where an engine or feature is available | Coverage map | Lists repeated across the introduction and selection bullets |
+| Where to look in the product | Readable UI crop | Several paragraphs of navigation instructions |
+| How uncertain a reading or change is | Interval plot | Prose describing the same ranges |
+
+Use native HTML/SVG for simple diagrams and charts. Keep exact commands and definitions selectable. A screenshot should show evidence or orientation that a simpler diagram cannot convey.
 
 Use existing `figure` shortcodes and brand tokens. Every new figure needs a text equivalent in Markdown and `llms-full` outputs. Label synthetic examples; source real chart values from stored records and reconcile counts before plotting. Keep cohorts and denominators comparable. Avoid additive charts of overlapping source classes, numerical retrieval funnels, composite winner scores and price charts implying equivalent coverage.
 
-Replace the explanation a visual makes redundant. Keep a short caption with assumptions and the relevant limitation. Capture current UI in both themes; crop to readable detail and identify historical examples. Check narrow screens, both themes and meaning without color.
+Identify the passage a visual replaces, then cut it. Keep captions and labels short, with assumptions and the relevant limitation. Capture current UI in both themes; crop to readable detail and identify historical examples. A current screenshot from another run cannot stand in for a historical result. Check narrow screens, both themes and meaning without color.
 
 ## Typeset equations
 
@@ -56,5 +78,7 @@ Use `\( ... \)` for inline math and `$$` on separate lines for display equations
 Use fractions, roots, sums and subscripts for actual formulas; keep simple counts, rates and export field names in prose or code. Introduce variables beside the equation and retain assumptions and units. Split long derivations into short steps for narrow screens. Do not use screenshots, code blocks or quotations for math. Check the rendered equation, arithmetic and text exports; do not change a statistical definition while improving its notation.
 
 ## Verify the edit
+
+Assess the whole reading burden, including descriptions, labels, captions and text equivalents. Prefer a shorter path to understanding over a word-count or figure-count quota. Check that HTML and text exports offer the same facts and navigation without duplicate generated lists.
 
 Run the Hugo build and brand-token check from `CLAUDE.md`. Inspect representative rendered pages, figures, mobile layout, local links/anchors and Markdown/text exports. For app template changes, run the relevant server tests and required repository checks. Review the diff for deleted caveats and accidental factual changes. Report the practical result, meaningful validation and any remaining limitation briefly.

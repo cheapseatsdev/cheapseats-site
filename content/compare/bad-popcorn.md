@@ -1,9 +1,11 @@
 ---
 title: Cheap Seats vs Bad Popcorn
-description: Cheap Seats, the free, self-hosted AI visibility tracker, as a place to start before Bad Popcorn. Markets, engines, grading, fixes and shop feeds, October 2026.
+description: "Briefs for your repo and approved CMS drafts: collection, markets, metrics and commerce plan limits, October 2026."
 weight: 35
 ---
-Bad Popcorn is a hosted AI visibility platform built for brands selling to shoppers in the Netherlands, Belgium, Germany and France. It asks buying questions in each market's language across ChatGPT, Claude, Gemini and Perplexity, from €890 a year; on Growth it also drafts the content to fix what it finds. [Cheap Seats](/compare/) asks the same two model families in whatever language you write, with no per-country runs, and leaves the writing to you.
+Choose [Cheap Seats](/compare/) for self-hosted benchmarks and fixes reviewed in your own repo. Choose Bad Popcorn for country-specific shopping questions and, on Growth, drafted content.
+
+{{< figure name="compare-bad-popcorn" >}}
 
 ## Side by side
 
@@ -21,7 +23,7 @@ As of October 2026, from Cheap Seats' docs and Bad Popcorn's own [home](https://
 | **Web search vs memory** | Search and recall, as separate tracks ([two tracks](/docs/how-grading-works/#two-tracks)) | Not stated on its methodology or product pages |
 | **Grading** | Recommended, mentioned or absent; position, top pick, objections and optional fact checking ([how grading works](/docs/how-grading-works/)) | Mention, citation (your site used as evidence), position and recommendation strength, and context: sentiment and whether the facts match the catalogue; summed up in a 0 to 100 visibility score, weights unpublished |
 | **History** | A run's grades are fixed when it's graded; a change of grading method is marked on the trend, and you can re-grade stored answers to carry it on | Not stated |
-| **What to fix** | Ranked fix briefs; before/after attempt checks ([from fix to pull request](/docs/fix-to-pull-request/)) | The reason a competitor gets cited; on Growth, FAQs, collection copy, product facts and schema drafted for you to approve; the same questions asked again to check |
+| **What to fix** | Ranked fix briefs; before/after attempt checks ([from fix to pull request](/docs/fix-to-pull-request/)) | Competitor citation gaps; Growth drafts FAQs, collection copy, product facts and schema for approval, then re-asks the same questions |
 | **Shop and crawler data** | No product feeds; AI crawler visits and AI referrals counted from your own access logs, free | AI-referred visits from Google Analytics 4; shopping and ChatGPT product feeds, and AI crawler visits from Cloudflare logs, on Enterprise |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | API access from Growth; reports and fix lists export to CSV |
 | **Data** | Your SQLite file; calls go to configured providers | Hosted by Bad Popcorn, under Dutch law |
@@ -35,7 +37,7 @@ Both call models directly rather than reproducing personalized consumer sessions
 - **Composite score:** Bad Popcorn's [API docs](https://badpopcorn.ai/api-docs) describe a 0–100 score combining mentions, position, sentiment and source quality, with unpublished weights. Cheap Seats reports separate rates and checked evidence quotes.
 - **Share of voice:** Bad Popcorn's [FAQ](https://badpopcorn.ai/#faq) doesn't state its denominator. Cheap Seats counts each product once per answer, across every product named ([formula](/docs/metrics/#share-of-voice-and-position)).
 - **Search and recall:** Cheap Seats reports required-search and no-tools answers separately. Bad Popcorn's methodology doesn't state whether answers searched.
-- **Drafting and shop data:** On Growth, Bad Popcorn drafts copy and schema from confirmed facts; approved work goes to WordPress as drafts or Shopify manually. It syncs Shopify/WooCommerce catalogues and checks ChatGPT shopping on Enterprise ([product](https://badpopcorn.ai/product)). Cheap Seats supplies page briefs for your repo and has no product feeds.
+- **Shop data:** Shopify/WooCommerce catalogue sync, ChatGPT shopping and product feeds require Enterprise ([product](https://badpopcorn.ai/product)); they aren't part of Growth's drafting workflow.
 
 ## Start with Cheap Seats if…
 
@@ -43,13 +45,12 @@ You want site changes to go through your own repo and review and don't need coun
 
 ## When to move to Bad Popcorn
 
-- **You sell to shoppers in the Netherlands, Belgium, Germany or France.** Bad Popcorn asks in their languages and reports country by country; Cheap Seats has no per-country runs.
-- **You need Gemini or Perplexity.** Bad Popcorn asks both; Cheap Seats asks only Claude and OpenAI models.
-- **You run an online shop.** Bad Popcorn checks answers against your catalogue, and on Enterprise handles shopping and ChatGPT product feeds beside AI crawler traffic. Cheap Seats checks answers only against the facts you list, and has no feeds.
-- **You want the content drafted for you.** On Growth, Bad Popcorn drafts FAQs, collection copy, product facts and schema for you to approve. Cheap Seats tells you which page to change and what it must say, and leaves the writing to you or Claude Code, with a pull request to review for every fix.
+- **You need country-specific or broader-engine coverage.** Bad Popcorn's markets and engines are listed above; Cheap Seats has no per-country runs.
+- **You run an online shop.** Bad Popcorn checks answers against your catalogue and offers Enterprise feeds. Cheap Seats checks only the facts you list and has no feeds.
+- **You want drafted content.** Growth supplies the approval workflow shown above; Cheap Seats leaves writing and review to you or your coding assistant.
 
 ## Taking your prompts with you
 
-Copy your prompt text from TOML: copy them into Bad Popcorn. Its plans count monitored prompts, 50 on Starter and 150 on Growth.
+Paste your TOML prompt text into Bad Popcorn, within the plan allowances above.
 
 [All comparisons](/compare/).

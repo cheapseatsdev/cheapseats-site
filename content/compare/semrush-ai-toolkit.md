@@ -1,9 +1,11 @@
 ---
 title: Cheap Seats vs Semrush AI Toolkit
-description: "Cheap Seats, the free, self-hosted AI visibility tracker, beside Semrush's AI Visibility Toolkit: engines, prompts, metrics and price, October 2026."
+description: Which Semrush report covers each engine, and how its metrics, prompts and prices compare. October 2026.
 weight: 50
 ---
-Semrush's AI Toolkit, which its knowledge base now calls the [AI Visibility Toolkit](https://www.semrush.com/kb/1493-ai-visibility-toolkit), is $99 a month inside the Semrush SEO suite. It covers ChatGPT, Google's AI surfaces, Gemini and Perplexity, but not Claude, which Semrush offers only in Enterprise AIO at a custom price. If tracking your brand in Claude matters, [Cheap Seats](/compare/) covers it; if you want AI visibility beside your SEO work, with Google's AI answers in it, Semrush is the natural next step.
+Choose [Cheap Seats](/compare/) for self-hosted Claude and OpenAI benchmarks. Choose Semrush's [AI Visibility Toolkit](https://www.semrush.com/kb/1493-ai-visibility-toolkit) for AI visibility alongside SEO. Its engine coverage depends on the report; Claude requires a separate Enterprise AIO contract.
+
+{{< figure name="compare-semrush" >}}
 
 ## Side by side
 
@@ -13,8 +15,8 @@ As of October 2026, from Cheap Seats' docs and Semrush's own pages: the [AI Visi
 | --- | --- | --- |
 | **Price** | Free MIT software; API calls or installed subscription CLIs ([cost and budget](/docs/cost-and-budget/)) | $99/month per domain, billed annually. Semrush One "SEO + AI Search": Starter $165.17/month billed annually ($199 monthly), Pro+ $248.17 ($299), Advanced on request |
 | **Where it runs** | Self-hosted SQLite; Docker, Helm or exe.dev ([self-hosting](/docs/self-hosting/)) | Hosted SaaS |
-| **Engines** | **Claude** and OpenAI models, through their APIs or the Claude Code and Codex CLIs | ChatGPT, Google AI Mode and Gemini in Prompt Tracking; Google AI Overviews in the prompt database; Perplexity in Brand Performance |
-| **Claude** | Required | Not tracked: Semrush says Claude and Perplexity ["aren't currently supported"](https://www.semrush.com/blog/how-to-build-an-ai-visibility-dashboard-semrush/) for tracking campaigns. Claude, Copilot, Grok and DeepSeek are in [Enterprise AIO](https://www.semrush.com/pricing/enterprise/), at a custom price |
+| **Engines** | Claude and OpenAI, via APIs or the Claude Code and Codex CLIs | Coverage varies by report; see the map above |
+| **Claude** | Required | Semrush says Claude and Perplexity ["aren't currently supported"](https://www.semrush.com/blog/how-to-build-an-ai-visibility-dashboard-semrush/) for Toolkit tracking campaigns. Claude requires [Enterprise AIO](https://www.semrush.com/pricing/enterprise/), at a custom price |
 | **How it asks** | Asked of the models directly, on two tracks: search (must search the web first) and recall (no tools), reported separately | From the consumer surfaces, "not via any APIs of LLMs"; ChatGPT "in search mode". Prompt Tracking asks each prompt daily, on desktop |
 | **Your prompts** | TOML in your own git repo, changed by pull request, as many as you like | Prompt Tracking: 25 prompts, 50 more for $60/month; Semrush One 50, 100 or unlimited. One platform per campaign, so a second platform counts them again. Plus a 317M+ prompt database from clickstream |
 | **Grading** | Recommended, mentioned or absent; position, top pick, objections and optional fact checking ([how grading works](/docs/how-grading-works/)) | A "proprietary AI brand extraction system" finds brands; Prompt Tracking matches the brand names you set. Mentions counts the prompts that include you. Recommended vs mentioned: not stated |
@@ -35,21 +37,20 @@ Semrush's team also [discusses noisy readings](https://www.semrush.com/blog/how-
 - **Question coverage:** Semrush combines a prompt database, domain-selected queries and your tracked prompts. Cheap Seats measures only your configured questions.
 - **Metrics:** Semrush's AI Visibility score combines [topic coverage and mention consistency](https://www.semrush.com/kb/1607-semrush-ai-visibility-data), with unpublished weights. Prompt Tracking's [Visibility](https://www.semrush.com/kb/1594-ai-seo-metrics) instead measures citation rank: 100% means first on every prompt. Cheap Seats reports separate named, recommended and top-pick rates.
 - **Share of voice:** Semrush Brand Performance [weights mentions and position](https://www.semrush.com/blog/how-to-measure-ai-share-of-voice/). Cheap Seats counts every product once per answer and reports position separately.
-- **Access:** Toolkit data leaves by export; Cheap Seats exposes SQLite, JSON and MCP. Collection surfaces, markets and supported engines are detailed in the table above.
+- **Access:** Toolkit data leaves by export; Cheap Seats exposes SQLite, JSON and MCP.
 
 ## Start with Cheap Seats if…
 
-Claude matters and you need direct model answers rather than a full SEO suite. Semrush offers Claude through Enterprise AIO.
+You want direct model benchmarks and can run the tracker yourself.
 
 ## When to move to Semrush
 
-- **You already live in Semrush** (or in Adobe, which [completed its acquisition of Semrush](https://news.adobe.com/news/2026/04/adobe-completes-semrush-acquisition) in April 2026). AI visibility sits next to Semrush's SEO tools, in one bill and one login.
-- **You need Google AI Overviews, AI Mode, Gemini or Perplexity,** as people see them. The toolkit collects from those surfaces; Cheap Seats asks only Claude and OpenAI models, directly, and covers none of them.
-- **You want prompt research, by market.** Semrush gives topic-level AI volume from clickstream data in 42 countries, and tracks per location and language; in Cheap Seats, you write your own prompts, and there is no location setting.
-- **You need Claude, Copilot, Grok and DeepSeek under one contract.** That's Semrush Enterprise AIO, priced on request.
+- **You already use Semrush** (or Adobe, which [completed its acquisition of Semrush](https://news.adobe.com/news/2026/04/adobe-completes-semrush-acquisition) in April 2026). AI visibility joins your SEO tools, bill and login.
+- **You need consumer surfaces or broader engine coverage.** Use the map to distinguish Toolkit reports from custom-priced Enterprise AIO.
+- **You want prompt research by market.** Semrush supplies topic-level AI volume from clickstream data and tracks by location and language. Cheap Seats measures only the prompts you write, without a location setting.
 
 ## Taking your prompts with you
 
-Copy your prompt text from TOML: paste them into Semrush's Prompt Tracking one per line, or import a TXT or CSV. The toolkit starts at 25 prompts, and each platform you track counts them again.
+Paste your TOML prompt text into Prompt Tracking, one per line, or import TXT or CSV. Its 25-prompt allowance counts each platform separately.
 
 [All comparisons](/compare/).

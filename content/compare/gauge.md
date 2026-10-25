@@ -1,13 +1,25 @@
 ---
 title: Cheap Seats vs Gauge
-description: Cheap Seats, the free, MIT-licensed AI visibility tracker, started as a small take on Gauge. Engines, method, Action Center and plans, October 2026.
+description: "Fixes in your repo or Gauge's Action Center: collection, grading, content workflow and plan limits, October 2026."
 weight: 40
 ---
-Gauge is a hosted agent-led growth platform: it tracks what ChatGPT, Google AI Mode, Copilot and more say about you, and its Action Center lets a team triage, assign and measure recommended actions, with a content engine that drafts and publishes the articles. A separate product, Gauge Agents, tests how coding agents choose and use your product. Gauge was [Cheap Seats](/compare/)' inspiration, and it's where its author points you when you outgrow it.
+Choose [Cheap Seats](/compare/) if your team will write, review and ship the fixes. Gauge is the hosted option for assigning work and having agents draft it.
 
 ## Why Cheap Seats exists
 
-Gauge inspired Cheap Seats' smaller workflow: ask buyer questions, grade the answers, and ship fixes through your own repo. Cheap Seats has no hosted tier.
+Gauge inspired Cheap Seats' smaller workflow: ask buyer questions, grade answers, and ship through your repo. Cheap Seats has no hosted tier.
+
+## What's different
+
+- **Collection and grading:** Gauge mainly uses logged-out consumer interfaces with search; Cheap Seats directly asks models with and without tools. Gauge extracts brands and citations; Cheap Seats distinguishes endorsement from mention ([grading](/docs/how-grading-works/)).
+- **Sentiment:** Gauge counts [positive answers over positive, neutral and negative answers](https://docs.withgauge.com/navigating/sentiment-analysis) naming you. Cheap Seats reports positive minus negative shares, from −100 to +100.
+- **Other data:** [Ask Gauge](https://docs.withgauge.com/navigating/ask-gauge) reads analytics, Search Console and ads. Gauge also tracks [Reddit citations](https://www.withgauge.com/blog/introducing-reddit-citation-tracking/) and [ChatGPT ads](https://www.withgauge.com/features/chatgpt-ads/). Cheap Seats has none of these.
+
+## Ranked fix list vs Action Center
+
+Gauge's [Action Center](https://www.withgauge.com/features/action-center/) manages the work; its agent can [research, draft and publish to CMSs](https://www.withgauge.com/resources/gauge-features/), with approvals. Cheap Seats keeps writing and review in your repo ([steps](/docs/fix-to-pull-request/)).
+
+{{< figure name="compare-gauge" >}}
 
 ## Side by side
 
@@ -35,34 +47,19 @@ Gauge's [billing docs](https://docs.withgauge.com/help/billing) give Growth six 
 
 ## What's the same
 
-Both rank work, evaluate completed actions, separate branded prompts and import AI crawler logs. Gauge evaluates content actions no earlier than 14 days after completion; Cheap Seats waits 7 days and an average of 4 answers per target prompt. These are eligibility gates, not guarantees of enough precision.
+Both rank work, evaluate completed actions, separate branded prompts and import AI crawler logs.
 
 Gauge can [open content PRs](https://docs.withgauge.com/help/cms-integrations); Cheap Seats supplies a Claude Code prompt for your repo. Both expose [crawler counts](https://docs.withgauge.com/navigating/ai-traffic), which don't by themselves establish citations or recommendations.
 
-## What's different
-
-- **Collection and grading:** Gauge mainly uses logged-out consumer interfaces with search; Cheap Seats directly asks models with and without tools. Gauge extracts brands and citations; Cheap Seats distinguishes endorsement from mention ([grading](/docs/how-grading-works/)).
-- **Sentiment:** Gauge counts [positive answers over positive, neutral and negative answers](https://docs.withgauge.com/navigating/sentiment-analysis) naming you. Cheap Seats reports positive minus negative shares, from −100 to +100.
-- **Execution:** Gauge's agent researches, drafts and can [publish to CMSs](https://www.withgauge.com/resources/gauge-features/), with approvals. Cheap Seats supplies a brief; your team reviews and ships the change.
-- **Other data:** [Ask Gauge](https://docs.withgauge.com/navigating/ask-gauge) reads analytics, Search Console and ads. Gauge also tracks [Reddit citations](https://www.withgauge.com/blog/introducing-reddit-citation-tracking/) and [ChatGPT ads](https://www.withgauge.com/features/chatgpt-ads/). Cheap Seats has none of these.
-
-## Ranked fix list vs Action Center
-
-Gauge's [Action Center](https://www.withgauge.com/features/action-center/) has **Triage** for accepting/dismissing recommendations, **Tasks** for assignment or agent handoff, and **Evaluation** for projected versus measured outcomes. It can close a content action when the target page becomes cited.
-
-A Cheap Seats fix names a target page, owner, required facts, target prompts, evidence and a done-when test. Attach the PR to track an attempt. Later runs compare its prompts before and after with uncertainty; your repo remains the writing and review workflow. [From fix to pull request](/docs/fix-to-pull-request/) covers the steps.
-
 ## Start with Cheap Seats if…
 
-You want the measurement-and-fix loop with your own repo and review process. You run and upgrade Cheap Seats; your team writes the content.
+You can run and upgrade it, and your team can write the content.
 
 ## When to move to Gauge
 
-- **You need Google AI Mode, Copilot, AI Overviews, Gemini or Perplexity.** Gauge tracks them; Cheap Seats asks only Claude and OpenAI models and covers none of these.
-- **You want what a person sees in the app.** Gauge reads the consumer interfaces themselves; Cheap Seats asks the models cleanly, which isn't the same.
-- **You want content written for you.** Gauge's Growth plan includes 18 articles a month, drafted and published to your CMS or opened as a pull request; Cheap Seats hands you a brief and a Claude Code prompt.
-- **You want a team workflow.** The Action Center assigns and tracks actions across people, with seats, Slack and a weekly digest.
-- **You want AI visibility beside your analytics.** Ask Gauge reads Google Analytics, Search Console and ads data alongside it.
+- **You need broader engine coverage or the consumer app's answer.** See the engine and collection rows above.
+- **You want content produced and assigned.** Growth includes 18 articles a month, delivered to your CMS or as PRs; Action Center adds owners, seats, Slack and a weekly digest.
+- **You want AI visibility beside Google Analytics, Search Console and ads data.** Ask Gauge brings them together.
 - **You want coding-agent evaluations** of how Claude Code and Codex choose and use your product. Gauge Agents runs them in isolated sandboxes and keeps each session's searches, installs and file changes ([how it works](https://www.withgauge.com/resources/how-to-track-which-products-coding-agents-recommend/)).
 - **You work for clients.** Gauge's [Agency Mode](https://www.withgauge.com/features/agency-aeo/) is $300 a month per active client, each in its own workspace, plus an agency base fee its [docs](https://docs.withgauge.com/navigating/agencies) don't price.
 - **You want strategy help.** Gauge Enterprise includes recurring strategy sessions with the Gauge team, and its comparison pages add a dedicated specialist and an API.
@@ -71,6 +68,6 @@ If SOC 2 is a procurement requirement, ask: Gauge's own [comparison with Profoun
 
 ## Taking your prompts with you
 
-Copy your prompt text from TOML: copy them into Gauge when you set it up.
+Copy your prompt text from TOML into Gauge when you set it up.
 
 [All comparisons](/compare/).
