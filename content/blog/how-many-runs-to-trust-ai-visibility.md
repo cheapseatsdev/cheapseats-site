@@ -63,7 +63,11 @@ $$
 
 where \(v_i\) is prompt \(i\)'s variance.
 
-Cheap Seats' own *Choosing an AI visibility tool* set has 17 prompts and two answerers, each answering once on each track. On one track, each prompt gets \(n = 2\) answers a run. At a rate near 50%:
+Cheap Seats' own *Choosing an AI visibility tool* set has 17 prompts and two answerers, each answering once on each track. On one track, each prompt gets \(n = 2\) answers a run:
+
+{{< figure name="precision" >}}
+
+A 10-point swing is within the margin between two single runs. Pooled weeks have a narrower sampling margin; day-to-day drift can add uncertainty. Here's the calculation at a rate near 50%:
 
 $$
 \tilde p = \frac{1 + 0.5}{3} = 0.5
@@ -98,12 +102,6 @@ $$
 $$
 
 For **one week against another**, it is **±9.0 points**.
-
-The same arithmetic for other set-ups:
-
-{{< figure name="precision" >}}
-
-Under those assumptions, a 10-point swing is within the margin between two single runs. Pooled weeks have a narrower sampling margin; day-to-day drift can add uncertainty.
 
 ## What to do about it
 

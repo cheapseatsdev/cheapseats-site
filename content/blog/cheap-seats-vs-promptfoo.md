@@ -25,9 +25,9 @@ For visibility checks, it supplies multiple providers, web-search configuration,
 
 ## What you'd have to build
 
-The custom work is the domain logic: distinguish active endorsement from a name in a long list; handle aliases and name collisions; retain queries and citations; aggregate brands consistently; compare runs with uncertainty; and turn answer evidence into actionable fixes.
+{{< figure name="visibility-workflows" >}}
 
-Cheap Seats supplies that workflow. Each grade records a verdict, position, top pick and objections. It keeps search and recall separate and proposes a page, required facts and target prompts for each fix. [How grading works](/docs/how-grading-works/) defines the rubric; [Noise and confidence](/docs/noise-and-confidence/) explains comparisons.
+[How grading works](/docs/how-grading-works/) defines Cheap Seats' rubric; [Noise and confidence](/docs/noise-and-confidence/) explains its comparisons.
 
 ## Side by side
 

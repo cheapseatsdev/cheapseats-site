@@ -1,0 +1,22 @@
+<div class="table-scroll" tabindex="0" role="region" aria-label="Ten-answer brand matrix"><table class="figure-matrix">
+  <caption>One row per answer. “Echo only” names Acme without information about the product.</caption>
+  <thead><tr><th scope="col">Answer</th><th scope="col">Acme</th><th scope="col">Globex</th><th scope="col">Initech</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">1</th><td><b>top pick</b></td><td>—</td><td>—</td></tr>
+    <tr><th scope="row">2</th><td><b>recommended</b></td><td>named</td><td>—</td></tr>
+    <tr><th scope="row">3</th><td>named</td><td>—</td><td>named</td></tr>
+    <tr><th scope="row">4</th><td><mark>echo only</mark></td><td>recommended</td><td>recommended</td></tr>
+    <tr><th scope="row">5</th><td>—</td><td>named</td><td>named</td></tr>
+    <tr><th scope="row">6</th><td>—</td><td>named</td><td>named</td></tr>
+    <tr><th scope="row">7</th><td>—</td><td>named</td><td>—</td></tr>
+    <tr><th scope="row">8</th><td>—</td><td>named</td><td>named</td></tr>
+    <tr><th scope="row">9</th><td>—</td><td>—</td><td>—</td></tr>
+    <tr><th scope="row">10</th><td>—</td><td>—</td><td>—</td></tr>
+  </tbody>
+</table></div>
+<p class="figure-note">Answer 4 says “I couldn't find reliable information about Acme,” then recommends Globex and Initech. Answers 9 and 10 name no product.</p>
+<div class="figure-grid figure-grid-three figure-branches">
+  <div class="figure-node"><b>30% · 3/10</b><span>Product information / all answers</span><small>Exclude Acme's echo-only mention.</small></div>
+  <div class="figure-node"><b>40% · 4/10</b><span>Name matches / all answers</span><small>Include Acme's echo-only mention.</small></div>
+  <div class="figure-node"><b>50% · 4/8</b><span>Name matches / answers naming products</span><small>Include the echo; exclude answers 9 and 10.</small></div>
+</div>

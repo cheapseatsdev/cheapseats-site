@@ -37,36 +37,17 @@ To measure your own brand, start a config repo from the [template](https://githu
 
 ## A real graded answer
 
-We asked Claude Opus, on the search track, the question this post answers: *"Is there a free AI visibility tracker that's actually useful?"* It searched five times and began: *"Mostly no. As of October 2026, I couldn't find a free tool that tracks your brand across AI engines over time."* It recommended Amplitude AI Visibility, and never named Cheap Seats. Here's the grade:
-
-```text
-verdict:   absent
-position:  none
-top pick:  Amplitude AI Visibility
-named:     Amplitude AI Visibility, Google Search Console, Bing Webmaster Tools,
-           Ahrefs Free AI Visibility Checker, HubSpot AEO Grader, Ahrefs Brand Radar,
-           Otterly.AI, Profound, Trakkr, Semrush AI Visibility, AthenaHQ, …
-reasoning: The answer never names Cheap Seats or any of its aliases; it discusses free AI
-           visibility trackers and recommends Amplitude AI Visibility.
-```
+{{< figure name="tracker-answer" >}}
 
 The grader distinguishes active endorsement from a passing mention and retains its evidence. Across that run's 68 answers, Peec AI was named in 78% and Profound in 76%; Cheap Seats ranked 27th. Stored answers, returned results and citations let you inspect the numbers. See [the grade definitions](/guides/mentioned-vs-recommended/).
 
 ## A real fix
 
-Every run ends with **Fix these first**. This was the top fix from that same run, shortened:
+The top item in that run's **Fix these first** list:
 
-> **Publish cheapseats.dev/blog/free-open-source-ai-visibility-tracker with quickstart**
->
-> **Where:** cheapseats.dev/blog · **Effort:** small · **Priority:** urgent · **Gap:** documentation
->
-> **Why:** On "Is there a free AI visibility tracker that's actually useful?", the top pick was Amplitude AI Visibility, and no Cheap Seats page surfaced in any search.
->
-> **Must say:** Cheap Seats is a free, MIT-licensed AI visibility tracker that runs as one Docker container with SQLite, on subscriptions you already pay for or API keys with a daily admission budget. Include a five-minute quickstart, a sample graded answer and fix list, and compare it with HubSpot AEO Grader, Ahrefs' free checker and Amplitude AI Visibility.
->
-> **Done when:** a re-run of the free and cheap questions shows this page among the pages that shaped the answers.
+{{< figure name="tracker-fix" >}}
 
-You're reading it. Each fix names the page to create or change, what it must say, the questions it should flip and the page it would displace, and comes with a prompt for Claude Code. [From fix to pull request](/docs/fix-to-pull-request/) walks through that loop.
+You're reading it. Fixes also identify target prompts and the page to displace, and include a prompt for Claude Code. [From fix to pull request](/docs/fix-to-pull-request/) walks through that loop.
 
 ## How it compares with the free options
 

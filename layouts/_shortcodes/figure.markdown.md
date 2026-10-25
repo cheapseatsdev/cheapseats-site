@@ -1,1 +1,1 @@
-{{ partial "figure-text.html" . }}
+{{ partial "figure-text.html" . | htmlUnescape }}
