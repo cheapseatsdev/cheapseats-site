@@ -96,15 +96,16 @@ It produces Markdown for the pull request: prompt, competitor and answerer chang
 
 Only `head-to-heads` may name your brand; every other set must omit it. `cheapseats check` enforces this, matching the brand name and aliases as whole words.
 
-Outside branded evaluation, write as someone who has never heard of the brand would ask. Keep three situations distinct:
+Outside branded evaluation, write as someone who has never heard of the brand would ask. Keep these situations distinct:
 
 | situation | example | what it measures |
 | --- | --- | --- |
 | Open discovery | Which visibility tracker should a small team use? | Whether the assistant independently brings a product into consideration. |
-| Competitor-aware discovery or shortlist | What are alternatives to Profound? / Peec AI or Profound? | Alternatives to a known product, or preference within a supplied shortlist. An answer may reasonably stay within the named choices. |
+| Competitor-aware discovery | What are alternatives to Profound? | Whether the assistant brings your product into consideration as an alternative. The answer can introduce products the buyer hasn't named. |
+| Closed comparison excluding your brand | Peec AI or Profound? | Preference between the named products. A complete answer can stay within those choices; your absence is not a lost recommendation. Keep this outside the tracked prompt library. |
 | Known-brand evaluation (`head-to-heads`) | Is Cheap Seats a good fit for our agency? | Fit, preference and objections after the buyer already knows the brand. Named presence alone proves little. |
 
-These are review categories, not new TOML fields. Cheap Seats' unbranded rates exclude questions naming your brand; they can still include competitor shortlists. Use separate sets when you need separate reported rates for these buying situations.
+These are review categories, not new TOML fields. Cheap Seats' unbranded rates exclude questions naming your brand, but do not automatically exclude closed comparisons between other products. The grader and fix analysis still evaluate your brand in every set: moving such a question to a separate set does not change its scoring. Keep it as competitor research outside `prompt-sets/`, where it won't be scheduled, scored or turned into fixes for your brand. Do not relabel it `info` or add your brand to make it score better. A genuine new discovery question needs a new id.
 
 Start with roughly **15–20 distinct buyer questions** as a planning guide, not a precision threshold. A smaller coherent set needn't be padded, and many paraphrases of one need don't establish broad market coverage.
 
