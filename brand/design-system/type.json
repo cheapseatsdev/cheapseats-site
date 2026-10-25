@@ -1,0 +1,142 @@
+{
+ "_note": "Type styles for the design system. Sizes come from assets/css/site.css and the app's internal/server/static/cheapseats.css; families are read from --cs-sans and --cs-mono in brand/web/tokens.css.",
+ "fonts": [],
+ "groups": [
+  {
+   "name": "Headings",
+   "family": "sans",
+   "styles": [
+    {
+     "name": "display",
+     "fontSize": "40px",
+     "lineHeight": "1.12",
+     "fontWeight": 600,
+     "letterSpacing": "-0.025em",
+     "sample": "See who AI recommends",
+     "usage": "Home hero headline only. 36px between 720 and 800px wide and under 400px; 40px otherwise."
+    },
+    {
+     "name": "h1",
+     "fontSize": "32px",
+     "lineHeight": "1.2",
+     "fontWeight": 600,
+     "letterSpacing": "-0.025em",
+     "sample": "Rankings",
+     "usage": "Site page title. The app uses 28px (26px on narrow screens)."
+    },
+    {
+     "name": "h2",
+     "fontSize": "22px",
+     "lineHeight": "1.3",
+     "fontWeight": 600,
+     "letterSpacing": "-0.015em",
+     "sample": "How it works",
+     "usage": "Site section heading. The app's is 18px."
+    },
+    {
+     "name": "h3",
+     "fontSize": "17px",
+     "lineHeight": "1.4",
+     "fontWeight": 600,
+     "sample": "Two tracks per question",
+     "usage": "Sub-heading; the app's card titles are 15px."
+    },
+    {
+     "name": "metric",
+     "fontSize": "32px",
+     "lineHeight": "1.1",
+     "fontWeight": 600,
+     "letterSpacing": "-0.025em",
+     "sample": "42%",
+     "usage": "Big numbers in metric rows, with font-variant-numeric: tabular-nums."
+    }
+   ]
+  },
+  {
+   "name": "Text",
+   "family": "sans",
+   "styles": [
+    {
+     "name": "lede",
+     "fontSize": "18px",
+     "lineHeight": "1.6",
+     "fontWeight": 400,
+     "sample": "Ask your buyers' questions of AI assistants and see whether they recommend you.",
+     "usage": "Intro paragraph under a page title, in cs-muted, max 720px."
+    },
+    {
+     "name": "body",
+     "fontSize": "16px",
+     "lineHeight": "1.65",
+     "fontWeight": 400,
+     "sample": "Your prompts are plain text in your own repo, so they come with you.",
+     "usage": "Site and docs prose, max 768px wide."
+    },
+    {
+     "name": "body-app",
+     "fontSize": "15px",
+     "lineHeight": "1.5",
+     "fontWeight": 400,
+     "sample": "Recommended in 7 of 12 answers this week.",
+     "usage": "The app's base text: denser than the site."
+    },
+    {
+     "name": "small",
+     "fontSize": "14px",
+     "lineHeight": "1.5",
+     "fontWeight": 400,
+     "sample": "Ranked by impact, then effort.",
+     "usage": "Nav links, tables, docs nav, captions."
+    },
+    {
+     "name": "meta",
+     "fontSize": "13px",
+     "lineHeight": "1.5",
+     "fontWeight": 400,
+     "sample": "Run 214 · 3 min ago · $0.42",
+     "usage": "Meta rows, footers, section notes, in cs-muted."
+    },
+    {
+     "name": "eyebrow",
+     "fontSize": "12px",
+     "lineHeight": "1.5",
+     "fontWeight": 600,
+     "letterSpacing": "0.04em",
+     "sample": "Search track",
+     "usage": "Small label above a heading, in cs-muted."
+    },
+    {
+     "name": "table-head",
+     "fontSize": "12px",
+     "lineHeight": "1.5",
+     "fontWeight": 500,
+     "letterSpacing": "0.04em",
+     "sample": "PROMPT SET",
+     "usage": "Table column headings, uppercase on the site, in cs-muted."
+    }
+   ]
+  },
+  {
+   "name": "Code",
+   "family": "mono",
+   "styles": [
+    {
+     "name": "code",
+     "fontSize": "13px",
+     "lineHeight": "1.6",
+     "fontWeight": 400,
+     "sample": "docker run cheapseats",
+     "usage": "Code blocks on cs-chip; inline code is 0.9em of its text."
+    },
+    {
+     "name": "mono-small",
+     "fontSize": "12px",
+     "lineHeight": "1.45",
+     "fontWeight": 400,
+     "sample": "https://example.com/pricing",
+     "usage": "The app's pre blocks, ids and URLs (overflow-wrap: anywhere)."
+    }
+   ]
+  }
+ ]
+}
