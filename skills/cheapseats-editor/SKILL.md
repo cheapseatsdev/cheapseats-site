@@ -31,6 +31,12 @@ Canonical homes, relative to the site repository:
 
 Preserve incoming headings when moving material: leave a brief section linking to its new home. Check local links and fragments after restructuring.
 
+## Make comparisons quick to use
+
+Put the buying decision and the most consequential difference before the full reference table. On the hub, put the comparison links first. Keep plan limits, prices, exceptions and dated source links in the table; remove prose that only repeats its lists.
+
+Choose one focused visual per comparison: a collection path, work handoff, annotated answer or counting example. Keep captions and labels short enough that the visual reduces the reading. When illustrating one counting rule, hold the answers, matching and other rules fixed; state the cohort and denominator. Label synthetic examples, and do not present them as captured vendor output. Preserve unknowns and conflicting source claims rather than smoothing them into a definitive diagram.
+
 ## Protect these distinctions
 
 - **Named** includes answers to informational prompts; **recommended** and **top pick** use choice-prompt answers. Named counts contain recommended counts, but percentages with different denominators need not preserve that ordering. Run rates pool answers; rankings average prompts.

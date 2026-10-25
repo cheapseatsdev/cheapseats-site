@@ -1,9 +1,20 @@
 ---
 title: Cheap Seats vs Profound
-description: "Cheap Seats, the free, self-hosted AI visibility tracker, beside Profound: engines, how each asks and grades, history, fixes and price, October 2026."
+description: How collection, denominators, model weighting and enterprise coverage differ, with prices and qualifications from October 2026.
 weight: 10
 ---
-Profound is a hosted enterprise platform for AI search visibility and marketing agents. It captures answers from the consumer front ends of up to nine answer engines, including Google AI Overviews and AI Mode, Gemini, Perplexity and Copilot, with SOC 2 Type II, SSO and custom enterprise pricing. [Cheap Seats](/compare/) asks only Claude and OpenAI models, directly, and grades each answer; this page says where that is enough and where Profound's reach is the point.
+Choose [Cheap Seats](/compare/) for self-hosted measurement of Claude and OpenAI models. Choose Profound for hosted consumer-app coverage across more engines and markets, enterprise controls and marketing agents.
+
+## What's different
+
+Profound's visibility divides by answers naming [any brand](https://docs.tryprofound.com/cookbook/metrics/how-metrics-are-calculated). The example holds matching fixed to isolate that denominator.
+
+{{< figure name="compare-profound" >}}
+
+- **Aggregation:** Profound weights models equally; a Cheap Seats run pools answers and shows each answerer separately ([metric mappings](/docs/comparing-metrics/)).
+- **Grading:** Profound extracts brand names; Cheap Seats distinguishes recommendation from mention and retains a checked evidence quote ([rubric](/docs/how-grading-works/)).
+- **Content workflow:** Profound's [AI Marketer](https://docs.tryprofound.com/aim/about) plans and drafts through Agents. Cheap Seats supplies briefs and Claude Code prompts; your team ships the page.
+- **Additional data:** Profound's [Prompt Volumes](https://docs.tryprofound.com/prompt-volumes/faq) estimates real-user question volume from licensed panels, and [Shopping](https://docs.tryprofound.com/shopping/about) tracks ChatGPT shopping placements. Cheap Seats has neither.
 
 ## Side by side
 
@@ -31,29 +42,22 @@ Both check claims against supplied facts, expose search queries, import crawler 
 
 Profound's [noise study](https://www.tryprofound.com/blog/is-once-a-day-enough) separates same-day sampling noise from day-to-day drift. Cheap Seats uses that split to assess whether extra samples help ([method](/docs/noise-and-confidence/#when-more-samples-help)).
 
-## What's different
-
-- **Grading:** Profound extracts brand names; Cheap Seats distinguishes recommendation from mention and retains a checked evidence quote ([rubric](/docs/how-grading-works/)).
-- **Denominator:** Profound's visibility uses answers naming [any brand](https://docs.tryprofound.com/cookbook/metrics/how-metrics-are-calculated); Cheap Seats' named rate uses all graded answers. Profound then weights models equally; a Cheap Seats run pools answers and shows each answerer separately. See [metric mappings](/docs/comparing-metrics/).
-- **Content workflow:** Profound's [AI Marketer](https://docs.tryprofound.com/aim/about) plans and drafts work through Agents. Cheap Seats supplies briefs and Claude Code prompts; your team ships the page.
-- **Additional data:** Profound's [Prompt Volumes](https://docs.tryprofound.com/prompt-volumes/faq) estimates real-user question volume from licensed panels, and [Shopping](https://docs.tryprofound.com/shopping/about) tracks ChatGPT shopping placements. Cheap Seats has neither.
-
 ## Start with Cheap Seats if…
 
-You want a self-hosted tracker for Claude and OpenAI models. Software is free; model usage and hosting depend on your setup. See [cost and budget](/docs/cost-and-budget/).
+You can own hosting and model usage ([cost and budget](/docs/cost-and-budget/)).
 
 ## When to move to Profound
 
-- **You need engines Cheap Seats doesn't ask, or the app's own answer.** Cheap Seats asks only Claude and OpenAI models, directly. It doesn't cover Gemini, Perplexity, Microsoft Copilot, Grok, DeepSeek, Google AI Overviews or AI Mode, and it doesn't see what a consumer app adds. Profound lists all of them and captures the app.
-- **You sell in several markets.** Profound sets a region and language for each prompt, and runs personas beside the bare question. Cheap Seats has no such settings.
-- **You want to know which questions people actually ask.** Profound's Prompt Volumes comes from licensed panel data. Cheap Seats' prompts are the ones you write.
+- **You need broader engine or consumer-app coverage.** See the engine and collection rows above, including Profound's differing engine lists.
+- **You sell in several markets.** Profound sets region, language and personas per prompt.
+- **You need estimates of real-user questions.** Prompt Volumes adds panel data to the prompts you write.
 - **You need enterprise procurement boxes ticked.** Profound lists SOC 2, SSO/SAML and support up to a dedicated specialist with a 24-hour SLA ([pricing](https://www.tryprofound.com/pricing)). Cheap Seats is software you run, so its security is your own.
-- **You want content produced for you.** Profound's AI Marketer drafts pages, social posts and launch material ([Profound](https://www.tryprofound.com/)). Cheap Seats tells you which page to write and what it must say, and hands you a Claude Code prompt, but your team ships it.
+- **You want content produced for you.** AI Marketer drafts pages, social posts and launch material ([Profound](https://www.tryprofound.com/)).
 - **You sell products through ChatGPT.** Profound's Shopping tracks your products in its shopping results, on Enterprise.
 - **You're an agency.** Profound has an agency plan with per-client workspaces and short-lived pitch workspaces ([Agency Mode](https://docs.tryprofound.com/agencies/agency-mode-overview)). Cheap Seats has no agency tier.
 
 ## Taking your prompts with you
 
-Copy your prompt text from TOML: copy them into Profound's prompt plan, or upload them as a CSV in [Prompt Designer](https://docs.tryprofound.com/answer-engine-insights/prompt-designer).
+Copy your prompt text from TOML into Profound's prompt plan, or upload it as CSV in [Prompt Designer](https://docs.tryprofound.com/answer-engine-insights/prompt-designer).
 
 [All comparisons](/compare/).

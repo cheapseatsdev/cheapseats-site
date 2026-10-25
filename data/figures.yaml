@@ -161,3 +161,91 @@ visibility-workflows:
     3. Deterministic or model-graded assertions.
     4. Evaluation results and comparisons.
     For visibility, configure the rubric, aliases, source capture, brand aggregation, uncertainty and fix logic.
+
+compare-options:
+  title: Choose a comparison
+  caption: Start with your main need; each page's table preserves the plan limits and qualifications.
+  text: |
+    - [Gauge](/compare/gauge/): triage, assign and evaluate content work.
+    - [Profound](/compare/profound/): enterprise markets, question-volume research and shopping.
+    - [Peec AI](/compare/peec-ai/): consumer-app answers by country, with team workflows.
+    - [Otterly.AI](/compare/otterly-ai/): self-serve monitoring, page audits and content briefs.
+    - [Semrush](/compare/semrush-ai-toolkit/): AI visibility alongside your SEO work.
+    - [Bad Popcorn](/compare/bad-popcorn/): country-specific shop content and CMS drafts.
+    - [Elmo](/compare/elmo/): self-hosted tracking with model-judged brand portrayal.
+    - [Limelit Open](/compare/limelit/): self-hosted name matching in one binary.
+
+compare-gauge:
+  title: Who carries the fix through to evaluation?
+  caption: Eligibility gates do not guarantee precision. A before/after change does not establish cause.
+  text: |
+    Cheap Seats — your repo:
+    1. Brief: page, owner, required facts, prompts, evidence and done-when test.
+    2. Review and ship; attach the PR as an attempt.
+    3. Check comparable later answers against the baseline, with uncertainty.
+    Eligible at least 7 days after marking, with at least 4 answers per target prompt on average.
+
+    Gauge — Action Center:
+    1. Triage: accept or dismiss recommendations.
+    2. Tasks: assign to people or hand to an agent.
+    3. Evaluation: projected vs measured outcomes; a content action can close when its page is cited.
+    Content actions evaluated no earlier than 14 days after completion.
+compare-profound:
+  title: Same mentions, different denominators
+  caption: "Synthetic example: ten answers; both methods agree that three name Acme and eight name any brand. Matching stays fixed."
+  text: |
+    - Cheap Seats named rate: Acme 3/10 = 30%, using all ten graded answers.
+    - Profound visibility: Acme 3/8 = 37.5%, using only the eight answers naming any brand.
+    The two answers naming no brand leave Profound's denominator. Acme's three mentions stay fixed.
+
+compare-elmo:
+  title: From answer to brand judgment
+  caption: Processing steps under the October 2026 rules.
+  text: |
+    Elmo: find whole-word names and domains → one Jev call per answer judges each candidate → count when the sum of positive, neutral, negative and mixed probabilities exceeds 30%. Other outcomes: another meaning, another company, or “no information.”
+
+    Cheap Seats: a Claude grading call reads the whole answer → grades your brand recommended, mentioned or absent → records position, top pick and objections. A name-only disclaimer is absent; product information can count even when hedged.
+compare-limelit:
+  title: A text match and a product judgment count differently
+  caption: Two separate synthetic examples under the October 2026 rules.
+  text: |
+    Example 1, name-only disclaimer: “I could not find Acme.” Limelit counts a whole-word name match as mentioned; Cheap Seats grades it absent because it contains no product information.
+
+    Example 2, repeated names: one unbranded answer contains genuine information about both tracked products, Acme and Globex, and names no other product. Acme appears once and Globex five times. Limelit counts occurrences: Acme 1/6 = 16.7% share of voice. Cheap Seats counts each product once: Acme 1/2 = 50% share of voice.
+
+compare-semrush:
+  title: Where to find the listed engines in Semrush
+  caption: October 2026 routes to these engines. Enterprise AIO is a separate contract.
+  text: |
+    | Engines | Where they appear |
+    | --- | --- |
+    | ChatGPT, Google AI Mode, Gemini | Toolkit: Prompt Tracking |
+    | Google AI Overviews | Toolkit: prompt database |
+    | Perplexity | Toolkit: Brand Performance |
+    | Claude, Copilot, Grok, DeepSeek | Separate, custom-priced Enterprise AIO |
+
+    Cheap Seats calls Claude and OpenAI directly, through APIs or subscription CLIs.
+compare-peec:
+  title: Two collection paths
+  caption: October 2026 methods. Direct model calls and consumer interfaces are different benchmarks.
+  text: |
+    Cheap Seats: your prompt → direct Claude or OpenAI API / CLI call → required web search or no-tools recall → results kept on separate tracks. No country setting.
+    Peec AI: your prompt and country → logged-out consumer web interface → app chooses the model and whether to search → search use flagged on the answer. Country allowances depend on the plan.
+compare-otterly:
+  title: A detected name is not always a recommendation
+  caption: Synthetic choice-question answers under the exact-name matching method dated 27 November 2025.
+  text: |
+    | Synthetic answer | Exact name match | Cheap Seats grade |
+    | --- | --- | --- |
+    | “Choose Acme for CSV exports.” | yes | recommended |
+    | “Acme offers CSV exports.” | yes | mentioned |
+    | “I couldn't find information about Acme.” | yes | absent |
+
+    A name match alone does not distinguish these cases. Cheap Seats also excludes namesakes.
+compare-bad-popcorn:
+  title: Who writes and publishes the fix?
+  caption: October 2026 workflows. Bad Popcorn's Growth drafting does not include its Enterprise catalogue feeds and shopping tools.
+  text: |
+    Cheap Seats: ranked page brief → you or your assistant writes in your repo → your review and pull request → later comparable answers checked with uncertainty.
+    Bad Popcorn Growth: copy and schema drafted from confirmed facts → your approval → WordPress drafts or manual Shopify placement → same questions asked again.
+    Re-asking does not establish that the content caused a change.

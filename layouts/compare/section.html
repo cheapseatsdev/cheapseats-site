@@ -1,0 +1,6 @@
+{{ define "main" }}
+<div class="wrap prose">
+  <header class="page-heading"><h1>{{ .Title }}</h1>{{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}</header>
+  <div class="article-content">{{ .Content }}</div>
+</div>
+{{ end }}
