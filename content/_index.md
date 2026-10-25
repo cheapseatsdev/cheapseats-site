@@ -33,13 +33,13 @@ Prompts and answers go to the services you configure. [Check provider and data b
 
 ## Run the example {#start}
 
-In a [Cheap Seats checkout](https://github.com/cheapseatsdev/cheapseats), with Go 1.26+ and the `claude` CLI installed and logged in:
+**Use Go for subscriptions, or Docker for the quickest API setup.**
 
-```bash
-CHEAPSEATS_CONFIG=examples/cheapseats-config/cheapseats.subscriptions.toml go run ./cmd/cheapseats serve
-# then open http://127.0.0.1:3000
-```
+| Start here | What you need |
+| --- | --- |
+| [Go with subscriptions](/docs/getting-started/#go-with-subscriptions) | Go 1.27+ and an installed, logged-in `claude` CLI; `codex` is optional. Calls share your subscription allowance, with no API spend. |
+| [Docker with API keys](/docs/getting-started/#docker-with-api-keys) | Docker and an Anthropic API key; an OpenAI key is optional. No Go installation. The release image has no subscription CLIs. |
 
-The example measures Cheap Seats itself. **Claude is required** for grading and analysis; **OpenAI is optional**. Installed `claude` and `codex` CLIs use subscriptions without API spend. The container image has no CLIs; configure paid APIs there. Subscription calls share your plan's allowance; hosting and optional services may add costs. API budgets admit calls against reservations; they are not hard billing ceilings. [Settled charges can exceed estimates](/docs/cost-and-budget/).
+The example measures Cheap Seats itself. API runs cost money; budgets admit calls against reservations and are not hard billing ceilings. Hosting and optional services may add costs. [Settled charges can exceed estimates](/docs/cost-and-budget/).
 
-[Getting started](/docs/getting-started/) covers API setup and creating your own config from the [template](https://github.com/cheapseatsdev/cheapseats-config-template).
+[Getting started](/docs/getting-started/) also covers creating your own config from the [template](https://github.com/cheapseatsdev/cheapseats-config-template).

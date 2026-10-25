@@ -5,7 +5,9 @@ weight: 420
 group: Running it
 ---
 
-Each deployment is its own config repo, made from the [config template](https://github.com/cheapseatsdev/cheapseats-config-template): it builds an image of Cheap Seats with that config inside, checks and plans every pull request, and deploys every merge to a Docker host or Kubernetes. **Start there**: the template has [guides](https://github.com/cheapseatsdev/cheapseats-config-template/blob/main/deploy/README.md) for a Docker host and for Kubernetes. A Docker-host deploy needs a `DEPLOY_HOST_KEY` secret, the host's own SSH public key, so the workflow hands the run's registry token to that host and no other; a deploy set up without one fails with a message naming it until it's added.
+**Use Docker or Kubernetes with API keys; use a machine or VM with logged-in CLIs for subscriptions.** For a first local run, choose [Docker with API keys](../getting-started/#docker-with-api-keys) or [Go with subscriptions](../getting-started/#go-with-subscriptions). Docker uses the prebuilt release image and needs no Go installation or subscription CLIs.
+
+For Docker and Kubernetes deployments, start from the [config template](https://github.com/cheapseatsdev/cheapseats-config-template). Its workflows build your config into an image, check and plan every pull request, and deploy every merge. The template has [guides](https://github.com/cheapseatsdev/cheapseats-config-template/blob/main/deploy/README.md) for both platforms. A Docker-host deploy needs a `DEPLOY_HOST_KEY` secret, the host's own SSH public key, so the workflow hands the run's registry token to that host and no other; a deploy set up without one fails with a message naming it until it's added.
 
 ## What any deployment needs
 
@@ -17,10 +19,10 @@ Each deployment is its own config repo, made from the [config template](https://
 
 ## An image per config commit
 
-Cheap Seats ships as an image, `ghcr.io/cheapseatsdev/cheapseats:<version>`, and a Helm chart, `oci://ghcr.io/cheapseatsdev/charts/cheapseats`, released together at the same version. The image has no config in it: each deployment builds its own image on top, from its config repo:
+Cheap Seats ships as an image, `ghcr.io/cheapseatsdev/cheapseats:<version>`, and a Helm chart, `oci://ghcr.io/cheapseatsdev/charts/cheapseats`, released together at the same version. The release image has no config in it. For production, build your config into an image on top of that release:
 
 ```dockerfile
-FROM ghcr.io/cheapseatsdev/cheapseats:0.4.5
+FROM ghcr.io/cheapseatsdev/cheapseats:0.5.3
 COPY cheapseats.toml /config/cheapseats.toml
 COPY prompt-sets /config/prompt-sets
 ARG REVISION=""
@@ -33,14 +35,17 @@ That image is one artifact per config commit: the same thing runs on a Docker ho
 
 The image serves on port 3000 with its database on a `/data` volume. It refuses to start without `CHEAPSEATS_TOKENS`, since it listens beyond localhost.
 
-Mounting a checkout of your config repo at `/config`, read-only, works too. The image sets `CHEAPSEATS_CONFIG=/config/cheapseats.toml` and reads the prompt sets from `/config/prompt-sets`. Without the mount it exits at startup with "reading /config/cheapseats.toml". From a checkout of Cheap Seats:
+You can also mount your config repo at `/config`, read-only, and run the prebuilt release image directly. The image sets `CHEAPSEATS_CONFIG=/config/cheapseats.toml` and reads the prompt sets from `/config/prompt-sets`. Without a config it exits at startup with "reading /config/cheapseats.toml".
+
+From your config checkout, with API providers configured and `.env` containing `CHEAPSEATS_TOKENS`, `ANTHROPIC_API_KEY` and optional `OPENAI_API_KEY` (see [first-run setup](../getting-started/#docker-with-api-keys)):
 
 ```bash
-docker build -t cheapseats .
-docker run -p 127.0.0.1:3000:3000 \
+docker run -d --name cheapseats --restart unless-stopped --stop-timeout 30 \
+  -p 127.0.0.1:3000:3000 \
   -v cheapseats-data:/data \
-  -v "$PWD/../your-config:/config:ro" \
-  --env-file .env cheapseats
+  -v "$PWD:/config:ro" \
+  --env-file .env \
+  ghcr.io/cheapseatsdev/cheapseats:0.5.3
 ```
 
 Keep the published port on loopback and put a TLS-terminating proxy in front for remote access: requests carry access tokens. To mount the config somewhere else, pass `-e CHEAPSEATS_CONFIG=/that/path/cheapseats.toml` too.
@@ -61,7 +66,7 @@ printf 'CHEAPSEATS_TOKENS=%s\n' "$(openssl rand -hex 32)" >cheapseats.env
 "${EDITOR:-vi}" cheapseats.env    # add ANTHROPIC_API_KEY=<key>, and OPENAI_API_KEY if an answerer uses it
 kubectl create secret generic cheapseats --from-env-file=cheapseats.env && rm cheapseats.env
 
-helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.4.5 \
+helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.5.3 \
   --set image.repository=ghcr.io/acme/cheapseats-config \
   --set image.tag=<config commit> \
   --set existingSecret=cheapseats
@@ -86,7 +91,7 @@ The plain app image works too, with the config mounted at `/config` by `extraVol
 
 `cheapseats backup <file>` takes a consistent copy of the live database (SQLite's `VACUUM INTO`). Copying `cheapseats.db` while Cheap Seats runs can miss recent writes still in its write-ahead log.
 
-- Docker: `docker compose exec cheapseats /app/cheapseats backup /data/backup.db`, then `docker compose cp cheapseats:/data/backup.db .`
+- Docker: `docker exec cheapseats /app/cheapseats backup /data/backup.db`, then `docker cp cheapseats:/data/backup.db .`
 - Kubernetes: `kubectl exec deploy/cheapseats -- /app/cheapseats backup /data/backup.db`. The image has no shell or `tar`, so copy it off the volume with a pod that mounts the claim.
 - exe.dev: `deploy/exe-dev-ops.sh` sets up nightly copies (below).
 
@@ -107,17 +112,16 @@ An [exe.dev](https://exe.dev) VM runs Cheap Seats as a systemd service behind ex
 2. Write its secrets to `~/cheapseats/cheapseats.env` on the VM, readable only by its user. The proxy passes a signed-in person's email as `X-ExeDev-Email`, and nothing reaches the VM except through the proxy, so Cheap Seats trusts that header; `CHEAPSEATS_ALLOWED_EMAILS` narrows it further (emails, or `@domain`). `CHEAPSEATS_HOSTS` names the host the proxy serves it as, which MCP needs (see step 7).
 
    ```bash
-   { printf 'ANTHROPIC_API_KEY=%s\n' "<key>"
-     printf 'CHEAPSEATS_AUTH_HEADER=X-ExeDev-Email\n'
+   { printf 'CHEAPSEATS_AUTH_HEADER=X-ExeDev-Email\n'
      printf 'CHEAPSEATS_ALLOWED_EMAILS=%s\n' "you@example.com,@yourcompany.com"
      printf 'CHEAPSEATS_HOSTS=%s\n' "<vm>.exe.xyz"   # and a custom domain, comma-separated
      printf 'CHEAPSEATS_TOKENS=%s\n' "$(openssl rand -hex 32)"
    } | ssh <vm>.exe.xyz 'mkdir -p ~/cheapseats && umask 077 && cat > ~/cheapseats/cheapseats.env'
    ```
 
-   Add `OPENAI_API_KEY` if an answerer uses `provider = "openai"`.
+   Add `ANTHROPIC_API_KEY` if the answerers, grader or analyst use Anthropic's API, and `OPENAI_API_KEY` if an answerer uses `provider = "openai"`. A subscription-only config needs neither key: set its answerers to `claude-code` or `codex`, and its grader and analyst to `claude-code`. See [subscription configuration](../getting-started/#running-on-your-subscriptions).
 
-   To keep the Anthropic key off the VM, add it as an exe.dev integration instead, and replace the `ANTHROPIC_API_KEY` line with `CHEAPSEATS_ANTHROPIC_BASE_URL=https://anthropic.int.exe.xyz`. Cheap Seats' own API calls (grading, the fix list, `anthropic` answerers) then go through that proxy, which adds the key. The `claude` CLI doesn't read this variable, so `claude-code` answerers stay on your subscription.
+   To keep an Anthropic API key off the VM, add it as an exe.dev integration instead, and set `CHEAPSEATS_ANTHROPIC_BASE_URL=https://anthropic.int.exe.xyz` instead of `ANTHROPIC_API_KEY`. Cheap Seats' own API calls (grading, the fix list, `anthropic` answerers) then go through that proxy, which adds the key. The `claude` CLI doesn't read this variable, so `claude-code` answerers stay on your subscription.
 
 3. Deploy (below), with `SEED_DB=path/to/cheapseats.db` the first time to start from an existing database. The deploy also makes a `cheapseats-cli` user for the `claude` and `codex` CLIs to run as: each is an agent with tools the model drives, and this keeps the VM's env file, database and logins out of a prompt-injected answer's reach whatever a CLI update adds (see [CLI answerers](../reference/#cli-answerers)).
 
@@ -154,7 +158,7 @@ An [exe.dev](https://exe.dev) VM runs Cheap Seats as a systemd service behind ex
 
    Revoke it with `ssh exe.dev ssh-key remove claude-code`. Without `CHEAPSEATS_HOSTS`, MCP answers `403 invalid Host header`: the proxy reaches Cheap Seats over loopback, and Cheap Seats refuses a loopback request under a name it wasn't told about, against DNS rebinding.
 
-**Every deploy**, from a checkout of Cheap Seats, with your config repo committed:
+**Every deploy**, from a checkout of Cheap Seats with Go 1.27 or later installed and your config repo committed:
 
 ```bash
 deploy/exe-dev.sh <vm> ../your-config

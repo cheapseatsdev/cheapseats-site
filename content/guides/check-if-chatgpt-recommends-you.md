@@ -16,7 +16,7 @@ Repeat each question, separate search from recall, and grade consistently. Cheap
 
 ## Step 1: write 10 to 20 buyer questions as a prompt set
 
-The questions are a TOML file in a config repo of your own. Ask the way a buyer would, and don't name your product: being named when the question names you proves little.
+The questions are a TOML file in a config repo of your own. Use `prompt-sets/discovery.toml` for this example and replace the placeholders with your category and competitors. Ask the way a buyer would, and don't name your product: being named when the question names you proves little.
 
 ```toml
 id = "discovery"
@@ -38,18 +38,15 @@ text = "How do I choose a <category>, and what should I compare?"
 intent = "info"    # asks to explain, not to choose: scored on named, not recommended
 ```
 
-`cheapseats init https://yoursite.com` writes a starter config repo from your website, with five prompt sets like this and your brand, sites and competitors filled in, and nothing is asked until you run a set. See [Prompt sets](/docs/prompt-sets/) for the format and [Getting started](/docs/getting-started/#start-one-from-your-website-cheapseats-init) for `init`.
+For **Go with subscriptions**, [`cheapseats init`](/docs/getting-started/#start-one-from-your-website-cheapseats-init) writes starter config from your website, with five prompt sets like this and Claude CLI providers for answers, grading and analysis. Review its TODOs before running: brand details and buyer questions need your input. It calls no model unless you add `-suggest`.
+
+For **Docker with API keys**, start from the [config template](https://github.com/cheapseatsdev/cheapseats-config-template), replace the example brand and questions, and keep its API providers. See [Prompt sets](/docs/prompt-sets/) for the file format.
 
 ## Step 2: choose how ChatGPT answers
 
 ChatGPT is OpenAI's product, so Cheap Seats asks OpenAI's models. These are OpenAI-model answers, rather than recordings of the ChatGPT app. Claude is also required to grade them.
 
-**Through the APIs**, with your own keys in `.env`:
-
-```bash
-ANTHROPIC_API_KEY=...   # grading, the fix list, and a Claude answerer
-OPENAI_API_KEY=...      # the ChatGPT-side answerer
-```
+**Use [Docker with API keys](/docs/getting-started/#docker-with-api-keys) for the quickest API setup**, with no Go installation. Follow that setup to create `.env` with a sign-in token and `ANTHROPIC_API_KEY` for grading, the fix list and a Claude answerer. Add `OPENAI_API_KEY` to include OpenAI answers. Configure the answerers in `cheapseats.toml`:
 
 ```toml
 [[answerers]]
@@ -67,7 +64,7 @@ model = "claude-opus-5-5"
 samples = { search = 2, recall = 1 }
 ```
 
-**Or on the subscriptions you already have**, on your own machine, with the `codex` CLI logged in to ChatGPT and the `claude` CLI logged in to Claude: `provider = "codex"` and `provider = "claude-code"` for answerers. Configure the grader and analyst with `provider = "claude-code"` too for a setup without API keys. These CLIs must be installed locally; they aren't in the Docker image. Subscription calls add no API charge; subscription usage limits still apply. See [Cost, API keys and the daily budget](/docs/cost-and-budget/#your-own-api-keys-or-your-own-subscriptions).
+**Or use [Go with subscriptions](/docs/getting-started/#go-with-subscriptions)**, with the `codex` CLI logged in to ChatGPT and the required `claude` CLI logged in to Claude: `provider = "codex"` and `provider = "claude-code"` for answerers. Configure the grader and analyst with `provider = "claude-code"` too for a setup without API keys. These CLIs must be installed locally; they aren't in the Docker image. Subscription calls add no API charge and share your plan's allowance. See [Cost, API keys and the daily budget](/docs/cost-and-budget/#your-own-api-keys-or-your-own-subscriptions).
 
 `samples = { search = 2, recall = 1 }` asks each question twice with web search forced on and once with no tools, so you get both what the web says about you today and what the model already believes. See [Which AI engines Cheap Seats asks](/docs/engines/).
 
@@ -80,16 +77,16 @@ For API calls, set an admission budget before the first run:
 daily_usd = 10.0
 ```
 
-Before an API call, Cheap Seats reserves estimated spend against the UTC day's budget; actual cost settles afterward and can exceed the reservation. If admission stops the run, finished work is kept. For the API-key setup, check and run with Docker:
+Before an API call, Cheap Seats reserves estimated spend against the UTC day's budget; actual cost settles afterward and can exceed the reservation. If admission stops the run, finished work is kept. For the API-key setup, check and run with Docker from your config checkout. Stop any server using this database before these standalone commands:
 
 ```bash
-docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD/your-config:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.4.5 check
-docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD/your-config:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.4.5 run discovery
+docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD:/config:ro" \
+  ghcr.io/cheapseatsdev/cheapseats:0.5.3 check
+docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD:/config:ro" \
+  ghcr.io/cheapseatsdev/cheapseats:0.5.3 run discovery
 ```
 
-For local subscription CLIs, run from a checkout: `CHEAPSEATS_CONFIG=../your-config/cheapseats.toml go run ./cmd/cheapseats run discovery`. With 15 prompts and the samples above, two answerers produce 90 answers. [Cost and budget](/docs/cost-and-budget/) has measured costs. `cheapseats serve` opens the web UI at `127.0.0.1:3000`; scheduling also requires the tier cadence in your config.
+For local subscription CLIs, run from the app checkout: `CHEAPSEATS_CONFIG=../your-config/cheapseats.toml go run ./cmd/cheapseats run discovery`. With 15 prompts and the samples above, two answerers produce 90 answers. [Cost and budget](/docs/cost-and-budget/) has measured costs. For ongoing use, [start the web UI with your config](/docs/getting-started/#point-cheap-seats-at-it) on your chosen route; scheduling also requires the tier cadence in your config.
 
 ## Step 4: read the grade for each question
 
