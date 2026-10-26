@@ -1,6 +1,6 @@
 ---
 title: "Free site checks: audit, citations, AI crawlers"
-description: "Three free checks that call no model: what AI crawlers can read on your sites, which cited pages name you, and AI crawler counts from your access logs."
+description: "Three free checks that call no model: what AI crawlers can read on your sites, which cited pages name you, and AI crawler and visit counts from your access logs."
 weight: 320
 group: Acting on it
 ---
@@ -122,8 +122,13 @@ Each request is classed by its user agent:
 | **training** | collecting training data | GPTBot, ClaudeBot, anthropic-ai, CCBot, Meta-ExternalAgent, Bytespider, Amazonbot, cohere-ai |
 | **engine** | a web search engine some assistants search through | Googlebot, Bingbot |
 | **AI referral** | a person, arriving from an assistant's answer | a Referer from chatgpt.com, chat.openai.com, claude.ai, perplexity.ai, copilot.microsoft.com or gemini.google.com, or `utm_source=` one of them |
+| **visit** | any other person reading a page | a user agent that starts `Mozilla/` with none of the words tools and bots send (`bot`, `crawl`, `spider`, `http`, `compatible;`, `headless`, `curl` and the like), asking for a page rather than a file |
 
-**Unverified: user agent only.** Anyone can send a crawler's user agent, and nothing here checks the request's IP against the operator's published ranges. Read the counts as what the logs claim.
+**Visits** are the AI referrals plus every other person's page view, so the page can say *AI referrals of N visits*: what share of the people reading came from an assistant, page by page. Redirects are left out (the page they lead to counts), and 4xx share the `/(errors)` row as for crawlers.
+
+It's a count from logs, not analytics: no sessions, unique visitors, time on page or trends, and a bot dressed as a browser counts as a visit. If you need those, a web analytics tool is the right place. Logs imported by a release before visits were counted have none; import the same logs again and their visits are added, with nothing else counted twice.
+
+**Unverified: user agent only.** Anyone can send a crawler's or a browser's user agent, and nothing here checks the request's IP against the operator's published ranges. Read the counts as what the logs claim.
 
 Cheap Seats keeps only daily counts per host, page, class and bot, not log lines, plus a hash of each counted request, so importing the same log twice, or one that overlaps it, counts nothing twice.
 
@@ -138,7 +143,7 @@ Because a repeated import counts nothing twice, a schedule can simply re-import 
 
 The import needs no API keys: it reads the config for your sites and writes only to the database. It's safe beside a running `cheapseats serve`. When the logs live on another machine, as with a site served from its own server, copy them over first in the same job; [a public read-only copy](../read-only-copy/#ai-crawler-logs-too) does that over SSH. A site on GitHub Pages or another host without access logs has nothing to import.
 
-The page lists each of your pages' fetches by class, and AI referrals, beside how often the latest finished run of each set cited and surfaced it, and flags:
+The page lists each of your pages' fetches by class, AI referrals and visits, beside how often the latest finished run of each set cited and surfaced it, and flags:
 
 - **crawled, never cited**: AI crawlers fetched it, but no answer in the latest runs cited it;
 - **cited, never crawled by search bots**: answers cite it, but no assistant or AI search crawler fetched it in the window. Only for hosts your logs cover.

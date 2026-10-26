@@ -112,4 +112,10 @@ cheapseats crawl import "$work/site.log"
 
 The public copy is the less trusted machine, so take one file's bytes into a name you chose, capped at 100 MB, rather than unpacking an archive whose paths and size it decides.
 
+The import also counts people's visits to your site. Those are probably yours to see, not the copy's: drop them from the database copy before you send it, and the AI crawlers page on the copy shows the crawler counts and AI referrals without them.
+
+```bash
+sqlite3 "$work/cheapseats.db" "DELETE FROM crawl_daily WHERE class = 'visit'; VACUUM;"
+```
+
 [Importing on a schedule](../site-audit/#on-a-schedule) has more.
