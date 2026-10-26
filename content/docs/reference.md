@@ -101,8 +101,8 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `wait_for_run`     | waits on the server for a run and returns its `list_runs` row (status, rates, rank) once every answer is graded and the fix list is built, so `get_run` is complete; takes `run` and `timeout_seconds` (default 90, at most 600). On the timeout it returns `timed_out: true` with the run's progress so far, to be called again; a run left queued by a restart says so in `note` |
 | `get_result`       | one answer in full: text, grade, searches and citations                         |
 | `get_quick_wins`   | the ranked fixes, filterable by gap, set, site, status and priority, each with its Claude prompt and the work submitted for it; `brief` leaves out the prompts and `limit` caps the list |
-| `mark_fix`         | record the commit or pull request submitted for a fix, as proposed or accepted  |
-| `set_attempt_state` | move submitted work on: accepted when it merges, withdrawn when it's closed    |
+| `mark_fix`         | record the commit or pull request submitted for a fix, as proposed or accepted; or dismiss the fix with `state: dismissed`, no `url` and the reason as `note` |
+| `set_attempt_state` | move submitted work on: accepted when it merges, withdrawn when it's closed; withdrawing a dismissal undoes it |
 | `list_attempts`    | the work submitted for fixes, with each one's outcome (moved, worse, mixed, no detectable change, needs regrade...) tested against noise |
 | `get_citations`    | every URL linked in an answer across runs, filterable by URL, set and window   |
 | `search_probe`     | one query through the answerers' web search tool, returning the exact result; with `[exa]`, `engine` is `claude`, `exa` or `both` (each link marked overlap, only Claude or only Exa) |
@@ -144,9 +144,9 @@ The server also offers three **prompts**, each telling the model which tools to 
 | `POST /api/runs/{id}/cancel`, `/retry` | stop a run, or finish an unfinished one                             |
 | `GET`/`POST /api/runs/{id}/shares`   | the run's share links; POST makes one from `{"days"?, "include_answers"?}` and returns it as `url`, once |
 | `DELETE /api/shares/{id}`            | revokes a share link                                                  |
-| `GET /api/quick-wins`                | the ranked fixes across sets; takes `gap`, `set`, `site` (a url, a kind like `docs`, or `elsewhere`), `status` (`open`, `proposed`, `accepted`) and `priority` |
-| `POST /api/runs/{id}/fixes/{rank}/attempts` | records work submitted for a fix: `{"url", "state"?, "note"?}`, state `proposed` (default) or `accepted` |
-| `POST /api/attempts/{id}`            | moves an attempt on: `{"state": "accepted"}` or `"withdrawn"`          |
+| `GET /api/quick-wins`                | the ranked fixes across sets; takes `gap`, `set`, `site` (a url, a kind like `docs`, or `elsewhere`), `status` (`open`, `proposed`, `accepted`, `dismissed`; dismissed fixes only when asked for) and `priority` |
+| `POST /api/runs/{id}/fixes/{rank}/attempts` | records work submitted for a fix: `{"url", "state"?, "note"?}`, state `proposed` (default) or `accepted`; or `{"state": "dismissed", "note": "<reason>"}`, with no `url` |
+| `POST /api/attempts/{id}`            | moves an attempt on: `{"state": "accepted"}` or `"withdrawn"`; withdrawing a dismissal undoes it |
 | `GET /api/attempts`                  | the work submitted for fixes, newest first, with outcomes; takes `set` |
 | `GET /api/rankings`                  | daily rank and rates per set, with rolling averages, bands and day-over-day margins; takes `lastDays`, `set` and `window` (7, 14 or 28) |
 | `GET /api/runs/{id}/searches`        | what the assistants searched in a run; `pool=1` adds the set's earlier same-method runs |
