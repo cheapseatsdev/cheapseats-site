@@ -67,7 +67,7 @@ Quick wins combines the latest fix list from every set. It ranks by **expected g
 
 With Jev enabled, fixes from different sets asking for the same page become one card, the highest ranked, with the rest under **also asked for by**. Marking the card marks the selected fix; the others can still be marked individually.
 
-Record the commit or pull request as **proposed**, **accepted** or **withdrawn**; withdrawal reopens the fix. Filter by status to find open work. [From fix to pull request](../fix-to-pull-request/) walks through the process.
+Record the commit or pull request as **proposed**, **accepted** or **withdrawn**; withdrawal reopens the fix. **Dismiss** a fix the team won't do, with the reason. It leaves the list, later fixes for the same page stay dismissed, and the analyst stops proposing fixes that rest on the reason's premise. Undo it from the **dismissed** filter. Filter by status to find open work. [From fix to pull request](../fix-to-pull-request/) walks through the process.
 
 **A fix that wasn't enough comes back.** Each run writes a fresh list. If its prompts still lose, a fix for the same page can return as **retry**, with the earlier work and outcome. Work recorded after a list was built also covers that list's fix for the same page.
 
