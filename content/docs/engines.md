@@ -5,7 +5,9 @@ weight: 250
 group: Reading what it finds
 ---
 
-Cheap Seats asks **Claude and OpenAI models** through APIs or subscription CLIs. It doesn't ask the consumer ChatGPT or Claude apps, Google AI Overviews, AI Mode, Gemini, Perplexity or Microsoft Copilot. If those surfaces matter to your buyers, you need additional coverage.
+Cheap Seats asks **Claude and OpenAI models** through APIs or subscription CLIs and supports two configurable tracks. **Search** requires web retrieval before answering and records searches, returned URLs and citations. **Recall** uses no tools, so you see what the model already believes.
+
+It doesn't ask the consumer ChatGPT or Claude apps, Google AI Overviews, AI Mode, Gemini, Perplexity or Microsoft Copilot. Cheap Seats avoids consumer-app scraping dependencies [by design](#why-not-scrape-the-consumer-apps). If those surfaces matter to your buyers, you need additional coverage.
 
 ## How Cheap Seats asks
 
@@ -20,7 +22,7 @@ Claude is required; OpenAI adds an optional second assistant. CLIs run where ins
 
 ## Search and recall
 
-**Search** requires web retrieval; **recall** uses no tools. Cheap Seats reports them separately, unlike a consumer app that chooses when to browse. Both can vary between answers. [How grading works](../how-grading-works/#two-tracks) explains the tracks and samples.
+Cheap Seats reports the two tracks separately, unlike a consumer app that chooses when to browse. Both can vary between answers. [How grading works](../how-grading-works/#two-tracks) explains the tracks and samples.
 
 ## Why not scrape the consumer apps
 
