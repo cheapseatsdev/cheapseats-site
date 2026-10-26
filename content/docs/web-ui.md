@@ -7,7 +7,7 @@ group: Reading what it finds
 
 **Is there a dashboard?** Yes. Every Cheap Seats deployment serves one. There is no Cheap Seats-hosted service: your team signs in to your deployment. [demo.cheapseats.dev](https://demo.cheapseats.dev/) is a read-only copy of one.
 
-{{< screenshot name="web-ui-dashboard" format="jpg" alt="The dashboard: a prompt-set table with search recommended, named and rank, recall named, and the latest run date for each set." caption="The demo dashboard on 26 October 2026." >}}
+{{< screenshot name="web-ui-dashboard" format="jpg" width="928" height="300" mobilename="web-ui-dashboard-mobile" mobilewidth="480" mobileheight="400" alt="The dashboard's prompt-set performance table sorted by search recommended rate, with the head-to-head set first." caption="Two rows from the [demo dashboard](https://demo.cheapseats.dev/), sorted by search recommended rate, on 26 October 2026." >}}
 
 ## Pages
 
@@ -21,7 +21,9 @@ group: Reading what it finds
 
 ## Sign-in
 
-- **Local:** without `CHEAPSEATS_TOKENS`, `serve` listens only on 127.0.0.1, with no sign-in.
+Cheap Seats has no built-in user accounts or per-user roles. Everyone who signs in has the same access to the deployment. If you need user management built into the product, consider a [hosted SaaS option](/compare/).
+
+- **Local:** by default, `serve` listens on 127.0.0.1 with no sign-in.
 - **Tokens:** with `CHEAPSEATS_TOKENS`, the UI asks for a token once and keeps it in a cookie. Serve it over HTTPS.
 - **Your sign-in proxy:** `CHEAPSEATS_AUTH_HEADER` trusts its email header, narrowed by `CHEAPSEATS_ALLOWED_EMAILS`. exe.dev VMs use this.
 
@@ -31,7 +33,7 @@ group: Reading what it finds
 
 | Audience | Use |
 | --- | --- |
-| Your team | sign-ins to your deployment |
+| Your team | tokens or your sign-in proxy |
 | Someone without a sign-in | a [share link](../sharing/): one run, read-only, expiring and revocable |
 | Anyone | a [public read-only copy](../read-only-copy/); treat its data as public |
 

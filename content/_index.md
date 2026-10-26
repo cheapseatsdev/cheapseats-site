@@ -1,15 +1,17 @@
 ---
 title: Cheap Seats
 description: Measure recommendations in Claude and OpenAI answers, inspect the evidence, and choose which pages to improve.
-surfaces: Web UI, CLI, JSON API and MCP server. Deploy on Docker, Kubernetes or an exe.dev VM.
+surfaces: Web dashboard, CLI, JSON API and MCP server. Deploy on Docker, Kubernetes or an exe.dev VM.
 preview:
-  title: Head-to-heads
-  description: Does AI choose Cheap Seats when buyers compare?
-  track: Search
-  answers: 4
-  kind: choice
-  recommended: 1
-  named: 3
+  name: web-ui-run-preview
+  format: jpg
+  width: 600
+  height: 650
+  mobilename: web-ui-run-preview-mobile
+  mobilewidth: 480
+  mobileheight: 632
+  alt: The head-to-head run report, with report navigation, export and sharing controls, and scores.
+  caption: Head-to-head run in the [demo](https://demo.cheapseats.dev/runs/r-20261026-040603-75d909), 26 October 2026. Every prompt names Cheap Seats.
 ---
 
 ## How it works {#how}
