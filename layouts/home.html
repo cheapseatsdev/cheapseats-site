@@ -5,6 +5,7 @@
       <p class="eyebrow">Open-source, self-hosted AI visibility tracker</p>
       <h1>Do AI assistants recommend you?</h1>
       <p class="lede">{{ .Description }}</p>
+      {{ with .Params.surfaces }}<p class="muted small"><a href="{{ "/docs/web-ui/" | relURL }}">{{ . }}</a></p>{{ end }}
       <p class="actions">
         <a class="btn" href="{{ "/docs/getting-started/" | relURL }}">Get started <span aria-hidden="true">→</span></a>
         <a class="btn ghost" href="https://demo.cheapseats.dev/">Explore the demo</a>

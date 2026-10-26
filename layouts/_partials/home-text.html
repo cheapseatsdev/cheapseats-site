@@ -1,6 +1,9 @@
 {{ with .Description }}
 > {{ . }}
 {{ end }}
+{{ with .Params.surfaces }}
+[{{ . }}]({{ "/docs/web-ui/" | absURL }})
+{{ end }}
 
 [Get started]({{ "/docs/getting-started/" | absURL }}) · [Explore the demo](https://demo.cheapseats.dev/)
 
