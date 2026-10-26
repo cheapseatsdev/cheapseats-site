@@ -1,0 +1,17 @@
+{{- /* Shared by content screenshots and the home hero. Narrow captures keep UI labels readable. */ -}}
+{{- $format := .format | default "webp" -}}
+{{- $light := printf "images/docs/%s-light.%s" .name $format -}}
+{{- $dark := printf "images/docs/%s-dark.%s" .name $format -}}
+<figure class="screenshot{{ with .class }} {{ . }}{{ end }}">
+<a href="{{ $light | relURL }}" title="View full-size capture"><picture>
+{{- with .mobilename }}
+<source data-dark data-media="(max-width: 720px)" srcset="{{ printf "images/docs/%s-dark.%s" . $format | relURL }}" media="(max-width: 720px) and (prefers-color-scheme: dark)"{{ with $.mobilewidth }} width="{{ . }}"{{ end }}{{ with $.mobileheight }} height="{{ . }}"{{ end }}>
+<source srcset="{{ printf "images/docs/%s-light.%s" . $format | relURL }}" media="(max-width: 720px)"{{ with $.mobilewidth }} width="{{ . }}"{{ end }}{{ with $.mobileheight }} height="{{ . }}"{{ end }}>
+{{- end }}
+<source data-dark srcset="{{ $dark | relURL }}" media="(prefers-color-scheme: dark)">
+<img src="{{ $light | relURL }}" alt="{{ .alt }}" loading="{{ .loading | default "lazy" }}"{{ with .fetchpriority }} fetchpriority="{{ . }}"{{ end }}{{ with .width }} width="{{ . }}"{{ end }}{{ with .height }} height="{{ . }}"{{ end }}>
+</picture></a>
+{{- with .caption }}
+<figcaption>{{ . | markdownify }} <a href="{{ $light | relURL }}">View full size</a>.</figcaption>
+{{- end }}
+</figure>

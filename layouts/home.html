@@ -5,28 +5,16 @@
       <p class="eyebrow">Open-source, self-hosted AI visibility tracker</p>
       <h1>Do AI assistants recommend you?</h1>
       <p class="lede">{{ .Description }}</p>
+      {{ with .Params.surfaces }}<p class="muted small hero-surfaces"><a href="{{ "/docs/web-ui/" | relURL }}">{{ . }}</a></p>{{ end }}
       <p class="actions">
         <a class="btn" href="{{ "/docs/getting-started/" | relURL }}">Get started <span aria-hidden="true">→</span></a>
         <a class="btn ghost" href="https://demo.cheapseats.dev/">Explore the demo</a>
       </p>
       <p class="muted small">Free MIT software; <a href="{{ "/docs/cost-and-budget/" | relURL }}">model and hosting costs</a> depend on your setup.</p>
     </div>
-    {{ $preview := .Params.preview }}
-    <section class="product-preview" aria-labelledby="preview-title">
-      <div class="preview-bar"><span>Illustrative snapshot</span><span>Cheap Seats</span></div>
-      <div class="preview-content">
-        <p class="eyebrow">Prompt set</p>
-        <h2 id="preview-title">{{ $preview.title }}</h2>
-        <p class="muted preview-description">{{ $preview.description }}</p>
-        <dl class="preview-metrics">
-          <div><dt>Recommended · {{ $preview.recommended }}/{{ $preview.answers }} answers</dt><dd>{{ printf "%g" (mul 100.0 (div (float $preview.recommended) (float $preview.answers))) }}<span>%</span></dd></div>
-          <div><dt>Named · {{ $preview.named }}/{{ $preview.answers }} answers</dt><dd>{{ printf "%g" (mul 100.0 (div (float $preview.named) (float $preview.answers))) }}<span>%</span></dd></div>
-        </dl>
-        <div class="preview-track" aria-hidden="true"><span style="width:{{ printf "%g" (mul 100.0 (div (float $preview.recommended) (float $preview.answers))) }}%"></span></div>
-        <p class="preview-caption">Illustrative results · {{ $preview.track }} track · {{ $preview.answers }} {{ $preview.kind }} answers</p>
-        <a class="text-link" href="https://demo.cheapseats.dev/">Inspect the real dashboard <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
+    {{ with .Params.preview }}
+      {{ partial "screenshot.html" (merge . (dict "class" "hero-dashboard" "loading" "eager" "fetchpriority" "high")) }}
+    {{ end }}
   </div>
 </section>
 

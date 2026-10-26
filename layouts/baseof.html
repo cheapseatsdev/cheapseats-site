@@ -88,7 +88,8 @@
   function apply() {
     if (mode === "system") delete root.dataset.theme; else root.dataset.theme = mode;
     document.querySelectorAll("picture source[data-dark]").forEach(function (s) {
-      s.media = mode === "system" ? "(prefers-color-scheme: dark)" : mode === "dark" ? "all" : "not all";
+      var size = s.dataset.media;
+      s.media = mode === "system" ? (size ? size + " and " : "") + "(prefers-color-scheme: dark)" : mode === "dark" ? size || "all" : "not all";
     });
     var next = modes[(modes.indexOf(mode) + 1) % modes.length];
     button.dataset.mode = mode;

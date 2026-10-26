@@ -1,14 +1,17 @@
 ---
 title: Cheap Seats
 description: Measure recommendations in Claude and OpenAI answers, inspect the evidence, and choose which pages to improve.
+surfaces: Web dashboard, CLI, JSON API and MCP server. Deploy on Docker, Kubernetes or an exe.dev VM.
 preview:
-  title: Head-to-heads
-  description: Does AI choose Cheap Seats when buyers compare?
-  track: Search
-  answers: 4
-  kind: choice
-  recommended: 1
-  named: 3
+  name: web-ui-run-preview
+  format: jpg
+  width: 600
+  height: 650
+  mobilename: web-ui-run-preview-mobile
+  mobilewidth: 480
+  mobileheight: 632
+  alt: The head-to-head run report, with report navigation, export and sharing controls, and scores.
+  caption: Head-to-head run in the [demo](https://demo.cheapseats.dev/runs/r-20261026-040603-75d909), 26 October 2026. Every prompt names Cheap Seats.
 ---
 
 ## How it works {#how}
@@ -19,6 +22,8 @@ preview:
 
 Track named and recommended rates with 95% intervals, and share-of-voice rankings over time. Prompt and method changes remain visible. Check quoted answers and sources before acting. Fix briefs name the page, required content, target questions, effort and owner. Later comparable answers can measure change; they do not establish that the fix caused it. [Read a run](/docs/reading-results/) or [ship and measure a fix](/docs/fix-to-pull-request/).
 
+{{< screenshot name="web-ui-quick-wins" format="jpg" alt="The Quick wins page filtered to high priority: four fixes, each with its target page, gap, prompt set, priority, effort and how many prompts it could flip." caption="Quick wins in the [demo](https://demo.cheapseats.dev/quick-wins) on 26 October 2026." >}}
+
 ## Who it's for {#who}
 
 For marketing, docs and product messaging teams using direct Claude and OpenAI model responses. Consumer apps are not covered. [Compare alternatives](/compare/) for more engines, managed hosting or client reporting.
@@ -27,7 +32,7 @@ For marketing, docs and product messaging teams using direct Claude and OpenAI m
 
 - **MIT-licensed and self-hosted**, with SQLite storage. Run on a [Docker host, Kubernetes or an exe.dev VM](/docs/deploying/).
 - **Config in git:** your brand, questions, assistants, budget and schedule in TOML. Preview trend changes with `cheapseats plan`.
-- **Web UI, CLI, JSON API and MCP server** for your existing tools and agents.
+- **A dashboard your team shares**, plus read-only [share links](/docs/sharing/) for anyone without a sign-in. [See the web UI](/docs/web-ui/).
 
 Prompts and answers go to the services you configure. [Check provider and data boundaries](/docs/self-hosting/#where-your-data-goes) before enabling them.
 

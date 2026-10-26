@@ -1,14 +1,1 @@
-{{- /* A screenshot in the reader's theme: static/images/docs/<name>-light.webp and -dark.webp. */ -}}
-{{- $name := .Get "name" -}}
-{{- $format := .Get "format" | default "webp" -}}
-{{- $light := printf "images/docs/%s-light.%s" $name $format -}}
-{{- $dark := printf "images/docs/%s-dark.%s" $name $format -}}
-<figure class="screenshot">
-<a href="{{ $light | relURL }}" title="View full-size capture"><picture>
-<source data-dark srcset="{{ $dark | relURL }}" media="(prefers-color-scheme: dark)">
-<img src="{{ $light | relURL }}" alt="{{ .Get "alt" }}" loading="lazy">
-</picture></a>
-{{- with .Get "caption" }}
-<figcaption>{{ . | markdownify }} <a href="{{ $light | relURL }}">View full size</a>.</figcaption>
-{{- end }}
-</figure>
+{{- partial "screenshot.html" .Params -}}
