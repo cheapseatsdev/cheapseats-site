@@ -3,6 +3,8 @@ title: How grading works
 description: How answers become recommended, mentioned or absent grades, and how to check the evidence behind each one.
 weight: 220
 group: Reading what it finds
+aliases:
+  - /docs/grading/
 ---
 
 Cheap Seats asks assistants your buyers' questions. A separate Claude call grades each answer **recommended**, **mentioned** or **absent** for your brand. Every answer, search, result, citation and grade is stored so you can check the reasoning or export the evidence.
