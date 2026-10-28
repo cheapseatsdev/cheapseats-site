@@ -4,6 +4,7 @@ description: Estimate model and hosting costs, choose subscriptions or API keys,
 weight: 140
 group: Start here
 aliases:
+  - /pricing/
   - /docs/cost/
   - /docs/costs/
   - /docs/models-keys-and-budget/

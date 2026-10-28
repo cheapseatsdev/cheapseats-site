@@ -1,0 +1,5 @@
+# Report a vulnerability in Cheap Seats privately, through GitHub.
+Contact: https://github.com/cheapseatsdev/cheapseats/security/advisories/new
+Expires: 2027-10-01T00:00:00Z
+Preferred-Languages: en
+Canonical: https://cheapseats.dev/.well-known/security.txt

@@ -19,6 +19,10 @@ target = "static"
 [[module.mounts]]
 source = "brand/web/tokens.css"
 target = "static/brand/tokens.css"
+# Safari and iOS ask for the touch icon at the root, whatever the page links.
+[[module.mounts]]
+source = "static/brand/apple-touch-icon.png"
+target = "static/apple-touch-icon.png"
 
 [params]
 description = "Cheap Seats is an MIT-licensed, self-hosted tracker of Claude and OpenAI answers. It grades recommendations, keeps the evidence and ranks page fixes."
