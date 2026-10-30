@@ -5,7 +5,7 @@ weight: 210
 group: Reading what it finds
 ---
 
-Start with the run's rates, then open the answers behind a weak prompt. Use their objections, searches and citations to choose a fix. [Metric definitions](../metrics/) gives the formulas; this page helps you find the evidence.
+Start with the run's rates, then open the answers behind a weak prompt. Use their objections, searches and citations to understand the market and choose a useful next step. [Metric definitions](../metrics/) gives the formulas; this page helps you find the evidence.
 
 ## Tracks
 
@@ -33,10 +33,10 @@ Open a grade to see its reasoning, evidence, brand position, top pick and reason
 | Why did we lose? | Expand an **answer**; read **Objections** and **What the answers say about you** | The highlighted evidence, why not #1, praise, tone and themes. With second opinions enabled, start with grades Jev disagreed with. |
 | Who wins instead? | **Share of voice**, **Head to head** | Named rate measures how often a product appears; share of voice divides its mentions by all products' mentions. Head to head compares answers naming both brands. |
 | Which pages shape the answers? | **Sources**, **Page types**, **Your sites in these answers** | Which pages were retrieved or cited, including your sites that were never reached. Site kind says whose page it is; page type says what it does. |
-| Should we write or seek coverage? | **Opportunities**, **Cited without you**, **Found but not cited** | Owned opportunities suggest pages to write; earned ones suggest coverage to seek. The outreach list identifies third-party hosts cited alongside competitors and never you. |
+| Should we write or seek coverage? | **Opportunities**, **Cited without you**, **Found but not cited** | These are candidates to verify against current pages, eligibility and product boundaries. The outreach list identifies third-party hosts cited alongside competitors and never you. |
 | Are our pages discoverable? | **Your pages for this question**, **Neutral retrieval** (with Exa) | Compare a neutral index with the assistants' retrieval. Pages are marked cited, retrieved or unseen. [Optional providers](../optional-providers/) explains the diagnosis and prospects. |
 | Did an answer get a fact wrong? | **Got wrong about you** | Contradictions of the facts you listed, with quotes and prompt markers. See [The fact check](../got-wrong/). |
-| What should we do next? | **Fix these first**, **Insights** | Proposed pages and changes tied to the answers that lost. |
+| What should we do next? | **Next steps**, **Insights** | Verified actions, bounded investigations and supported market findings. Zero actions is a valid result. |
 
 **Check the evidence.** A highlighted quote is checked against the answer's text; an unverified quote is dropped. Absent answers and grades from before evidence was added have none. See [the evidence rules](../how-grading-works/#three-grades).
 
@@ -51,7 +51,7 @@ Use it to check:
 - **Rewritten questions.** **From prompt** is the share of a search's words found in its prompt; **prompt kept** is the share of the prompt's words kept in the search. Low values show rephrasing or narrowing. **Added** and **dropped** list the recurring changes.
 - **Added names.** A `+Name` chip marks a brand or competitor added to a query that wasn't in the prompt.
 - **Missed pages.** Top queries show whether results reached your sites, which competitors appeared, and how often their answers named you.
-- **New prompts.** **Add as prompt** gives a TOML entry for queries whose results named competitors and never reached your sites. Reword it as a buyer would ask before merging; Cheap Seats writes nothing.
+- **New prompts.** Search-derived ideas identify queries whose results named competitors and never reached your sites. Review their buyer, learning, decision and repeat value before making a tracked question; search frequency does not establish buyer demand.
 
 The page also counts answers searched, searches and distinct queries, with a prompt-by-prompt breakdown. Distinct queries ignore case, quotes and repeated whitespace. The same data is at `/api/runs/<id>/searches` and MCP `get_search_queries`.
 
@@ -63,15 +63,19 @@ A ready-to-paste prompt asks Claude Code to make the change without inventing nu
 
 ## Quick wins
 
-Quick wins combines the latest fix list from every set. It ranks by **expected gain**: prompts a fix could flip per working day, weighted by their remaining room to improve. [Metric definitions](../metrics/#trends-and-outcomes) gives the formula. Filter by site to hand each team its list.
+Quick wins is now **Next steps**. Open it from the navigation, or from a run to see that run's analysis. The hub uses the latest completed analysis of each active set.
 
-With Jev enabled, fixes from different sets asking for the same page become one card, the highest ranked, with the rest under **also asked for by**. Marking the card marks the selected fix; the others can still be marked individually.
+| View | What belongs here | What to do with it |
+| --- | --- | --- |
+| **Actions** | A specific change verified against current artifacts, capabilities, strategy and eligibility | Review its evidence and completion check, then use its implementation prompt |
+| **Investigations** | A bounded unresolved check that could change a useful decision | Complete the read-only check before proposing work |
+| **Market findings** | Supported learning about buyers, competitors and positioning, including accepted product limits | Use the evidence to improve decisions and messaging; it need not create a task |
 
-Record the commit or pull request as **proposed**, **accepted** or **withdrawn**; withdrawal reopens the fix. **Dismiss** a fix the team won't do, with the reason. It leaves the list, later fixes for the same page stay dismissed, and the analyst stops proposing fixes that rest on the reason's premise. Undo it from the **dismissed** filter. Filter by status to find open work. [From fix to pull request](../fix-to-pull-request/) walks through the process.
+The analyst generates candidates, verifies them, then ranks eligible actions. A page missing from an AI answer does not establish that it is missing from your site. Unreadable pages and unknown listing rules remain unknown. Existing work and deliberate product limits can close a proposal instead of creating more pages or features. Zero actions is a valid result.
 
-**A fix that wasn't enough comes back.** Each run writes a fresh list. If its prompts still lose, a fix for the same page can return as **retry**, with the earlier work and outcome. Work recorded after a list was built also covers that list's fix for the same page.
+Optional `[brand.advisory]` settings record `positioning`, `goals` and `boundaries` for advice and prompt review. They do not instruct buyer answerers or graders. Older suggestions remain available as investigations with their work history; their verification was not recorded. Proposed or accepted work does not establish readiness or a visibility improvement.
 
-Outcomes compare the target prompts before and after the work, with a sampling margin. **No detectable change** does not establish that a fix failed; **newly surfaced** means its page appeared in searches or citations after the work. Host citation changes are shown separately. See [outcome statuses and comparison windows](../noise-and-confidence/#what-no-detectable-change-means-for-a-fix).
+Verified actions retain the site, gap, set, priority and work-status filters. Their estimated gain weighs prompt reach, effort and remaining headroom; it is a ranking aid, not a measured effect or success probability. [From fix to pull request](../fix-to-pull-request/) covers implementation and outcome tracking.
 
 ## Rankings
 
