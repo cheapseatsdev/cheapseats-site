@@ -9,6 +9,22 @@ Start with `cheapseats audit` to check what crawlers can read: robots.txt, firew
 
 These checks call no model. HTTP requests and log imports are free; if [Exa fallback reads](../optional-providers/) are enabled, empty or challenged pages may incur a page-read charge against the daily admission budget.
 
+{{< figure name="site-check-inputs" >}}
+
+## Run, interpret and recheck
+
+Choose the input you have, run the corresponding command or UI action below, inspect its exact evidence, and correct issues you own. Recheck the changed artifact. Audit after a deployment, CDN/robots change, or a suspicious unreadable-page result; import fresh logs when reviewing crawler activity. These are recommended triggers, not an automatic schedule.
+
+| Outcome | Meaning and next action |
+| --- | --- |
+| Audit error or warning | A specific check found a condition to inspect. Verify the response and infrastructure context before changing access policy. |
+| Audit without findings | The bounded checks found no reportable issue in their sample. This does not prove every page or bot can read the site. |
+| Could not read | Access or content remains unknown. Inspect the recorded reason; don't infer the product or claim is absent. |
+| Product name found on a cited page | A literal match in the fetched text; read the claim before treating it as support or endorsement. |
+| Requests in crawler logs | Requests claiming a bot user agent reached the logged server. Corroborate identity; no request in these logs is not proof no assistant discovered the content. |
+
+**Success:** an identified access issue is verified fixed, or the evidence supports a clearer decision. Passing technical checks does not guarantee citations or recommendations. [Which check should I run?](../checks-and-evaluations/) distinguishes these checks from grader evaluation.
+
 ## Site audit
 
 ```bash

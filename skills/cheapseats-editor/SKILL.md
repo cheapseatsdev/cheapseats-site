@@ -17,12 +17,36 @@ Respect the reader's time: make the answer easy to find and preserve what they n
 
 Put the useful result before background: an answer, buying decision, working path or next action. On hubs, let readers browse before the product pitch. Keep titles, descriptions and openings useful on their own; cut boilerplate repeated within the reading path.
 
+## Teach the workflow before assuming expertise
+
+Readers may be engineers or startup marketers new to AI visibility and evaluation.
+For a feature's workflow guide, explain:
+
+- the decision it helps make, required inputs and what it changes;
+- the shortest end-to-end path, including the point that starts provider usage;
+- likely outcomes and their next actions, including failures, uncertainty and no justified work;
+- signals or a suggested cadence for repeating it, distinguished from implemented thresholds and automatic scheduling;
+- what success means, what would settle the decision and what the check cannot establish.
+
+Define jargon where needed. Distinguish buyer questions from grading instructions,
+measurement from label validation, shipping from observed effects, and a software
+floor from a recommended sample size. Keep example corpus sizes explicitly local
+to that example. Use a flow or decision diagram when it replaces a prose walkthrough;
+give it a complete text equivalent. Reference pages should link the relevant
+workflow rather than repeat it for every field.
+
 Give each explanation one home: comparable facts in tables, relationships in diagrams, consequences in prose. Cut repeated product pitches, engine lists, workflow descriptions, previews followed by identical summaries and release history interrupting current instructions. Link useful specialist detail from its canonical home. Repeat brief units and qualifications where readers need them locally; preserve working commands and meaningful examples.
 
 Canonical homes, relative to the site repository:
 
 | Subject | Home |
 | --- | --- |
+| AEO/GEO and the learning loop | `content/docs/understanding-ai-visibility.md` |
+| Choosing buyer questions | `content/docs/choosing-questions.md` |
+| First run and interpretation | `content/docs/first-run.md` |
+| Selecting checks and rerun signals | `content/docs/checks-and-evaluations.md` |
+| Grader evaluation lifecycle and outcomes | `content/docs/evaluation.md` |
+| Success and follow-up decisions | `content/docs/measuring-success.md` |
 | Verdicts, tracks, quoted evidence | `content/docs/how-grading-works.md` |
 | Formulas, denominators, legacy fields | `content/docs/metrics.md` |
 | Other tools' metric definitions | `content/docs/comparing-metrics.md` |

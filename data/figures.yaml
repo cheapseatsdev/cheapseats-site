@@ -1,3 +1,186 @@
+visibility-learning-loop:
+  layout: learning-flow
+  title: A learning loop, not a promise of placement
+  caption: Start with a buyer decision. Repeat measurement when the next observation could change that decision.
+  steps: [Buyer need, Useful questions, Collect answers, Inspect evidence, Decide, Revisit]
+  lanes:
+    - title: A supported remaining gap
+      steps: [Verify a change, Ship and check it, Measure later]
+      note: A new answer may discover a page; that does not prove the change caused a recommendation.
+    - title: A legitimate product limit
+      steps: [Understand the loss, Keep the boundary, Record the learning]
+      note: Choosing not to add a feature can be a useful result.
+    - title: An important unknown
+      steps: [Name the unknown, Run a bounded check, Decide again]
+      note: Missing evidence is a reason to investigate when the decision matters.
+question-intent-path:
+  layout: learning-flow
+  title: Does a complete answer require a product decision?
+  caption: Choose intent by the buyer's required answer, not by the first word of the question.
+  lanes:
+    - title: Yes → selection
+      steps: [A product choice or suitability decision, Recommended and top-pick denominators]
+      note: "Example: Which tracker should a small team use? Named rate also includes these answers."
+    - title: No → information
+      steps: ["An explanation, method or checklist", Named denominator only]
+      note: "Example: How do I calculate recommendation rate? A product example may help without being required."
+  note: These arrows describe eligibility for metrics, not a requirement that the answer recommend your product.
+question-situations:
+  layout: learning-flow
+  title: Three different buyer situations
+  caption: These questions reveal different things. Keep supplied brand knowledge visible in the interpretation.
+  lanes:
+    - title: Open discovery
+      steps: ["Which tracker fits this team?", "Does the assistant introduce us?"]
+      note: The buyer has not supplied your brand.
+    - title: Seeking alternatives
+      steps: ["What could replace this competitor?", "Are we a relevant alternative?"]
+      note: The buyer names a competitor but is open to other products.
+    - title: Known-brand evaluation
+      steps: ["Is Cheap Seats a fit for this team?", "Which strengths and limits matter?"]
+      note: Put your brand in head-to-heads. Being named here is not evidence of independent discovery.
+  note: A closed comparison of two other products can be answered without considering you. Keep it outside the tracked prompt library.
+first-run-denominators:
+  layout: learning-flow
+  title: The same answers, counted for three rates
+  caption: Synthetic teaching example. Six graded answers from one answerer on one track; four selection questions and two information questions, one sample each. No failed calls.
+  table:
+    caption: The answer collection stays fixed while eligibility changes.
+    columns: [Answer, Intent, Brand judgment]
+    rows:
+      - [1, selection, recommended and top pick]
+      - [2, selection, recommended]
+      - [3, selection, absent]
+      - [4, selection, absent]
+      - [5, information, absent]
+      - [6, information, absent]
+  lanes:
+    - title: Named
+      steps: [2 named / 6 graded answers, 33.3%]
+      note: Includes selection and information answers.
+    - title: Recommended
+      steps: [2 endorsements / 4 selection answers, 50%]
+      note: Both endorsements count as named too; their denominator is smaller.
+    - title: Top pick
+      steps: [1 top pick / 4 selection answers, 25%]
+      note: The two information answers may be useful without naming any product.
+  note: Counts are illustrative, not target scores or a recommended sample size. Named counts include recommended counts; percentages can use different denominators.
+first-run-decision:
+  layout: learning-flow
+  title: Follow an answer to the next useful decision
+  caption: Read the complete answer and its trace. Favorable and unfavorable grades can both deserve inspection.
+  steps: [Open the answer, Check its interpretation, Inspect source evidence]
+  lanes:
+    - title: The grade looks wrong
+      steps: [Review the saved label, Resolve the interpretation]
+      note: Use Evaluation in the preview build; record the evidence before changing a grader.
+    - title: The grade fits, a claim may be wrong
+      steps: [Check facts and current artifacts, Choose justified work or a check]
+      note: A literal quote is not proof the claim is supported.
+    - title: The answer reflects a real tradeoff
+      steps: [Record the buyer learning, Keep or reconsider the intended boundary]
+      note: A legitimate loss need not create a feature or page task.
+checks-map:
+  layout: learning-flow
+  title: Three questions, three kinds of evidence
+  caption: Choose the lane that addresses your uncertainty. Passing one lane does not validate the others.
+  lanes:
+    - title: What do buyers get?
+      steps: [Buyer questions, New model answers, Rates and evidence, Market or work decision]
+      note: Collect a run. Repeating it measures answer variation and changes over time.
+    - title: Can we trust the labels?
+      steps: [Saved answers, Human reference labels, Grader comparison, Human change review]
+      note: The Evaluation preview tests interpretation without recollecting buyer answers.
+    - title: Can sources be accessed?
+      steps: [Pages or logs, Technical and source checks, A specific access finding]
+      note: A readable page or a crawler request does not establish a recommendation.
+regrade-or-recollect:
+  layout: learning-flow
+  title: Reuse an answer, or ask a new question?
+  caption: Pick the operation by what changed. A grader comparison tests a candidate before deciding to change production grading.
+  lanes:
+    - title: Grading inputs changed → re-grade
+      steps: [Same saved answer, Today's grader and inputs, Updated grade]
+      note: Original answer and date stay; replaced grades remain in history. Eligible answers must have been asked alike.
+    - title: Need new answers → collect
+      steps: [Buyer question and collection policy, New model call, New dated answer and grade]
+      note: Use for current observations or a new baseline after a question, answer prompt or search-policy change.
+  note: Re-grading cannot reconstruct what an assistant would have said under a different question or search policy.
+success-layers:
+  layout: learning-flow
+  title: Success has separate checkpoints
+  caption: These are related decisions, not an attribution funnel. Completion does not guarantee a visibility effect.
+  lanes:
+    - title: Learning
+      steps: [Buyer evidence, A clearer decision]
+      note: An accurate objection, an intentional limit or no justified action can be useful learning.
+    - title: Delivery
+      steps: [Scoped work, Review and publish, Verify the artifact]
+      note: Check the actual page, capability or draft against a completion criterion the team controls.
+    - title: Observed visibility
+      steps: [Comparable later answers, Counts and uncertainty, An outcome interpretation]
+      note: Moved, worse, mixed and no detectable change describe observations, not proof of cause.
+  note: Qualified visits, trials and revenue need separate analytics and customer evidence. Cheap Seats does not attribute them automatically.
+evaluation-lifecycle:
+  layout: learning-flow
+  title: Turn saved answers into evidence for a grader decision
+  caption: The human owns the reference labels. Imports and approval are free of model calls; explicitly started checks and comparisons use provider access.
+  lanes:
+    - title: 1. Establish labels
+      steps: [Import saved answers, Commit human judgments, Optional batch checks, Resolve differences]
+      note: Drafts are unfinished work. Incomplete evidence or unclear rules can stay unresolved.
+    - title: 2. Freeze a reference
+      steps: [Preview membership, Explain exclusions, Approve a version]
+      note: Membership, labels, rules, evidence and partitions stay fixed for that version.
+    - title: 3. Test a candidate
+      steps: [Development comparison, Freeze candidate, Untouched validation, Human release review]
+      note: The control and candidates each run twice. A separate reviewed change is needed to ship anything.
+  note: Agreement is not another human review. Approving or exporting a version does not update golden CI or deploy a grader.
+evaluation-outcomes:
+  layout: learning-flow
+  title: A comparison can end with repair, no change, or a proposal
+  caption: Read coverage, per-class errors, missing calls and repeat variation before interpreting aggregate agreement.
+  lanes:
+    - title: Evidence or execution is insufficient
+      steps: [Missing calls or class coverage, Repair or collect relevant references, No release conclusion]
+      note: Failure remains unknown. Two examples per core class is a software floor, not proof of reliability.
+    - title: Results do not justify the candidate
+      steps: [Regressions or inconclusive differences, Keep the control or investigate on development evidence]
+      note: A more elaborate prompt is not automatically better. A failed gate does not by itself locate the cause.
+    - title: Results support further review
+      steps: [Prerequisites met on untouched evidence, Inspect the actual differences, Propose a reviewed change]
+      note: Passing the conservative gate is not statistical proof or automatic deployment. Quote occurrence is not semantic support.
+  note: Once validation answers or disputes inform tuning, they are no longer untouched for that candidate. A revised reference needs a new dataset version and comparison.
+advice-decisions:
+  layout: learning-flow
+  title: Evidence can lead to work, a check, or learning
+  caption: Next steps generates candidates, verifies current artifacts and the advisory brief, then ranks eligible actions. Zero actions is valid.
+  steps: [Run evidence, Candidate, Six verification gates]
+  lanes:
+    - title: A verified remaining change
+      steps: [Action, Scoped implementation, Check team-controlled completion]
+      note: Review the quotes and reasons. Later visibility is a separate observation.
+    - title: An unresolved useful decision
+      steps: [Investigation, Bounded read-only check, Decide whether work is warranted]
+      note: An unread page, unknown eligibility or incomplete inventory stays unknown.
+    - title: Supported market learning
+      steps: [Finding, Positioning or product decision]
+      note: Existing work and intentional limits can explain why no new implementation is needed.
+  note: Weak or irrelevant proposals can be omitted; they do not automatically earn research tasks. Model verification can still misinterpret evidence.
+site-check-inputs:
+  layout: learning-flow
+  title: Match the source check to its input
+  caption: These checks call no model. Optional Exa fallback page reads can incur charges.
+  lanes:
+    - title: Your sites → audit
+      steps: [Robots, HTTP responses and raw HTML, Access and markup findings]
+      note: Check the exact response and your infrastructure logs before changing a bot policy.
+    - title: Cited URLs → citation check
+      steps: [Fetch readable page text, Match product names, Inspect the source claim]
+      note: A name match does not establish a recommendation or prove an assistant read that passage.
+    - title: Access logs → crawler report
+      steps: [Import your logs, Count claimed bot requests and referrals, Compare with citation observations]
+      note: User-agent claims are unverified. No logged request is not proof no assistant could discover the page.
 run-atlas:
   title: Read a run in three steps
   caption: Crops from the public demo's 24 October 2026 head-to-head run. Open a view to inspect it; click a capture for full size.
@@ -8,13 +191,13 @@ run-atlas:
     Captures: /images/docs/run-scores-light.jpg, /images/docs/run-grid-light.jpg and /images/docs/run-evidence-light.jpg.
     Inspect the source run: https://demo.cheapseats.dev/runs/r-20261024-222715-986b58
 run-pipeline:
-  title: From question to fix
+  title: From question to next steps
   caption: Available assistants answer on enabled tracks, for the configured samples. Answers and grades stay separate by track.
   text: |
     Buyer questions → each available configured assistant on enabled tracks, repeated for the configured samples. A track can have zero samples.
     - Search: search the web, then answer; keep the searches, returned URLs and citations.
     - Recall: answer with no tools; keep the answer.
-    A separate Claude call grades each answer. Stored answers and grades feed the rates, evidence and ranked fixes.
+    A separate Claude call grades each answer. Stored answers and grades feed rates, evidence and Next steps: verified actions, investigations and market findings. Review the evidence; no new work may be needed.
 grade-examples:
   title: The sentence behind the grade
   caption: Illustrative answers to a choice question about Acme. A repeated name alone does not establish visibility.
@@ -51,9 +234,9 @@ source-trace:
     - The answer names you with objections: inspect the quoted objection and the facts your content can support.
 fix-lifecycle:
   title: Shipping and measuring are separate steps
-  caption: A merged PR records work shipped. Later comparable answers measure what changed; they do not prove its cause.
+  caption: A merged PR records accepted work. Verify the actual artifact; later comparable answers measure changes without proving their cause.
   text: |
-    Work: record a commit or PR → proposed → accepted when merged, or withdrawn when closed. A later fix for the same page can return as a retry.
+    Work: record a commit or PR → proposed → explicitly mark accepted when merged, or withdrawn when closed. Verify the live artifact separately. A later fix for the same page can return as a retry.
     Measurement: collect same-method answers for the target prompts → check comparability and enough data → report named and recommended changes with their margins.
     Pending means no later run; too early means there is not yet a comparable run at least seven days after marking, or fewer than four answers per target prompt on average. A method mismatch may need re-grading; differently asked answers cannot be repaired by re-grading.
     Outcomes: moved, worse, mixed, or no detectable change. A newly surfaced page is supporting evidence, not a measured rate improvement.

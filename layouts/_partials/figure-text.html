@@ -3,4 +3,29 @@
 {{- if not $meta }}{{ errorf "Unknown figure %q in %s" $name .Position }}{{ end -}}
 **{{ $meta.title }}.** {{ $meta.caption }}
 
+{{- if eq $meta.layout "learning-flow" }}
+{{ with $meta.steps }}
+{{ delimit . " → " }}.
+{{ end }}
+{{ with $meta.table }}
+{{ .caption }}
+
+| {{ delimit .columns " | " }} |
+|{{ range .columns }} --- |{{ end }}
+{{ range .rows }}| {{ delimit . " | " }} |
+{{ end }}
+{{ end }}
+{{ range $meta.lanes }}
+**{{ .title }}**
+
+{{ with .steps }}{{ delimit . " → " }}.{{ end }}
+{{ with .note }}
+{{ . }}
+{{ end }}
+{{ end }}
+{{ with $meta.note }}
+{{ . }}
+{{ end }}
+{{- else }}
 {{ $meta.text }}
+{{- end }}

@@ -1,4 +1,10 @@
 docs:
+  understanding-ai-visibility: Learn AEO/GEO, the measurement loop and what a useful result can be.
+  choosing-questions: Choose real buyer situations, intent and stable questions instead of favorable wording.
+  first-run: Collect an initial measurement, read the answers and leave with a decision.
+  checks-and-evaluations: Choose a check, run it end to end and interpret outcomes and rerun signals.
+  measuring-success: Separate learning, delivery and visibility; decide what changed and what remains uncertain.
+  evaluation: Review human references, run independent checks and compare grader prompts in the unreleased preview.
   getting-started: Run the example, configure your brand and check the first results.
   configuration: Set the brand, assistants, prices and schedule in cheapseats.toml.
   prompt-sets: Write buyer questions with stable IDs that retain their history.

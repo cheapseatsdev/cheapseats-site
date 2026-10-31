@@ -5,6 +5,8 @@ weight: 240
 group: Reading what it finds
 ---
 
+Use this page to judge whether a measured difference is distinguishable from sampling noise and whether more observations would help. Start with [Measuring success](../measuring-success/) for the workflow and plain-language outcome decisions; the calculations and worked examples live here.
+
 For named rate on 17 fixed prompts with two answerers and one sample per track, one run has a worst-case sampling margin of about **±17 points for a reading** and **±24 points for a change between two runs**. Pool seven daily runs on each side and those margins shrink to about **±6** and **±9**. Reading uncertainty and change detection are different calculations.
 
 Cheap Seats calculates both from stored answers, without extra model calls. A change beyond its margin is evidence against sampling noise; it does not establish that your work caused the change.
