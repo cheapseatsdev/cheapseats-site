@@ -57,7 +57,7 @@ As of October 2026, from each vendor's own pages:
 | --- | --- | --- | --- | --- |
 | **Free** | The software; model/provider usage depends on setup | Yes; a form for the full report | Yes; no signup | A limited free report; full product in Amplitude plans |
 | **Ongoing tracking** | Yes, on a schedule | No, one-time; HubSpot AEO is $50/month | No, one-time; Brand Radar is paid | Yes, in an Amplitude plan |
-| **Assistants** | Claude and OpenAI models | GPT-5.4 mini, Perplexity, Gemini | ChatGPT, Gemini, Perplexity, Copilot, AI Overviews (AI Mode in a separate free tracker) | ChatGPT, Google AI Overviews |
+| **Assistants** | Claude and OpenAI models | GPT-5.4 mini, Perplexity, Gemini | ChatGPT, Gemini, Perplexity, Copilot, AI Overviews; the checker page gives conflicting lists for AI Mode coverage | ChatGPT, Google AI Overviews |
 | **Your own questions** | Yes, in your git repo | No | No (Brand Radar has custom prompts) | Generated for you; editable |
 | **Web search or memory** | Both, graded separately | Training data | Search-backed prompts | Not stated |
 | **Recommended vs. mentioned** | Yes | Sentiment and presence scores | Mention counts | Mentions, position, sentiment |
