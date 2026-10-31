@@ -87,9 +87,9 @@ Before an API call, Cheap Seats reserves estimated spend against the UTC day's b
 
 ```bash
 docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.5.3 check
+  ghcr.io/cheapseatsdev/cheapseats:0.5.8 check
 docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.5.3 run discovery
+  ghcr.io/cheapseatsdev/cheapseats:0.5.8 run discovery
 ```
 
 For local subscription CLIs, run from the app checkout: `CHEAPSEATS_CONFIG=../your-config/cheapseats.toml go run ./cmd/cheapseats run discovery`. With 15 prompts and the samples above, two answerers produce 90 answers. [Cost and budget](/docs/cost-and-budget/) has measured costs. For ongoing use, [start the web UI with your config](/docs/getting-started/#point-cheap-seats-at-it) on your chosen route; scheduling also requires the tier cadence in your config.
