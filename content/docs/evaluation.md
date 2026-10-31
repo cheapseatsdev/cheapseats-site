@@ -84,13 +84,21 @@ For example, “I don't have reliable information on a product called Cheap Seat
 
 “What remains unclear, if unresolved?” asks what prevents you from deciding, such as a truncated answer or ambiguous product identity. Leave it blank when you can finish the judgment. A quote match establishes that the words occur in the answer; you still decide whether they support your interpretation.
 
-**Save and next** commits the judgment and advances. Uncommitted drafts autosave without advancing or counting as completed reviews. Edits to an already committed judgment stay in the browser tab until an explicit save; autosave does not replace the committed review. Reopening a session after an interrupted save offers continuation without saving the same judgment again. **End session** saves an unfinished draft for later. The reviewed count measures unique answers; editing one answer repeatedly does not add reviews.
+**Save and next** commits the judgment and advances. The reviewed count measures unique answers; editing one answer repeatedly does not add reviews.
+
+Uncommitted drafts autosave without advancing or counting as completed reviews. Edits to a saved judgment or unresolved decision stay in the browser tab until an explicit save; autosave does not replace either decision. Reopening a session after an interrupted save offers continuation without saving the same judgment again.
+
+**End session** pauses at the same case. A saved judgment or unresolved decision stays unchanged; unfinished work is saved as a draft.
 
 ## 2. Check the session as a batch
 
 At **Review session complete**, the app asks whether to run independent checks over the finished judgments. Review the configured grader, cached assessments and allowance, then choose **Run checks for all N**. One progress page tracks the batch and opens the combined comparison when it finishes. If all assessments are already saved, choose **Compare all N saved assessments**.
 
-The Evaluation overview offers the same flow across the selected import's finished judgments, up to 500 cases per batch. You do not need to reopen and save each answer. Leaving the page does not stop the worker; it pauses after 30 minutes or an explicit pause. Saved results survive a restart. Resume reuses completed assessments. Pauses, cancellations, timeouts and exhausted admission budgets preserve the assessment allowance and resume without selecting retry; recorded provider charges remain. Provider or parse failures and crashed claims still need explicit retry. A crashed worker's lease must expire before recovery. After a final-attempt crash, an expired lease is an unknown result rather than a permanently running check; late workers cannot save after expiry. Failures remain unknown, never absent.
+The Evaluation overview offers the same flow across the selected import's finished judgments, up to 500 cases per batch. You do not need to reopen and save each answer. Leaving the page does not stop the worker; it pauses after 30 minutes or an explicit pause. Saved results survive a restart.
+
+Resume reuses completed assessments. Stopping the enclosing run, its 30-minute deadline and exhausted admission budgets preserve the assessment allowance and resume without selecting retry; recorded provider charges remain. A single request hitting its three-minute limit counts as a failed attempt and the worker continues to the later cases. Request failures and crashed claims still need explicit retry, within the two-attempt limit.
+
+A crashed worker's lease must expire before recovery. After a final-attempt crash, an expired lease is an unknown result rather than a permanently running check; late workers cannot save after expiry. Failures remain unknown, never absent.
 
 The assessor receives the saved question, complete answer, intended brand, competitors and rubric, with old and human labels, notes and quotes removed. That makes the assessment independent of those labels; it does not make two model judgments statistically independent or create another human review.
 
