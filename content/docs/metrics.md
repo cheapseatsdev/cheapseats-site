@@ -74,7 +74,7 @@ For each product on the board, against your brand, over every graded answer (`he
 
 ### Objections
 
-The concerns raised in answers that name your brand (`objections`), folded for counting: lowercase, every run of punctuation and spaces one space, so "Pricing unclear." and "pricing, unclear" count once. Each objection counts once per answer, with the first prompt it came up on as an example. With `[typesafe]` and `cluster_phrases` on, wordings Jev judged to say the same thing count as one row, named by the wording seen first, with `wordings` listing the rest; the same applies to praise.
+The concerns raised in answers that name your brand (`objections`), folded for counting: lowercase, every run of punctuation and spaces one space, so "Pricing unclear." and "pricing, unclear" count once. Each objection counts once per answer, with the first prompt it came up on as an example. With `[typesafe]` and `cluster_phrases` on, wordings Jev judged to say the same thing count as one row, named by the wording seen first, with `wordings` listing the rest; the same applies to praise. Each objection and praise row also carries `sources`, up to three pages cited by the answers raising it (host, page type, owned or earned, answers), and `recall_answers`, how many raised it with no tools: leads to inspect, not proof a page caused the claim.
 
 ## Sentiment and themes
 
@@ -144,6 +144,7 @@ With competitors configured, only they count as competitors here; with none, eve
 
 - **Cited without your brand** (`outreach`): the missing hosts that aren't a competitor's own, ranked by distinct competitors named × answers citing the host. These are the pages to get your brand onto.
 - **Found but not cited** (`found_not_cited`): your own pages that searches returned and no answer linked.
+- **Cited pages that changed** (`cited_page_changes`): when this run and an earlier run of the set both had a [citation check](../site-audit/#citation-check), the pages read by both whose text started or stopped naming you or a competitor since, with the run compared against. A comparison of stored readings: it fetches nothing and doesn't say when the page changed or why.
 
 ### Neutral retrieval
 

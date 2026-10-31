@@ -36,6 +36,7 @@ When you record work against a fix, Cheap Seats compares named and recommended r
 | worse | one fell beyond its margin, and neither rose beyond its margin |
 | mixed | one rose and the other fell beyond their margins |
 | no detectable change (±X pts) | neither measured change excludes zero; X is named's margin |
+| dismissed | the fix was [dismissed](../reading-results/#quick-wins) with a reason; nothing shipped, so nothing is measured |
 
 **No detectable change does not mean the fix failed.** The available answers cannot distinguish the observed change from zero. The margin is uncertainty around that observed change, not a bound on the size of a possible effect. A benefit or harm may remain undetected.
 

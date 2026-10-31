@@ -76,7 +76,7 @@ Rankings annotate set changes. Day-to-day comparisons use only prompts both days
 |---|---|
 | brand `name`, `aliases`, `about` or `audience` | new trend |
 | grader model or provider | new trend |
-| a Cheap Seats release that changes its answer, search or grading prompts | new trend |
+| a Cheap Seats release that changes its answer, search or grading prompts, or how it calls the `claude` or `codex` CLI | new trend |
 | prompts added, removed or reworded | noted; comparisons use the prompts both days asked |
 | a prompt's `intent` | noted; that prompt is left out of the day's comparison |
 | competitors | noted |

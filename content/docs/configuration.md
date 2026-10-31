@@ -75,7 +75,7 @@ samples = { search = 2, recall = 1 }
 
 - Results and rankings key on `id`: never reuse an id for a different model; add a new answerer instead.
 - `name` is an optional display name.
-- `samples` is how many answers it takes per track (`search` and `recall`) for each prompt.
+- `samples` is how many answers it takes per track (`search` and `recall`) for each prompt: 0 to 20 each, with at least one across the two.
 - `claude-code` and `codex` only work on your own machine or a VM with the CLIs installed. `cheapseats check` notes a subscription answerer whose CLI isn't installed where it's checked, since runs skip it, and fails only when no answerer can run there.
 
 ## Shared competitors
@@ -144,7 +144,7 @@ reservation_usd = 0.60
 concurrency = 6
 ```
 
-Every billable attempt reserves an allowance in the SQLite ledger before it starts, then settles to known usage. If a new reservation won't fit, the call is refused; a run stopped as `budget` keeps completed work and can be retried the next UTC day. Unknown or cancelled attempts retain at least their reservation.
+`concurrency` is 1 to 64 calls in flight (unset means 4). Every billable attempt reserves an allowance in the SQLite ledger before it starts, then settles to known usage. If a new reservation won't fit, the call is refused; a run stopped as `budget` keeps completed work and can be retried the next UTC day. Unknown or cancelled attempts retain at least their reservation.
 
 This is an admission limit, not a provider billing cap: actual costs, including calls already in flight, can exceed reservations. Set provider-side limits too. Subscription calls in any role are recorded at $0. See [Cost and budget](../cost-and-budget/#the-daily-budget).
 
@@ -201,7 +201,7 @@ every_days = 7
 max_samples = 1
 ```
 
-Set `schedule.daily_hour_utc` and, from that hour, every `core` set runs every `tiers.core.every_days` days (default 1, daily) and every `plg` set every `tiers.plg.every_days` with one sample, one set after another. Locally it's off unless you set it.
+Set `schedule.daily_hour_utc` and, from that hour, every `core` set runs every `tiers.core.every_days` days (default 1, daily) and every `plg` set every `tiers.plg.every_days` with `max_samples` a track (default 1, at most 20), one set after another. Locally it's off unless you set it.
 
 Weekly runs use one-seventh the answers of daily runs. Choose the cadence for how soon you need to detect changes; either track can vary between runs.
 
@@ -238,4 +238,4 @@ A fix goes to its site's owner, else to the owner for its gap here, else `defaul
 | `CHEAPSEATS_DATA_DIR` | where the database lives, default `data` |
 | `CHEAPSEATS_DEBUG` | set to anything for debug logging |
 
-Cheap Seats reads `.env` at startup; the real environment wins.
+Cheap Seats reads `.env` in the working directory at startup; the real environment wins. Keys and `CHEAPSEATS_TOKENS` load from it. Variables that redirect requests or change sign-in don't: a `.env` line setting a `*_BASE_URL`, a proxy or certificate variable, `CHEAPSEATS_CLI_ENV`, `CHEAPSEATS_AUTH_HEADER`, `CHEAPSEATS_ALLOWED_EMAILS`, or a variable that loads code at startup (`LD_*`, `NODE_OPTIONS`...) is ignored with a warning. Export those in the real environment.
