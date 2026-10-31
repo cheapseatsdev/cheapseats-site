@@ -223,7 +223,7 @@ A high score means sources have been consistent; a low score means they vary bet
 | **Vs day before** | \(D\) = mean over the prompts both days asked of (today − yesterday), with a 95% margin; within noise when \(D \pm \text{margin}\) covers 0 |
 | **A set's prompts** | each prompt's answers pooled over the window, with a Wilson interval |
 | **Fix outcome** | the same paired \(D\), before and after the fix, over its target prompts |
-| **Quick wins gain** | speed × mean over the fix's prompts of \((1 - p)\), where speed is prompts per working day and \(p\) is the prompt's recommended rate (named, for an info prompt) pooled over the last 14 days |
+| **Next steps action gain** | speed × mean over the fix's prompts of \((1 - p)\), where speed is prompts per working day and \(p\) is the prompt's recommended rate (named, for an info prompt) pooled over the last 14 days |
 
 \(\operatorname{var}_k\) is a prompt's sampling variance:
 

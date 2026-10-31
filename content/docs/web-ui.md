@@ -14,10 +14,15 @@ group: Reading what it finds
 | Page | Shows |
 | --- | --- |
 | Dashboard | each prompt set's latest rates, share-of-voice rank and run |
-| Quick wins | the ranked fix list, filtered by status, priority, site, gap or set |
+| Next steps | verified actions, bounded investigations and market findings; actions retain work-status, priority, site, gap and set filters |
 | Rankings | each set's named, recommended or top-pick rate by day, with method changes and fixes marked |
 | Run | one run's rates, answers, grades, searches and fixes ([Reading results](../reading-results/)) |
 | Checks | search probe, [site audit](../site-audit/) and AI crawlers |
+
+The unreleased [Evaluation preview](../evaluation/) adds **Checks → Evaluation**
+for reviewing saved answers, batch-checking judgments and comparing grader prompts.
+It requires the preview build and an explicit flag; it is not in 0.6.0 or the
+read-only demo.
 
 ## Sign-in
 

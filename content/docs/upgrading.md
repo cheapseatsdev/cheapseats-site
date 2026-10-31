@@ -12,6 +12,28 @@ group: Running it
 
 With an image per config commit (see [Deploying](../deploying/)), upgrading Cheap Seats is a reviewed change to the `FROM` line in your config repo.
 
+## Upgrading to 0.6.0
+
+**Quick wins becomes Next steps**, with verified actions, bounded investigations
+and market findings. Older fix lists retain their work history but appear as
+investigations because verification was not recorded. Rebuild a run's analysis
+with `cheapseats next-steps -rebuild <run-id>` to apply the new checks; this uses
+the configured analyst and can incur charges. An accepted PR is work history,
+not proof of a verified action or improved visibility. See [Next steps](../reading-results/#quick-wins).
+
+`[brand.advisory]` optionally adds positioning, goals and deliberate boundaries
+for advice; buyer answerers and graders do not receive it. Upgrade the app before
+adding the table because older versions reject unknown config keys.
+
+This release uses schema 13 and backs up an existing database before migration.
+Rollback requires that backup. `/quick-wins`, `fixes` and `get_quick_wins` remain
+compatible aliases or action-only interfaces; [the reference](../reference/)
+describes the new interfaces.
+
+**Evaluation is a separate unreleased preview**, not part of this upgrade. It
+uses schema 19 and needs its own test database and explicit enablement. See the
+[preview guide](../evaluation/#backups-and-rollback) before trying it.
+
 ## Upgrading to prompt ids
 
 From a release before prompt ids: run `cheapseats migrate-config` on your config repo, review the generated ids, run `cheapseats check`, and commit; then deploy the new version.

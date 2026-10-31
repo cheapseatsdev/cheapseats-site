@@ -55,6 +55,29 @@ The [CLI and CI guide](../cli-and-ci/) covers exit codes and pipelines. `audit`,
 
 - **`regrade`**: `-since` takes `28d`, `72h` or `all` (default 28 days) and applies to a set; `-dry-run` is true by default.
 
+## Evaluation (preview)
+
+These commands require the unreleased Evaluation build, not the 0.6.0 image:
+
+```text
+cheapseats evaluation import [file.jsonl]
+cheapseats evaluation export <dataset-id> <new-file.jsonl>
+cheapseats evaluation run-comparison <id> [--retry]
+cheapseats evaluation comparison-report <id> [--gate <candidate-number>]
+```
+
+Omit the import filename to use the bundled public fixtures. Export creates a
+private file and refuses to overwrite an existing one. Comparison execution calls
+the configured grader and uses its allowance; the report reads saved results.
+`--gate 1` checks the first candidate's release-review prerequisites and exits
+nonzero when they are unmet. Passing does not deploy a prompt or update golden CI.
+
+`CHEAPSEATS_EVALUATION=1` enables the authenticated web workbench at `/evaluation`,
+under **Checks → Evaluation**. It is off by default and unavailable with
+`CHEAPSEATS_READONLY=1`. Use the same `CHEAPSEATS_DATA_DIR` to retain reviews across
+restarts. See [Reviewing grader labels](../evaluation/) for setup, batch checks,
+dataset approval, comparison budgets and preview database compatibility.
+
 ## init options
 
 `init` writes `./<brand>-cheapseats-config` unless you supply a directory:
