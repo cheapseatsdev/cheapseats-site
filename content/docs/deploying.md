@@ -22,7 +22,7 @@ For Docker and Kubernetes deployments, start from the [config template](https://
 Cheap Seats ships as an image, `ghcr.io/cheapseatsdev/cheapseats:<version>`, and a Helm chart, `oci://ghcr.io/cheapseatsdev/charts/cheapseats`, released together at the same version. The release image has no config in it. For production, build your config into an image on top of that release:
 
 ```dockerfile
-FROM ghcr.io/cheapseatsdev/cheapseats:0.5.3
+FROM ghcr.io/cheapseatsdev/cheapseats:0.6.0
 COPY cheapseats.toml /config/cheapseats.toml
 COPY prompt-sets /config/prompt-sets
 ARG REVISION=""
@@ -45,7 +45,7 @@ docker run -d --name cheapseats --restart unless-stopped --stop-timeout 30 \
   -v cheapseats-data:/data \
   -v "$PWD:/config:ro" \
   --env-file .env \
-  ghcr.io/cheapseatsdev/cheapseats:0.5.3
+  ghcr.io/cheapseatsdev/cheapseats:0.6.0
 ```
 
 Keep the published port on loopback and put a TLS-terminating proxy in front for remote access: requests carry access tokens. To mount the config somewhere else, pass `-e CHEAPSEATS_CONFIG=/that/path/cheapseats.toml` too.
@@ -66,7 +66,7 @@ printf 'CHEAPSEATS_TOKENS=%s\n' "$(openssl rand -hex 32)" >cheapseats.env
 "${EDITOR:-vi}" cheapseats.env    # add ANTHROPIC_API_KEY=<key>, and OPENAI_API_KEY if an answerer uses it
 kubectl create secret generic cheapseats --from-env-file=cheapseats.env && rm cheapseats.env
 
-helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.5.3 \
+helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.6.0 \
   --set image.repository=ghcr.io/acme/cheapseats-config \
   --set image.tag=<config commit> \
   --set existingSecret=cheapseats

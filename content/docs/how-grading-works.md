@@ -50,7 +50,7 @@ Each grade also records:
 
 Tone and praise feed [net sentiment and themes](../metrics/#sentiment-and-themes). Questions marked `intent = "info"` can be answered completely without a product choice, so they count toward named only, not recommended or top pick. See [choosing intent](../prompt-sets/#say-what-a-good-answer-looks-like).
 
-Grading changes mark new methods in trends. Older grades may have no tone or evidence; evidence arrived in 0.2.5. Version 0.4.4 restored `absent` for echoed names after 0.4.3 briefly graded them `mentioned`; agreement on the 80-answer golden set rose from 90% to 97–99%. [Re-grade stored answers](../regrading/) to apply today's grading without asking the assistants again; replaced grades are retained.
+Grading changes mark new methods in trends. Older grades may have no tone or evidence; evidence arrived in 0.2.5. Version 0.4.4 restored `absent` for echoed names after 0.4.3 briefly graded them `mentioned`; agreement with earlier model labels on the 80-answer golden set rose from 90% to 97–99%. That was not a comparison with independently established human truth. [Re-grade stored answers](../regrading/) to apply today's grading without asking the assistants again; replaced grades are retained.
 
 ## Worked examples
 
@@ -71,11 +71,13 @@ The run page shows named, recommended and top-pick rates per assistant and track
 
 Expand an answer on the run page to read its full text, highlighted evidence, searches, results, citations and grading reasons. Each run stores its grading instructions, config commit and Cheap Seats version, and exports to CSV or JSON.
 
-The grader is checked against human-labeled stored answers in `internal/grade/testdata/golden/`. Run the real grader with:
+The real-provider golden test checks agreement with stored labels in `internal/grade/testdata/golden/`. The current 80 committed labels are model proposals, not a completed human-reviewed benchmark. Run it from an app checkout with configured grader access:
 
 ```bash
 CHEAPSEATS_GOLDEN=1 go test ./internal/grade/... -run Golden
 cheapseats golden export <snapshot.db>
 ```
 
-The test fails below its agreement threshold; the export samples a deployment's answers for labeling. Grader changes must pass this check. The repository's [grading procedure](https://github.com/cheapseatsdev/cheapseats/blob/main/docs/grading.md) has the details.
+The test fails below its agreement threshold; the export samples a consistent database snapshot for labeling. Grader changes must pass this check, but aggregate agreement alone is insufficient: the proposed labels contain 74 absent answers, so always predicting absent reaches 92.5% verdict agreement. Inspect label provenance, class coverage and rare-class errors. The repository's [grading procedure](https://github.com/cheapseatsdev/cheapseats/blob/main/docs/grading.md) has the thresholds and workflow details.
+
+The unreleased [Evaluation workbench](../evaluation/) adds human review before revealing imported proposals, independent checks over batches, frozen reference datasets and paired prompt comparisons. It does not change production grades, replace the golden test or update its fixtures automatically.

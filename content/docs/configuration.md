@@ -31,6 +31,14 @@ audience = "a product marketing lead"
 
 `brand.about` goes to the grader and analyst, and `brand.facts` to the analyst and the fact check, so keep anything private out of them. Changing `about` or `audience` restarts every trend; changing `facts` restarts none.
 
+## Advisory brief
+
+Use `[brand.advisory]` for optional positioning, goals and deliberate product
+boundaries that guide advice and prompt curation. Keep public identity and claims
+in `brand.about` and `brand.facts`. Buyer answerers and graders do not receive
+the advisory brief; advisory providers do. See [the fields and privacy boundary](../reference/#advisory-brief)
+and [Next steps](../reading-results/#quick-wins). The table requires 0.6.0 or later.
+
 ## Sites
 
 List your sites to identify your pages, assign fixes to owners, and see which sites assistants use or miss.

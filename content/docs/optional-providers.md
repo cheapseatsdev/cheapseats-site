@@ -26,7 +26,7 @@ The tables list each pass, its switch and command. Passes reuse stored decisions
 | **Cluster objections and praise**, so wordings of one complaint count as one | `cluster_phrases` | objections and sentiment, "(3 wordings)"; `cheapseats cluster` | under a cent |
 | **Second opinions** on every grade's verdict and evidence sentence | `second_opinions` | a block under the prompt grid, beside each answer, the set page's "Jev agrees" column; `cheapseats verdicts` | under a cent |
 | **Page types and source classes** where the rule lists said other or editorial | `page_types` | the Page types and Sources tables, a "typed by Jev" chip; `cheapseats classify` | a fraction of a cent |
-| **One card for one page**: fixes from different sets that want the same page | `fix_matches` | quick wins, "also asked for by"; `cheapseats match-fixes` | under a cent |
+| **One card for one page**: fixes from different sets that want the same page | `fix_matches` | Next steps actions, "also asked for by"; `cheapseats match-fixes` | under a cent |
 | **Prompt judgments**: duplicates, off-target, intent and branded wording | `prompt_review` | `cheapseats check` suggestions, the prompt review's Jev section; `cheapseats judge` | a fraction of a cent, once per wording |
 
 Jev supplements the existing rules: configured competitor aliases still fold names, and `[sources]` overrides Jev's host classification. Decisions below `min_confidence` do not take effect. Second opinions appear beside the original grades and never replace them; read disagreements first when checking a grade.
