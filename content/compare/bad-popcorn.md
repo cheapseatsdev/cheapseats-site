@@ -37,7 +37,7 @@ Both call models directly rather than reproducing personalized consumer sessions
 - **Composite score:** Bad Popcorn's [API docs](https://badpopcorn.ai/api-docs) describe a 0–100 score combining mentions, position, sentiment and source quality, with unpublished weights. Cheap Seats reports separate rates and checked evidence quotes.
 - **Share of voice:** Bad Popcorn's [FAQ](https://badpopcorn.ai/#faq) doesn't state its denominator. Cheap Seats counts each product once per answer, across every product named ([formula](/docs/metrics/#share-of-voice-and-position)).
 - **Search and recall:** Cheap Seats reports required-search and no-tools answers separately. Bad Popcorn's methodology doesn't state whether answers searched.
-- **Shop data:** Shopify/WooCommerce catalogue sync, ChatGPT shopping and product feeds require Enterprise ([product](https://badpopcorn.ai/product)); they aren't part of Growth's drafting workflow.
+- **Shop data:** ChatGPT shopping and product feeds require Enterprise; Shopify and WooCommerce product sync is listed without a plan label, and you copy an approved change into Shopify yourself ([product](https://badpopcorn.ai/product)).
 
 ## Start with Cheap Seats if…
 

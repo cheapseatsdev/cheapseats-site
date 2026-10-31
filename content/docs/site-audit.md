@@ -1,6 +1,6 @@
 ---
 title: "Free site checks: audit, citations, AI crawlers"
-description: "Three free checks that call no model: what AI crawlers can read on your sites, which cited pages name you, and AI crawler and visit counts from your access logs."
+description: "Three free checks that call no model: what AI crawlers can read on your sites, which cited pages name you, and crawler and visit counts from your access logs."
 weight: 320
 group: Acting on it
 ---

@@ -15,6 +15,8 @@ For Docker and Kubernetes deployments, start from the [config template](https://
 - **Secrets in the environment:** `CHEAPSEATS_TOKENS` (required beyond localhost), `ANTHROPIC_API_KEY` for API grading and analysis, `OPENAI_API_KEY` for OpenAI answerers, and `TYPESAFE_API_KEY` or `EXA_API_KEY` only with `[typesafe]` or `[exa]` in the config (or their `CHEAPSEATS_*_BASE_URL` proxies; see [Optional providers](../optional-providers/)). Containers use API providers: the image has no Claude Code or Codex CLI. Subscription answerers are skipped there; `check` fails if none can run, or if the grader or analyst requires a missing CLI.
 - **Time to stop.** On SIGTERM Cheap Seats stops starting runs and marks the ones in progress as interrupted; on the next start it resumes them, oldest first, keeping every answer they already had. Give it 30 seconds.
 - **Probes:** `GET /healthz` answers `ok` without a token.
+- **Open to crawlers and browsers:** `/robots.txt`, `/favicon.ico` and `/apple-touch-icon.png` answer without a token too. The robots file says `Disallow: /api/` and leaves pages to be crawled, since a shared report says `noindex` itself and a signed-in deployment answers a crawler with the sign-in page. To keep crawlers off a whole deployment, answer `/robots.txt` at your proxy.
+- **A proxy in front** needs a read timeout over ten minutes, for MCP's `wait_for_run`. Cheap Seats itself allows a minute to send a request, two before closing an idle connection, and 1 MiB per body (4 KiB for `/login`).
 - **Share links:** `GET /share/<token>` answers without a token, serving only that link's run ([Sharing a run](../sharing/)). Set `CHEAPSEATS_PUBLIC_URL` to the address people reach Cheap Seats at, such as `https://cheapseats.example.com`, so the links point there. Behind a proxy, without it, a link can point at the address the proxy reaches Cheap Seats on; one that would point at a loopback address gets a warning. A proxy that signs people in must let `/share/` through for links to work.
 
 ## An image per config commit
@@ -22,7 +24,7 @@ For Docker and Kubernetes deployments, start from the [config template](https://
 Cheap Seats ships as an image, `ghcr.io/cheapseatsdev/cheapseats:<version>`, and a Helm chart, `oci://ghcr.io/cheapseatsdev/charts/cheapseats`, released together at the same version. The release image has no config in it. For production, build your config into an image on top of that release:
 
 ```dockerfile
-FROM ghcr.io/cheapseatsdev/cheapseats:0.5.3
+FROM ghcr.io/cheapseatsdev/cheapseats:0.5.8
 COPY cheapseats.toml /config/cheapseats.toml
 COPY prompt-sets /config/prompt-sets
 ARG REVISION=""
@@ -45,7 +47,7 @@ docker run -d --name cheapseats --restart unless-stopped --stop-timeout 30 \
   -v cheapseats-data:/data \
   -v "$PWD:/config:ro" \
   --env-file .env \
-  ghcr.io/cheapseatsdev/cheapseats:0.5.3
+  ghcr.io/cheapseatsdev/cheapseats:0.5.8
 ```
 
 Keep the published port on loopback and put a TLS-terminating proxy in front for remote access: requests carry access tokens. To mount the config somewhere else, pass `-e CHEAPSEATS_CONFIG=/that/path/cheapseats.toml` too.
@@ -66,7 +68,7 @@ printf 'CHEAPSEATS_TOKENS=%s\n' "$(openssl rand -hex 32)" >cheapseats.env
 "${EDITOR:-vi}" cheapseats.env    # add ANTHROPIC_API_KEY=<key>, and OPENAI_API_KEY if an answerer uses it
 kubectl create secret generic cheapseats --from-env-file=cheapseats.env && rm cheapseats.env
 
-helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.5.3 \
+helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.5.8 \
   --set image.repository=ghcr.io/acme/cheapseats-config \
   --set image.tag=<config commit> \
   --set existingSecret=cheapseats
@@ -74,7 +76,7 @@ helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 
 kubectl port-forward svc/cheapseats 3000:3000         # or set ingress.enabled, ingress.host and ingress.tls
 ```
 
-An ingress needs TLS, either in `ingress.tls` or at a proxy in front. Requests carry access tokens.
+An ingress needs TLS: set `ingress.tls`, or `ingress.externalTLS: true` when TLS ends at a proxy in front. Without either, the install or upgrade fails, since requests carry access tokens.
 
 Chart values:
 
@@ -82,7 +84,7 @@ Chart values:
 - `existingSecret`: a Secret you create holding `CHEAPSEATS_TOKENS`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` if an answerer uses it, and `TYPESAFE_API_KEY` or `EXA_API_KEY` with `[typesafe]` or `[exa]`. The chart never takes keys as values: a value named like one fails the install. `extraEnv` and `extraEnvFrom` pick single keys out of other Secrets.
 - `env`: plain environment for values that aren't secrets, such as `CHEAPSEATS_CONFIG_REV` or the key-adding proxies `CHEAPSEATS_ANTHROPIC_BASE_URL`, `CHEAPSEATS_TYPESAFE_BASE_URL` and `CHEAPSEATS_EXA_BASE_URL`.
 - `persistence`: the volume for the database (1Gi by default), or an `existingClaim`.
-- `ingress`: off by default, with `className`, `annotations`, `host` and `tls` when on. Set `tls`, or terminate TLS in front of the ingress: every request carries an access token.
+- `ingress`: off by default, with `className`, `annotations`, `host` and `tls` when on. Set `tls`, or `externalTLS: true` when TLS ends in front of the ingress; the chart refuses an ingress with neither.
 - The usual knobs: `nameOverride`, `image.pullPolicy`, `imagePullSecrets`, `service.type` and `port`, `resources`, `terminationGracePeriodSeconds`, `nodeSelector`, `tolerations`, `affinity` and `podAnnotations`.
 
 The plain app image works too, with the config mounted at `/config` by `extraVolumes` and `extraVolumeMounts`. The template's [Kubernetes guide](https://github.com/cheapseatsdev/cheapseats-config-template/blob/main/deploy/README.md) walks through it.

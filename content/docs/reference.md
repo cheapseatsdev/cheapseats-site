@@ -102,7 +102,7 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `get_prompt_set`   | the prompts in one set, and the competitor names the grader folds onto          |
 | `start_run`        | start a run over a set (costs money; returns the id); takes `set` and `dry_run`. With `dry_run: true` it starts nothing and returns the plan: answers per answerer and track, answerers skipped, estimated cost from each answerer's recent answers and their grading (priced by `[pricing]`; re-grades count toward grading, so it errs high), today's remaining budget, and whether it would be refused |
 | `list_runs`        | recent runs with status and headline rates                                      |
-| `get_run`          | rates per answerer and track (and `unbranded`, without branded prompts), share of voice with named rate, positions and top 3, head to head, objections, sources by kind and host, cited pages by type, `opportunities`, the outreach list, the brand's pages found but not cited, net sentiment with top praise and objections, the run's themes, the fix list, insights, one line per prompt; with the providers on, `own_pages` per prompt, `neutral_retrieval`, `prospects`, second-opinion counts and up to ten disagreements, and `misstatements` when facts are checked |
+| `get_run`          | rates per answerer and track (and `unbranded`, without branded prompts), share of voice with named rate, positions and top 3, head to head, objections with the pages behind each, sources by kind and host, `cited_page_changes` after two citation checks, cited pages by type, `opportunities`, the outreach list, the brand's pages found but not cited, net sentiment with top praise and objections, the run's themes, the fix list, insights, one line per prompt; with the providers on, `own_pages` per prompt, `neutral_retrieval`, `prospects`, second-opinion counts and up to ten disagreements, and `misstatements` when facts are checked |
 | `wait_for_run`     | waits on the server for a run and returns its `list_runs` row (status, rates, rank) once every answer is graded and the fix list is built, so `get_run` is complete; takes `run` and `timeout_seconds` (default 90, at most 600). On the timeout it returns `timed_out: true` with the run's progress so far, to be called again; a run left queued by a restart says so in `note` |
 | `get_result`       | one answer in full: text, grade, searches and citations                         |
 | `get_next_steps`   | verified actions, bounded investigations and market findings from the latest completed analysis of each active set; respects the current advisory brief. Read-only |
@@ -119,7 +119,7 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `suggest_prompts`  | drafts new buyer questions for a set as TOML to paste, with repeats dropped; takes `set` and `n` (default 10, max 50). One analyst call; writes nothing |
 | `audit_sites`      | audits sites for AI crawlers, returning findings and fixes; takes `site`, `cached` and `info`. No model calls; optional Exa page reads are billed |
 | `check_citations`  | fetches cited third-party pages and checks brand/competitor names; takes `run`, `limit` and `cached`. No model calls; optional Exa page reads are billed |
-| `get_crawlers`     | AI crawler fetches and AI referrals per page from imported logs, beside how often runs cite each; takes `last_days`, `flag` and `limit`. User agent only, unverified |
+| `get_crawlers`     | AI crawler fetches, AI referrals and people's visits per page from imported logs, beside how often runs cite each; takes `last_days`, `flag` and `limit`. User agent only, unverified |
 | `review_prompts`   | a set's [prompt review](../prompt-review/): flat, noisy, off-target, duplicate, rewritten and branded prompts, and gaps; takes `set`, `days` (30, 60 or 90) and `suggest`. Free unless `suggest`, which is one analyst call for proposed edits |
 | `regrade`          | grade a set's, or one run's, stored answers again with today's grader, brand and competitors; takes `target` (a set or run id), `since_days` (default 28, 0 for all) and `dry_run` (true unless set to false). The dry run says how many answers and the estimated cost; the real one runs in the background within the daily budget. See [Re-grading](../regrading/) |
 | `share_run`        | a read-only [share link](../sharing/) to a run's report; takes `run`, or `set` for its newest finished run, `days` (default 30, max 365) and `include_answers`. The URL is shown only this once |
@@ -159,7 +159,7 @@ The server also offers three **prompts**, each telling the model which tools to 
 | `GET /api/runs/{id}/searches`        | what the assistants searched in a run; `pool=1` adds the set's earlier same-method runs |
 | `GET`/`POST /api/audit`              | the latest audit; POST runs one and waits (optional Exa reads are billed) |
 | `GET`/`POST /api/runs/{id}/citation-check` | the latest citation check; POST checks the `n` most-cited third-party pages (default 25) and waits (optional Exa reads are billed) |
-| `GET /api/crawlers`                  | AI crawler and referral counts per page, from imported logs; takes `days` (default 30) |
+| `GET /api/crawlers`                  | AI crawler, referral and visit counts per page, from imported logs; takes `days` (default 30) |
 | `GET /api/citations`                 | cited URLs across runs; takes `urlContains`, `lastDays` and `set`     |
 | `POST /api/search-probe`             | one search, verbatim; takes `{"query", "allowed_domains"?, "blocked_domains"?, "engine"?}` |
 | `GET /api/competitors/suggestions`   | the hosts competitor discovery found (`suggestions` and `toml`); calls no provider   |
@@ -176,7 +176,7 @@ A run's JSON (`/api/runs/{id}`, and `/runs/{id}/export.json`) carries everything
 
 In the web UI, `/sets/{id}/review` is a set's [prompt review](../prompt-review/) (`/api/sets/{id}/review` its JSON), `/sets/{id}/regrade` shows a set's re-grade dry run and starts one ([Re-grading](../regrading/)), and `/share/{token}` is a run's [share page](../sharing/).
 
-`GET /healthz` answers `ok` without a token, for a container's liveness probe. `GET /share/{token}` is the only other page open without a sign-in besides `/login` and static files, and serves only that link's run.
+`GET /healthz` answers `ok` without a token, for a container's liveness probe. `GET /share/{token}` is the only other page open without a sign-in besides `/login`, `/robots.txt` (which says `Disallow: /api/`), the root icons and static files, and serves only that link's run.
 
 ## Access
 
