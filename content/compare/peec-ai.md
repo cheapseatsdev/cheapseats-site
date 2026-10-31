@@ -13,7 +13,7 @@ As of October 2026, from Cheap Seats' docs and Peec AI's own pricing, docs and c
 
 | | Cheap Seats | Peec AI |
 | --- | --- | --- |
-| **Price** | Free MIT software; API calls or installed subscription CLIs ([cost and budget](/docs/cost-and-budget/)) | Starter (50 prompts), Pro (150) and Advanced (350), each with 3 models of your choice, daily, 15% off yearly; Enterprise custom and annual, through sales ([pricing](https://peec.ai/pricing)) |
+| **Price** | Free MIT software; API calls or installed subscription CLIs ([cost and budget](/docs/cost-and-budget/)) | Starter $95 (50 prompts), Pro $245 (150) and Advanced $495 a month (350), each with 3 models of your choice, daily, 15% off yearly; Enterprise custom and annual, through sales ([pricing](https://peec.ai/pricing)) |
 | **Where it runs** | Self-hosted SQLite; Docker, Helm or exe.dev ([self-hosting](/docs/self-hosting/)) | Hosted SaaS |
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Pick 3 of ChatGPT, Google AI Overviews, Google AI Mode, Gemini, Microsoft Copilot and Naver AI. Perplexity, Claude Sonnet and Haiku, Grok, DeepSeek, Qwen and Mistral are add-ons or on Enterprise ([pricing](https://peec.ai/pricing), [AI instructions](https://peec.ai/ai-instructions)); up to 13 models on [Enterprise](https://peec.ai/for-enterprise) |
 | **How it asks** | Direct model APIs or CLIs | Logged-out web-interface automation ([intro](https://docs.peec.ai/intro-to-peec-ai)); see the collection paths above |
@@ -24,7 +24,7 @@ As of October 2026, from Cheap Seats' docs and Peec AI's own pricing, docs and c
 | **Grading** | Recommended, mentioned or absent; position, top pick, objections and optional fact checking ([how grading works](/docs/how-grading-works/)) | Your tracked name and aliases, or a regex you write ([competitors](https://docs.peec.ai/identifying-your-competitors)); then position, win rate, sentiment and a [fact check](https://docs.peec.ai/brand-perception-fact-checking); objections come from separate questions ([objections](https://docs.peec.ai/brand-perception-objections)) |
 | **What to fix** | Ranked fix briefs; before/after attempt checks ([from fix to pull request](/docs/fix-to-pull-request/)) | Actions: site fixes, your own pages (with a brief or suggested rewrites), mentions elsewhere and wrong claims, rated on a five-level relative impact; a chart marks when each was done ([actions](https://docs.peec.ai/actions)); no test against noise stated |
 | **Agencies and teams** | One brand per instance; no seats, no agency tier | Unlimited users; agency plans ([agencies](https://peec.ai/for-agencies)); SAML SSO on Enterprise ([SSO](https://docs.peec.ai/sso)) |
-| **API / MCP** | Web UI, CLI, JSON API and MCP server | Customer API, for Enterprise ([API](https://docs.peec.ai/api/introduction)); MCP server on every paid plan, with OAuth, read and write tools ([MCP](https://docs.peec.ai/mcp/introduction)) |
+| **API / MCP** | Web UI, CLI, JSON API and MCP server | Customer API on Pro, Advanced, Enterprise and agency plans, not Starter ([API](https://docs.peec.ai/api/introduction)); MCP server on every paid plan, with OAuth, read and write tools ([MCP](https://docs.peec.ai/mcp/introduction)) |
 | **Data** | Your SQLite file; calls go to configured providers | Hosted by Peec AI on Google Cloud; CSV, Data Studio and API ([privacy](https://peec.ai/legal/privacy-policy)) |
 
 ## What's the same
