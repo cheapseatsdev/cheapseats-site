@@ -22,7 +22,7 @@ Nothing is written unless you pass `-dry-run=false`.
 
 - **Set:** finished runs in `-since` (`28d`, `72h` or `all`; default 28 days). **Run:** that run only.
 - **Skipped:** runs already matching today's grading-input fingerprint: grader prompt and model, brand name, aliases and `about`, and competitors' names and aliases.
-- **Ineligible:** unfinished or running runs, or answers asked under another answer prompt or search policy. Re-grading cannot change how an answer was obtained.
+- **Ineligible:** unfinished or running runs, or answers asked under another answer prompt, search policy or set of CLI arguments (a `claude-code` or `codex` answerer called differently, as in 0.5.6). Re-grading cannot change how an answer was obtained.
 
 ## What it costs
 
