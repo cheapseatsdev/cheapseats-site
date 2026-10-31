@@ -7,6 +7,8 @@ group: Start here
 
 ## What you need
 
+If AI visibility is new to you, read [what AEO/GEO means and how the workflow works](../understanding-ai-visibility/) first. This page gets the app running; [your first run](../first-run/) explains what to do with its answers.
+
 **Use Go with subscriptions, or Docker for the quickest setup with API keys.**
 
 | How you access models | Setup | What you need |
@@ -124,7 +126,7 @@ Before asking questions, use **Checks → Site audit** in the web UI to
 [check what AI crawlers can read on your sites](../site-audit/). It makes no model calls;
 optional Exa fallback reads can cost money.
 
-Then run a set from its dashboard page and [read the results and fix list](../reading-results/).
+Then [run a set and read the answers](../first-run/). Leave with a useful decision before choosing work; the [results reference](../reading-results/) maps every view.
 
 ## Running on your subscriptions
 

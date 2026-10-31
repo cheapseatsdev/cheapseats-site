@@ -3,5 +3,5 @@
 {{- if not $meta }}{{ errorf "Unknown figure %q in %s" $name .Position }}{{ end -}}
 <figure class="explainer">
   <figcaption><strong>{{ $meta.title }}</strong><span>{{ $meta.caption }}</span></figcaption>
-  {{ partial (printf "figures/%s.html" $name) (dict "meta" $meta "Page" .Page) }}
+  {{ partial (printf "figures/%s.html" ($meta.layout | default $name)) (dict "meta" $meta "Page" .Page) }}
 </figure>

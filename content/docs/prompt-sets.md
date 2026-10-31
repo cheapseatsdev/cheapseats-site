@@ -7,6 +7,8 @@ group: Start here
 
 Each file in your config repo's `prompt-sets/` is one category of buyer questions. Cheap Seats only reads them, so change one with a pull request, after `cheapseats check`.
 
+Start with [Choosing useful buyer questions](../choosing-questions/) for buyer situations, examples, intent and review outcomes. This page owns the TOML format, stable IDs and effects on trends.
+
 ## Format
 
 ```toml

@@ -7,6 +7,8 @@ group: Reading what it finds
 
 Start with the run's rates, then open the answers behind a weak prompt. Use their objections, searches and citations to understand the market and choose a useful next step. [Metric definitions](../metrics/) gives the formulas; this page helps you find the evidence.
 
+For a first visit, [Your first run](../first-run/) walks from collection through interpretation and a decision. To assess a later change, use [Measuring success](../measuring-success/).
+
 ## Tracks
 
 **Search** answers use web search; **recall** answers use no tools. They are graded and reported separately. [How grading works](../how-grading-works/#two-tracks) explains what each measures.
@@ -67,11 +69,9 @@ Once work is recorded for a fix whose target is on one of your sites, its card s
 
 Quick wins is now **Next steps**. Open it from the navigation, or from a run to see that run's analysis. The hub uses the latest completed analysis of each active set.
 
-| View | What belongs here | What to do with it |
-| --- | --- | --- |
-| **Actions** | A specific change verified against current artifacts, capabilities, strategy and eligibility | Review its evidence and completion check, then use its implementation prompt |
-| **Investigations** | A bounded unresolved check that could change a useful decision | Complete the read-only check before proposing work |
-| **Market findings** | Supported learning about buyers, competitors and positioning, including accepted product limits | Use the evidence to improve decisions and messaging; it need not create a task |
+{{< figure name="advice-decisions" >}}
+
+An empty Actions view can be valid; first check whether analysis completed. Missing or failed verification remains unknown rather than a conclusion that no work is worthwhile.
 
 The analyst generates candidates, verifies them, then ranks eligible actions. A page missing from an AI answer does not establish that it is missing from your site. Unreadable pages and unknown listing rules remain unknown. Existing work and deliberate product limits can close a proposal instead of creating more pages or features. Zero actions is a valid result.
 

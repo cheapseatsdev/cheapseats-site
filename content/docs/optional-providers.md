@@ -14,6 +14,8 @@ Each is off until its table is present in `cheapseats.toml`; its switches then d
 
 Most passes run after a run or on demand and store their results. Reports read those results without calling a provider; the interactive search probe is the exception. These features require Cheap Seats 0.4.0 or later.
 
+Choose a pass when its additional evidence could change a decision: ambiguous name grouping, disputed grades, unclear source coverage or a specific query to investigate. [Which check or evaluation should I run?](../checks-and-evaluations/) explains the end-to-end paths, outcomes and rerun signals, including how Jev second opinions differ from the Evaluation preview's independent checks.
+
 ## What they add
 
 The tables list each pass, its switch and command. Passes reuse stored decisions where their inputs are unchanged; some web content caches expire. Costs below use the example `[pricing]` rates and exclude hosting.

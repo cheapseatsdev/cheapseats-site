@@ -7,6 +7,10 @@ group: Reading what it finds
 
 An answer can recommend you and get your price, platform or product wrong. List facts under `[brand]` to check answers that name you for contradictions. Findings appear under **Got wrong about you** and feed the fix list. They do not change grades or trends.
 
+Run the workflow as **maintain current public facts → check eligible answers → inspect the claimed contradiction and quote → decide whether a supported correction is needed**. An empty completed check means no contradiction of those listed facts was found in the checked eligible answers; it does not certify every claim as true. A failed check is incomplete evidence, not an empty successful result.
+
+Revisit after a factual product change, a suspicious claim or a grading change that alters eligibility. Success is a correct, supported interpretation and an appropriate response, including no change when the answer is accurate. [Choose a check](../checks-and-evaluations/) if the concern is visibility, site access or grading rather than a contradiction.
+
 ```toml
 [brand]
 facts = [
