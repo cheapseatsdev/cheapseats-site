@@ -83,7 +83,7 @@ concurrency = 6
 
 - **`daily_usd`** limits new billable attempts in a UTC day across all providers and runs.
 - **`reservation_usd`** is the allowance reserved for a call before it starts (default $0.60).
-- **`concurrency`** limits calls in flight through the budget controller.
+- **`concurrency`** limits calls in flight through the budget controller: 1 to 64, and 4 when unset.
 
 Before a billable attempt, Cheap Seats checks the ledger's settled costs and outstanding reservations against `daily_usd`. It settles the entry to known usage afterward; unknown or cancelled attempts retain at least their reservation.
 
