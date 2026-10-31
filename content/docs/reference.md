@@ -14,7 +14,8 @@ cheapseats serve [-addr 127.0.0.1:3000]   web UI, JSON API, MCP and the daily sc
 cheapseats sets                           list prompt sets
 cheapseats run <set-id>                   run one set and wait for it (API calls cost money)
 cheapseats report [-json] <run-id>        rates, share of voice and top pages for a run
-cheapseats fixes [-rebuild] <run-id>      the run's fix list as markdown
+cheapseats next-steps [-rebuild] <run-id> actions, investigations and market findings
+cheapseats fixes [-rebuild] <run-id>      alias for next-steps
 cheapseats themes <run-id> [-rebuild]     net sentiment and the run's themes; -rebuild runs the theme pass again (one grader call)
 cheapseats fold <run-id>                  put the run's new product names to Jev ([typesafe])
 cheapseats coverage <run-id>              search the brand's sites for each prompt ([exa])
@@ -82,6 +83,10 @@ The output contains `cheapseats.toml` plus discovery, use-cases, alternatives, p
 
 Generated files are validated before writing. Existing target files abort the write. Review all TODOs, especially guessed brand details, `audience`, `facts` and buyer questions, then follow [Getting started](../getting-started/#point-cheap-seats-at-it).
 
+## Advisory brief
+
+`[brand.advisory]` accepts `positioning` (string), `goals` and `boundaries` (string arrays). These guide advice and prompt curation only; buyer answerers and graders do not receive them. They are sent to the configured advisory model providers, so keep secrets out of this brief. Changes require saved actions to be verified again. See [Next steps](../reading-results/#quick-wins).
+
 ## MCP server
 
 `/api/mcp` is an MCP server (Streamable HTTP), so Claude Code, Claude Desktop or any MCP client can list prompt sets, start runs and read the results without the web UI.
@@ -100,7 +105,8 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `get_run`          | rates per answerer and track (and `unbranded`, without branded prompts), share of voice with named rate, positions and top 3, head to head, objections with the pages behind each, sources by kind and host, `cited_page_changes` after two citation checks, cited pages by type, `opportunities`, the outreach list, the brand's pages found but not cited, net sentiment with top praise and objections, the run's themes, the fix list, insights, one line per prompt; with the providers on, `own_pages` per prompt, `neutral_retrieval`, `prospects`, second-opinion counts and up to ten disagreements, and `misstatements` when facts are checked |
 | `wait_for_run`     | waits on the server for a run and returns its `list_runs` row (status, rates, rank) once every answer is graded and the fix list is built, so `get_run` is complete; takes `run` and `timeout_seconds` (default 90, at most 600). On the timeout it returns `timed_out: true` with the run's progress so far, to be called again; a run left queued by a restart says so in `note` |
 | `get_result`       | one answer in full: text, grade, searches and citations                         |
-| `get_quick_wins`   | the ranked fixes, filterable by gap, set, site, status and priority, each with its Claude prompt and the work submitted for it; `brief` leaves out the prompts and `limit` caps the list |
+| `get_next_steps`   | verified actions, bounded investigations and market findings from the latest completed analysis of each active set; respects the current advisory brief. Read-only |
+| `get_quick_wins`   | verified actions only, filterable by gap, set, site, status and priority, each with its Claude prompt and the work submitted for it; `brief` leaves out the prompts and `limit` caps the list |
 | `mark_fix`         | record the commit or pull request submitted for a fix, as proposed or accepted; or dismiss the fix with `state: dismissed`, no `url` and the reason as `note` |
 | `set_attempt_state` | move submitted work on: accepted when it merges, withdrawn when it's closed; withdrawing a dismissal undoes it |
 | `list_attempts`    | the work submitted for fixes, with each one's outcome (moved, worse, mixed, no detectable change, needs regrade...) tested against noise |
@@ -144,7 +150,8 @@ The server also offers three **prompts**, each telling the model which tools to 
 | `POST /api/runs/{id}/cancel`, `/retry` | stop a run, or finish an unfinished one                             |
 | `GET`/`POST /api/runs/{id}/shares`   | the run's share links; POST makes one from `{"days"?, "include_answers"?}` and returns it as `url`, once |
 | `DELETE /api/shares/{id}`            | revokes a share link                                                  |
-| `GET /api/quick-wins`                | the ranked fixes across sets; takes `gap`, `set`, `site` (a url, a kind like `docs`, or `elsewhere`), `status` (`open`, `proposed`, `accepted`, `dismissed`; dismissed fixes only when asked for) and `priority` |
+| `GET /api/next-steps`               | verified actions, investigations and market findings |
+| `GET /api/quick-wins`                | verified actions only across sets; takes `gap`, `set`, `site` (a url, a kind like `docs`, or `elsewhere`), `status` (`open`, `proposed`, `accepted`, `dismissed`; dismissed fixes only when asked for) and `priority` |
 | `POST /api/runs/{id}/fixes/{rank}/attempts` | records work submitted for a fix: `{"url", "state"?, "note"?}`, state `proposed` (default) or `accepted`; or `{"state": "dismissed", "note": "<reason>"}`, with no `url` |
 | `POST /api/attempts/{id}`            | moves an attempt on: `{"state": "accepted"}` or `"withdrawn"`; withdrawing a dismissal undoes it |
 | `GET /api/attempts`                  | the work submitted for fixes, newest first, with outcomes; takes `set` |
