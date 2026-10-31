@@ -113,7 +113,7 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `suggest_prompts`  | drafts new buyer questions for a set as TOML to paste, with repeats dropped; takes `set` and `n` (default 10, max 50). One analyst call; writes nothing |
 | `audit_sites`      | audits sites for AI crawlers, returning findings and fixes; takes `site`, `cached` and `info`. No model calls; optional Exa page reads are billed |
 | `check_citations`  | fetches cited third-party pages and checks brand/competitor names; takes `run`, `limit` and `cached`. No model calls; optional Exa page reads are billed |
-| `get_crawlers`     | AI crawler fetches and AI referrals per page from imported logs, beside how often runs cite each; takes `last_days`, `flag` and `limit`. User agent only, unverified |
+| `get_crawlers`     | AI crawler fetches, AI referrals and people's visits per page from imported logs, beside how often runs cite each; takes `last_days`, `flag` and `limit`. User agent only, unverified |
 | `review_prompts`   | a set's [prompt review](../prompt-review/): flat, noisy, off-target, duplicate, rewritten and branded prompts, and gaps; takes `set`, `days` (30, 60 or 90) and `suggest`. Free unless `suggest`, which is one analyst call for proposed edits |
 | `regrade`          | grade a set's, or one run's, stored answers again with today's grader, brand and competitors; takes `target` (a set or run id), `since_days` (default 28, 0 for all) and `dry_run` (true unless set to false). The dry run says how many answers and the estimated cost; the real one runs in the background within the daily budget. See [Re-grading](../regrading/) |
 | `share_run`        | a read-only [share link](../sharing/) to a run's report; takes `run`, or `set` for its newest finished run, `days` (default 30, max 365) and `include_answers`. The URL is shown only this once |
@@ -152,7 +152,7 @@ The server also offers three **prompts**, each telling the model which tools to 
 | `GET /api/runs/{id}/searches`        | what the assistants searched in a run; `pool=1` adds the set's earlier same-method runs |
 | `GET`/`POST /api/audit`              | the latest audit; POST runs one and waits (optional Exa reads are billed) |
 | `GET`/`POST /api/runs/{id}/citation-check` | the latest citation check; POST checks the `n` most-cited third-party pages (default 25) and waits (optional Exa reads are billed) |
-| `GET /api/crawlers`                  | AI crawler and referral counts per page, from imported logs; takes `days` (default 30) |
+| `GET /api/crawlers`                  | AI crawler, referral and visit counts per page, from imported logs; takes `days` (default 30) |
 | `GET /api/citations`                 | cited URLs across runs; takes `urlContains`, `lastDays` and `set`     |
 | `POST /api/search-probe`             | one search, verbatim; takes `{"query", "allowed_domains"?, "blocked_domains"?, "engine"?}` |
 | `GET /api/competitors/suggestions`   | the hosts competitor discovery found (`suggestions` and `toml`); calls no provider   |
@@ -169,7 +169,7 @@ A run's JSON (`/api/runs/{id}`, and `/runs/{id}/export.json`) carries everything
 
 In the web UI, `/sets/{id}/review` is a set's [prompt review](../prompt-review/) (`/api/sets/{id}/review` its JSON), `/sets/{id}/regrade` shows a set's re-grade dry run and starts one ([Re-grading](../regrading/)), and `/share/{token}` is a run's [share page](../sharing/).
 
-`GET /healthz` answers `ok` without a token, for a container's liveness probe. `GET /share/{token}` is the only other page open without a sign-in besides `/login` and static files, and serves only that link's run.
+`GET /healthz` answers `ok` without a token, for a container's liveness probe. `GET /share/{token}` is the only other page open without a sign-in besides `/login`, `/robots.txt` (which says `Disallow: /api/`), the root icons and static files, and serves only that link's run.
 
 ## Access
 

@@ -20,6 +20,19 @@ From a release before prompt ids: run `cheapseats migrate-config` on your config
 cheapseats migrate-config [dir]           give each prompt an id, in sets written before ids
 ```
 
+## Upgrading to 0.5
+
+No schema changes from 0.5.0 to 0.5.8. Four 0.5.0 changes can need something from you first:
+
+- **A Helm ingress needs TLS.** `ingress.enabled: true` without `ingress.tls` fails to install or upgrade, because the sign-in cookie carries the access token. Set `ingress.tls`, or `ingress.externalTLS: true` when TLS ends in front of the Ingress. The chart also refuses a literal key or token in `extraEnv`; use `valueFrom.secretKeyRef` or `existingSecret`.
+- **Config limits.** `[budget] concurrency` must be 1 to 64 (unset still means 4), and an answerer's `samples` and `[tiers.plg] max_samples` at most 20 a track. A config above these refuses to start, so run `cheapseats check` first.
+- **`.env` can't redirect requests or change sign-in.** A `.env` line setting a `*_BASE_URL`, a proxy or certificate variable, `CHEAPSEATS_CLI_ENV`, `CHEAPSEATS_AUTH_HEADER`, `CHEAPSEATS_ALLOWED_EMAILS`, or a variable that loads code at startup (`LD_*`, `NODE_OPTIONS`...) is ignored with a warning. Export those in the real environment. `CHEAPSEATS_TOKENS` still loads from `.env`.
+- **Startup checks its auth settings.** `serve` refuses to start when `CHEAPSEATS_TOKENS` is set but holds no token, or `CHEAPSEATS_AUTH_HEADER` is blank, and runs without sign-in only on `localhost` or a loopback address.
+
+**0.5.6 is a new grading method for runs with a `claude-code` or `codex` answerer.** Codex's search track now searches the live web and its recall track has no web search, and a run's method records the arguments each CLI is called with. Those runs start a new trend at the first run on 0.5.6; earlier Codex answers aren't comparable, and re-grading can't repair how an answer was obtained. Runs with only API answerers carry on. See [What's re-graded](../regrading/#whats-re-graded).
+
+Also in 0.5: a fix can be [dismissed](../reading-results/#quick-wins) with its reason (0.5.7), and `cheapseats crawl import` counts [people's visits](../site-audit/#ai-crawlers) (0.5.5); re-import recent access logs once to backfill them.
+
 ## Upgrading to 0.4
 
 - **Two schema migrations**, backed up first as always. An existing deployment upgrades with no config changes.

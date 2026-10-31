@@ -46,6 +46,6 @@ Behind a proxy, set `CHEAPSEATS_PUBLIC_URL`. A link that would point at a loopba
 ## Security
 
 - **The token** is 128 random bits (22 characters, base64url), stored as its SHA-256. A copy of the database opens no link.
-- **Open without a sign-in**: `/share/<token>` is the only page besides `/login`, `/healthz` and static files, and only for `GET` with a well-formed token. A proxy that signs people in must let `/share/` through for links to work.
+- **Open without a sign-in**: `/share/<token>` is the only page besides `/login`, `/healthz`, `/robots.txt`, the root icons and static files, and only for `GET` with a well-formed token. A proxy that signs people in must let `/share/` through for links to work.
 - **Headers**: `X-Robots-Tag: noindex, nofollow`, `Referrer-Policy: no-referrer` (so the token doesn't leak to sites the page links to), `Cache-Control: no-store` and `X-Frame-Options: DENY`.
 - **Guessing**: a client asking for 20 unknown tokens in a minute gets 429 for unknown tokens until the minute is up. A token is looked up before the limit is checked, so a link that works always opens, even behind a proxy where every client shares the proxy's address.
