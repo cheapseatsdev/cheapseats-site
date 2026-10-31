@@ -52,7 +52,7 @@ This example config has scheduling disabled. Open `http://127.0.0.1:3000/evaluat
 
 For your own results, choose **Add answers from a saved run**. Select answers from a finished run and explicitly choose **Import selected answers**. You can also enter from **Review saved answers** on a run or **Review this grade** beside an answer. One unique case opens directly; larger selections open their review queue. There is no required collection size; a single import accepts up to 500 selected answers within 16 MiB.
 
-Run imports keep the exact saved answer, question, intent and recorded brand/competitor context, including completed regrade context. They retain source IDs and keep matching cases' existing reviews. If the run changes after preview, review the selection again. Missing source evidence stays unavailable. The source-run link reveals the old model grade, so visiting the report first does not create independently blinded adjudication.
+Run imports keep the exact saved answer, question, intent and recorded brand/competitor context, including completed regrade context. They retain source IDs and keep matching cases' existing reviews. If the run changes after preview, review the selection again. Missing source evidence stays unavailable. A source-run link is shown only when the exact saved answer and question are present in this deployment. Bundled or foreign evidence keeps its provenance without linking to a missing local run. The source-run link reveals the old model grade, so visiting the report first does not create independently blinded adjudication.
 
 To use your own collection, import a private JSONL file before starting the server:
 
@@ -84,13 +84,13 @@ For example, “I don't have reliable information on a product called Cheap Seat
 
 “What remains unclear, if unresolved?” asks what prevents you from deciding, such as a truncated answer or ambiguous product identity. Leave it blank when you can finish the judgment. A quote match establishes that the words occur in the answer; you still decide whether they support your interpretation.
 
-**Save and next** commits the judgment and advances. Drafts autosave without advancing or counting as completed reviews. **End session** saves an unfinished draft for later. The reviewed count measures unique answers; editing one answer repeatedly does not add reviews.
+**Save and next** commits the judgment and advances. Uncommitted drafts autosave without advancing or counting as completed reviews. Edits to an already committed judgment stay in the browser tab until an explicit save; autosave does not replace the committed review. Reopening a session after an interrupted save offers continuation without saving the same judgment again. **End session** saves an unfinished draft for later. The reviewed count measures unique answers; editing one answer repeatedly does not add reviews.
 
 ## 2. Check the session as a batch
 
 At **Review session complete**, the app asks whether to run independent checks over the finished judgments. Review the configured grader, cached assessments and allowance, then choose **Run checks for all N**. One progress page tracks the batch and opens the combined comparison when it finishes. If all assessments are already saved, choose **Compare all N saved assessments**.
 
-The Evaluation overview offers the same flow across the selected import's finished judgments, up to 500 cases per batch. You do not need to reopen and save each answer. Leaving the page does not stop the worker; it pauses after 30 minutes or an explicit pause. Saved results survive a restart. Resume reuses completed assessments; retrying failed or interrupted checks is explicit. A crashed worker's lease must expire before recovery. Failures remain unknown, never absent.
+The Evaluation overview offers the same flow across the selected import's finished judgments, up to 500 cases per batch. You do not need to reopen and save each answer. Leaving the page does not stop the worker; it pauses after 30 minutes or an explicit pause. Saved results survive a restart. Resume reuses completed assessments. Pauses, cancellations, timeouts and exhausted admission budgets preserve the assessment allowance and resume without selecting retry; recorded provider charges remain. Provider or parse failures and crashed claims still need explicit retry. A crashed worker's lease must expire before recovery. After a final-attempt crash, an expired lease is an unknown result rather than a permanently running check; late workers cannot save after expiry. Failures remain unknown, never absent.
 
 The assessor receives the saved question, complete answer, intended brand, competitors and rubric, with old and human labels, notes and quotes removed. That makes the assessment independent of those labels; it does not make two model judgments statistically independent or create another human review.
 
