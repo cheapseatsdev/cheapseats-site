@@ -1,6 +1,6 @@
 ---
 title: "Free site checks: audit, citations, AI crawlers"
-description: "Three free checks that call no model: what AI crawlers can read on your sites, which cited pages name you, and AI crawler and visit counts from your access logs."
+description: "Three free checks that call no model: what AI crawlers can read on your sites, which cited pages name you, and crawler and visit counts from your access logs."
 weight: 320
 group: Acting on it
 ---
@@ -72,7 +72,6 @@ Each finding has a severity, a check id, what it found and a fix.
 | `page.title-long` | warning | a `<title>` over 60 characters | shorten it, key words first |
 | `page.description-missing` | warning | no meta description | add a 50–160 character summary |
 | `page.description-length` | warning | a meta description outside 50–160 characters | rewrite it to 50–160 characters |
-| `page.h1` | warning | not exactly one `<h1>` | give it exactly one |
 | `page.lang` | warning | no `lang` on `<html>` | add `lang="en"`, or the page's language |
 | `page.canonical` | warning | no canonical link | add `<link rel="canonical" href="<its URL>">` |
 | `page.open-graph` | warning | no `og:title` or `og:description` | add both |
