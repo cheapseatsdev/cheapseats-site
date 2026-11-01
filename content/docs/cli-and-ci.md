@@ -64,7 +64,7 @@ For API keys, use a container with its own data volume; no Go or subscription CL
 
 ```bash
 docker run --rm --env-file .env -v cheapseats-data:/data -v "$PWD:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.7.0 run head-to-heads
+  ghcr.io/cheapseatsdev/cheapseats:0.7.1 run head-to-heads
 ```
 
 On a deployment that is already serving, start the run through the API instead (below) or from the set's page. It lands in the same database and the same trend, and counts against the same daily budget.
