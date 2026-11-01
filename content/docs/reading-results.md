@@ -71,7 +71,7 @@ Quick wins is now **Next steps**. Open it from the navigation, or from a run to 
 
 {{< figure name="advice-decisions" >}}
 
-An empty Actions view can be valid; first check whether analysis completed. Missing or failed verification remains unknown rather than a conclusion that no work is worthwhile.
+An empty Actions view can be valid; first check whether analysis completed. Missing or failed verification remains unknown rather than a conclusion that no work is worthwhile. From 0.7.0, a failed rebuild never replaces a good analysis: the hub, dashboard and run page keep showing the earlier one, say which analysis they show, and display the error.
 
 The analyst generates candidates, verifies them, then ranks eligible actions. A page missing from an AI answer does not establish that it is missing from your site. Unreadable pages and unknown listing rules remain unknown. Existing work and deliberate product limits can close a proposal instead of creating more pages or features. Zero actions is a valid result.
 

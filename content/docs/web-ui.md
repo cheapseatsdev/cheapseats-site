@@ -19,10 +19,10 @@ group: Reading what it finds
 | Run | one run's rates, answers, grades, searches and fixes ([Reading results](../reading-results/)) |
 | Checks | search probe, [site audit](../site-audit/) and AI crawlers |
 
-The unreleased [Evaluation preview](../evaluation/) adds **Checks → Evaluation**
+The [Evaluation preview](../evaluation/) (0.7.0 and later) adds **Checks → Evaluation**
 for reviewing saved answers, batch-checking judgments and comparing grader prompts.
-It requires the preview build and an explicit flag; it is not in 0.6.0 or the
-read-only demo.
+It is off by default: set `CHEAPSEATS_EVALUATION=1`. Read-only mode turns it off,
+so the public demo does not show it.
 
 ## Sign-in
 

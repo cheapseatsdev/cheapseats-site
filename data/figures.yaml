@@ -73,7 +73,7 @@ first-run-decision:
   lanes:
     - title: The grade looks wrong
       steps: [Review the saved label, Resolve the interpretation]
-      note: Use Evaluation in the preview build; record the evidence before changing a grader.
+      note: Use the Evaluation preview; record the evidence before changing a grader.
     - title: The grade fits, a claim may be wrong
       steps: [Check facts and current artifacts, Choose justified work or a check]
       note: A literal quote is not proof the claim is supported.
