@@ -12,6 +12,23 @@ group: Running it
 
 With an image per config commit (see [Deploying](../deploying/)), upgrading Cheap Seats is a reviewed change to the `FROM` line in your config repo.
 
+## Upgrading to 0.7.1
+
+**No schema change** (still schema 19), so upgrading from 0.7.0 is a plain binary or image swap,
+and rolling back to 0.7.0 needs no restore.
+
+**Competitor rows can merge.** Name folding now reads Jev's decisions the same way on every read,
+and names whose decisions point at each other fold onto one row. A report that showed "Scrunch" and
+"Scrunch AI" as two rows can show one. Configured competitors and aliases still win. See
+[provider mechanics](../reference/#optional-provider-mechanics).
+
+**`cheapseats regrade -force`** (MCP `regrade` with `force`) re-grades runs already graded with
+today's inputs, so a fix to the grader's code can reach stored answers. It is a dry run by
+default; see [After a fix to the grader's code](../regrading/#after-a-fix-to-the-graders-code).
+
+`cheapseats fixes -rebuild` now says "Showing the run's earlier analysis…" once when a failed
+rebuild keeps the earlier analysis.
+
 ## Upgrading to 0.7.0
 
 **Database schema 13 → 19.** The first start copies the database to
@@ -22,10 +39,11 @@ upgrade is not in the copy. 0.7.0 includes 0.6.1's fixes.
 
 **The grader finds a brand split by formatting**: `**Example** **Tracker**`, a
 line break or a double space inside the name. Such answers were graded absent
-before. Answers graded before 0.7.0 keep their stored grade, and
-[re-grading](../regrading/) won't revisit them: the fix is not a grading input,
-so a regrade reports those runs as already graded with today's inputs. Only new
-answers benefit.
+before. Answers graded before 0.7.0 keep their stored grade, and a plain
+[re-grade](../regrading/) won't revisit them: the fix is not a grading input,
+so a regrade reports those runs as already graded with today's inputs. From
+0.7.1, `cheapseats regrade -force` re-grades them; preview its dry run and cost
+before passing `-dry-run=false`.
 
 **A failed analysis never replaces a good one.** When a rebuild fails, the
 earlier analysis stays and the error is recorded; the hub, dashboard, run page,

@@ -31,9 +31,10 @@ cheapseats discover [-json]               sites like your competitors' and yours
 cheapseats probe [-engine claude|exa|both] [-domains a,b] [-exclude a,b] [-json] "<query>"
                                        one search as the answerers' tool returns it; exa and both need [exa]
 cheapseats suggest-prompts <set-id> [-n 10]  new buyer questions for a set, as TOML to paste (one analyst call; writes nothing)
-cheapseats regrade [-since 28d] [-dry-run=false] <set-id|run-id>
+cheapseats regrade [-since 28d] [-force] [-dry-run=false] <set-id|run-id>
                                        grade stored answers again with today's grader, brand and competitors;
-                                       a dry run with its cost unless -dry-run=false
+                                       a dry run with its cost unless -dry-run=false;
+                                       -force: also runs already graded with today's inputs
 cheapseats review [-days 30] [-json] [-suggest] [-jev] <set-id>
                                        the prompts themselves: flat, noisy, off-target, duplicate and branded ones, and gaps (free; -suggest: one analyst call)
 cheapseats audit [-pages 10] [-info] [-json] [site...]   what AI crawlers can read on the brand's sites (optional Exa reads are billed)
@@ -55,7 +56,7 @@ For the [subscription setup](../getting-started/#go-with-subscriptions), run com
 
 The [CLI and CI guide](../cli-and-ci/) covers exit codes and pipelines. `audit`, `check-citations` and `crawl` call no model; optional Exa fallback page reads can cost money; see [Free site checks](../site-audit/). `init` is in [Getting started](../getting-started/#start-one-from-your-website-cheapseats-init), `regrade` in [Re-grading stored answers](../regrading/), `review` in [Reviewing your prompts](../prompt-review/), `fold`, `coverage`, `cluster`, `verdicts`, `classify`, `match-fixes`, `judge`, `baseline`, `prospect`, `discover` and the probe's `-engine` in [Optional providers](../optional-providers/), `misstatements` in [Got wrong about you](../got-wrong/). `check -no-jev` skips the prompt judgments and `review -jev` asks for them.
 
-- **`regrade`**: `-since` takes `28d`, `72h` or `all` (default 28 days) and applies to a set; `-dry-run` is true by default.
+- **`regrade`**: `-since` takes `28d`, `72h` or `all` (default 28 days) and applies to a set; `-dry-run` is true by default. `-force` (0.7.1 and later) also re-grades runs already graded with today's inputs, after a fix to the grading code; its dry run adds `forced_runs`, `forced_answers` and `forced_usd`. See [After a fix to the grader's code](../regrading/#after-a-fix-to-the-graders-code).
 
 ## Evaluation (preview)
 
@@ -146,7 +147,7 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `check_citations`  | fetches cited third-party pages and checks brand/competitor names; takes `run`, `limit` and `cached`. No model calls; optional Exa page reads are billed |
 | `get_crawlers`     | AI crawler fetches, AI referrals and people's visits per page from imported logs, beside how often runs cite each; takes `last_days`, `flag` and `limit`. User agent only, unverified |
 | `review_prompts`   | a set's [prompt review](../prompt-review/): flat, noisy, off-target, duplicate, rewritten and branded prompts, and gaps; takes `set`, `days` (30, 60 or 90) and `suggest`. Free unless `suggest`, which is one analyst call for proposed edits |
-| `regrade`          | grade a set's, or one run's, stored answers again with today's grader, brand and competitors; takes `target` (a set or run id), `since_days` (default 28, 0 for all) and `dry_run` (true unless set to false). The dry run says how many answers and the estimated cost; the real one runs in the background within the daily budget. See [Re-grading](../regrading/) |
+| `regrade`          | grade a set's, or one run's, stored answers again with today's grader, brand and competitors; takes `target` (a set or run id), `since_days` (default 28, 0 for all), `dry_run` (true unless set to false) and `force` (0.7.1 and later; false unless set to true, to re-grade runs already graded with today's inputs). The dry run says how many answers and the estimated cost; the real one runs in the background within the daily budget. See [Re-grading](../regrading/) |
 | `share_run`        | a read-only [share link](../sharing/) to a run's report; takes `run`, or `set` for its newest finished run, `days` (default 30, max 365) and `include_answers`. The URL is shown only this once |
 | `cancel_run`       | stop an in-progress run                                                         |
 
@@ -195,7 +196,7 @@ curl -H "Authorization: Bearer <token>" \
   "https://<host>/api/citations?urlContains=docs.example.com&lastDays=30"
 ```
 
-A run's JSON (`/api/runs/{id}`, and `/runs/{id}/export.json`) carries everything on the run page under `Summary`: `voice` with `named_rate`, `share_of_voice`, `avg_position`, `named_first`, `top3` and `position_weighted` per product (and `share`, the old name for `named_rate`), `unbranded`, `head_to_head`, `objections`, `source_classes`, `hosts` with `bucket`, `outreach` and `found_not_cited`; net sentiment and themes are under `opinion`; each source page has a `page_type`, rolled up in `page_types`; `opportunities` scores kind of site and page type together. With the providers on, each objection carries its `wordings`, each prompt its `coverage` and `baseline`, the run its `prospects` and `second_opinion`, and `misstatements` when facts are checked. Each grade carries its `evidence`, and a re-graded run lists its `regrades`: when, how many answers, the cost, and the method and grader it had before. [Metric definitions](../metrics/) defines each field. An attempt's `outcome` has `status`, `summary`, and `named` and `recommended` as `{d, margin, prompts}`.
+A run's JSON (`/api/runs/{id}`, and `/runs/{id}/export.json`) carries everything on the run page under `Summary`: `voice` with `named_rate`, `share_of_voice`, `avg_position`, `named_first`, `top3` and `position_weighted` per product (and `share`, the old name for `named_rate`), `unbranded`, `head_to_head`, `objections`, `source_classes`, `hosts` with `bucket`, `outreach` and `found_not_cited`; net sentiment and themes are under `opinion`; each source page has a `page_type`, rolled up in `page_types`; `opportunities` scores kind of site and page type together. With the providers on, each objection carries its `wordings`, each prompt its `coverage` and `baseline`, the run its `prospects` and `second_opinion`, and `misstatements` when facts are checked. Each grade carries its `evidence`, and a re-graded run lists its `regrades`: when, how many answers, the cost, the method and grader it had before, and `forced` when it was already graded with today's inputs. [Metric definitions](../metrics/) defines each field. An attempt's `outcome` has `status`, `summary`, and `named` and `recommended` as `{d, margin, prompts}`.
 
 `/api/citations` counts each answer that linked a URL once, and returns `runs_scanned` and `answers_scanned` alongside the pages, so a URL missing from the list reads as uncited across that many answers.
 
@@ -219,7 +220,7 @@ Prompts and answers are sent to the model providers on every run; `brand.about` 
 
 Passes store decisions and reuse unchanged inputs. Re-running a pass can still make calls for missing or changed inputs, or after a web-content cache expires.
 
-- **Name folding:** one decision per new name against plausible known products, with a “different product” option; configured aliases remain authoritative.
+- **Name folding:** one decision per new name against plausible known products, with a “different product” option; configured aliases and competitor names remain authoritative. From 0.7.1, decisions are read back the same way on every read: the most confident decision per name, chains followed to their end, and decisions that point round in a circle (a → b → a) treated as one product, folded onto one row under the circle's most confident decision's display (ties go to the display that sorts first byte by byte). `cheapseats fold` shows where each name lands, or why a decision isn't read.
 - **Phrase clustering:** new objection and praise wordings are compared with established clusters. JSON exposes each cluster's `wordings`.
 - **Second opinions:** stored opinions are compared with the answer's current grade when read: agrees, disagrees or unsure below `min_confidence`.
 - **Classification:** Jev handles pages the rules call `other` and third-party hosts they call `editorial`. `[sources]` wins over Jev, which wins over the built-in default.

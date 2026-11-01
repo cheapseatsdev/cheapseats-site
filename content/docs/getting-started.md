@@ -49,7 +49,7 @@ docker run --rm --name cheapseats --stop-timeout 30 \
   --env-file .env \
   -v "$PWD:/config:ro" \
   -v cheapseats-data:/data \
-  ghcr.io/cheapseatsdev/cheapseats:0.7.0
+  ghcr.io/cheapseatsdev/cheapseats:0.7.1
 ```
 
 Open <http://127.0.0.1:3000> and sign in with the token from `.env`. The `cheapseats-data` volume
@@ -107,7 +107,7 @@ repo. [Configuration](../configuration/) and [prompt sets](../prompt-sets/) expl
 
 ```bash
 docker run --rm --env-file .env -v "$PWD:/config:ro" \
-  ghcr.io/cheapseatsdev/cheapseats:0.7.0 check
+  ghcr.io/cheapseatsdev/cheapseats:0.7.1 check
 ```
 
 Then stop and restart the [Docker command above](#docker-with-api-keys) to load your changes.

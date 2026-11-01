@@ -35,7 +35,7 @@ Cheap Seats has no telemetry or service in the middle. Answers, grades, citation
 
 The image serves on port 3000 and keeps its database on `/data`. It reads your config from `/config` and refuses to start without `CHEAPSEATS_TOKENS`, since it listens beyond localhost. It's built for linux/amd64 and linux/arm64.
 
-For a first run, follow [Docker with API keys](../getting-started/#docker-with-api-keys): it uses the prebuilt `ghcr.io/cheapseatsdev/cheapseats:0.7.0` image with the config template, an Anthropic API key and a sign-in token. An OpenAI API key is optional. No app checkout, Go installation or image build is needed.
+For a first run, follow [Docker with API keys](../getting-started/#docker-with-api-keys): it uses the prebuilt `ghcr.io/cheapseatsdev/cheapseats:0.7.1` image with the config template, an Anthropic API key and a sign-in token. An OpenAI API key is optional. No app checkout, Go installation or image build is needed.
 
 Keep the published port on `127.0.0.1` for local access. To serve it further, put a TLS-terminating proxy in front rather than publishing the port, since every request carries an access token. To measure your own brand, edit the config template and mount it at `/config`. Pin an exact version; the [releases](https://github.com/cheapseatsdev/cheapseats/releases) list them.
 
