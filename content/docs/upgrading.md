@@ -12,6 +12,19 @@ group: Running it
 
 With an image per config commit (see [Deploying](../deploying/)), upgrading Cheap Seats is a reviewed change to the `FROM` line in your config repo.
 
+## Upgrading to 0.7.2
+
+**No schema change** (still schema 19), so upgrading from 0.7.1 is a plain binary or image swap,
+and rolling back to 0.7.1 needs no restore.
+
+**New on the run page:** Pages referenced shows, for each of your own pages, how many unbranded
+answers citing it named you and recommended you (see [Named when cited](../metrics/#buckets-outreach-and-found-but-not-cited)),
+and Scores says why an answerer's answers failed. When the analyst's reply is unusable, the fix
+list's error now ends with the reply's stop reason and block types.
+
+On exe.dev, re-run `deploy/exe-dev-ops.sh <vm> <email>` to install the watch's new
+[recommended-rate drop alert](../deploying/#exedev).
+
 ## Upgrading to 0.7.1
 
 **No schema change** (still schema 19), so upgrading from 0.7.0 is a plain binary or image swap,

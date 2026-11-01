@@ -144,6 +144,7 @@ With competitors configured, only they count as competitors here; with none, eve
 
 - **Cited without your brand** (`outreach`): the missing hosts that aren't a competitor's own, ranked by distinct competitors named × answers citing the host. These are the pages to get your brand onto.
 - **Found but not cited** (`found_not_cited`): your own pages that searches returned and no answer linked.
+- **Named when cited**: for each of your own pages in Pages referenced, of the answers that cite it to prompts that don't name you (`cited_unbranded`), those that name you (`cited_named`); beneath it, of those asked for a choice (`cited_choice`), those that recommend you (`cited_recommended`). Info answers count only toward named, as in your rates. Each answer counts once however often it links the page, and branded prompts are left out because their answers name you trivially. A page cited in nine answers and named in two of them was read and not credited: a fix for the page's copy. Other sites' pages show –. The same fields are on each page in the run's JSON and MCP `get_run`'s `top_pages`.
 - **Cited pages that changed** (`cited_page_changes`): when this run and an earlier run of the set both had a [citation check](../site-audit/#citation-check), the pages read by both whose text started or stopped naming you or a competitor since, with the run compared against. A comparison of stored readings: it fetches nothing and doesn't say when the page changed or why.
 
 ### Neutral retrieval

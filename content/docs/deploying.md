@@ -24,7 +24,7 @@ For Docker and Kubernetes deployments, start from the [config template](https://
 Cheap Seats ships as an image, `ghcr.io/cheapseatsdev/cheapseats:<version>`, and a Helm chart, `oci://ghcr.io/cheapseatsdev/charts/cheapseats`, released together at the same version. The release image has no config in it. For production, build your config into an image on top of that release:
 
 ```dockerfile
-FROM ghcr.io/cheapseatsdev/cheapseats:0.7.1
+FROM ghcr.io/cheapseatsdev/cheapseats:0.7.2
 COPY cheapseats.toml /config/cheapseats.toml
 COPY prompt-sets /config/prompt-sets
 ARG REVISION=""
@@ -47,7 +47,7 @@ docker run -d --name cheapseats --restart unless-stopped --stop-timeout 30 \
   -v cheapseats-data:/data \
   -v "$PWD:/config:ro" \
   --env-file .env \
-  ghcr.io/cheapseatsdev/cheapseats:0.7.1
+  ghcr.io/cheapseatsdev/cheapseats:0.7.2
 ```
 
 Keep the published port on loopback and put a TLS-terminating proxy in front for remote access: requests carry access tokens. To mount the config somewhere else, pass `-e CHEAPSEATS_CONFIG=/that/path/cheapseats.toml` too.
@@ -68,7 +68,7 @@ printf 'CHEAPSEATS_TOKENS=%s\n' "$(openssl rand -hex 32)" >cheapseats.env
 "${EDITOR:-vi}" cheapseats.env    # add ANTHROPIC_API_KEY=<key>, and OPENAI_API_KEY if an answerer uses it
 kubectl create secret generic cheapseats --from-env-file=cheapseats.env && rm cheapseats.env
 
-helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.7.1 \
+helm install cheapseats oci://ghcr.io/cheapseatsdev/charts/cheapseats --version 0.7.2 \
   --set image.repository=ghcr.io/acme/cheapseats-config \
   --set image.tag=<config commit> \
   --set existingSecret=cheapseats
@@ -135,6 +135,8 @@ An [exe.dev](https://exe.dev) VM runs Cheap Seats as a systemd service behind ex
    ```
 
 5. Backups and alerts: a nightly copy of the database (the newest 14 kept, in `~/cheapseats/backups`), and an hourly check that emails when a run ends partial, failed or out of budget, a fix list fails, or a run stalls. The address must be one exe.dev lets the VM write to: its owner, a teammate, or someone who has signed in to it.
+
+   From 0.7.2, the same check also emails when a set's newest **recommended** rate fell beyond noise against its previous run day, on either track: the paired day-over-day test behind [Rankings' "vs day before"](../reading-results/#rankings), read over the last 8 days. The test's margin is 95%, so a drop outside noise happens by chance about once in 40 runs of each set and track; read it on Rankings before acting. Daily and weekly sets are compared, less frequent ones are not, and named and top-pick rates are not checked. Each set, track and day is sent once. The watch reads Cheap Seats' port from its service on the VM, so a deploy on another port needs nothing extra, and signs in with the first token in `CHEAPSEATS_TOKENS` from `cheapseats.env`; without a token, or when Cheap Seats doesn't answer, only runs are checked.
 
    ```bash
    deploy/exe-dev-ops.sh <vm> you@example.com
