@@ -5,7 +5,7 @@ weight: 335
 group: Acting on it
 ---
 
-**Availability:** Evaluation is an unreleased preview, currently [app PR #161](https://github.com/cheapseatsdev/cheapseats/pull/161), which includes batch checks and saved-run imports. It is not part of the 0.6.0 image or the public read-only demo. It is off by default and unavailable in read-only mode.
+**Availability:** Evaluation is a preview in 0.7.0 and later, including batch checks and saved-run imports. It is off by default: set `CHEAPSEATS_EVALUATION=1` to enable it. It is unavailable in read-only mode, so the public demo does not show it.
 
 Evaluation helps answer “would this grading prompt be better?” First establish human reference labels, then compare the current grader and candidate prompts on the same saved answers. This is separate from [reviewing buyer questions](../prompt-review/) and [re-grading historical runs](../regrading/).
 
@@ -39,7 +39,7 @@ Evaluation helps answer “would this grading prompt be better?” First establi
 
 ## Start with a separate test database
 
-From the preview app checkout, with the [Go prerequisites](../getting-started/#go-with-subscriptions) installed:
+From an app checkout at v0.7.0 or later, with the [Go prerequisites](../getting-started/#go-with-subscriptions) installed:
 
 ```bash
 CHEAPSEATS_EVALUATION=1 \
@@ -167,8 +167,8 @@ A comparison report never installs a new prompt. Passing its conservative gate i
 
 These are suggested triggers, not an automatic schedule or a mandate to relabel every case each month. Reuse cached independent assessments only when their evidence, rubric, model and evaluator context still match. Running a comparison on new evidence answers a different question from repeating a call on the same case. Set the cadence by the risk, change rate and decisions you need to make.
 
-For import limits, private exports, comparison CLI commands, retry rules and complete provenance details, see the preview [repository guide](https://github.com/cheapseatsdev/cheapseats/blob/0b4321b778f401c80a6a077c04c7afaa66bb50ee/docs/evaluation.md) and [CLI reference](../reference/#evaluation-preview). For other kinds of checks, use [Which check or evaluation should I run?](../checks-and-evaluations/).
+For import limits, private exports, comparison CLI commands, retry rules and complete provenance details, see the [repository guide](https://github.com/cheapseatsdev/cheapseats/blob/v0.7.0/docs/evaluation.md) and [CLI reference](../reference/#evaluation-preview). For other kinds of checks, use [Which check or evaluation should I run?](../checks-and-evaluations/).
 
 ## Backups and rollback
 
-The preview uses database schema 19. Opening an existing database backs it up before migration, and an older binary refuses the newer schema. To roll back, restore the pre-migration backup with the older build. Use a separate test directory for the preview; a read-only copy disables writes but does not redact review evidence or private data.
+0.7.0 uses database schema 19, whether or not Evaluation is enabled. Opening an existing database backs it up before migration, and an older binary refuses the newer schema. To roll back, restore the pre-migration backup with the older build; see [Upgrading to 0.7.0](../upgrading/#upgrading-to-070). Use a separate test directory while you try the workbench; a read-only copy disables writes but does not redact review evidence or private data.

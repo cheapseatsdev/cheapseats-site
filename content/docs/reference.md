@@ -41,7 +41,9 @@ cheapseats check-citations [-n 25] [-json] <run-id>      which cited pages name 
 cheapseats crawl import [-host example.com] <logfile>... AI crawler fetches and AI referrals from access logs; - reads stdin, .gz is read as gzip
 cheapseats crawl report [-days 30] [-json]               those counts per page, beside how the latest runs cite it
 cheapseats backup <file>                  a consistent copy of the database, safe while serve runs
-cheapseats check [-no-jev]                validate the config and every prompt set
+cheapseats check [-no-jev] [-live [-live-budget 0.25]]
+                                          validate the config and every prompt set; -live also sends each
+                                          structured-output schema to the Anthropic API once (a few cents)
 cheapseats plan <before> [<after>]        what a config change does to trends, for its pull request
 cheapseats migrate-config [dir]           give each prompt an id, in sets written before ids
 cheapseats golden export <snapshot.db> [-n 80] [-set id] [-o dir]
@@ -57,7 +59,7 @@ The [CLI and CI guide](../cli-and-ci/) covers exit codes and pipelines. `audit`,
 
 ## Evaluation (preview)
 
-These commands require the unreleased Evaluation build, not the 0.6.0 image:
+These commands are in 0.7.0 and later:
 
 ```text
 cheapseats evaluation import [file.jsonl]

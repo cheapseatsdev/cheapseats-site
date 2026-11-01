@@ -12,6 +12,44 @@ group: Running it
 
 With an image per config commit (see [Deploying](../deploying/)), upgrading Cheap Seats is a reviewed change to the `FROM` line in your config repo.
 
+## Upgrading to 0.7.0
+
+**Database schema 13 → 19.** The first start copies the database to
+`cheapseats.db.bak-v13` before migrating. Older binaries refuse the migrated
+database, so rolling back means stopping Cheap Seats, restoring that copy as
+`cheapseats.db` and running the previous version. Work recorded after the
+upgrade is not in the copy. 0.7.0 includes 0.6.1's fixes.
+
+**The grader finds a brand split by formatting**: `**Example** **Tracker**`, a
+line break or a double space inside the name. Such answers were graded absent
+before. Answers graded before 0.7.0 keep their stored grade, and
+[re-grading](../regrading/) won't revisit them: the fix is not a grading input,
+so a regrade reports those runs as already graded with today's inputs. Only new
+answers benefit.
+
+**A failed analysis never replaces a good one.** When a rebuild fails, the
+earlier analysis stays and the error is recorded; the hub, dashboard, run page,
+`/api/next-steps`, `/api/runs/{id}` and MCP say which analysis they show and why.
+See [Next steps](../reading-results/#quick-wins).
+
+**Evaluation is a preview, off by default.** Set `CHEAPSEATS_EVALUATION=1` to
+enable it; read-only mode turns it off. Try it on a separate test database first;
+see [Reviewing grader labels](../evaluation/).
+
+On exe.dev:
+
+- Re-run `deploy/exe-dev-ops.sh <vm> <email>` to install the new watch. It alerts
+  on failed fix-list rebuilds of any age, and its first check skips failures an
+  earlier version already reported.
+- Optionally deploy with `LIVE_CHECK=1 deploy/exe-dev.sh …`. It runs
+  `cheapseats check -live` on the VM before the swap, sending each structured-output
+  schema to the API once with the VM's key (a few cents, capped by `LIVE_BUDGET`,
+  default 0.25 dollars), and stops the deploy if the API refuses one. Use it when the
+  grader or analyst uses the API.
+- If a new build fails to start after migrating the database, `exe-dev.sh` stops
+  and disables Cheap Seats instead of starting the old build, and prints how to
+  restore `bak-v<N>`.
+
 ## Upgrading to 0.6.0
 
 **Quick wins becomes Next steps**, with verified actions, bounded investigations
@@ -30,9 +68,12 @@ Rollback requires that backup. `/quick-wins`, `fixes` and `get_quick_wins` remai
 compatible aliases or action-only interfaces; [the reference](../reference/)
 describes the new interfaces.
 
-**Evaluation is a separate unreleased preview**, not part of this upgrade. It
-uses schema 19 and needs its own test database and explicit enablement. See the
-[preview guide](../evaluation/#backups-and-rollback) before trying it.
+Evaluation was not part of 0.6.0; it ships as a preview in 0.7.0.
+
+**0.6.1 is a patch with no schema change.** On 0.6.0, every Next steps analysis
+on the Claude API fails; 0.6.1 fixes that, and MCP `get_started` no longer returns
+`[brand.advisory]`. Runs whose analysis failed on 0.6.0 keep the error until you
+rebuild them with `cheapseats next-steps -rebuild <run-id>`.
 
 ## Upgrading to prompt ids
 
