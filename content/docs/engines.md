@@ -24,6 +24,15 @@ Claude is required; OpenAI adds an optional second assistant. CLIs run where ins
 
 Cheap Seats reports the two tracks separately, unlike a consumer app that chooses when to browse. Both can vary between answers. [How grading works](../how-grading-works/#two-tracks) explains the tracks and samples.
 
+An API call with no tools answers from what the model already knows. Cheap Seats reports that as recall rather than mixing it into search. A search-track answer that records no searches is asked again, insisting on a search; if it still records none, it fails and stays out of the rates. Search-track rates therefore come only from answers that searched. They still aren't the apps' answers: see [What that misses](#what-that-misses).
+
+To read the numbers with that in mind:
+
+- **Follow trends, not single answers.** Repeated answers vary on both tracks; [Noise and confidence](../noise-and-confidence/) says when a change is real.
+- **Act on the sources.** The search track records what each answer searched, the URLs it got back and the pages it cited. Those pages and hosts are what you can fix or reach.
+- **Compare the tracks.** Named on search but not on recall: the web is carrying you, and the model's own knowledge hasn't caught up yet.
+- **Spot-check what matters.** For questions that drive a decision, ask them in the apps your buyers use and compare.
+
 ## Why not scrape the consumer apps
 
 Tracking a consumer surface requires obtaining the answer that surface rendered, rather than substituting an API model response. Other trackers use paid scraping services. Cheap Seats avoids that dependency so you can start on a subscription you already have.
