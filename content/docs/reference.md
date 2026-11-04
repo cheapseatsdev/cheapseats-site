@@ -133,7 +133,7 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `get_result`       | one answer in full: text, grade, searches and citations                         |
 | `get_next_steps`   | verified actions, bounded investigations and market findings from the latest completed analysis of each active set; respects the current advisory brief. Read-only |
 | `get_quick_wins`   | verified actions only, filterable by gap, set, site, status and priority, each with its Claude prompt and the work submitted for it; `brief` leaves out the prompts and `limit` caps the list |
-| `mark_fix`         | record the commit or pull request submitted for a fix, as proposed or accepted; or dismiss the fix with `state: dismissed`, no `url` and the reason as `note` |
+| `mark_fix`         | address any next step: `run`, `kind` (`action` by default, `investigation` or `finding`) and `rank` (an action's rank, or the item's `number` from `get_next_steps`). Record the commit or pull request as proposed or accepted; or close it with `state: dismissed`, no `url` and, as `note`, the reason or what the check found. Work on an investigation or finding settles only that item |
 | `set_attempt_state` | move submitted work on: accepted when it merges, withdrawn when it's closed; withdrawing a dismissal undoes it |
 | `list_attempts`    | the work submitted for fixes, with each one's outcome (moved, worse, mixed, no detectable change, needs regrade...) tested against noise |
 | `get_citations`    | every URL linked in an answer across runs, filterable by URL, set and window   |
@@ -179,6 +179,7 @@ The server also offers three **prompts**, each telling the model which tools to 
 | `GET /api/next-steps`               | verified actions, investigations and market findings |
 | `GET /api/quick-wins`                | verified actions only across sets; takes `gap`, `set`, `site` (a url, a kind like `docs`, or `elsewhere`), `status` (`open`, `proposed`, `accepted`, `dismissed`; dismissed fixes only when asked for) and `priority` |
 | `POST /api/runs/{id}/fixes/{rank}/attempts` | records work submitted for a fix: `{"url", "state"?, "note"?}`, state `proposed` (default) or `accepted`; or `{"state": "dismissed", "note": "<reason>"}`, with no `url` |
+| `POST /api/runs/{id}/investigations/{n}/attempts`, `/findings/{n}/attempts` | the same body, for investigation or market finding `n` (its `number`) |
 | `POST /api/attempts/{id}`            | moves an attempt on: `{"state": "accepted"}` or `"withdrawn"`; withdrawing a dismissal undoes it |
 | `GET /api/attempts`                  | the work submitted for fixes, newest first, with outcomes; takes `set` |
 | `GET /api/rankings`                  | daily rank and rates per set, with rolling averages, bands and day-over-day margins; takes `lastDays`, `set` and `window` (7, 14 or 28) |
