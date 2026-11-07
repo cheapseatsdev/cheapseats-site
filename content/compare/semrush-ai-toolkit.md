@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Semrush AI Toolkit
-description: Which Semrush report covers each engine, and how its metrics, prompts and prices compare. October 2026.
+description: Which Semrush report covers each engine, and how its metrics, prompts and prices compare. November 2026.
 weight: 50
 ---
 Choose [Cheap Seats](/compare/) for self-hosted Claude and OpenAI benchmarks. Choose Semrush's [AI Visibility Toolkit](https://www.semrush.com/kb/1493-ai-visibility-toolkit) for AI visibility alongside SEO. Its engine coverage depends on the report; Claude requires a separate Enterprise AIO contract.
@@ -9,7 +9,7 @@ Choose [Cheap Seats](/compare/) for self-hosted Claude and OpenAI benchmarks. Ch
 
 ## Side by side
 
-As of October 2026, from Cheap Seats' docs and Semrush's own pages: the [AI Visibility Toolkit](https://www.semrush.com/kb/1493-ai-visibility-toolkit), [where its data comes from](https://www.semrush.com/kb/1607-semrush-ai-visibility-data), [metrics](https://www.semrush.com/kb/1594-ai-seo-metrics), [Prompt Tracking](https://www.semrush.com/kb/1503-prompt-tracking), [Brand Performance](https://www.semrush.com/kb/1595-brand-performance-reports), and the [toolkit](https://www.semrush.com/pricing/ai/), [Semrush One](https://www.semrush.com/pricing/seo-ai-search/) and [Enterprise AIO](https://www.semrush.com/pricing/enterprise/) pricing pages:
+As of November 2026, from Cheap Seats' docs and Semrush's own pages: the [AI Visibility Toolkit](https://www.semrush.com/kb/1493-ai-visibility-toolkit), [where its data comes from](https://www.semrush.com/kb/1607-semrush-ai-visibility-data), [metrics](https://www.semrush.com/kb/1594-ai-seo-metrics), [Prompt Tracking](https://www.semrush.com/kb/1503-prompt-tracking), [Brand Performance](https://www.semrush.com/kb/1595-brand-performance-reports), and the [toolkit](https://www.semrush.com/pricing/ai/), [Semrush One](https://www.semrush.com/pricing/seo-ai-search/) and [Enterprise AIO](https://www.semrush.com/pricing/enterprise/) pricing pages:
 
 | | Cheap Seats | Semrush AI Visibility Toolkit |
 | --- | --- | --- |

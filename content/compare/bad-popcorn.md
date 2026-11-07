@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Bad Popcorn
-description: "Briefs for your repo and approved CMS drafts: collection, markets, metrics and commerce plan limits, October 2026."
+description: "Briefs for your repo and approved CMS drafts: collection, markets, metrics and commerce plan limits, November 2026."
 weight: 35
 ---
 Choose [Cheap Seats](/compare/) for self-hosted benchmarks and fixes reviewed in your own repo. Choose Bad Popcorn for country-specific shopping questions and, on Growth, drafted content.
@@ -9,7 +9,7 @@ Choose [Cheap Seats](/compare/) for self-hosted benchmarks and fixes reviewed in
 
 ## Side by side
 
-As of October 2026, from Cheap Seats' docs and Bad Popcorn's own [home](https://badpopcorn.ai/), [methodology](https://badpopcorn.ai/methodology), [product](https://badpopcorn.ai/product) and [API docs](https://badpopcorn.ai/api-docs) pages:
+As of November 2026, from Cheap Seats' docs and Bad Popcorn's own [home](https://badpopcorn.ai/), [methodology](https://badpopcorn.ai/methodology), [product](https://badpopcorn.ai/product) and [API docs](https://badpopcorn.ai/api-docs) pages:
 
 | | Cheap Seats | Bad Popcorn |
 | --- | --- | --- |

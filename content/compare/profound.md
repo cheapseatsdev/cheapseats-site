@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Profound
-description: How collection, denominators, model weighting and enterprise coverage differ, with prices and qualifications from October 2026.
+description: How collection, denominators, model weighting and enterprise coverage differ, with prices and qualifications from November 2026.
 weight: 10
 ---
 Choose [Cheap Seats](/compare/) for self-hosted measurement of Claude and OpenAI models. Choose Profound for hosted consumer-app coverage across more engines and markets, enterprise controls and marketing agents.
@@ -18,13 +18,13 @@ Profound's visibility divides by answers naming [any brand](https://docs.tryprof
 
 ## Side by side
 
-As of October 2026, from Cheap Seats' docs and Profound's own pages, linked in each row:
+As of November 2026, from Cheap Seats' docs and Profound's own pages, linked in each row:
 
 | | Cheap Seats | Profound |
 | --- | --- | --- |
 | **Price** | Free MIT software; API calls or installed subscription CLIs ([cost and budget](/docs/cost-and-budget/)) | Free trial (50 prompts, run daily for 7 days). Agency Growth: 400 credits a month per client workspace, with no price on the pricing page; Profound's [agency launch post](https://www.tryprofound.com/blog/agencies-launch-your-aeo-practice-with-profound) of November 2025 put it at $399 a month per client workspace. Enterprise is custom ([pricing](https://www.tryprofound.com/pricing)) |
 | **Where it runs** | Self-hosted SQLite; Docker, Helm or exe.dev ([self-hosting](/docs/self-hosting/)) | Hosted SaaS |
-| **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Trial: ChatGPT, Gemini, Google AI Overviews. Enterprise: "up to 9" of ChatGPT, Perplexity, Google AI Mode, AI Overviews, Gemini, Copilot, DeepSeek, Claude and Exa ([pricing](https://www.tryprofound.com/pricing)); the product page lists Grok in place of Exa ([Answer Engine Insights](https://www.tryprofound.com/features/answer-engine-insights)) |
+| **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Trial: ChatGPT, Gemini, Google AI Overviews. Enterprise: "up to 9" of ChatGPT, Perplexity, Google AI Mode, AI Overviews, Gemini, DeepSeek, Claude, Exa and Meta's Muse Spark, added in November 2026 ([pricing](https://www.tryprofound.com/pricing)); the product page lists Copilot and Grok in place of Exa and Muse Spark ([Answer Engine Insights](https://www.tryprofound.com/features/answer-engine-insights)) |
 | **Web search vs memory** | Search and recall, as separate tracks ([two tracks](/docs/how-grading-works/#two-tracks)) | "We capture directly from the browser" ([Answer Engine Insights](https://www.tryprofound.com/features/answer-engine-insights)): one answer, searching when the app decides; not split |
 | **Your prompts** | TOML in your own git repo, changed by pull request; `samples` per answerer and track | Trial: a recommended set you can't edit. Enterprise: a tailored prompt plan, edited in [Prompt Designer](https://docs.tryprofound.com/answer-engine-insights/prompt-designer); one run per prompt, model, region, persona and day ([why past numbers change](https://docs.tryprofound.com/cookbook/metrics/why-past-numbers-change)) |
 | **Markets** | No region, language or persona settings | Region and language per prompt, from 150+ regions and 30+ languages ([Answer Engine Insights](https://www.tryprofound.com/features/answer-engine-insights)); up to three personas per category, each run as an extra prompt ([Personas](https://docs.tryprofound.com/answer-engine-insights/personas)) |

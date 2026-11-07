@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Limelit Open
-description: "Recommendation judgments and reproducible name counts: engines, setup, history and open-core limits, October 2026."
+description: "Recommendation judgments and reproducible name counts: engines, setup, history and open-core limits, November 2026."
 weight: 70
 ---
 Choose Limelit Open for broader engine coverage, reproducible text matching and a single-binary install. Choose Cheap Seats for recommendation judgments, uncertainty and measured fix attempts. Limelit Open is Apache-2.0 software with SQLite and MCP access; its hosted counterpart, Limelit Cloud, sells prepaid credits.
@@ -9,11 +9,11 @@ Choose Limelit Open for broader engine coverage, reproducible text matching and 
 
 {{< figure name="compare-limelit" >}}
 
-Cheap Seats grades the whole answer, uses brand context to reject namesakes, then checks for a name or alias. Limelit's [text search](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/methodology.md#finding-brands-a-text-search-on-purpose) stores match offsets. Its [competitor config](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/internal/config/config.go) accepts names and domains, without aliases; discovery is a Cloud feature.
+Cheap Seats grades the whole answer, uses brand context to reject namesakes, then checks for a name or alias. Limelit's [text search](https://github.com/limelit-co/open/blob/53d178b62fc33bf23270aa4399f5f5ae4e5243bd/docs/methodology.md#finding-brands-a-text-search-on-purpose) stores match offsets. Its [competitor config](https://github.com/limelit-co/open/blob/53d178b62fc33bf23270aa4399f5f5ae4e5243bd/internal/config/config.go) accepts names and domains, without aliases; discovery is a Cloud feature.
 
 ## Side by side
 
-As of October 2026, from Cheap Seats' docs and Limelit's own [README](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/README.md), [methodology](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/methodology.md), [MCP tool catalog](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/tools.md), [providers](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/providers.md), [releases](https://github.com/limelit-co/open/releases), [Limelit Open](https://limelit.co/open) and [pricing](https://limelit.co/pricing) pages, and its code at the same commit:
+As of November 2026, from Cheap Seats' docs and Limelit's own [README](https://github.com/limelit-co/open/blob/53d178b62fc33bf23270aa4399f5f5ae4e5243bd/README.md), [methodology](https://github.com/limelit-co/open/blob/53d178b62fc33bf23270aa4399f5f5ae4e5243bd/docs/methodology.md), [MCP tool catalog](https://github.com/limelit-co/open/blob/53d178b62fc33bf23270aa4399f5f5ae4e5243bd/docs/tools.md), [providers](https://github.com/limelit-co/open/blob/53d178b62fc33bf23270aa4399f5f5ae4e5243bd/docs/providers.md), [releases](https://github.com/limelit-co/open/releases), [Limelit Open](https://limelit.co/open) and [pricing](https://limelit.co/pricing) pages, and its code at the same commit:
 
 | | Cheap Seats | Limelit Open |
 | --- | --- | --- |
@@ -34,7 +34,7 @@ As of October 2026, from Cheap Seats' docs and Limelit's own [README](https://gi
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | Dashboard, JSON API and an MCP server whose tools share Limelit Cloud's names. Chart tools that draw inline in MCP Apps hosts are on `main`, not yet in a release |
 | **Site checks** | Free site audit, citation check and AI crawler counts from your logs | Two Claude skills, `ai-crawler-check` (robots.txt, through Limelit's free checker) and `llms-txt-check`, in its plugin marketplace |
 
-Limelit Open charges no license fee or separate grading call. Its `runs_per_day` ceiling defaults to 200 answers, checked before a pass starts. The free Cloud allowance covers ChatGPT, Gemini, Perplexity and Google's AI surfaces, not Claude ([providers](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/providers.md#the-free-allowance)). Beyond it, Google's surfaces need DataForSEO or SearchApi, billed per request. Cloud estimates about 9 credits ($0.09) per prompt refresh across five standard engines, more with Claude ([pricing](https://limelit.co/pricing)).
+Limelit Open charges no license fee or separate grading call. Its `runs_per_day` ceiling defaults to 200 answers, checked before a pass starts. The free Cloud allowance covers ChatGPT, Gemini, Perplexity and Google's AI surfaces, not Claude ([providers](https://github.com/limelit-co/open/blob/53d178b62fc33bf23270aa4399f5f5ae4e5243bd/docs/providers.md#the-free-allowance)). Beyond it, Google's surfaces need DataForSEO or SearchApi, billed per request. Cloud estimates about 9 credits ($0.09) per prompt refresh across five standard engines, more with Claude ([pricing](https://limelit.co/pricing)).
 
 ## What's the same
 
@@ -59,10 +59,10 @@ You need recommendation evidence, especially for a common product name. Local su
 
 - **You need more engines.** Limelit adds Perplexity, Gemini, Google AI Overviews, AI Mode and Copilot to [Cheap Seats' Claude and OpenAI coverage](/docs/engines/).
 - **You want a single-file install.** No container required; the wizard reads your brand from your site, with a first number in about ten minutes.
-- **You need reproducible counts.** Limelit publishes a [check](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/qa/overview-from-export.md) that rebuilds every Overview number from its export. Cheap Seats' model grades can vary on close calls.
+- **You need reproducible counts.** Limelit publishes a [check](https://github.com/limelit-co/open/blob/53d178b62fc33bf23270aa4399f5f5ae4e5243bd/docs/qa/overview-from-export.md) that rebuilds every Overview number from its export. Cheap Seats' model grades can vary on close calls.
 - **You want history to follow your setup.** Adding a competitor recounts every stored answer automatically.
 - **You need hourly runs** or an answer-count spending guard.
-- **You want inline charts in MCP Apps hosts such as Claude.** Build from `main` for now. ChatGPT requires syncing answers to Cloud ([guide](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/docs/chatgpt.md)).
+- **You want inline charts in MCP Apps hosts such as Claude.** Build from `main` for now. ChatGPT requires syncing answers to Cloud ([guide](https://github.com/limelit-co/open/blob/53d178b62fc33bf23270aa4399f5f5ae4e5243bd/docs/chatgpt.md)).
 - **You want a hosted path.** Cloud keeps the same metric definitions and adds sentiment, prompt generation and multi-brand portfolios. `limelit upgrade` copies history without deleting it locally or sending provider keys.
 
 ## Taking your prompts with you

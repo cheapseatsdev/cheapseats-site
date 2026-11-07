@@ -19,7 +19,7 @@ That is a workable approach. Cheap Seats was graded `absent` in the answer; this
 
 ## What Promptfoo is
 
-Promptfoo describes itself as an open-source CLI and library for evaluating and red-teaming LLM apps. Its October 2026 README says it is part of OpenAI and remains MIT licensed.
+Promptfoo describes itself as an open-source CLI and library for evaluating and red-teaming LLM apps. Its README, read in November 2026, says it is part of OpenAI and remains MIT licensed.
 
 For visibility checks, it supplies multiple providers, web-search configuration, deterministic and model-graded assertions, repeated tests, derived metrics, and a browser results viewer. If you already use it, you can point those at your buyers' questions.
 
@@ -31,7 +31,7 @@ For visibility checks, it supplies multiple providers, web-search configuration,
 
 ## Side by side
 
-As of October 2026, from each project's own docs:
+As of November 2026, from each project's own docs:
 
 | | Cheap Seats | [Promptfoo](https://github.com/promptfoo/promptfoo) |
 | --- | --- | --- |

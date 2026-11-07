@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Otterly.AI
-description: "Recommendation grades and exact-name matching: collection, prompt units, plans and history, October 2026."
+description: "Recommendation grades and exact-name matching: collection, prompt units, plans and history, November 2026."
 weight: 30
 ---
 Choose [Cheap Seats](/compare/) for self-hosted recommendation grading on Claude and OpenAI. Choose Otterly.AI for hosted name monitoring across consumer search surfaces and countries, from $29/month for 15 prompts. A detected name does not necessarily mean an endorsement.
@@ -9,7 +9,7 @@ Choose [Cheap Seats](/compare/) for self-hosted recommendation grading on Claude
 
 ## Side by side
 
-As of October 2026, from Cheap Seats' docs and Otterly.AI's own [pricing](https://otterly.ai/pricing) page, [help center](https://help.otterly.ai/) and [API docs](https://docs.otterly.ai/):
+As of November 2026, from Cheap Seats' docs and Otterly.AI's own [pricing](https://otterly.ai/pricing) page, [help center](https://help.otterly.ai/) and [API docs](https://docs.otterly.ai/):
 
 | | Cheap Seats | Otterly.AI |
 | --- | --- | --- |
@@ -20,7 +20,7 @@ As of October 2026, from Cheap Seats' docs and Otterly.AI's own [pricing](https:
 | **Web search vs memory** | Search and recall, as separate tracks ([two tracks](/docs/how-grading-works/#two-tracks)) | Not separated: each website decides whether to search; Claude is asked with web search |
 | **Markets** | No country setting; prompts in the language you write them | A country per prompt, 70+ countries ([countries](https://help.otterly.ai/countries-otterlyai)), each using its own prompt slot ([prompt counts](https://help.otterly.ai/amount-searchprompts)); prompts run in any language, as written ([languages](https://help.otterly.ai/languages)) |
 | **Your prompts** | TOML in your own git repo, changed by pull request; no cap | Counted by plan; +100 prompts for $99/month on Standard and Premium |
-| **How often** | Your schedule, daily or weekly, with as many samples a prompt as you set | [Daily](https://help.otterly.ai/monitoring-interval), not adjustable; one answer per prompt and engine a day ([KPIs](https://help.otterly.ai/brand-report-kpi-definition)) |
+| **How often** | Your schedule, daily or weekly, with as many samples a prompt as you set | [Daily](https://help.otterly.ai/monitoring-interval), which its help center says can't be changed; its [prompt tracking page](https://otterly.ai/features/ai-prompt-tracker) offers a daily or weekly cadence per prompt. One answer per prompt and engine a day ([KPIs](https://help.otterly.ai/brand-report-kpi-definition)) |
 | **Grading** | Model-graded: recommended, mentioned or absent; position, top pick, objections and optional fact checking ([how grading works](/docs/how-grading-works/)) | Exact name matching since 27 November 2025 ([brand detection](https://help.otterly.ai/brand-detection)), with a [regex option](https://help.otterly.ai/add-brands); no separate recommendation grade |
 | **What it reports** | Named, recommended and top pick, position, share of voice, objections, net sentiment; with your facts listed, what each answer got wrong about you | Brand coverage, share of voice, position, net sentiment, domain coverage ([KPIs](https://help.otterly.ai/brand-report-kpi-definition)); ChatGPT Shopping cards (Ads paused since 16 September 2026, [changelog](https://help.otterly.ai/changelog)); weekly [Brand Profiling](https://help.otterly.ai/what-is-brand-profiling) |
 | **Noise** | 95% intervals on named, recommended and top pick; changes tested against noise ([how big a change](/docs/noise-and-confidence/)) | No intervals; it advises a broad prompt set read over weeks ([prompt tracking](https://otterly.ai/features/ai-prompt-tracker)) |

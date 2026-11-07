@@ -35,7 +35,7 @@ Cheap Seats' software is free; API calls, optional providers and hosting depend 
 | **Peec AI** | Yes, tracked prompts | Not graded; an answer counts when it contains your tracked name, an alias or your regex | Actions in four groups, from site fixes to mentions elsewhere, on a five-level impact rating | MCP on every paid plan; API from Pro |
 | **Profound** | Yes; on Enterprise, edit, disable or add prompts | Not graded; a model lists the brands each answer names | "Suggestions"; AI Marketer agents draft content | API and hosted MCP on Enterprise |
 | **Otterly.AI** | Yes, 15 to 400 by plan | Not graded; an exact text match of the names you list | Recommendations, GEO URL audits, content briefs | API and MCP from Standard |
-| **Scrunch** | Yes, 125 unique prompts on Core | Not stated | "Insights & Recommendations", page optimizations and content generation | Query API access and MCP access on Enterprise |
+| **Scrunch** | Yes, 125 unique prompts on Core | Not stated | "Insights & Recommendations", page optimizations and content generation | Query API access on Enterprise; MCP access "Custom" on Enterprise |
 | **Ahrefs Brand Radar** | Yes, custom prompts | Not stated | Not described | Not described for Brand Radar; Ahrefs lists an SEO API and SEO MCP separately |
 | **Semrush AI Visibility** | Yes, 25 prompts; 50 more for $60/month | Not graded; its extraction system finds the brand, and Mentions counts prompts | AI-generated strategic recommendations | Toolkit data isn't in the Semrush API or MCP yet; CSV and Google Sheets export |
 | **Elmo** | Yes, by hand or from an onboarding wizard | Mentions confirmed by a model, with sentiment; recommendation not graded | Opportunities: one LLM call over your data, refreshed about weekly | REST API, TypeScript and Python SDKs, MCP |
@@ -62,7 +62,7 @@ Others exist on GitHub, described here in their own words. They aren't reviewed 
 - [OpenSight](https://github.com/shuvamk/opensight) (MIT): "See how AI talks about your brand".
 - [Gego](https://github.com/AI2HU/gego) (GPL-3.0): "Generative Engine Optimization for your brand, track your GEO across all LLMs".
 - [OneGlanse](https://github.com/oneglanse/oneglanse) (MIT): "Open-source AI visibility, AEO & GEO tracker", monitoring answers "through real product UIs".
-- [GetCito](https://github.com/ai-search-guru/getcito-worlds-first-open-source-aio-aeo-or-geo-tool) (MIT): "Open source AI visibility tracking and optimization", self-hosted; its README says it is a fork of Elmo.
+- [GetCito](https://github.com/ai-search-guru/getcito-worlds-first-open-source-aio-aeo-or-geo-tool) (MIT): "An open-source platform to track and improve your brand's presence in AI answers", self-hosted on Node.js and Supabase.
 - [GEO/AEO Tracker](https://github.com/danishashko/geo-aeo-tracker) (MIT): "Open-source, self-hosted AI visibility tracker for GEO and AEO", with answers collected through Bright Data.
 - [Ansvisor](https://github.com/ansvisor/ansvisor) (MIT): "Open-source agentic AI Search Execution Platform", whose agents "turn signals into prioritized actions and draft the fixes" across ChatGPT, Claude, Gemini, Google AI Overviews and AI Mode, Perplexity, Grok and Copilot; Ansvisor Cloud is its hosted tier.
 

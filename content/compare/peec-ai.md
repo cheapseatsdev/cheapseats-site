@@ -1,6 +1,6 @@
 ---
 title: Cheap Seats vs Peec AI
-description: "Direct model calls and logged-out consumer interfaces: collection, country limits, metrics and plans, October 2026."
+description: "Direct model calls and logged-out consumer interfaces: collection, country limits, metrics and plans, November 2026."
 weight: 20
 ---
 Choose [Cheap Seats](/compare/) for self-hosted recommendation benchmarks. Choose Peec AI for hosted [consumer-app monitoring](/docs/engines/) across engines and markets. Both track your prompts and prioritize fixes.
@@ -9,19 +9,19 @@ Choose [Cheap Seats](/compare/) for self-hosted recommendation benchmarks. Choos
 
 ## Side by side
 
-As of October 2026, from Cheap Seats' docs and Peec AI's own pricing, docs and changelog pages:
+As of November 2026, from Cheap Seats' docs and Peec AI's own pricing, docs and changelog pages:
 
 | | Cheap Seats | Peec AI |
 | --- | --- | --- |
 | **Price** | Free MIT software; API calls or installed subscription CLIs ([cost and budget](/docs/cost-and-budget/)) | Starter $95 (50 prompts), Pro $245 (150) and Advanced $495 a month (350), each with 3 models of your choice, daily, 15% off yearly; Enterprise custom and annual, through sales ([pricing](https://peec.ai/pricing)) |
 | **Where it runs** | Self-hosted SQLite; Docker, Helm or exe.dev ([self-hosting](/docs/self-hosting/)) | Hosted SaaS |
-| **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Pick 3 of ChatGPT, Google AI Overviews, Google AI Mode, Gemini, Microsoft Copilot and Naver AI. Perplexity, Claude Sonnet and Haiku, Grok, DeepSeek, Qwen and Mistral are add-ons or on Enterprise ([pricing](https://peec.ai/pricing), [AI instructions](https://peec.ai/ai-instructions)); up to 13 models on [Enterprise](https://peec.ai/for-enterprise) |
+| **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Pick 3 of ChatGPT, Google AI Overviews, Google AI Mode, Gemini, Microsoft Copilot and Naver AI; another of those or Perplexity is an add-on at $30, $70 or $140 a month by plan, billed yearly. Claude Sonnet 4, GPT 5 Search, Grok, DeepSeek, Qwen, Mistral and Muse Spark, by API, are Enterprise ([pricing](https://peec.ai/pricing)); up to 13 models on [Enterprise](https://peec.ai/for-enterprise). Peec AI's [AI instructions](https://peec.ai/ai-instructions) page still puts Perplexity in every plan |
 | **How it asks** | Direct model APIs or CLIs | Logged-out web-interface automation ([intro](https://docs.peec.ai/intro-to-peec-ai)); see the collection paths above |
 | **Markets** | No country or language setting | A country per prompt: 1 per project on Starter, 3 on Pro and Advanced, unlimited on Enterprise ([pricing](https://peec.ai/pricing)) |
 | **Your prompts** | TOML in your own git repo, changed by pull request | Tracked prompts in topics and tags, by hand or CSV, each labelled branded or not and by intent automatically ([organizing](https://docs.peec.ai/organizing-your-setup)); monthly answers are "tracked prompts by active models and tracking frequency" ([pricing](https://peec.ai/pricing)) |
 | **Noise** | 95% intervals on named, recommended and top pick; changes tested against noise ([how big a change](/docs/noise-and-confidence/)) | Each prompt once a day on each model ([organizing](https://docs.peec.ai/organizing-your-setup)); hourly or weekly on [Enterprise](https://peec.ai/for-enterprise); no interval stated, though its study of 120 million chats finds more prompts beat more runs ([The key to prompt tracking](https://peec.ai/blog/the-key-to-prompt-tracking)) |
 | **Web search vs memory** | Separate required-search and no-tools tracks ([two tracks](/docs/how-grading-works/#two-tracks)) | Search use flagged per response ([intro](https://docs.peec.ai/intro-to-peec-ai)) |
-| **Grading** | Recommended, mentioned or absent; position, top pick, objections and optional fact checking ([how grading works](/docs/how-grading-works/)) | Your tracked name and aliases, or a regex you write ([competitors](https://docs.peec.ai/identifying-your-competitors)); then position, win rate, sentiment and a [fact check](https://docs.peec.ai/brand-perception-fact-checking); objections come from separate questions ([objections](https://docs.peec.ai/brand-perception-objections)) |
+| **Grading** | Recommended, mentioned or absent; position, top pick, objections and optional fact checking ([how grading works](/docs/how-grading-works/)) | Your tracked name and aliases, or a regex you write ([competitors](https://docs.peec.ai/identifying-your-competitors)); then position, win rate, sentiment and a [fact check](https://docs.peec.ai/brand-perception-fact-checking) of 5, 10 or 25 prompts by plan, unlimited on Enterprise; objections come from separate questions, monthly on Pro and weekly above, not on Starter ([objections](https://docs.peec.ai/brand-perception-objections), [pricing](https://peec.ai/pricing)) |
 | **What to fix** | Ranked fix briefs; before/after attempt checks ([from fix to pull request](/docs/fix-to-pull-request/)) | Actions: site fixes, your own pages (with a brief or suggested rewrites), mentions elsewhere and wrong claims, rated on a five-level relative impact; a chart marks when each was done ([actions](https://docs.peec.ai/actions)); no test against noise stated |
 | **Agencies and teams** | One brand per instance; no seats, no agency tier | Unlimited users; agency plans ([agencies](https://peec.ai/for-agencies)); SAML SSO on Enterprise ([SSO](https://docs.peec.ai/sso)) |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | Customer API on Pro, Advanced, Enterprise and agency plans, not Starter ([API](https://docs.peec.ai/api/introduction)); MCP server on every paid plan, with OAuth, read and write tools ([MCP](https://docs.peec.ai/mcp/introduction)) |
@@ -36,7 +36,7 @@ Both measure position among all brands named, including untracked ones ([Peec AI
 ## What's different
 
 - **Matching and history:** Peec AI uses names, aliases or regex and recounts past chats when they change. Cheap Seats grades meaning; old answers change only through explicit [re-grading](/docs/regrading/). Peec AI's docs describe no recommended grade.
-- **Share of voice:** Peec AI's [formula](https://docs.peec.ai/metrics/brand-metrics/share-of-voice) uses all brand mentions, but doesn't state whether untracked brands enter the sum. Cheap Seats includes every product named, once per answer.
+- **Share of voice:** Peec AI's [formula](https://docs.peec.ai/metrics/brand-metrics/share-of-voice) divides by all brand mentions, but the page says "all brands mentioned" in one sentence and "tracked competitors" in the next, so whether untracked brands enter the sum is unclear. Cheap Seats includes every product named, once per answer.
 - **Sentiment:** Peec AI's [score](https://docs.peec.ai/metrics/brand-metrics/sentiment) is 0–100. Cheap Seats reports net sentiment, positive minus negative, from −100 to +100.
 - **Fixes:** Peec AI provides [briefs and suggested rewrites](https://docs.peec.ai/content-optimization). Cheap Seats records target prompts and compares subsequent answers with uncertainty.
 
@@ -49,6 +49,7 @@ You want strict recommendation grades on Claude and OpenAI models and can run th
 - **You need consumer-app answers across engines and countries.** Check the table's included engines, add-ons and country limits for your plan.
 - **You're an agency.** Peec AI has agency plans on credits, pitch workspaces and client reports through Looker Studio ([agencies](https://peec.ai/for-agencies)). Cheap Seats measures one brand per instance and has no agency tier.
 - **You want earned-media opportunities as a workflow.** Peec AI's actions rank listings, editorial and reviews, and its agent can research who is behind a source and draft the outreach ([Actions](https://peec.ai/blog/turn-opportunities-into-impact-with-peec-agent-and-actions)). Cheap Seats scores the same owned and earned split, and with Exa lists prospect pages like the ones cited ([Opportunities](/docs/metrics/#opportunities)); but its fixes are still single pages to create or change, and the outreach is yours to do.
+- **You sell products through ChatGPT.** Peec AI's Shopping matches a catalog you upload to the product shortlists in your tracked ChatGPT chats, on every plan ([Shopping](https://docs.peec.ai/overview)). Cheap Seats grades brands, not products.
 
 ## Taking your prompts with you
 
