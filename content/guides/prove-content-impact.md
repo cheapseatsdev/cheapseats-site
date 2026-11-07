@@ -69,6 +69,7 @@ Subsequent runs compare exactly those prompts:
 | worse | one fell beyond its margin, with neither rising beyond its margin |
 | mixed | one rose and the other fell beyond their margins |
 | no detectable change (±X pts) | neither moved beyond its margin; the evidence remains compatible with a range of effects |
+| dismissed | the fix was closed with a reason; nothing shipped, so nothing is measured |
 
 A still-losing fix can return as **retry**, with its previous outcome attached. The attempts list retains each PR and result.
 
