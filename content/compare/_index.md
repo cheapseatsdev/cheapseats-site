@@ -5,7 +5,7 @@ weight: 25
 outputs: ["html", "markdown"]
 ---
 
-Choose the workflow you need. Each comparison explains how the tools collect answers, count mentions and help you act, using published facts as of October 2026.
+Choose the workflow you need. Each comparison explains how the tools collect answers, count mentions and help you act, using published facts as of November 2026.
 
 {{< figure name="compare-options" >}}
 

@@ -51,7 +51,7 @@ You're reading it. Fixes also identify target prompts and the page to displace, 
 
 ## How it compares with the free options
 
-As of October 2026, from each vendor's own pages:
+As of November 2026, from each vendor's own pages:
 
 | | Cheap Seats | [HubSpot AI Search Grader](https://www.hubspot.com/ai-search-grader) | [Ahrefs AI Visibility Checker](https://ahrefs.com/ai-visibility-checker) | [Amplitude AI Visibility](https://amplitude.com/docs/amplitude-ai/ai-visibility) |
 | --- | --- | --- | --- | --- |

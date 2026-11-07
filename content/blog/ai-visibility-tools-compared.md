@@ -2,22 +2,22 @@
 title: AI visibility tools compared
 date: 2026-10-22
 author: Chad Metcalf
-description: Cheap Seats, Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar, Semrush, Elmo and Limelit Open, row by row from their own pages, October 2026.
+description: Cheap Seats, Peec AI, Profound, Otterly.AI, Scrunch, Ahrefs Brand Radar, Semrush, Elmo and Limelit Open, row by row from their own pages, November 2026.
 ---
 
 Compare **engine coverage, collection method, grading and workflow** before price. Hosted tools cover more consumer surfaces; open-source trackers give you more control over data and operation. Cheap Seats asks Claude and OpenAI models directly and adds recommendation grades and fix briefs. The tables below show the tradeoffs.
 
 <!--more-->
 
-Everything below comes from each tool's own pages, read in October 2026. Where a page didn't say something, the table says "not stated" rather than guessing, and where a price wasn't clear, it links the pricing page instead of quoting a number. Cheap Seats is our product, so check its rows against the [docs](/docs/) the same way.
+Everything below comes from each tool's own pages, read in November 2026. Where a page didn't say something, the table says "not stated" rather than guessing, and where a price wasn't clear, it links the pricing page instead of quoting a number. Cheap Seats is our product, so check its rows against the [docs](/docs/) the same way.
 
 ## Engines, price and hosting
 
 | Tool | Engines covered | Pricing model, entry price | Self-hosted or SaaS |
 | --- | --- | --- | --- |
 | **Cheap Seats** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | Self-hosted: one Docker container with SQLite |
-| **[Peec AI](/compare/peec-ai/)** | Monthly plans choose 3 of ChatGPT, Google AI Mode, AI Overviews, Copilot, Gemini and Naver AI; Enterprise up to 13, adding Claude, Perplexity, Grok, DeepSeek and more | Monthly plans: Starter $95 (50 prompts), Pro $245 (150), Advanced $495 (350); Enterprise custom ([pricing](https://peec.ai/pricing)) | SaaS |
-| **[Profound](/compare/profound/)** | Up to 9 on Enterprise: ChatGPT, Perplexity, Google AI Mode, Gemini, Copilot, DeepSeek, Claude, AI Overviews, Exa Search | Free 7-day trial; Enterprise custom; an Agency Growth plan, [see their pricing page](https://www.tryprofound.com/pricing) | SaaS |
+| **[Peec AI](/compare/peec-ai/)** | Monthly plans choose 3 of ChatGPT, Google AI Mode, AI Overviews, Copilot, Gemini and Naver AI; Enterprise up to 13, adding Claude, Grok, DeepSeek and more, with Perplexity as a paid add-on on every plan | Monthly plans: Starter $95 (50 prompts), Pro $245 (150), Advanced $495 (350); Enterprise custom ([pricing](https://peec.ai/pricing)) | SaaS |
+| **[Profound](/compare/profound/)** | Up to 9 on Enterprise: ChatGPT, Perplexity, Google AI Mode, Gemini, DeepSeek, Claude, AI Overviews, Exa Search and Meta's Muse Spark | Free 7-day trial; Enterprise custom; an Agency Growth plan, [see their pricing page](https://www.tryprofound.com/pricing) | SaaS |
 | **[Otterly.AI](/compare/otterly-ai/)** | ChatGPT, AI Overviews, Perplexity, Copilot included; AI Mode, Gemini and Claude as add-ons | Per plan; Lite $29/month for 15 prompts | SaaS |
 | **Scrunch** | ChatGPT, Perplexity, Google AI Overviews and Copilot on Core; Enterprise adds Claude, Gemini, Google AI Mode, Meta AI and Grok | Per plan; Core $250/month (125 prompts, 5,000 responses a month), Enterprise custom; [see their pricing page](https://scrunch.com/pricing/) | SaaS |
 | **Ahrefs Brand Radar** | AI Overviews, AI Mode, ChatGPT, Perplexity, Gemini, Copilot; Claude on Custom Prompts only, at 8 checks per update | Custom Prompts from $50/month, with a daily quota included on paid Ahrefs plans; the AI Visibility Index from $199/month; [see their page](https://ahrefs.com/brand-radar) | SaaS |
@@ -35,13 +35,13 @@ Cheap Seats' software is free; API calls, optional providers and hosting depend 
 | **Peec AI** | Yes, tracked prompts | Not graded; an answer counts when it contains your tracked name, an alias or your regex | Actions in four groups, from site fixes to mentions elsewhere, on a five-level impact rating | MCP on every paid plan; API from Pro |
 | **Profound** | Yes; on Enterprise, edit, disable or add prompts | Not graded; a model lists the brands each answer names | "Suggestions"; AI Marketer agents draft content | API and hosted MCP on Enterprise |
 | **Otterly.AI** | Yes, 15 to 400 by plan | Not graded; an exact text match of the names you list | Recommendations, GEO URL audits, content briefs | API and MCP from Standard |
-| **Scrunch** | Yes, 125 unique prompts on Core | Not stated | "Insights & Recommendations", page optimizations and content generation | Query API access and MCP access on Enterprise |
+| **Scrunch** | Yes, 125 unique prompts on Core | Not stated | "Insights & Recommendations", page optimizations and content generation | Query API access on Enterprise; MCP access "Custom" on Enterprise |
 | **Ahrefs Brand Radar** | Yes, custom prompts | Not stated | Not described | Not described for Brand Radar; Ahrefs lists an SEO API and SEO MCP separately |
 | **Semrush AI Visibility** | Yes, 25 prompts; 50 more for $60/month | Not graded; its extraction system finds the brand, and Mentions counts prompts | AI-generated strategic recommendations | Toolkit data isn't in the Semrush API or MCP yet; CSV and Google Sheets export |
 | **Elmo** | Yes, by hand or from an onboarding wizard | Mentions confirmed by a model, with sentiment; recommendation not graded | Opportunities: one LLM call over your data, refreshed about weekly | REST API, TypeScript and Python SDKs, MCP |
 | **Limelit Open** | Yes, a starter pack plus your own | Not graded; a text search finds mentions, with list rank | Not in the open core (Cloud) | JSON API and MCP |
 
-Table dated October 2026. Prices and engine lists change often; follow the links to check.
+Table dated November 2026. Prices and engine lists change often; follow the links to check.
 
 ## Start with Cheap Seats
 
@@ -62,7 +62,7 @@ Others exist on GitHub, described here in their own words. They aren't reviewed 
 - [OpenSight](https://github.com/shuvamk/opensight) (MIT): "See how AI talks about your brand".
 - [Gego](https://github.com/AI2HU/gego) (GPL-3.0): "Generative Engine Optimization for your brand, track your GEO across all LLMs".
 - [OneGlanse](https://github.com/oneglanse/oneglanse) (MIT): "Open-source AI visibility, AEO & GEO tracker", monitoring answers "through real product UIs".
-- [GetCito](https://github.com/ai-search-guru/getcito-worlds-first-open-source-aio-aeo-or-geo-tool) (MIT): "Open source AI visibility tracking and optimization", self-hosted; its README says it is a fork of Elmo.
+- [GetCito](https://github.com/ai-search-guru/getcito-worlds-first-open-source-aio-aeo-or-geo-tool) (MIT): "An open-source platform to track and improve your brand's presence in AI answers", self-hosted on Node.js and Supabase.
 - [GEO/AEO Tracker](https://github.com/danishashko/geo-aeo-tracker) (MIT): "Open-source, self-hosted AI visibility tracker for GEO and AEO", with answers collected through Bright Data.
 - [Ansvisor](https://github.com/ansvisor/ansvisor) (MIT): "Open-source agentic AI Search Execution Platform", whose agents "turn signals into prioritized actions and draft the fixes" across ChatGPT, Claude, Gemini, Google AI Overviews and AI Mode, Perplexity, Grok and Copilot; Ansvisor Cloud is its hosted tier.
 
@@ -71,7 +71,7 @@ Others exist on GitHub, described here in their own words. They aren't reviewed 
 Choose from the capabilities you need:
 
 - **You need Gemini, Perplexity, Copilot, Google AI Overviews or AI Mode.** Cheap Seats asks only Claude and OpenAI models. Otterly.AI includes AI Overviews, Perplexity and Copilot on its entry plan; Profound lists the most engines, nine on Enterprise.
-- **You need SOC 2 and SSO.** Profound lists SOC 2 and SSO/SAML on Enterprise, Scrunch lists SOC 2 Type II, and Peec AI's pricing table lists SOC 2 on every plan (type not stated).
+- **You need SOC 2 and SSO.** Profound lists SOC 2 and SSO/SAML on Enterprise, Scrunch lists SOC 2 Type II, and Peec AI's pricing page lists SOC 2 Type II on every plan.
 - **You're an agency.** Profound, Peec AI, Otterly.AI and Scrunch all have agency programmes or pages. Cheap Seats has no agency tier.
 - **You already pay for Ahrefs or Semrush.** Their AI visibility tools sit beside the SEO work you already do there.
 - **You want open source, with more engines.** Elmo and Limelit Open reach Google's AI surfaces, Perplexity, Gemini and Copilot, through vendor APIs and paid scraping services.
