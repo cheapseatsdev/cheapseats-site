@@ -16,12 +16,13 @@ The examples below are from [`examples/cheapseats-config/cheapseats.toml`](https
 name = "Cheap Seats"
 aliases = ["CheapSeats", "cheapseats.dev", "cheapseatsdev/cheapseats"]
 # What the product is, so the grader can tell it apart from other things called "cheapseats".
-about = "Cheap Seats is an open-source, self-hosted tool that asks AI assistants a brand's buyer questions, grades whether they recommend the brand, and builds a ranked list of fixes."
-# The market, as a noun phrase: what a prompt should be about, as opposed to what this one product is.
-category = "AI search visibility tools, which measure whether AI assistants recommend a brand"
+about = "Cheap Seats is an MIT-licensed, self-hosted tool that helps small teams and startups measure whether Claude and OpenAI models recommend their product and choose what to fix first."
+# The market, as a noun phrase: what the prompts are about, where `about` says what this one
+# product is. The prompt review's off-target check is asked against it ([typesafe]).
+category = "AI visibility tools and starter workflows for small teams and startups measuring whether AI models recommend their product"
 # Who asks the questions. The answerers are told they're answering this person's question.
 # Changing `about` or `audience` changes how answers are asked or graded, so every trend restarts.
-audience = "a product marketing lead"
+audience = "a founder or marketer at a small team or startup making its first AI visibility checks with limited time and budget"
 ```
 
 - `aliases` are other names the grader counts as the brand.
@@ -120,9 +121,8 @@ review = ["example.com/reviews"]
 ```toml
 [grader]
 model = "claude-haiku-5-5"
-# provider = "claude-code"  # default: anthropic
-# themes = false           # skip the theme pass (on by default)
-# check_facts = false      # skip fact checks when [brand] facts are listed
+# provider = "claude-code"
+# themes = true
 
 [analyst]
 model = "claude-opus-5-5"
@@ -202,14 +202,14 @@ page_per_1k = 1.0
 # daily_hour_utc = 13
 
 [tiers.core]
-every_days = 2
+every_days = 7
 
 [tiers.plg]
-every_days = 7
+every_days = 28
 max_samples = 1
 ```
 
-Set `schedule.daily_hour_utc` and, from that hour, every `core` set runs every `tiers.core.every_days` days (default 1, daily) and every `plg` set every `tiers.plg.every_days` with `max_samples` a track (default 1, at most 20), one set after another. Locally it's off unless you set it.
+Set `schedule.daily_hour_utc` and, from that hour, every `core` set runs every `tiers.core.every_days` days (default 1, daily) and every `plg` set every `tiers.plg.every_days` days (default 7) with `max_samples` a track (default 1, at most 20), one set after another. Locally it's off unless you set it.
 
 Weekly runs use one-seventh the answers of daily runs. Choose the cadence for how soon you need to detect changes; either track can vary between runs.
 

@@ -48,6 +48,7 @@ A corrected false claim or a decision to keep an intentional product boundary ca
 | Worse | A rate fell beyond its margin and neither rose beyond its margin | Check the affected questions, tradeoffs and external changes |
 | Mixed | One rate rose and another fell beyond their margins | Decide which buyer outcome matters; don't collapse the tradeoff into a score |
 | No detectable change | The available changes do not exclude zero within their margins | Inspect uncertainty; benefit or harm may still be undetected |
+| Dismissed | The fix was closed with a reason; nothing shipped, so nothing is measured | Nothing; the reason stays on the card |
 
 These are outcome interpretations, not evidence that the work caused the movement. Model and web changes, sampling and other work can affect the answers too. **Newly surfaced** means a target page began appearing in recorded retrieval or citations; it is separate supporting evidence, not a recommendation-rate improvement.
 

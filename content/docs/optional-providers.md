@@ -106,7 +106,7 @@ page_per_1k = 1.0
 
 Provide each service's key (`TYPESAFE_API_KEY`, `EXA_API_KEY`) or key-adding proxy (`CHEAPSEATS_TYPESAFE_BASE_URL`, `CHEAPSEATS_EXA_BASE_URL`). On [exe.dev](../deploying/#exedev), add integrations for the proxies.
 
-`cheapseats check` lists enabled passes. A configured provider without a key or proxy is noted and skipped at run time; a missing `[pricing]` entry or unknown key fails validation. Upgrade the app before adding a switch an older version doesn't recognize.
+A configured provider without a key or proxy is noted by `cheapseats check`, which lists the passes that will be skipped at run time; a missing `[pricing]` entry for Jev's model or Exa's searches, or an unknown key, fails validation (a missing `exa-contents` price is a note: no page is read through Exa). Upgrade the app before adding a switch an older version doesn't recognize.
 
 On Kubernetes, put keys in the chart's Secret or `extraEnv` with `secretKeyRef`; proxy URLs belong in plain `env`. See [Deploying](../deploying/#kubernetes-with-helm).
 
