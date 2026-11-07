@@ -57,6 +57,8 @@ cheapseats regrade <set-id|run-id> -force -dry-run=false
 - **Same limits.** Runs asked under another answer prompt or search policy, and unfinished runs, are still skipped.
 - **Same history.** Replaced grades are kept, and the re-grade is recorded as forced.
 
+**0.7.4 is such a fix.** Its grader writes its reasoning and evidence before its verdict, which agrees with the golden set more often, but the method ID doesn't change. Re-grade the sets whose history you compare with `-force`, adding `-since 90d` or `-since all` when the runs are older than 28 days; until you do, a set's history mixes the two orders. See [Upgrading to 0.7.4](../upgrading/#upgrading-to-074).
+
 ## What it costs
 
 One grader call per answer. With `provider = "claude-code"`, your subscription covers the calls. API dry runs estimate from `[pricing]`, about four characters per token and the grader's thinking. Actual calls use the [daily budget](../cost-and-budget/#the-daily-budget); a run estimated to exceed the remainder isn't started.

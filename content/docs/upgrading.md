@@ -12,6 +12,84 @@ group: Running it
 
 With an image per config commit (see [Deploying](../deploying/)), upgrading Cheap Seats is a reviewed change to the `FROM` line in your config repo.
 
+## Upgrading to 0.7.6
+
+**Database schema 19 → 20.** Take a `cheapseats backup` first. The first start copies the
+database to `cheapseats.db.bak-v19` before migrating, and 0.7.5 and older refuse the migrated
+database, so rolling back means stopping Cheap Seats, restoring that copy as `cheapseats.db` and
+running the previous version. Grading is unchanged and trends don't restart. Every attempt recorded
+before the upgrade reads as work on an action, with the same status and outcome.
+
+**Every next step can be addressed.** Investigations and market findings carry `kind`, `number`
+and `status`, and their cards on Next steps, the run page and the home page have the same forms as
+actions. MCP `mark_fix` takes `kind` (`action` by default, `investigation` or `finding`) and the
+item's number; the API has `POST /api/runs/{id}/investigations/{n}/attempts` and
+`/findings/{n}/attempts`. `status` filters every kind, and without it dismissed items are left
+out; `get_started` and the home page count only open items. See [the reference](../reference/#mcp-server).
+
+**The analyst reads your pages first.** Before proposing fixes it reads up to 8 of the brand's own
+pages: each site's start page, the brand pages answers cited or fetched, then the targets of
+shipped and dismissed work. Expect fewer proposals of work that is already done.
+
+## Upgrading to 0.7.5
+
+**No schema change** (still schema 19), so upgrading from 0.7.4 is a plain binary or image swap,
+and rolling back to 0.7.4 needs no restore.
+
+**Stored evaluation checks read as stale once.** The release changes how the grader's code reports
+failures, which the evaluator digest covers, so checks, batches, grader comparisons and blinded
+reviews made before it show as made with an older evaluator. See [Reviewing grader labels](../evaluation/#when-to-run-these-evaluations).
+
+**A failing command-line answerer alerts once more.** Its stored error no longer includes the
+CLI's own output, so the watch sees a new message. Run the CLI by hand to see its full output.
+
+**New on the run page:** **Candidates not promoted** lists every fix candidate that didn't become
+an action, with the stage, outcome and reason; `/api/runs/{id}` carries it as `omitted`, and
+`/api/next-steps` and MCP `get_next_steps` include it with `omitted=true`. Analyses built before
+0.7.5 have no list. Evidence on next steps reads as one quote per line, linked to its answer, and
+provider errors now carry the provider's message redacted, so credentials don't reach stored
+errors, pages, the API, MCP, emails or the log. See [Next steps](../reading-results/#quick-wins).
+
+## Upgrading to 0.7.4
+
+**No schema change** (still schema 19), so upgrading from 0.7.3 is a plain binary or image swap,
+and rolling back to 0.7.3 needs no restore.
+
+**Re-grade the sets whose history you compare.** The grader now writes its reasoning and evidence
+before its verdict, which agrees with the golden set more often. The grading method ID doesn't
+change, so a plain `regrade` treats stored runs as current; use `-force`, with `-since` when the
+runs you compare are older than 28 days:
+
+```
+cheapseats regrade <set> -force                    # dry run: runs, answers, cost
+cheapseats regrade <set> -force -since 90d -dry-run=false
+```
+
+The set page's **Re-grade stored answers** button has no force option; use the CLI or MCP
+`regrade` with `force: true`. Until you do, a set's history mixes the two orders. See
+[After a fix to the grader's code](../regrading/#after-a-fix-to-the-graders-code).
+
+**Stored evaluation checks read as stale once.** The evaluator digest now tracks what the grader
+sends and how it reads replies, so its value changes with this release. Comment and formatting
+edits to the grader's code no longer change it.
+
+**Next steps produces verified actions again.** Since 0.7.0 most candidates were written with
+prose targets and dropped before review. A target that still isn't one URL now ends as an
+investigation instead of disappearing, and each omitted candidate records its reason. Pages read
+to verify an action are fetched fresh (up to 12 extra fetches per analysis) and marked truncated
+when the read was cut short.
+
+## Upgrading to 0.7.3
+
+**No schema change** (still schema 19), so upgrading from 0.7.2 is a plain binary or image swap,
+and rolling back to 0.7.2 needs no restore.
+
+**The analyst no longer returns an empty template.** Some runs' recommendations failed with a
+reply whose every field was blank. The analyst's schema is now sent with its fields in the order
+the prompt asks for; every other schema, including the grader's, is sent as before, so grades and
+stored evaluation checks are unaffected. To retry a run whose recommendations failed this way,
+rebuild them after upgrading: `cheapseats next-steps -rebuild <run-id>`.
+
 ## Upgrading to 0.7.2
 
 **No schema change** (still schema 19), so upgrading from 0.7.1 is a plain binary or image swap,

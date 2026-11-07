@@ -167,8 +167,10 @@ A comparison report never installs a new prompt. Passing its conservative gate i
 
 These are suggested triggers, not an automatic schedule or a mandate to relabel every case each month. Reuse cached independent assessments only when their evidence, rubric, model and evaluator context still match. Running a comparison on new evidence answers a different question from repeating a call on the same case. Set the cadence by the risk, change rate and decisions you need to make.
 
+The evaluator context includes a digest of the grader's code: what it sends and how it reads replies (from 0.7.4), and how it reports failures (from 0.7.5). Each of those releases changes the digest once, so checks, batches, grader comparisons and blinded reviews made before them show as made with an older evaluator. Comment and formatting edits to that code don't change it.
+
 For import limits, private exports, comparison CLI commands, retry rules and complete provenance details, see the [repository guide](https://github.com/cheapseatsdev/cheapseats/blob/v0.7.0/docs/evaluation.md) and [CLI reference](../reference/#evaluation-preview). For other kinds of checks, use [Which check or evaluation should I run?](../checks-and-evaluations/).
 
 ## Backups and rollback
 
-0.7.0 uses database schema 19, whether or not Evaluation is enabled. Opening an existing database backs it up before migration, and an older binary refuses the newer schema. To roll back, restore the pre-migration backup with the older build; see [Upgrading to 0.7.0](../upgrading/#upgrading-to-070). Use a separate test directory while you try the workbench; a read-only copy disables writes but does not redact review evidence or private data.
+0.7.0 uses database schema 19, whether or not Evaluation is enabled. Opening an existing database backs it up before migration, and an older binary refuses the newer schema. To roll back, restore the pre-migration backup with the older build; see [Upgrading to 0.7.0](../upgrading/#upgrading-to-070). 0.7.6 moves to schema 20; [Upgrading](../upgrading/) lists each release's schema. Use a separate test directory while you try the workbench; a read-only copy disables writes but does not redact review evidence or private data.
