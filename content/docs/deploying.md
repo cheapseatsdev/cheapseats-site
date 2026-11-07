@@ -170,6 +170,8 @@ deploy/exe-dev.sh <vm> ../your-config
 
 It builds a Linux binary, ships the config as committed (recording its commit on every run), runs `cheapseats check` on the VM, swaps both in, restarts, and rolls back to the previous binary and config if Cheap Seats doesn't come up healthy. Runs in progress resume after the restart.
 
+Two exceptions, from 0.7.0. If the failed build had already migrated the database, the script leaves Cheap Seats stopped and disabled instead of starting the old build on a database it can't open, and prints how to restore `cheapseats.db.bak-v<N>`. And `LIVE_CHECK=1 deploy/exe-dev.sh …` also runs `cheapseats check -live` on the VM before the swap, sending each structured-output schema to the Anthropic API once (a few cents, capped by `LIVE_BUDGET`, default 0.25 dollars) and stopping the deploy if the API refuses one; use it when the grader or analyst uses the API.
+
 **Running it:**
 
 | | |
