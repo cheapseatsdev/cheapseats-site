@@ -18,7 +18,7 @@ Repeat each question, separate search from recall, and grade consistently. Cheap
 
 The questions are a TOML file in a config repo of your own. Use `prompt-sets/discovery.toml` for this example and replace the placeholders with your category and competitors. Ask the way a buyer would, and don't name your product: being named when the question names you proves little.
 
-Roughly 15–20 questions is a starting guide for coverage, not a minimum that makes rates precise. Use real buyer needs where you have them, label hypotheses in review notes, and include constraints your product may fail. Open questions and requests for alternatives can introduce your brand. Keep closed comparisons such as "Peec AI or Profound?" outside the tracked library when neither product is yours: answering the question does not require considering your brand. Moving it to another set still scores your brand's absence.
+Roughly 15–20 questions is a starting guide for coverage, not a minimum that makes rates precise. Use real buyer needs where you have them, and include constraints your product may fail. Keep closed comparisons such as "Peec AI or Profound?" outside the tracked library when neither product is yours: a complete answer needn't consider your brand, and a separate set still scores your absence. [Choosing useful buyer questions](/docs/choosing-questions/) has more.
 
 ```toml
 id = "discovery"
@@ -48,7 +48,7 @@ For **Docker with API keys**, start from the [config template](https://github.co
 
 ## Step 2: choose how ChatGPT answers
 
-ChatGPT is OpenAI's product, so Cheap Seats asks OpenAI's models. These are OpenAI-model answers, rather than recordings of the ChatGPT app. Claude is also required to grade them.
+An OpenAI answerer supplies the ChatGPT-model answers; Claude is required to grade them.
 
 **Use [Docker with API keys](/docs/getting-started/#docker-with-api-keys) for the quickest API setup**, with no Go installation. Follow that setup to create `.env` with a sign-in token and `ANTHROPIC_API_KEY` for grading, the fix list and a Claude answerer. Add `OPENAI_API_KEY` to include OpenAI answers. Configure the answerers in `cheapseats.toml`:
 

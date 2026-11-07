@@ -35,15 +35,13 @@ Noise flags use planned samples, excluding adaptive extras and runs where all an
 
 A prompt with enough data and no flag is labelled **healthy**. That means no implemented rule fired; it doesn't validate intent, buyer demand, market coverage or independence from other questions. Likewise, a flag doesn't establish its cause.
 
-Before editing, check [intent and buying situation](../prompt-sets/#ask-the-way-a-buyer-would), the source of the buyer need, and the denominator you care about. Distinguish open discovery and requests for alternatives from known-brand evaluation. Remove closed comparisons that only ask the buyer to choose between other products from the tracked library: a complete answer can omit your brand. A separate set still grades your brand and produces fixes for it. Informational answers can show useful source visibility without supporting a recommendation rate.
+Before editing, check [intent and buying situation](../prompt-sets/#ask-the-way-a-buyer-would), the source of the buyer need, and the denominator you care about. Remove closed comparisons between other products from the tracked library: a complete answer can omit your brand, and a separate set still grades it and produces fixes for it. Informational answers can show useful source visibility without supporting a recommendation rate.
 
 ## Run a review end to end
 
-Open the set's review page or run `cheapseats review <set-id>`. Read the saved wording, sample counts and flags. Check the underlying buyer need before requesting optional suggestions. Review proposed edits in a config PR, run `cheapseats check` and `cheapseats plan`, then merge and restart to load them. The review never applies edits automatically.
+Open the set's review page or run `cheapseats review <set-id>`. Read the saved wording, sample counts and flags, and check the underlying buyer need before requesting optional suggestions. Review proposed edits in a config PR, run `cheapseats check` and `cheapseats plan`, then merge and restart to load them. The review never applies edits automatically.
 
-Use [Choosing useful buyer questions](../choosing-questions/) for concrete examples and intent decisions. A successful review can keep the set unchanged, preserve a useful losing question, clarify a confusing one, or retire a need with an explicit reason. Higher rates after deleting difficult questions are not evidence of better visibility.
-
-Revisit an active library roughly monthly, or when customer evidence, positioning or repeated answer problems warrant it. That cadence is a recommendation. Statistical flags need the implemented three-run/six-answer floor; a **healthy** flag only means no implemented rule fired. If data is thin, collect more or inspect the buyer hypothesis rather than forcing an edit.
+A successful review can keep the set unchanged, preserve a useful losing question, clarify a confusing one, or retire a need with an explicit reason. Higher rates after deleting difficult questions are not evidence of better visibility. If data is thin, collect more or inspect the buyer hypothesis rather than forcing an edit. [Choosing useful buyer questions](../choosing-questions/) has concrete examples and intent decisions.
 
 ## What it reads
 

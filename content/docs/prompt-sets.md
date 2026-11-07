@@ -107,17 +107,9 @@ Outside branded evaluation, write as someone who has never heard of the brand wo
 | Closed comparison excluding your brand | Peec AI or Profound? | Preference between the named products. A complete answer can stay within those choices; your absence is not a lost recommendation. Keep this outside the tracked prompt library. |
 | Known-brand evaluation (`head-to-heads`) | Is Cheap Seats a good fit for our agency? | Fit, preference and objections after the buyer already knows the brand. Named presence alone proves little. |
 
-These are review categories, not new TOML fields. Cheap Seats' unbranded rates exclude questions naming your brand, but do not automatically exclude closed comparisons between other products. The grader and fix analysis still evaluate your brand in every set: moving such a question to a separate set does not change its scoring. Keep it as competitor research outside `prompt-sets/`, where it won't be scheduled, scored or turned into fixes for your brand. Do not relabel it `info` or add your brand to make it score better. A genuine new discovery question needs a new id.
+These are review categories, not new TOML fields. Unbranded rates exclude questions naming your brand, but not closed comparisons between other products: the grader and fix analysis evaluate your brand in every set, so moving such a question to a separate set does not change its scoring. Keep it as competitor research outside `prompt-sets/`, where it won't be scheduled, scored or turned into fixes. Don't relabel it `info` or add your brand to make it score better; a genuine new discovery question needs a new id.
 
-Start with roughly **15–20 distinct buyer questions** as a planning guide, not a precision threshold. A smaller coherent set needn't be padded, and many paraphrases of one need don't establish broad market coverage.
-
-- **Distinct questions** cover different buyer needs and constraints.
-- **Repeated samples** estimate answer variability for those questions.
-- **Runs across days** capture variation over time. A week containing one weekly run isn't seven daily runs.
-
-Check the selection-question count, answer counts and intervals for the metric you plan to use. [Sampling and change detection](../noise-and-confidence/) explains the assumptions behind precision estimates; neither a question count nor a narrow sampling interval proves the set represents your market.
-
-Record why a question belongs in the set: a public buyer question, recurring sales or support need, research finding, or an unvalidated hypothesis. Keep this evidence in comments or review notes and omit private customer information. Cover constraints that can rule your product out, such as operating capacity, engine or locale requirements, and multi-client needs. Feature-specific questions can be useful, but their frequency in your set isn't evidence of market demand.
+[Choosing useful buyer questions](../choosing-questions/) covers how many questions to write, where they come from, and what to record about each (in comments or review notes, without private customer information). Include constraints that can rule your product out; feature-specific questions can be useful, but their frequency in your set isn't evidence of market demand. Check the selection-question count before relying on a recommended rate, since info questions don't add to its denominator; neither a question count nor a narrow interval proves the set represents your market ([sampling and change detection](../noise-and-confidence/)).
 
 The configured `brand.audience` is sent to answerers. Put any additional buyer or task context needed to interpret a particular question in its text; a technical operator's question may need more context than the global audience supplies.
 
@@ -127,9 +119,7 @@ Sets written before prompts had ids (`prompts = ["...", "..."]`) are converted b
 
 ## Review them monthly
 
-Once a set has a month of runs, the [prompt review](../prompt-review/) flags flat rates, noisy answers, possible category mismatches and overlap, and suggests gaps to investigate. These are review candidates, not proof a question is bad or a buyer need is missing. The review is free; requesting proposed edits makes one analyst call.
-
-Keep a stable core for comparison and test new questions separately before replacing it. Preserve legitimate unfavorable questions as gap or regression checks. Retire a question when its buyer need is no longer relevant or another question covers the same need and constraints, not simply because the brand always loses or wins. Review the diff before opening a pull request.
+Once a set has a month of runs, the [prompt review](../prompt-review/) flags flat rates, noisy answers, possible category mismatches and overlap, and suggests gaps to investigate. These are review candidates, not proof a question is bad or a buyer need is missing. The review is free; requesting proposed edits makes one analyst call. Keep a stable core for comparison, and retire a question for its buyer need, not because the brand always loses or wins.
 
 ## Keep them public
 
