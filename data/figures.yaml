@@ -331,7 +331,7 @@ fix-speed:
 
 visibility-workflows:
   title: The workflow you get, and the one you configure
-  caption: Different purposes, as described in the October 2026 comparison. Both can ask several models and evaluate answers.
+  caption: Different purposes, as described in the November 2026 comparison. Both can ask several models and evaluate answers.
   text: |
     Cheap Seats supplies a visibility workflow:
     1. Buyer questions in TOML.
@@ -383,14 +383,14 @@ compare-profound:
 
 compare-elmo:
   title: From answer to brand judgment
-  caption: Processing steps under the October 2026 rules.
+  caption: Processing steps under the November 2026 rules.
   text: |
     Elmo: find whole-word names and domains → one Jev call per answer judges each candidate → count when the sum of positive, neutral, negative and mixed probabilities exceeds 30%. Other outcomes: another meaning, another company, or “no information.”
 
     Cheap Seats: a Claude grading call reads the whole answer → grades your brand recommended, mentioned or absent → records position, top pick and objections. A name-only disclaimer is absent; product information can count even when hedged.
 compare-limelit:
   title: A text match and a product judgment count differently
-  caption: Two separate synthetic examples under the October 2026 rules.
+  caption: Two separate synthetic examples under the November 2026 rules.
   text: |
     Example 1, name-only disclaimer: “I could not find Acme.” Limelit counts a whole-word name match as mentioned; Cheap Seats grades it absent because it contains no product information.
 
@@ -398,7 +398,7 @@ compare-limelit:
 
 compare-semrush:
   title: Where to find the listed engines in Semrush
-  caption: October 2026 routes to these engines. Enterprise AIO is a separate contract.
+  caption: November 2026 routes to these engines. Enterprise AIO is a separate contract.
   text: |
     | Engines | Where they appear |
     | --- | --- |
@@ -410,10 +410,10 @@ compare-semrush:
     Cheap Seats calls Claude and OpenAI directly, through APIs or subscription CLIs.
 compare-peec:
   title: Two collection paths
-  caption: October 2026 methods. Direct model calls and consumer interfaces are different benchmarks.
+  caption: November 2026 methods. Direct model calls and consumer interfaces are different benchmarks.
   text: |
     Cheap Seats: your prompt → direct Claude or OpenAI API / CLI call → required web search or no-tools recall → results kept on separate tracks. No country setting.
-    Peec AI: your prompt and country → logged-out consumer web interface → app chooses the model and whether to search → search use flagged on the answer. Country allowances depend on the plan.
+    Peec AI: your prompt and country → logged-out consumer web interface → app chooses the model and whether to search → one answer stored, searched or not. Country allowances depend on the plan.
 compare-otterly:
   title: A detected name is not always a recommendation
   caption: Synthetic choice-question answers under the exact-name matching method dated 27 November 2025.
@@ -427,7 +427,7 @@ compare-otterly:
     A name match alone does not distinguish these cases. Cheap Seats also excludes namesakes.
 compare-bad-popcorn:
   title: Who writes and publishes the fix?
-  caption: October 2026 workflows. Bad Popcorn's Growth drafting does not include its Enterprise catalogue feeds and shopping tools.
+  caption: November 2026 workflows. Bad Popcorn's Growth drafting does not include its Enterprise catalogue feeds and shopping tools.
   text: |
     Cheap Seats: ranked page brief → you or your assistant writes in your repo → your review and pull request → later comparable answers checked with uncertainty.
     Bad Popcorn Growth: copy and schema drafted from confirmed facts → your approval → WordPress drafts or manual Shopify placement → same questions asked again.

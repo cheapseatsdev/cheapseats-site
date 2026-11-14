@@ -55,9 +55,9 @@ The [site audit](../site-audit/) checks crawler access. [AI crawler counts](../s
 
 ## How other tools reach them
 
-As of October 2026:
+As of November 2026:
 
-- **Elmo** (MIT) supports six scraping services for ChatGPT, Google's AI surfaces, Gemini, Perplexity and Copilot, plus direct APIs for Claude, OpenAI, Mistral and OpenRouter models ([providers](https://www.elmohq.com/docs/user-guide/providers)).
+- **Elmo** (MIT) supports six scraping services for ChatGPT, Google's AI surfaces, Gemini and Bing AI Mode, plus direct APIs for Claude, OpenAI, Mistral and OpenRouter models, Perplexity's Sonar among them; since 0.7.9 it no longer scrapes Perplexity or the Copilot app, which require a sign-in ([providers](https://www.elmohq.com/docs/user-guide/providers)).
 - **Limelit Open** (Apache-2.0) uses APIs for ChatGPT, Claude, Perplexity and Gemini, and scrapers for Google AI Overviews, AI Mode and Bing Copilot ([README](https://github.com/limelit-co/open/blob/982668c4b3974558d900565f4a10bf9bf4e2dc88/README.md#engines-and-providers)).
 - **Hosted tools** offer broader surface coverage on some or all plans. [Compare](/compare/) lists the engines each names.
 
