@@ -82,7 +82,7 @@ Use the [normal grading definitions](../how-grading-works/#three-grades). Eviden
 
 For example, “I don't have reliable information on a product called Cheap Seats or its methodology” is **absent: echoed name** when the rest of the answer supplies no concrete product information. Quote that disclaimer. A hedged statement about a real feature or fit can instead make the answer mentioned.
 
-“What remains unclear, if unresolved?” asks what prevents you from deciding, such as a truncated answer or ambiguous product identity. Leave it blank when you can finish the judgment. A quote match establishes that the words occur in the answer; you still decide whether they support your interpretation.
+“Why can't you finish this review?” is answered only when you leave a case unresolved: pick the reason, such as a truncated answer or ambiguous product identity, and explain it in the review note. Leave it blank when you can finish the judgment. A quote match establishes that the words occur in the answer; you still decide whether they support your interpretation.
 
 **Save and next** commits the judgment and advances. The reviewed count measures unique answers; editing one answer repeatedly does not add reviews.
 

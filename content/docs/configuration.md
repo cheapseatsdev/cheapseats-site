@@ -237,6 +237,7 @@ A fix goes to its site's owner, else to the owner for its gap here, else `defaul
 | `CHEAPSEATS_HOSTS` | host names a proxy on the same machine serves Cheap Seats as, comma-separated; MCP (and, with no sign-in, everything) refuses loopback requests under any other name, and forms from any other origin are refused |
 | `CHEAPSEATS_PUBLIC_URL` | the address [share links](../sharing/) use, such as `https://cheapseats.example.com`. Unset, they use the first of `CHEAPSEATS_HOSTS` over https, else the host the request came in on (`X-Forwarded-Host` first) |
 | `CHEAPSEATS_READONLY` | set to anything for a [read-only copy](../read-only-copy/): serves pages and the JSON API to anyone, refuses every change and MCP, runs nothing |
+| `CHEAPSEATS_EVALUATION` | set to `1` for the [Evaluation](../evaluation/) preview at `/evaluation`; off by default, and ignored in read-only mode |
 | `CHEAPSEATS_CLI_USER` | a user to run the `claude` and `codex` CLIs as, through `sudo`, so nothing a model-driven tool can reach includes this user's files ([CLI answerers](../reference/#cli-answerers)); the exe.dev deploy sets it |
 | `CHEAPSEATS_CLI_ENV` | more environment variables to pass the CLIs, comma-separated; by default they get only what they need, never this process's keys or tokens |
 | `CHEAPSEATS_CONFIG` | path to `cheapseats.toml`; prompt sets are read from `prompt-sets/` beside it |

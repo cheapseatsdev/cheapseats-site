@@ -53,11 +53,11 @@ Use it to check:
 - **Rewritten questions.** **From prompt** is the share of a search's words found in its prompt; **prompt kept** is the share of the prompt's words kept in the search. Low values show rephrasing or narrowing. **Added** and **dropped** list the recurring changes.
 - **Added names.** A `+Name` chip marks a brand or competitor added to a query that wasn't in the prompt.
 - **Missed pages.** Top queries show whether results reached your sites, which competitors appeared, and how often their answers named you.
-- **New prompts.** Search-derived ideas identify queries whose results named competitors and never reached your sites. Review their buyer, learning, decision and repeat value before making a tracked question; search frequency does not establish buyer demand.
+- **Research leads.** Search-derived ideas identify queries whose results named competitors and never reached your sites. Review their buyer, learning, decision and repeat value before making a tracked question; search frequency does not establish buyer demand.
 
 The page also counts answers searched, searches and distinct queries, with a prompt-by-prompt breakdown. Distinct queries ignore case, quotes and repeated whitespace. The same data is at `/api/runs/<id>/searches` and MCP `get_search_queries`.
 
-## Fix these first
+## What an action says
 
 A finished run builds an analysis with actions, investigations and market findings. Only verified actions receive implementation prompts; the list can be empty. Each action names the page to create or change, what it must say, a controllable **done when**, the target prompts and competing source where recorded. It includes effort, priority, gap (documentation, positioning, third-party or product), destination site and owner: the site's owner, falling back to `[owners]` by gap.
 

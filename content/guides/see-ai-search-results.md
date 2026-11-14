@@ -54,7 +54,7 @@ Open **Every answer** on a run to see the text, highlighted grading evidence, qu
 | **Pages referenced** | trace each page to its prompts and cited/surfaced counts |
 | **What the assistants searched** | inspect common queries, sites reached, and competitors added to queries |
 
-The searches view also compares words retained from prompts with words added or dropped. **Add as prompt** offers a TOML entry for relevant queries that found competitors but missed your sites. `/sets/<id>/searches` opens the latest run; `?pool=1` adds up to six earlier compatible runs. Viewing these stored traces makes no model calls.
+The searches view also compares words retained from prompts with words added or dropped. **Research leads** lists queries whose results named competitors and never reached your sites, each with a review note and a `[[prompts]]` entry to paste. `/sets/<id>/searches` opens the latest run; `?pool=1` adds up to six earlier compatible runs. Viewing these stored traces makes no model calls.
 
 ## From the CLI
 

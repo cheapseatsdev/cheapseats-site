@@ -83,7 +83,7 @@ Chart values:
 - `image.repository` and `image.tag`: your deployment's image (required). Deploy an exact tag, so a rollback is redeploying the previous one.
 - `existingSecret`: a Secret you create holding `CHEAPSEATS_TOKENS`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` if an answerer uses it, and `TYPESAFE_API_KEY` or `EXA_API_KEY` with `[typesafe]` or `[exa]`. The chart never takes keys as values: a value named like one fails the install. `extraEnv` and `extraEnvFrom` pick single keys out of other Secrets.
 - `env`: plain environment for values that aren't secrets, such as `CHEAPSEATS_CONFIG_REV` or the key-adding proxies `CHEAPSEATS_ANTHROPIC_BASE_URL`, `CHEAPSEATS_TYPESAFE_BASE_URL` and `CHEAPSEATS_EXA_BASE_URL`.
-- `persistence`: the volume for the database (1Gi by default), or an `existingClaim`.
+- `persistence`: the volume for the database (1Gi by default, the cluster's default `storageClass`), or an `existingClaim`.
 - `ingress`: off by default, with `className`, `annotations`, `host` and `tls` when on. Set `tls`, or `externalTLS: true` when TLS ends in front of the ingress; the chart refuses an ingress with neither.
 - The usual knobs: `nameOverride`, `image.pullPolicy`, `imagePullSecrets`, `service.type` and `port`, `resources`, `terminationGracePeriodSeconds`, `nodeSelector`, `tolerations`, `affinity` and `podAnnotations`.
 
