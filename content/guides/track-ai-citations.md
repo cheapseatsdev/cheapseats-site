@@ -26,14 +26,14 @@ It measures links to your site, by page. It doesn't show which other sites appea
 
 ## Does Bing or Copilot cite our website?
 
-Bing Webmaster Tools' AI Performance report covers Microsoft's AI experiences. According to [Microsoft's June 2026 announcement](https://blogs.bing.com/search/June-2026/New-AI-Visibility-Insights-in-Bing-Webmaster-Tools-Intents-Topics-Citation-Share-Compare):
+Bing Webmaster Tools' AI Performance report covers Microsoft's AI experiences. According to [Microsoft's June 2026 announcement](https://blogs.bing.com/search/2026/6/New-AI-Visibility-Insights-in-Bing-Webmaster-Tools-Intents-Topics-Citation-Share-Compare/):
 
 - it shows how your content appears in AI-generated answers "across Microsoft Copilot, Bing, and select partner AI experiences";
 - it answers "Where is my content being cited in AI-generated answers?", with the **grounding queries** behind those citations;
 - in preview, it groups grounding queries into **Intents** and **Topics**, shows **Citation Share** for a query, and can **Compare** one period with another;
 - Citation Share "does not expose competitor domains, represent traffic share, or assign quality scores to content."
 
-See also Bing's [help page for the report](https://www.bing.com/webmasters/help/ai-performance-9f8e7d6c) and the [original public preview announcement](https://blogs.bing.com/webmaster/February-2026/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview).
+See also Bing's [help page for the report](https://www.bing.com/webmasters/help/ai-performance-9f8e7d6c) and the [original public preview announcement](https://blogs.bing.com/webmaster/2026/2/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview/).
 
 ## How do I monitor whether AI search engines cite our website?
 
