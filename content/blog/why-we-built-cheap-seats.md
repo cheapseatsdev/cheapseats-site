@@ -5,7 +5,7 @@ author: Chad Metcalf
 description: An open-source project I wrote to make my own product better, inspired by Gauge and others. Free, always, on the Claude subscription you already have.
 ---
 
-Cheap Seats is an open-source project I wrote to make my own product better. It draws on lots of inspiration, [Gauge](https://withgauge.com) first among them, along with Profound and Peec AI. It's free, and it always will be: MIT licensed, no hosted tier, nothing to upsell. I hope you find it useful.
+Cheap Seats is an open-source project I wrote to make my own product better. It draws on lots of inspiration, [Gauge](https://www.withgauge.com/) first among them, along with Profound and Peec AI. It's free, and it always will be: MIT licensed, no hosted tier, nothing to upsell. I hope you find it useful.
 
 Here's the problem it solves for me. Buyers ask AI assistants what to use. "What should I use for X?" gets one answer, written in full sentences, often with a top pick. If you sell in that category, you want to know what that answer says about you.
 
