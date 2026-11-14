@@ -5,7 +5,7 @@ weight: 310
 group: Acting on it
 ---
 
-Choose a verified action in **Next steps**, give its prompt to Claude Code, review the change, then record the pull request so later runs can measure the outcome. Investigations have read-only checks; market findings need not become work. The worked example began on 21 October 2026 with 0 of 90 answers naming Cheap Seats. The screenshots show a different fix in the current demo UI, captured on 24 October; they illustrate the controls, not the original PR.
+Choose a verified action in **Next steps**, give its prompt to Claude Code, review the change, then record the pull request so later runs can measure the outcome. Investigations have read-only checks; market findings need not become work. The worked example began on 21 October 2026 with 0 of 90 answers naming Cheap Seats. The screenshots show a different fix in the demo UI as it was on 24 October, before 0.6.0 renamed Quick wins to Next steps; they illustrate the controls, not the original PR.
 
 ## 1. Pick a fix
 

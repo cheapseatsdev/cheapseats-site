@@ -1,6 +1,6 @@
 ---
 title: Find out if ChatGPT recommends your product
-description: "Find out whether ChatGPT recommends your product in about 15 minutes: buyer questions as a prompt set, a grade on each answer, and why checking by hand fails."
+description: "Find out whether ChatGPT recommends your product: buyer questions as a prompt set, a grade on each answer, and why checking by hand fails."
 weight: 40
 ---
 
