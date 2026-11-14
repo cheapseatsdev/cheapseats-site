@@ -9,7 +9,7 @@ On the same ten AI answers, "visibility" can be 30%, 40% or 50%, and share of vo
 
 <!--more-->
 
-Every vendor formula below comes from its own documentation as of October 2026, collected in Cheap Seats' [metric definitions](/docs/comparing-metrics/).
+Every vendor formula below comes from its own documentation as of November 2026, collected in Cheap Seats' [metric definitions](/docs/comparing-metrics/).
 
 ## Ten answers
 
