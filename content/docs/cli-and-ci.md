@@ -54,7 +54,7 @@ cheapseats report -json r-20261022-051238-0c6344 |
 | 1 | the run ended any other way, with `cheapseats: study ended budget; inspect errors and retry unfinished results` on stderr (`budget` when the [daily budget](../cost-and-budget/#the-daily-budget) stopped it, also `cancelled`, `partial` or `failed`), or anything else went wrong: no such set, a config error, no API key |
 | 2 | usage: no command, or a flag it doesn't know |
 
-A run that stopped keeps what it finished; `POST /api/runs/{id}/retry`, or the **Retry** button on the run page, finishes the rest, the next day if it was the budget.
+A run that stopped keeps what it finished; `POST /api/runs/{id}/retry`, or the **Retry unfinished** button on the run page, finishes the rest, the next day if it was the budget.
 
 ### Where to run it
 

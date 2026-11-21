@@ -59,7 +59,7 @@ The page also counts answers searched, searches and distinct queries, with a pro
 
 ## What an action says
 
-A finished run builds an analysis with actions, investigations and market findings. Only verified actions receive implementation prompts; the list can be empty. Each action names the page to create or change, what it must say, a controllable **done when**, the target prompts and competing source where recorded. It includes effort, priority, gap (documentation, positioning, third-party or product), destination site and owner: the site's owner, falling back to `[owners]` by gap.
+A finished run builds an analysis with actions, investigations and market findings. Only verified actions receive implementation prompts; the list can be empty. Each action names the page to create or change (**Where**), what it must say (**Change**), a controllable check (**Complete when**), the target prompts and a **Comparison source** where recorded. It includes effort, priority, gap (documentation, positioning, third-party or product), destination site and owner: the site's owner, falling back to `[owners]` by gap.
 
 A ready-to-paste prompt asks Claude Code to make the change without inventing numbers. **Insights** explains the losses, objections, strengths and influential pages behind the list.
 

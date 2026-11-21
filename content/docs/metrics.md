@@ -167,7 +167,7 @@ The kind of site says whose page it is; the **page type** says what the page doe
 | `repo` | a repository's front page: github.com/owner/repo (and GitLab, Codeberg, Bitbucket) |
 | `docs` | `docs.*` hosts, a `/docs/`, `/documentation/` or `/reference/` path, Read the Docs, pkg.go.dev, docs.rs, MDN, Microsoft Learn |
 | `comparison` | the path or title says vs, versus, compare or comparison, or "alternative to" |
-| `review` | G2, Capterra, TrustRadius, GetApp, Software Advice, Trustpilot, PeerSpot, Gartner reviews; after the listicle rule, any page whose path or title says review |
+| `review` | G2, Capterra, TrustRadius, GetApp, Software Advice, Trustpilot, PeerSpot, Gartner reviews, Product Hunt product pages; after the listicle rule, any page whose path or title says review |
 | `listicle` | best (not "best practices"), top N, N best, alternatives, tools/apps/software/platforms for |
 | `article` | a `/blog/`, `/news/`, `/articles/`, `/posts/` path, a dated path (`/2026/05/`), `blog.*` and `news.*` hosts, Medium, dev.to, Substack, Hashnode |
 | `product` | the home page, `/pricing`, `/plans`, `/features`, `/product`, `/solutions`, `/integrations` |

@@ -94,8 +94,8 @@ cheapseats init yoursite.com -name "Acme" -competitors "Asana,Trello" -suggest
 | --- | --- |
 | `-name X` | Override the discovered brand name |
 | `-competitors a,b` | Add competitor entries, alternatives prompts and head-to-heads |
-| `-suggest [-n 10]` | Add suggested prompts with one analyst call on the `claude` CLI, using its subscription |
-| `-dry-run` | Print discovered values and every proposed file; write nothing. With `-suggest`, the analyst call still runs |
+| `-suggest [-n 10]` | Add suggested prompts with at most one analyst call on the `claude` CLI, using its subscription. A fresh init has no `audience` or advisory brief yet, so it records a note and calls nothing until you fill them in |
+| `-dry-run` | Print discovered values and every proposed file; write nothing. With `-suggest`, the analyst call, when there is one, still runs |
 
 Discovery fetches the home page, `/llms.txt` and `/sitemap.xml`, following sitemap indexes within its limits, through the guarded public-address fetcher. It chooses:
 
@@ -141,7 +141,7 @@ claude mcp add --transport http cheapseats https://<host>/api/mcp --header "Auth
 | `suggest_competitors` | runs competitor discovery on Exa and returns the top 10 hosts with reasons and the `[[competitors]]` TOML to paste; needs `[exa]`, Jev optional. Nothing is written to the config |
 | `get_citation_stability` | how much the hosts a set's answers cite move from run to run: Bray–Curtis similarity and Jaccard overlap of consecutive runs, the headline score from 3 transitions, and the newest transition's new and gone hosts (ten of each); takes `set`, `track` (`search` by default, or `recall`) and `last_days` (default 30). Free |
 | `get_rankings`     | the brand's daily share-of-voice rank and rates per set, with rolling averages and 95% bands, and day-over-day change with its margin (`within_noise` when it could be chance); takes `set`, `last_days` and `window` (7, 14 or 28) |
-| `get_search_queries` | the searches behind a run's search-track answers: top queries, names the assistants added, words added and dropped, and queries worth adding as prompts; takes `run`, `pool` and `limit`. Free |
+| `get_search_queries` | the searches behind a run's search-track answers: top queries, names the assistants added, words added and dropped, and research leads to review before writing a prompt; takes `run`, `pool` and `limit`. Free |
 | `suggest_prompts`  | drafts new buyer questions for a set as TOML to paste, with repeats dropped; takes `set` and `n` (default 10, max 50). One analyst call; writes nothing |
 | `audit_sites`      | audits sites for AI crawlers, returning findings and fixes; takes `site`, `cached` and `info`. No model calls; optional Exa page reads are billed |
 | `check_citations`  | fetches cited third-party pages and checks brand/competitor names; takes `run`, `limit` and `cached`. No model calls; optional Exa page reads are billed |
