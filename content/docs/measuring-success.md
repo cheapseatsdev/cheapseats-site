@@ -29,7 +29,7 @@ A corrected false claim or a decision to keep an intentional product boundary ca
 ## Run the follow-up
 
 1. Read the action's verification and confirm the proposed change still matters. If a necessary fact is unknown, complete the investigation first.
-2. Record the PR or commit against the action. Mark accepted when the work is accepted; check that the actual target artifact is live and meets its team-controlled completion criteria.
+2. Record the PR or commit against the action. Mark it accepted when the change merges; check that the actual target artifact is live and meets its team-controlled completion criteria.
 3. Run the same relevant questions over time. Check answerers, tracks, wording, intent and measurement methods before comparing.
 4. Inspect changes in named and recommended rates on the target prompts, their eligible counts and uncertainty. Also inspect page retrieval/citations and the complete answers.
 5. Record an interpretation and decision: keep observing, investigate a regression, try a different supported change, or stop because the decision is settled.

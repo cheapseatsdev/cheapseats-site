@@ -13,7 +13,7 @@ Cheap Seats has a second model grade each answer:
 | --- | --- |
 | `recommended` | the top pick, or one of at most three primary recommendations actively endorsed for the buyer's situation |
 | `mentioned` | named as one option among many, in passing, as a comparison point, or with reservations |
-| `absent` | not named, aliases included, or named only to say the assistant can't find, verify or doesn't know it |
+| `absent` | not named, aliases included, or named only to say the assistant can't find or verify it, or doesn't know it |
 
 {{< figure name="grade-examples" >}}
 

@@ -110,7 +110,7 @@ Cheap Seats was absent, and none of its pages surfaced for the 17 questions. On 
 
 ## How the day-by-day ranking stays honest
 
-The series uses the newest finished run per set on each UTC day, split by track. It records changed prompts, intent, competitors, answerers, model versions and sample counts.
+The series records changed prompts, intent, competitors, answerers, model versions and sample counts.
 
 Rate comparisons use matching prompts, wording and answerers. Rank movement requires matching prompts and answerers and a rank on both days. Daily rates weight prompts equally; rolling bands account for repeated answers within prompts. Changes to answer/search instructions, grading, grader model or brand identity start a new method; adding a competitor is noted without restarting it. See [Noise and confidence](/docs/noise-and-confidence/) and [Re-grading](/docs/regrading/).
 

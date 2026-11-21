@@ -96,7 +96,7 @@ It produces Markdown for the pull request: prompt, competitor and answerer chang
 
 ## Ask the way a buyer would
 
-Only `head-to-heads` may name your brand; every other set must omit it. `cheapseats check` enforces this, matching the brand name and aliases as whole words.
+Only `head-to-heads` may name your brand. `cheapseats check` enforces this, matching the brand name and aliases as whole words.
 
 Outside branded evaluation, write as someone who has never heard of the brand would ask. Keep these situations distinct:
 

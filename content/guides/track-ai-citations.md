@@ -22,7 +22,7 @@ Search Console's [generative AI performance report for Search](https://support.g
 - it doesn't include experiments in Search Labs;
 - as of August 31, 2026, Google says it has rolled out to all websites.
 
-It measures links to your site, by page. It doesn't show which other sites appeared alongside yours, and it covers Google's AI features only.
+It doesn't show which other sites appeared alongside yours, and it covers Google's AI features only.
 
 ## Does Bing or Copilot cite our website?
 
@@ -62,7 +62,7 @@ The MCP tool `get_citations` returns the same, and `get_result` returns one answ
 
 ## An example: Cheap Seats measuring itself
 
-We run Cheap Seats on its own brand. The run "Finding out whether AI assistants recommend us" on 2026-10-21 asked 15 questions and graded 90 answers from Claude (via Claude Code) and GPT (via Codex), on the search and recall tracks. The search-track answers ran 102 web searches.
+We run Cheap Seats on its own brand. The run "Finding out whether AI assistants recommend us" on 21 October 2026 asked 15 questions and graded 90 answers from Claude (via Claude Code) and GPT (via Codex), on the search and recall tracks. The search-track answers ran 102 web searches.
 
 None of Cheap Seats' own sites surfaced in a search or was cited:
 
