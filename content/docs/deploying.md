@@ -18,6 +18,7 @@ For Docker and Kubernetes deployments, start from the [config template](https://
 - **Open to crawlers and browsers:** `/robots.txt`, `/favicon.ico` and `/apple-touch-icon.png` answer without a token too. The robots file says `Disallow: /api/` and leaves pages to be crawled, since a shared report says `noindex` itself and a signed-in deployment answers a crawler with the sign-in page. To keep crawlers off a whole deployment, answer `/robots.txt` at your proxy.
 - **A proxy in front** needs a read timeout over ten minutes, for MCP's `wait_for_run`. Cheap Seats itself allows a minute to send a request, two before closing an idle connection, and 1 MiB per body (4 KiB for `/login`).
 - **Share links:** `GET /share/<token>` answers without a token, serving only that link's run ([Sharing a run](../sharing/)). Set `CHEAPSEATS_PUBLIC_URL` to the address people reach Cheap Seats at, such as `https://cheapseats.example.com`, so the links point there. Behind a proxy, without it, a link can point at the address the proxy reaches Cheap Seats on; one that would point at a loopback address gets a warning. A proxy that signs people in must let `/share/` through for links to work.
+- **TLS at the proxy:** the `/login` cookie is the token. It is marked `Secure` (sent over HTTPS only) when `CHEAPSEATS_PUBLIC_URL` starts with `https://` or the request arrives over TLS or with `X-Forwarded-Proto: https`, so set one of them.
 
 ## An image per config commit
 
@@ -81,7 +82,7 @@ An ingress needs TLS: set `ingress.tls`, or `ingress.externalTLS: true` when TLS
 Chart values:
 
 - `image.repository` and `image.tag`: your deployment's image (required). Deploy an exact tag, so a rollback is redeploying the previous one.
-- `existingSecret`: a Secret you create holding `CHEAPSEATS_TOKENS`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` if an answerer uses it, and `TYPESAFE_API_KEY` or `EXA_API_KEY` with `[typesafe]` or `[exa]`. The chart never takes keys as values: a value named like one fails the install. `extraEnv` and `extraEnvFrom` pick single keys out of other Secrets.
+- `existingSecret` (required): a Secret you create holding `CHEAPSEATS_TOKENS`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` if an answerer uses it, and `TYPESAFE_API_KEY` or `EXA_API_KEY` with `[typesafe]` or `[exa]`. The chart never takes keys as values: a value named like one fails the install. `extraEnv` and `extraEnvFrom` pick single keys out of other Secrets.
 - `env`: plain environment for values that aren't secrets, such as `CHEAPSEATS_CONFIG_REV` or the key-adding proxies `CHEAPSEATS_ANTHROPIC_BASE_URL`, `CHEAPSEATS_TYPESAFE_BASE_URL` and `CHEAPSEATS_EXA_BASE_URL`.
 - `persistence`: the volume for the database (1Gi by default, the cluster's default `storageClass`), or an `existingClaim`.
 - `ingress`: off by default, with `className`, `annotations`, `host` and `tls` when on. Set `tls`, or `externalTLS: true` when TLS ends in front of the ingress; the chart refuses an ingress with neither.

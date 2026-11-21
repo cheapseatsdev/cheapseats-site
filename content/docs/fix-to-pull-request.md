@@ -14,9 +14,9 @@ Choose a verified action in **Next steps**, give its prompt to Claude Code, revi
 Start in **Next steps → Actions**, or filter by site to find work your team owns. Each fix says:
 
 - **Where**: the exact page to create or change.
-- **Must say**: the facts the answers were missing.
-- **Done when**: a completion check the team controls; later AI answers are a separate outcome.
-- **Competing source**: a retrieved or cited page associated with the question, where recorded.
+- **Change**: the facts the answers were missing (the Claude Code prompt calls this *What it must say*).
+- **Complete when**: a completion check the team controls; later AI answers are a separate outcome (*Done when* in the prompt).
+- **Comparison source**: a retrieved or cited page associated with the question, where recorded.
 - **Why**: the evidence from the run.
 
 We chose two small documentation gaps where answers cited another vendor's help centre. We reserved positioning and competitor claims for human review.
@@ -53,7 +53,7 @@ Mark the fix with the pull request while it's open: from its card in Next steps,
 
 {{< figure name="fix-lifecycle" >}}
 
-Once the page is live, run the same set again. Check the fix's **Done when** criteria and whether its page appears in the recorded searches or citations. A search result shows the page surfaced; a citation links it to the answer. Neither proves the change caused an improvement.
+Once the page is live, run the same set again. Check the fix's **Complete when** criteria and whether its page appears in the recorded searches or citations. A search result shows the page surfaced; a citation links it to the answer. Neither proves the change caused an improvement.
 
 The analyst writes fresh Next steps with the work already tried and the current brand brief. An unresolved fix can return as *retry*, carrying its pull request and results for the target prompts. Search answers may discover a new page after indexing; both tracks can also vary between runs without a model release.
 

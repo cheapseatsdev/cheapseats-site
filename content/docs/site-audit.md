@@ -36,7 +36,7 @@ cheapseats audit -json           # the findings as JSON
 
 Also **Site audit** in the web UI (`/audit`, "Audit now"), `POST /api/audit` to run one and `GET /api/audit` for the latest, and the MCP tool `audit_sites`.
 
-The audit fetches robots.txt, the home page, `/llms.txt`, the sitemap and up to 10 sampled sitemap pages. It reads raw HTML without JavaScript, with 4 concurrent requests, a 15-second timeout and a 2 MB page limit. Its user agent is `Mozilla/5.0 (compatible; CheapSeats-Audit/<version>; +https://cheapseats.dev)`.
+The audit fetches robots.txt, the home page, `/llms.txt`, the sitemap and up to 10 sampled sitemap pages. It reads raw HTML without JavaScript, with 4 concurrent requests per audit (16 across the process), a 15-second timeout and a 2 MiB page limit. Its user agent is `Mozilla/5.0 (compatible; CheapSeats-Audit/<version>; +https://cheapseats.dev)`.
 
 - A host/path site (`github.com/example`) gets its robots.txt rules checked for that path, but no llms.txt or sitemap check: those belong to the host.
 - Sites of kind `code` or `community` (your GitHub, a forum) raise no robots.txt, firewall, llms.txt, sitemap or markup findings: none of that is yours to fix. Which crawlers the host blocks is still recorded on the site's `blocked` line, so you know it, without a fix you can't apply.

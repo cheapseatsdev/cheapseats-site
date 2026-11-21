@@ -78,7 +78,7 @@ The review proposes at most five of each:
 | **Product** | Unconfigured product appears in ≥20% of answers across ≥2 prompts. Includes a `[[competitors]]` entry. |
 | **Topic** | A word absent from prompts is added in ≥5 searches across ≥2 prompts. Includes its most-run search. |
 
-Each includes a buyer-worded `[[prompts]]` entry with an unused id. These are hypotheses from model behavior, not observed buyer demand. Validate the need, context and overlap with the existing set before adding it. The same review applies to the **Research leads** on the searches page: frequent searches comparing two other products do not establish a discovery question for your brand. Keep those closed comparisons outside `prompt-sets/`. Reword before committing; ids are permanent.
+Each comes with its counts and example; none comes with a prompt to paste. These are hypotheses from model behavior, not observed buyer demand. Validate the need, context and overlap with the existing set, then write the question yourself; ids are permanent. The same review applies to the **Research leads** on the searches page: frequent searches comparing two other products do not establish a discovery question for your brand. Keep those closed comparisons outside `prompt-sets/`.
 
 ## Proposed edits (optional)
 
