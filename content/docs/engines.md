@@ -39,7 +39,7 @@ Tracking a consumer surface requires obtaining the answer that surface rendered,
 
 Scraping adds:
 
-- **Cost and setup:** another account, key and bill. Elmo estimates $0.15–$2.25 per prompt per month at its default cadence of about 300 evaluations per prompt ([providers](https://www.elmohq.com/docs/user-guide/providers), October 2026).
+- **Cost and setup:** another account, key and bill. Elmo estimates $0.15–$2.25 per prompt per month at its default cadence of about 300 evaluations per prompt ([providers](https://www.elmohq.com/docs/user-guide/providers), November 2026).
 - **Maintenance:** scrapers must follow changes to the products they drive. Elmo's provider table records two services losing ChatGPT search results in late September 2026 and a Google AI Overview token expiring within a minute.
 
 ## What that misses

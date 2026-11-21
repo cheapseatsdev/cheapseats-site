@@ -17,7 +17,7 @@ Everything below comes from each tool's own pages, read in November 2026. Where 
 | --- | --- | --- | --- |
 | **Cheap Seats** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Free and open source (MIT); runs on your existing Claude subscription (ChatGPT optional) | Self-hosted: one Docker container with SQLite |
 | **[Peec AI](/compare/peec-ai/)** | Monthly plans choose 3 of ChatGPT, Perplexity, Google AI Mode, AI Overviews, Gemini, Naver AI Briefing, ERNIE and Bing AI Mode, with one more as a paid add-on; Enterprise up to 26, adding API models such as Claude, Grok, DeepSeek, Qwen and Mistral | Monthly plans: Starter $95 (50 prompts), Pro $245 (150), Advanced $495 (350); Enterprise custom ([pricing](https://peec.ai/pricing)) | SaaS |
-| **[Profound](/compare/profound/)** | Up to 10 on Enterprise: ChatGPT, Perplexity, Google AI Mode, Gemini, DeepSeek, Claude, AI Overviews, Exa Search, Meta's Muse Spark and Qwen | Free 7-day trial; Enterprise custom; an Agency Growth plan, [see their pricing page](https://www.tryprofound.com/pricing) | SaaS |
+| **[Profound](/compare/profound/)** | Up to 10 on Enterprise: ChatGPT, Perplexity, Google AI Mode, Gemini, DeepSeek, Claude, AI Overviews, Exa Search, Meta's Muse Spark and Qwen | Enterprise custom, with no self-serve plan or trial for brands since its 16 November pricing update; an Agency Growth plan for agencies, [see their pricing page](https://www.tryprofound.com/pricing) | SaaS |
 | **[Otterly.AI](/compare/otterly-ai/)** | Any 3 or more of ChatGPT, AI Overviews, AI Mode, Gemini, Perplexity, Copilot and Claude, paid from the plan's credits; a Claude check costs 3 credits, the others 1 | Per plan; Lite $29/month for 16 prompts a day on 4 engines | SaaS |
 | **Scrunch** | ChatGPT, Perplexity, Google AI Overviews and Copilot on Core; Enterprise adds Claude, Gemini, Google AI Mode, Meta AI and Grok | Per plan; Core $250/month (125 prompts, 5,000 responses a month), Enterprise custom; [see their pricing page](https://scrunch.com/pricing/) | SaaS |
 | **Ahrefs Brand Radar** | AI Overviews, AI Mode, ChatGPT, Perplexity, Gemini, Copilot; Claude on Custom Prompts only, at 8 checks per update | Custom Prompts from $50/month, with a daily quota included on paid Ahrefs plans; the AI Visibility Index from $199/month; [see their page](https://ahrefs.com/brand-radar) | SaaS |
@@ -37,7 +37,7 @@ Cheap Seats' software is free; API calls, optional providers and hosting depend 
 | **Otterly.AI** | Yes, 16 to 403 a day on 4 engines by plan (21 to 537 on 3) | Not graded; an exact text match of the names you list | Recommendations, GEO URL audits, content briefs | API and MCP from Standard |
 | **Scrunch** | Yes, 125 unique prompts on Core | Not stated | "Insights & Recommendations", page optimizations and content generation | Query API access on Enterprise; MCP access "Custom" on Enterprise |
 | **Ahrefs Brand Radar** | Yes, custom prompts | Not stated | Not described | A [Brand Radar API](https://docs.ahrefs.com/en/api/reference/brand-radar) for mentions, share of voice, citations and AI responses; Ahrefs lists an SEO MCP separately |
-| **Semrush AI Visibility** | Yes, 25 prompts on the Toolkit; 50 to 200 with Semrush One | Not graded; its extraction system finds the brand, and Mentions counts prompts | AI-generated strategic recommendations | Toolkit data isn't in the Semrush API or MCP yet; CSV and Google Sheets export |
+| **Semrush AI Visibility** | Yes, 25 prompts on the Toolkit; 50 to 200 with Semrush One | Not graded; its extraction system finds the brand, and Mentions counts prompts | AI-generated strategic recommendations | Toolkit data isn't in the Semrush API or MCP; Enterprise AIO has an Enterprise API; CSV and Google Sheets export |
 | **Elmo** | Yes, by hand or from an onboarding wizard | Mentions confirmed by a model, with sentiment; recommendation not graded | Opportunities: one LLM call over your data, refreshed about weekly | REST API, TypeScript and Python SDKs, MCP |
 | **Limelit Open** | Yes, a starter pack plus your own | Not graded; a text search finds mentions, with list rank | Not in the open core (Cloud) | JSON API and MCP |
 
@@ -57,11 +57,11 @@ Three trackers here are open source and free to self-host. They differ more in a
 
 Others exist on GitHub, described here in their own words. They aren't reviewed on this site:
 
-- [Canonry](https://github.com/Canonry/canonry) (MIT): "Agent-first AI SEO (AEO/GEO) operating platform".
+- [Canonry](https://github.com/Canonry/canonry) (MIT): "The agent-first AEO operating platform", tracking "mentions and citations across ChatGPT, Claude, Gemini, Meta Muse, and more".
 - [Lettertrace](https://github.com/letterstory/lettertrace) (MIT): "Open-source, bring-your-own-key monitoring for how your brand shows up in AI assistant answers".
 - [OpenSight](https://github.com/shuvamk/opensight) (MIT): "See how AI talks about your brand".
 - [Gego](https://github.com/AI2HU/gego) (GPL-3.0): "Generative Engine Optimization for your brand, track your GEO across all LLMs".
-- [OneGlanse](https://github.com/oneglanse/oneglanse) (MIT): "Open-source AI visibility, AEO & GEO tracker", monitoring answers "through real product UIs".
+- [OneGlanse](https://github.com/oneglanse/oneglanse) (MIT): "Open-source AI visibility & GEO tracker", running prompts "on their actual websites, not model APIs".
 - [GetCito](https://github.com/ai-search-guru/getcito-worlds-first-open-source-aio-aeo-or-geo-tool) (MIT): "An open-source platform to track and improve your brand's presence in AI answers", self-hosted on Node.js and Supabase.
 - [GEO/AEO Tracker](https://github.com/danishashko/geo-aeo-tracker) (MIT): "Open-source, self-hosted AI visibility tracker and AEO checker", with a dashboard, an MCP server and a CLI, and answers collected through Bright Data.
 - [Ansvisor](https://github.com/ansvisor/ansvisor) (MIT): "Open-source agentic AI Search Execution Platform", whose agents "turn signals into prioritized actions and draft the fixes" across ChatGPT, Claude, Gemini, Google AI Overviews and AI Mode, Perplexity, Grok and Copilot; Ansvisor Cloud is its hosted tier.

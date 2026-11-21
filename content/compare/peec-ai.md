@@ -25,7 +25,7 @@ As of November 2026, from Cheap Seats' docs and Peec AI's own pricing, docs and 
 | **What to fix** | Ranked fix briefs; before/after attempt checks ([from fix to pull request](/docs/fix-to-pull-request/)) | Actions: site fixes, your own pages (with a brief or suggested rewrites), mentions elsewhere and wrong claims, rated on a five-level relative impact; a chart marks when each was done ([actions](https://docs.peec.ai/actions)); no test against noise stated |
 | **Agencies and teams** | One brand per instance; no seats, no agency tier | Unlimited users; agency plans ([agencies](https://peec.ai/for-agencies)); SAML SSO on Enterprise ([SSO](https://docs.peec.ai/sso)) |
 | **API / MCP** | Web UI, CLI, JSON API and MCP server | Customer API on Pro, Advanced, Enterprise and agency plans, not Starter ([API](https://docs.peec.ai/api/introduction)); MCP server on every paid plan, with OAuth, read and write tools ([MCP](https://docs.peec.ai/mcp/introduction)) |
-| **Data** | Your SQLite file; calls go to configured providers | Hosted by Peec AI on Google Cloud; CSV, Data Studio and API ([privacy](https://peec.ai/legal/privacy-policy)) |
+| **Data** | Your SQLite file; calls go to configured providers | Hosted by Peec AI on Google Cloud in the EU ([privacy annex](https://peec.ai/legal/privacy-policy-annex/v2026-11-19)); CSV exports on every plan, the API from Pro, the Data Studio connector from Advanced ([pricing](https://peec.ai/pricing)) |
 
 ## What's the same
 

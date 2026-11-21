@@ -27,7 +27,7 @@ As of November 2026, from Cheap Seats' docs and Gauge's own [pricing](https://ww
 
 | | Cheap Seats | Gauge |
 | --- | --- | --- |
-| **Price** | Free MIT software; API calls or installed subscription CLIs ([cost and budget](/docs/cost-and-budget/)) | Growth $599/month, with 3 seats; Enterprise custom. Gauge Agents is priced separately: its [pricing](https://www.withgauge.com/agents/pricing/) page lists a Free plan (100 credits a week, open models only), Pro at $499 a month (5,000 credits) and custom Enterprise, and its [billing docs](https://docs.withgauge.com/agents/guides/billing) now agree. Running its open-source CLI locally is free, with your own agent subscription |
+| **Price** | Free MIT software; API calls or installed subscription CLIs ([cost and budget](/docs/cost-and-budget/)) | Growth $599/month, with 3 seats; Enterprise custom. Gauge Agents is priced separately: its [pricing](https://www.withgauge.com/agents/pricing/) page and [billing docs](https://docs.withgauge.com/agents/guides/billing) list a Free plan (500 credits at signup, then 100 a week, on open models plus one first run on Claude Code or Codex), Pro at $499 a month (5,000 credits) and custom Enterprise. Running its open-source CLI locally is free, with your own agent subscription |
 | **Where it runs** | Self-hosted SQLite; Docker, Helm or exe.dev ([self-hosting](/docs/self-hosting/)) | Hosted SaaS |
 | **Engines** | Claude and OpenAI models, through their APIs or the Claude Code and Codex CLIs | Growth: ChatGPT, Google AI Mode and Microsoft Copilot on the pricing page; Gauge's November [changelog](https://docs.withgauge.com/resources/changelog) moves new sampling from Copilot to Bing AI Mode, keeping Copilot history. Enterprise adds Google AI Overviews, Gemini and Perplexity. Claude and Grok with your own Anthropic or xAI API key, billed by the provider ([BYOK](https://docs.withgauge.com/help/byok)) |
 | **How it asks** | The model asked directly, by API or CLI, with your CLI setup switched off | A clean, logged-out browser session per prompt on each engine's own interface, with its default model; Claude by API |
@@ -64,7 +64,7 @@ You can run and upgrade it, and your team can write the content.
 - **You work for clients.** Gauge's [Agency Mode](https://www.withgauge.com/features/agency-aeo/) is $300 a month per active client, each in its own workspace, plus an agency base fee its [docs](https://docs.withgauge.com/navigating/agencies) don't price.
 - **You want strategy help.** Gauge Enterprise includes recurring strategy sessions with the Gauge team, and its comparison pages add a dedicated specialist and an API.
 
-If SOC 2 is a procurement requirement, ask: Gauge's own [comparison with Profound](https://www.withgauge.com/resources/gauge-vs-profound/) says it is pursuing a SOC 2 Type II report.
+If SOC 2 is a procurement requirement, ask: Gauge's own [comparison with Profound](https://www.withgauge.com/resources/gauge-vs-profound/) says it is pursuing a SOC 2 Type II report, while its Agents [pricing](https://www.withgauge.com/agents/pricing/) page lists "SOC 2 report access" on Agents Enterprise.
 
 ## Taking your prompts with you
 
