@@ -29,7 +29,7 @@ As of November 2026, from Cheap Seats' docs and Elmo's own [README](https://gith
 | **Grading** | Recommended, mentioned or absent; position, top pick, objections and optional fact checking ([how grading works](/docs/how-grading-works/)) | Name candidates, then Jev portrayal judgments, as shown above ([source](https://github.com/elmohq/elmo/blob/797d765cec65b3fc182fcd8434116368d0947a7b/packages/lib/src/mention-judge/analyze.ts)) |
 | **Sampling** | `samples` per answerer and track, set in your config; optional adaptive extras for the least certain prompts | Each prompt once a day by default, 5 samples per target (`RUNS_PER_PROMPT`); Cloud samples 1 to 4 times a day |
 | **Noise** | 95% intervals on named, recommended and top pick; changes tested against noise ([how big a change](/docs/noise-and-confidence/)) | None in the app. Its `aeo` skill gives a \(\pm 2\sqrt{\frac{p(1-p)}{n}}\) rule to apply yourself ([skill](https://github.com/elmohq/elmo/blob/797d765cec65b3fc182fcd8434116368d0947a7b/skills/aeo/references/measurement.md)) |
-| **History** | Grades stay as graded; a change of method is marked on the trend; re-grading is a step you take | Past answers re-judged in place when names or the judge change, 90 days back by default (`REPROCESS_DAYS`); older ones keep their old judgement |
+| **History** | Grades stay as graded; a change of method is marked on the trend; re-grading is a step you take | Past answers re-judged in place when names or the judge change, 90 days back by default (`REPROCESS_DAYS`); older ones keep their old judgment |
 | **What to fix** | Ranked fix briefs; before/after attempt checks ([from fix to pull request](/docs/fix-to-pull-request/)) | Opportunities: one LLM call over a digest of your top 30 prompts, 8 to 12 items in creation, existing content, outreach and social, renewed after 6 days; no outcome tracking ([source](https://github.com/elmohq/elmo/blob/797d765cec65b3fc182fcd8434116368d0947a7b/apps/web/src/server/opportunities.ts)) |
 | **Brands and teams** | One `[brand]` per config; no agency tier | Unlimited brands self-hosted; Cloud 1 to 5 brands with unlimited seats; white-label adds custom branding, a custom domain and SSO |
 | **Reports and API** | Web UI, CLI, JSON API, MCP server, and [read-only share links](/docs/sharing/) to a run | REST API with TypeScript and Python SDKs; MCP server; a report generator with shareable links, for admin users and [not on Elmo Cloud](https://github.com/elmohq/elmo/blob/797d765cec65b3fc182fcd8434116368d0947a7b/packages/deployment/src/deployment.ts) |
@@ -45,7 +45,7 @@ Both use Bray–Curtis similarity for host-level citation stability. Elmo feeds 
 
 ## How the numbers differ
 
-[Metric definitions](/docs/comparing-metrics/) has the full table. The consequential differences:
+[Comparing metrics across tools](/docs/comparing-metrics/) has the full table. The consequential differences:
 
 - **Visibility.** Elmo uses each prompt's latest answers; Cheap Seats pools every graded answer in the run. Both exclude name-only disclaimers. Elmo counts a link to your site as a mention; Cheap Seats grades answer text, not citations.
 - **Recommended.** Elmo includes recommendations in positive sentiment, without a separate recommended rate. Cheap Seats distinguishes endorsement from being named.

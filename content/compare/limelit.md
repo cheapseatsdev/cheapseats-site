@@ -44,7 +44,7 @@ Unlike Limelit's answer ceiling, Cheap Seats reserves estimated API spend agains
 
 ## How the numbers differ
 
-[Metric definitions](/docs/comparing-metrics/) has the full table. Beyond the examples above:
+[Comparing metrics across tools](/docs/comparing-metrics/) has the full table. Beyond the examples above:
 
 - **Visibility.** Limelit divides unbranded answers containing your brand string by unbranded answers. Cheap Seats divides answers graded recommended or mentioned by every graded answer, excluding name-only disclaimers and namesakes.
 - **Recommended.** Cheap Seats distinguishes endorsement; Limelit has no recommendation judgment.

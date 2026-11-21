@@ -48,7 +48,7 @@ CHEAPSEATS_DATA_DIR="$PWD/data/evaluation" \
 go run ./cmd/cheapseats serve -addr 127.0.0.1:3000
 ```
 
-This example config has scheduling disabled. Open `http://127.0.0.1:3000/evaluation`, also available under **Checks → Evaluation**, and choose **Import saved review records**. Reuse the same data directory when restarting: that is where your reviews live. Changing directories does not transfer them.
+This example config has scheduling disabled. Open `http://127.0.0.1:3000/evaluation`, also available under **Checks → Evaluation**, and choose **Import saved review records**. Reuse the same data directory when restarting: that is where your reviews live.
 
 For your own results, choose **Add answers from a saved run**. Select answers from a finished run and explicitly choose **Import selected answers**. You can also enter from **Review saved answers** on a run or **Review this grade** beside an answer. One unique case opens directly; larger selections open their review queue. There is no required collection size; a single import accepts up to 500 selected answers within 16 MiB.
 

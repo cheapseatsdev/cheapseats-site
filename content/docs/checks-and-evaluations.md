@@ -5,7 +5,7 @@ weight: 300
 group: Acting on it
 ---
 
-Start with the uncertainty you need to resolve. A buyer run measures answers; a grader evaluation checks how answers are labeled; a site check inspects access or page evidence. One passing check cannot stand in for the others.
+Start with the uncertainty you need to resolve. A buyer run measures answers; a grader evaluation checks how answers are labelled; a site check inspects access or page evidence. One passing check cannot stand in for the others.
 
 {{< figure name="checks-map" >}}
 

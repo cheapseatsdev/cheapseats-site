@@ -9,7 +9,7 @@ On the same ten AI answers, "visibility" can be 30%, 40% or 50%, and share of vo
 
 <!--more-->
 
-Every vendor formula below comes from its own documentation as of November 2026, collected in Cheap Seats' [metric definitions](/docs/comparing-metrics/).
+Every vendor formula below comes from its own documentation as of November 2026, collected in Cheap Seats' [comparison of metrics across tools](/docs/comparing-metrics/).
 
 ## Ten answers
 
@@ -71,4 +71,4 @@ Re-deriving keeps the past comparable with today's setup, so the Initech change 
 - To get Otterly.AI's brand coverage, count prompts whose named rate is above zero.
 - To compare with Limelit's share of voice, you'd need occurrence counts, which Cheap Seats doesn't keep; compare named rates instead.
 
-The full mapping, tool by tool, is in [Metric definitions](/docs/comparing-metrics/#migrating-between-cheap-seats-and-these-tools). Keep the buyer questions and their sampling conditions when moving between tools; a similar metric label doesn't ensure a comparable number.
+The full mapping, tool by tool, is in [Comparing metrics across tools](/docs/comparing-metrics/#migrating-between-cheap-seats-and-these-tools). Keep the buyer questions and their sampling conditions when moving between tools; a similar metric label doesn't ensure a comparable number.
